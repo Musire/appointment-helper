@@ -1,37 +1,24 @@
 import { NextResponse, type NextRequest } from "next/server"
-import { createServerClient } from "@supabase/ssr"
+import { createSupabaseServerClient } from "@/lib/supabase/server"
+import { supabaseAdminClient } from "@/lib/supabase/admin"
 
 const ROLE_REDIRECT: Record<string, string> = {
   user: "/user/dashboard",
   staff: "/staff/dashboard",
-  owner: "/owner/dashboard",
+  admin: "/admin/dashboard",
+  superadmin: "superadmin/dashboard"
 }
 
 export async function proxy(request: NextRequest) {
   const response = NextResponse.next()
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get: (name) => request.cookies.get(name)?.value,
-        set: (name, value, options) => {
-          response.cookies.set({ name, value, ...options })
-        },
-        remove: (name, options) => {
-          response.cookies.set({ name, value: "", ...options })
-        },
-      },
-    }
-  )
+  const supabase = createSupabaseServerClient()
 
   // Get the logged-in user
   const {
     data: { user },
   } = await supabase.auth.getUser()
 
-  console.log('user :', user)
 
   if (user && request.nextUrl.pathname === "/login") {
     return NextResponse.redirect(new URL("/dashboard", request.url))
@@ -44,21 +31,33 @@ export async function proxy(request: NextRequest) {
 
   // Only redirect on /dashboard
   if (request.nextUrl.pathname === "/dashboard") {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .single()
 
-    const redirectPath = ROLE_REDIRECT[profile?.role]
+    const { data, error } = await supabaseAdminClient
+      .from("UserRole")
+      .select(`
+        role:Role (
+          name
+        )
+      `)
+      .eq("userId", user.id);
+
+    type RoleDataType = {
+      role : { 
+        name: string;
+      }
+    } 
+
+    const profile = data as RoleDataType[] | null
+    const role = profile ? profile[0].role?.name.toLowerCase() : null
+
+    const redirectPath = role ? ROLE_REDIRECT[role] : null
 
     if (redirectPath) {
         return NextResponse.redirect(
             new URL(redirectPath, request.url)
         )
     }
-
-    // Optional: default fallback
+    
     return NextResponse.redirect(new URL("/", request.url))
   }
 

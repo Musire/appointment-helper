@@ -16,20 +16,27 @@ type FormFieldProps<T extends FieldValues> =
   | ({
       label: string;
       name: Path<T>;
-      type?: undefined; // default input
+      as?: "input"; // default
+      type?: InputHTMLAttributes<HTMLInputElement>["type"];
     } & InputHTMLAttributes<HTMLInputElement>)
   | ({
       label: string;
       name: Path<T>;
-      type: "text-area";
+      as: "textarea";
+      type?: string;
     } & TextareaHTMLAttributes<HTMLTextAreaElement>);
 
-export default function Input<T extends FieldValues>({
-  label,
-  name,
-  type,
-  ...rest
-}: FormFieldProps<T>) {
+
+export default function Input<T extends FieldValues>(
+  props: FormFieldProps<T>
+) {
+  const {
+    label,
+    name,
+    as = "input",
+    ...rest
+  } = props;
+
   const {
     register,
     formState: { errors },
@@ -40,36 +47,44 @@ export default function Input<T extends FieldValues>({
   const baseClasses =
     "grow bg-transparent border border-white/40 rounded-lg focus:outline-none text-base normal-space text-white/60";
 
+  if (as === "textarea") {
+    return (
+      <div>
+        <label className="flex flex-col w-full space-y-1">
+          <span className="w-fit capitalize text-white/75 text-lg">{label}</span>
+
+          <textarea
+            {...register(name)}
+            {...(rest as TextareaHTMLAttributes<HTMLTextAreaElement>)}
+            className={`min-h-32 ${baseClasses} ${
+              fieldError ? "border-error-dark snappy scrollbar-adjust" : ""
+            }`}
+          />
+
+          <p className="text-sm relative text-error-dark snappy h-4">
+            {fieldError?.message}
+          </p>
+        </label>
+      </div>
+    );
+  }
+
+  // ⬇️ TypeScript KNOWS this is the input branch here
   return (
     <div>
       <label className="flex flex-col w-full space-y-1">
         <span className="w-fit capitalize text-white/75 text-lg">{label}</span>
 
-        {type !== "text-area" && (
-          <input
-            {...register(name)}
-            {...(rest as InputHTMLAttributes<HTMLInputElement>)}
-            className={`${baseClasses} ${
-              fieldError ? "border-error-dark snappy" : ""
-            }`}
-          />
-        )}
-
-        {type === "text-area" && (
-          <textarea
-            {...register(name)}
-            {...(rest as TextareaHTMLAttributes<HTMLTextAreaElement>)}
-            className={`min-h-32 ${baseClasses} ${
-              fieldError ? "border-error-dark snappy scrollbar-adjust " : ""
-            }`}
-          />
-        )}
-
-        <p
-          className={`text-sm relative text-error-dark snappy h-4 ${
-            fieldError ? "visible animate-ghostIn" : "invisible"
+        <input
+          type={props.type}
+          {...register(name)}
+          {...(rest as InputHTMLAttributes<HTMLInputElement>)}
+          className={`${baseClasses} ${
+            fieldError ? "border-error-dark snappy" : ""
           }`}
-        >
+        />
+
+        <p className="text-sm relative text-error-dark snappy h-4">
           {fieldError?.message}
         </p>
       </label>

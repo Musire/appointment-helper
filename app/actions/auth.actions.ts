@@ -1,30 +1,12 @@
 'use server'; 
 
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { createSupabaseServerClient, createSupabaseServerClientReadOnly } from "@/lib/supabase/server"
+import { supabaseAdminClient } from "@/lib/supabase/admin"
 
 export async function logout() {
-  const cookieStore = cookies()
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        async get(name: string) {
-          return (await cookieStore).get(name)?.value
-        },
-        async set(name: string, value: string, options) {
-          (await cookieStore).set({ name, value, ...options })
-        },
-        async remove(name: string, options) {
-          (await cookieStore).set({ name, value: "", ...options })
-        },
-      },
-    }
-  )
-
+  const supabase = createSupabaseServerClient()
   await supabase.auth.signOut()
 
   // Clear session and send user somewhere safe
@@ -33,26 +15,7 @@ export async function logout() {
 
 
 export async function login(email: string, password: string) {
-  const cookieStore = cookies()
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        async get(name: string) {
-          return (await cookieStore).get(name)?.value
-        },
-        async set(name: string, value: string, options) {
-          (await cookieStore).set({ name, value, ...options })
-        },
-        async remove(name: string, options) {
-          (await cookieStore).set({ name, value: "", ...options })
-        },
-      },
-    }
-  )
-
+  const supabase = createSupabaseServerClient()
   const { error } = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -63,4 +26,36 @@ export async function login(email: string, password: string) {
   }
 
   redirect("/dashboard")
+}
+
+
+
+
+export async function inviteAdmin(email: string) {
+  
+  // 1️⃣ Invite the user (creates auth user + sends invite email)
+  const { data: inviteData, error: inviteError } =
+    await supabaseAdminClient.auth.admin.inviteUserByEmail(email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/admin/welcome`,
+      data: {
+        role: 'admin',
+      },
+    });
+
+  if (inviteError) throw new Error(inviteError.message);
+  if (!inviteData.user) throw new Error('No user returned');
+
+  return { user: inviteData.user };
+
+}
+
+export async function getCurrentUser() {
+  const supabase = createSupabaseServerClientReadOnly()
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser()
+
+  if (error) throw new Error(error.message)
+  return user
 }

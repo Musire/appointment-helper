@@ -27,6 +27,7 @@ export default function Form<S extends z.ZodObject<any>> ({ initialValues, onSub
       handleSubmit,
       setError,
       clearErrors,
+      reset,
       formState: { isSubmitting, isSubmitSuccessful, errors }
     } = methods;
   
@@ -38,6 +39,16 @@ export default function Form<S extends z.ZodObject<any>> ({ initialValues, onSub
     useEffect(() => {
       if(error) setError("root.server", { type: "server", message: error })
     }, [error])
+
+    useEffect(() => {
+      if (!isSubmitSuccessful) return;
+
+      const timeoutId = setTimeout(() => {
+        reset();
+    }, 1500)
+
+      return () => clearTimeout(timeoutId);
+    }, [isSubmitSuccessful, reset]);
     
     const wrappedSubmit: SubmitHandler<z.infer<S>> = async (data, e) => {
       clearErrors("root.server"); // clear previous server errors
