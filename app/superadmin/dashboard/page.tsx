@@ -1,7 +1,7 @@
 'use client';
 
 import { logout } from "@/app/actions/auth.actions"
-import InviteAdminForm from "@/components/dashboards/InviteAdminForm";
+import { InviteAdminForm } from "@/components/forms";
 import { Modal } from "@/components/UI/modal";
 import { useState } from "react";
 

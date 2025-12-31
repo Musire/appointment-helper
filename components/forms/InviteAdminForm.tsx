@@ -1,5 +1,5 @@
 import { inviteAdmin } from "@/app/actions/auth.actions";
-import { Form, Input } from "../UI";
+import { Form, Input } from "@/components/UI";
 import { InviteAdminSchema, InviteAdminType } from "@/validation/InviteAdmin.schema"
 
 export default function InviteAdminForm ({ closeModal }: { closeModal: () => void }) {
