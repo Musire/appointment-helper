@@ -25,6 +25,12 @@ enum StoreRole {
   STAFF
 }
 
+enum StoreStatus {
+  DRAFT
+  ACTIVE
+  SUSPENDED
+}
+
 enum StaffStatus {
   INVITED
   ACTIVE
@@ -62,6 +68,7 @@ model User {
   roles   UserRole[]
   staff   StaffProfile?
   notices Notification[]
+  stores  Store[]
 
   appointments Appointment[] @relation("UserAppointments")
 }
@@ -88,17 +95,36 @@ model UserRole {
 // STORES
 // ================================
 model Store {
-  id          String   @id @default(uuid())
+  id          String      @id @default(uuid())
   name        String
   description String?
   timezone    String
-  createdAt   DateTime @default(now())
+  status      StoreStatus @default(DRAFT)
+  createdAt   DateTime    @default(now())
+
+  createdById String
+  createdBy   User   @relation(fields: [createdById], references: [id])
 
   staff        StoreStaff[]
   services     Service[]
   categories   ServiceCategory[]
   appointments Appointment[]
   invites      Invite[]
+  config       StoreConfig?
+}
+
+model StoreConfig {
+  id      String @id @default(uuid())
+  storeId String @unique
+
+  hours    Json // opening hours, breaks, holidays
+  buffers  Json // before/after buffers
+  policies Json // cancellation, reschedule, no-show
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  store Store @relation(fields: [storeId], references: [id])
 }
 
 // ================================

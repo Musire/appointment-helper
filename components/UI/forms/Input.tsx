@@ -14,13 +14,13 @@ import {
 // Discriminated union for input vs textarea
 type FormFieldProps<T extends FieldValues> =
   | ({
-      label: string;
+      label?: string;
       name: Path<T>;
       as?: "input"; // default
       type?: InputHTMLAttributes<HTMLInputElement>["type"];
     } & InputHTMLAttributes<HTMLInputElement>)
   | ({
-      label: string;
+      label?: string;
       name: Path<T>;
       as: "textarea";
       type?: string;
@@ -71,7 +71,7 @@ export default function Input<T extends FieldValues>(
 
   // ⬇️ TypeScript KNOWS this is the input branch here
   return (
-    <div>
+    <div className={`${props.type === 'hidden' ? "hidden" : ""}`}>
       <label className="flex flex-col w-full space-y-1">
         <span className="w-fit capitalize text-white/75 text-lg">{label}</span>
 

@@ -24,7 +24,9 @@ export default function CreateStoreButton () {
           isOpen={isMounted}
           onClose={closeDrawer}
       >
-        <StoreCreationForm onClose={closeDrawer} />
+        <StoreCreationForm 
+          onClose={closeDrawer} 
+        />
       </Modal>
     </>
   );

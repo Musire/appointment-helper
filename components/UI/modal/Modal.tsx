@@ -27,7 +27,7 @@ export default function Modal({ children, isOpen, onClose, title }: ModalProps) 
     return ( 
         <div
               onClick={handleBackdropClick}
-              className={`fixed flex items-center justify-center  will-change-transform inset-0 w-screen  bg-black/60 ${isOpen ? 'visible': 'hidden'}`}
+              className={`fixed flex items-center justify-center  will-change-transform inset-0 w-screen z-30 bg-black/60 ${isOpen ? 'visible': 'hidden'}`}
               style={{
                 WebkitBackdropFilter: 'none', 
                 backdropFilter: 'none',

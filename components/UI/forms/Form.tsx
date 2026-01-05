@@ -45,7 +45,7 @@ export default function Form<S extends z.ZodObject<any>> ({ initialValues, onSub
 
       const timeoutId = setTimeout(() => {
         reset();
-    }, 1500)
+    }, 1000)
 
       return () => clearTimeout(timeoutId);
     }, [isSubmitSuccessful, reset]);

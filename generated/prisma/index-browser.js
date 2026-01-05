@@ -142,7 +142,19 @@ exports.Prisma.StoreScalarFieldEnum = {
   name: 'name',
   description: 'description',
   timezone: 'timezone',
-  createdAt: 'createdAt'
+  status: 'status',
+  createdAt: 'createdAt',
+  createdById: 'createdById'
+};
+
+exports.Prisma.StoreConfigScalarFieldEnum = {
+  id: 'id',
+  storeId: 'storeId',
+  hours: 'hours',
+  buffers: 'buffers',
+  policies: 'policies',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.StoreStaffScalarFieldEnum = {
@@ -261,6 +273,12 @@ exports.RoleName = exports.$Enums.RoleName = {
   USER: 'USER'
 };
 
+exports.StoreStatus = exports.$Enums.StoreStatus = {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  SUSPENDED: 'SUSPENDED'
+};
+
 exports.StoreRole = exports.$Enums.StoreRole = {
   ADMIN: 'ADMIN',
   STAFF: 'STAFF'
@@ -297,6 +315,7 @@ exports.Prisma.ModelName = {
   Role: 'Role',
   UserRole: 'UserRole',
   Store: 'Store',
+  StoreConfig: 'StoreConfig',
   StoreStaff: 'StoreStaff',
   StaffProfile: 'StaffProfile',
   StaffAvailability: 'StaffAvailability',

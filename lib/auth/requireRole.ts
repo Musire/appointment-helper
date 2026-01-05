@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { getCurrentUser } from "@/app/actions/auth.actions"
 
@@ -8,24 +7,27 @@ export type RoleName =
   | "ADMIN"
   | "SUPERADMIN"
 
+export const hasAccess = (roles: { role : { name: string } }[], allowed: string[]) => {
+  return roles.some(r =>
+    allowed.includes(r.role.name as RoleName)
+  )
+}
+
 export async function requireRole(allowed: RoleName[]) {
   const user = await getCurrentUser()
-  if (!user) redirect("/unauthorized")
 
   const roles = await prisma.userRole.findMany({
-    where: { userId: user.id },
+    where: { userId: user?.id },
     select: {
       role: { select: { name: true } },
     },
   })
 
-  const hasAccess = roles.some(r =>
-    allowed.includes(r.role.name as RoleName)
-  )
+  const access = hasAccess(roles, allowed)
 
-  if (!hasAccess) {
-    redirect("/unauthorized")
+  return {
+    access,
+    user
   }
 
-  return user
 }
