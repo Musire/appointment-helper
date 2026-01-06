@@ -1,9 +1,22 @@
 // lib/store/store-activation.ts
 import { prisma } from "@/lib/prisma"
 
-export async function getStoreActivationState(storeId: string | undefined) {
+export type StoreActivationState = {
+  hasConfig: boolean
+  hasActiveStaff: boolean
+  hasServices: boolean
+  isReady: boolean
+}
 
-  if (!storeId) return null;
+
+export async function getStoreActivationState(storeId: string | undefined): Promise<StoreActivationState> {
+
+  if (!storeId) return {
+    hasConfig: false,
+    hasActiveStaff: false,
+    hasServices: false,
+    isReady: false
+  };
 
   const [config, activeStaffCount, servicesCount] = await Promise.all([
     prisma.storeConfig.findUnique({

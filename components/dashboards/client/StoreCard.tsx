@@ -1,5 +1,5 @@
 import { StoreType } from "@/app/admin/dashboard/page";
-import { slugify } from "@/lib/utils";
+import { slugify } from "@/lib/stringMutate";
 import Link from "next/link";
 
 export default function StoreCard ({ store }: { store: StoreType}) {

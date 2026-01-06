@@ -11,6 +11,7 @@ export default function StoreDetails () {
     return check ? <Check size={20} className="text-green-600" /> : <X size={20} className="text-error-dark" />
   }
 
+
   return (
     <div className="">
         { status === 'DRAFT' && (

@@ -6,8 +6,9 @@ import StoreActionTray from "./StoreActionTray";
 import SelectableDisplay from "./SelectableDisplay";
 import ContinueButton from "./ContinueButton";
 import { DeleteModal } from "@/components/UI";
-import { createExcerpt } from "@/lib/utils";
+import { createExcerpt, slugify } from "@/lib/stringMutate";
 import { deleteStores } from "@/app/actions/admin.actions";
+import Link from "next/link";
 
 export default function AdminControl ({ items }: { items: any }) {
     const { 
@@ -49,10 +50,12 @@ export default function AdminControl ({ items }: { items: any }) {
                 getId={(item: any) => item.id}
                 onSelect={handleSelect}
                 renderItem={(i) => (
-                    <article className="w-full rounded-xl h-full px-3 py-2 flex flex-col space-y-2 relative">
+                    <Link 
+                        href={'/admin/store/' + slugify(i.name)}
+                        className="w-full rounded-xl h-full px-3 py-2 flex flex-col space-y-2 relative">
                         <p className="text-2xl capitalize">{i.name}</p>
                         <p className="text-sm" >{createExcerpt(i.description, 60)}</p>
-                    </article>
+                    </Link>
                 )}
             />
             <ContinueButton 

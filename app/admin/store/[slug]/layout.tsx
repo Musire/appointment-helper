@@ -1,7 +1,7 @@
+
 import { PanelNav } from "@/components/dashboards/client";
-import { prisma } from "@/lib/prisma";
-import { getStoreActivationState } from "@/lib/store/store-activation";
-import { unslugify } from "@/lib/utils";
+import { getStoreContext } from "@/lib/store/data-loader";
+import { unslugify } from "@/lib/stringMutate";
 import StoreProvider from "@/stores/StoreContext";
 
 type StoreDetailsProps = {
@@ -13,23 +13,9 @@ type StoreDetailsProps = {
 
 export default async function StoreLayout ({ params, children }: StoreDetailsProps ) {
     const {slug} = await params
+    const data = await getStoreContext(unslugify(slug))
 
-    const store = await prisma.store.findFirst({
-        where: {
-            name: unslugify(slug)
-        },
-        include: {
-            createdBy: {
-                select: {
-                    email: true
-                }
-            }
-        }
-    })
-
-    const activation = await getStoreActivationState(store?.id)
-
-    if (!store) {
+    if (!data || !data.store) {
         return <p className="">no store found</p>
     }
 
@@ -46,7 +32,7 @@ export default async function StoreLayout ({ params, children }: StoreDetailsPro
                 <h1 className="">Store Details</h1>
                 <h2 className="">{slug}</h2>
                 <PanelNav items={tabs} />
-                <StoreProvider store={store} activation={activation} >
+                <StoreProvider data={data} >
                     { children }
                 </StoreProvider>
             </div>

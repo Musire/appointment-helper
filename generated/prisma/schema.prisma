@@ -1,6 +1,3 @@
-// ================================
-// GENERATOR & DATASOURCE
-// ================================
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -10,9 +7,183 @@ datasource db {
   provider = "postgresql"
 }
 
-// ================================
-// ENUMS
-// ================================
+model User {
+  id           String         @id
+  email        String         @unique
+  createdAt    DateTime       @default(now()) @map("created_at")
+  appointments Appointment[]  @relation("UserAppointments")
+  notices      Notification[]
+  staff        StaffProfile?
+  stores       Store[]
+  roles        UserRole[]
+}
+
+model Role {
+  id    String     @id @default(uuid())
+  name  RoleName   @unique
+  users UserRole[]
+}
+
+model UserRole {
+  id     String @id @default(uuid())
+  userId String
+  roleId String
+  role   Role   @relation(fields: [roleId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([userId, roleId])
+}
+
+model Store {
+  id           String            @id @default(uuid())
+  name         String
+  description  String?
+  timezone     String
+  status       StoreStatus       @default(DRAFT)
+  createdAt    DateTime          @default(now())
+  createdById  String
+  appointments Appointment[]
+  invites      Invite[]
+  services     Service[]
+  categories   ServiceCategory[]
+  createdBy    User              @relation(fields: [createdById], references: [id])
+  config       StoreConfig?
+  staff        StoreStaff[]
+}
+
+model StoreConfig {
+  id        String   @id @default(uuid())
+  storeId   String   @unique
+  hours     Json
+  buffers   Json
+  policies  Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  store     Store    @relation(fields: [storeId], references: [id])
+}
+
+model StoreStaff {
+  id      String      @id @default(uuid())
+  storeId String
+  userId  String
+  role    StoreRole
+  status  StaffStatus
+  store   Store       @relation(fields: [storeId], references: [id])
+
+  @@unique([storeId, userId])
+}
+
+model StaffProfile {
+  id           String              @id @default(uuid())
+  userId       String              @unique
+  bio          String?
+  active       Boolean             @default(true)
+  appointments Appointment[]
+  availability StaffAvailability[]
+  user         User                @relation(fields: [userId], references: [id])
+}
+
+model StaffAvailability {
+  id        String       @id @default(uuid())
+  staffId   String
+  dayOfWeek Int
+  startTime DateTime
+  endTime   DateTime
+  staff     StaffProfile @relation(fields: [staffId], references: [id])
+
+  @@index([staffId, dayOfWeek])
+}
+
+model Service {
+  id          String               @id @default(uuid())
+  storeId     String
+  categoryId  String?
+  name        String
+  durationMin Int
+  priceCents  Int
+  type        ServiceType
+  createdAt   DateTime             @default(now())
+  bookings    AppointmentService[]
+  category    ServiceCategory?     @relation(fields: [categoryId], references: [id])
+  store       Store                @relation(fields: [storeId], references: [id])
+
+  @@index([storeId])
+}
+
+model ServiceCategory {
+  id       String    @id @default(uuid())
+  storeId  String
+  name     String
+  services Service[]
+  store    Store     @relation(fields: [storeId], references: [id])
+
+  @@unique([storeId, name])
+}
+
+model Appointment {
+  id        String               @id @default(uuid())
+  storeId   String
+  staffId   String
+  userId    String?
+  startTime DateTime
+  endTime   DateTime
+  status    AppointmentStatus
+  createdAt DateTime             @default(now())
+  staff     StaffProfile         @relation(fields: [staffId], references: [id])
+  store     Store                @relation(fields: [storeId], references: [id])
+  client    User?                @relation("UserAppointments", fields: [userId], references: [id])
+  items     AppointmentService[]
+
+  @@index([storeId, startTime])
+  @@index([staffId, startTime])
+}
+
+model AppointmentService {
+  id            String      @id @default(uuid())
+  appointmentId String
+  serviceId     String
+  appointment   Appointment @relation(fields: [appointmentId], references: [id])
+  service       Service     @relation(fields: [serviceId], references: [id])
+
+  @@unique([appointmentId, serviceId])
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  type      NotificationType
+  payload   Json
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  user      User             @relation(fields: [userId], references: [id])
+
+  @@index([userId, read])
+}
+
+model Invite {
+  id        String    @id @default(uuid())
+  storeId   String
+  email     String
+  role      StoreRole
+  token     String    @unique
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+  store     Store     @relation(fields: [storeId], references: [id])
+
+  @@index([storeId])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  actorId   String
+  action    String
+  entity    String
+  entityId  String
+  createdAt DateTime @default(now())
+
+  @@index([actorId])
+}
+
 enum RoleName {
   SUPERADMIN
   ADMIN
@@ -55,228 +226,4 @@ enum NotificationType {
   APPOINTMENT_UPDATED
   APPOINTMENT_CANCELLED
   STORE_INVITATION
-}
-
-// ================================
-// AUTH / RBAC
-// ================================
-model User {
-  id        String   @id
-  email     String   @unique
-  createdAt DateTime @default(now()) @map("created_at")
-
-  roles   UserRole[]
-  staff   StaffProfile?
-  notices Notification[]
-  stores  Store[]
-
-  appointments Appointment[] @relation("UserAppointments")
-}
-
-model Role {
-  id   String   @id @default(uuid())
-  name RoleName @unique
-
-  users UserRole[]
-}
-
-model UserRole {
-  id     String @id @default(uuid())
-  userId String
-  roleId String
-
-  user User @relation(fields: [userId], references: [id])
-  role Role @relation(fields: [roleId], references: [id])
-
-  @@unique([userId, roleId])
-}
-
-// ================================
-// STORES
-// ================================
-model Store {
-  id          String      @id @default(uuid())
-  name        String
-  description String?
-  timezone    String
-  status      StoreStatus @default(DRAFT)
-  createdAt   DateTime    @default(now())
-
-  createdById String
-  createdBy   User   @relation(fields: [createdById], references: [id])
-
-  staff        StoreStaff[]
-  services     Service[]
-  categories   ServiceCategory[]
-  appointments Appointment[]
-  invites      Invite[]
-  config       StoreConfig?
-}
-
-model StoreConfig {
-  id      String @id @default(uuid())
-  storeId String @unique
-
-  hours    Json // opening hours, breaks, holidays
-  buffers  Json // before/after buffers
-  policies Json // cancellation, reschedule, no-show
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  store Store @relation(fields: [storeId], references: [id])
-}
-
-// ================================
-// STORE STAFF / RBAC
-// ================================
-model StoreStaff {
-  id      String      @id @default(uuid())
-  storeId String
-  userId  String
-  role    StoreRole
-  status  StaffStatus
-
-  store Store @relation(fields: [storeId], references: [id])
-
-  @@unique([storeId, userId])
-}
-
-model StaffProfile {
-  id     String  @id @default(uuid())
-  userId String  @unique
-  bio    String?
-  active Boolean @default(true)
-
-  availability StaffAvailability[]
-  appointments Appointment[]
-
-  user User @relation(fields: [userId], references: [id])
-}
-
-// ================================
-// AVAILABILITY
-// ================================
-model StaffAvailability {
-  id        String   @id @default(uuid())
-  staffId   String
-  dayOfWeek Int
-  startTime DateTime
-  endTime   DateTime
-
-  staff StaffProfile @relation(fields: [staffId], references: [id])
-
-  @@index([staffId, dayOfWeek])
-}
-
-// ================================
-// SERVICES
-// ================================
-model Service {
-  id          String      @id @default(uuid())
-  storeId     String
-  categoryId  String?
-  name        String
-  durationMin Int
-  priceCents  Int
-  type        ServiceType
-  createdAt   DateTime    @default(now())
-
-  store    Store                @relation(fields: [storeId], references: [id])
-  category ServiceCategory?     @relation(fields: [categoryId], references: [id])
-  bookings AppointmentService[]
-
-  @@index([storeId])
-}
-
-model ServiceCategory {
-  id      String @id @default(uuid())
-  storeId String
-  name    String
-
-  store    Store     @relation(fields: [storeId], references: [id])
-  services Service[]
-
-  @@unique([storeId, name])
-}
-
-// ================================
-// APPOINTMENTS
-// ================================
-model Appointment {
-  id        String            @id @default(uuid())
-  storeId   String
-  staffId   String
-  userId    String?
-  startTime DateTime
-  endTime   DateTime
-  status    AppointmentStatus
-  createdAt DateTime          @default(now())
-
-  store  Store                @relation(fields: [storeId], references: [id])
-  staff  StaffProfile         @relation(fields: [staffId], references: [id])
-  client User?                @relation("UserAppointments", fields: [userId], references: [id])
-  items  AppointmentService[]
-
-  @@index([storeId, startTime])
-  @@index([staffId, startTime])
-}
-
-// JOIN TABLE
-model AppointmentService {
-  id            String @id @default(uuid())
-  appointmentId String
-  serviceId     String
-
-  appointment Appointment @relation(fields: [appointmentId], references: [id])
-  service     Service     @relation(fields: [serviceId], references: [id])
-
-  @@unique([appointmentId, serviceId])
-}
-
-// ================================
-// NOTIFICATIONS
-// ================================
-model Notification {
-  id        String           @id @default(uuid())
-  userId    String
-  type      NotificationType
-  payload   Json
-  read      Boolean          @default(false)
-  createdAt DateTime         @default(now())
-
-  user User @relation(fields: [userId], references: [id])
-
-  @@index([userId, read])
-}
-
-// ================================
-// INVITES
-// ================================
-model Invite {
-  id        String    @id @default(uuid())
-  storeId   String
-  email     String
-  role      StoreRole
-  token     String    @unique
-  expiresAt DateTime
-  createdAt DateTime  @default(now())
-
-  store Store @relation(fields: [storeId], references: [id])
-
-  @@index([storeId])
-}
-
-// ================================
-// AUDIT LOG
-// ================================
-model AuditLog {
-  id        String   @id @default(uuid())
-  actorId   String
-  action    String
-  entity    String
-  entityId  String
-  createdAt DateTime @default(now())
-
-  @@index([actorId])
 }

@@ -2,38 +2,26 @@
 "use client"
 
 import { createContext, useContext } from "react"
-import { StoreType } from "@/app/admin/dashboard/page"
+import { StoreContextData } from "@/lib/store/data-loader"
 
-export type StoreWithCreator = ({
-  createdBy: { email: string };
-} & StoreType) 
 
-export type StoreContextValue = {
-  store: StoreWithCreator,
-  activation: {
-    hasConfig: boolean;
-    hasActiveStaff: boolean;
-    hasServices: boolean;
-    isReady: boolean
-  } | null
+type StoreProviderProps = {
+  data: StoreContextData
+  children: React.ReactNode
 }
-const StoreContext = createContext<StoreContextValue | undefined>(undefined)
 
-export default function StoreProvider({ store, activation, children }: StoreContextValue & {children : React.ReactNode}) {
+const StoreContext = createContext<StoreContextData | null>(null)
 
-  const context = {
-    store,
-    activation
-  }
+export default function StoreProvider({ data, children }: StoreProviderProps) {
 
   return (
-    <StoreContext.Provider value={context}>
+    <StoreContext.Provider value={data}>
       {children}
     </StoreContext.Provider>
   )
 }
 
-export function useStore() {
+export function useStore(): StoreContextData {
   const storeContext = useContext(StoreContext)
   if (!storeContext) throw new Error("useStore must be inside StoreProvider");
   return storeContext
