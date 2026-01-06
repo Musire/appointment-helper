@@ -34,10 +34,9 @@ export async function safeAction<T>(
   } catch (err: any) {
 
     let msg;
-    const original = err.meta.driverAdapterError.cause.originalMessage 
 
-    if (err.code === 'P2002' && original === 'duplicate key value violates unique constraint "Store_name_key"') { 
-      msg = 'Seems that store name is already taken'
+    if (err.code === 'P2002' ) { 
+      msg = 'Cannot create duplicates'
     } else {
       msg = err instanceof Error ? err.message : "Unknown error"
     }

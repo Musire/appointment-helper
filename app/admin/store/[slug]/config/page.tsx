@@ -25,7 +25,7 @@ type DayHours = {
 type WeeklyHours = Record<DayKey, DayHours>
 
 export default function ConfigPage () {
-    const { config } = useStore()
+    const { store, config } = useStore()
     const router = useRouter()
 
     const updateConfig = async () => {
@@ -54,7 +54,7 @@ export default function ConfigPage () {
     return (
       <div className="py-6 flex flex-col ">
           <button onClick={updateConfig} type="button" className="btn self-end">Edit Hours</button>
-          <Table className="max-w-44">
+          <Table className="max-w-44 border border-whitesmoke/37">
             <TableCaption>Current Business Hours</TableCaption>
             <TableHeader >
               <TableRow className="flex justify-center items-center text-smokewhite/87" >
