@@ -76,14 +76,41 @@ export default function Input<T extends FieldValues>(
         <span className="w-fit capitalize text-white/75 text-lg">{label}</span>
 
         <input
-          type={props.type}
+          type={props.type === 'number' ? 'text' : props.type}
+          inputMode={props.type === 'number' ? 'numeric' : undefined}
+          onWheel={
+            props.type === 'number'
+              ? (e) => {
+                  ;(e.currentTarget as HTMLInputElement).blur()
+                }
+              : null
+          }
+          onBeforeInput={
+            props.type === 'number'
+              ? (e) => {
+                  const event = e as InputEvent
+                  if (event.data && /\D/.test(event.data)) {
+                    e.preventDefault()
+                  }
+                }
+              : undefined
+          }
+          onPaste={
+            props.type === 'number'
+              ? (e) => {
+                  const pasted = e.clipboardData.getData('text')
+                  if (/\D/.test(pasted)) {
+                    e.preventDefault()
+                  }
+                }
+              : undefined
+          }
           {...register(name)}
           {...(rest as InputHTMLAttributes<HTMLInputElement>)}
           className={`${baseClasses} ${
-            fieldError ? "border-error-dark snappy" : ""
+            fieldError ? 'border-error-dark snappy' : ''
           }`}
         />
-
         <p className="text-sm relative text-error-dark snappy h-4">
           {fieldError?.message}
         </p>

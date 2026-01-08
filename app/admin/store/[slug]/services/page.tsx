@@ -1,9 +1,17 @@
 'use client';
+import { groupServicesByCategory } from "@/lib/helpers/groupArrays";
 import { useStore } from "@/stores";
 import Link from "next/link";
+import { useMemo } from "react";
+
+import CategoryAccordians from "@/components/dashboards/client/services/CategoryAccordians";
 
 export default function ServicePage () {
-    const { store } = useStore()
+    const { categories, services } = useStore()
+    
+    const categoriesWithServices = useMemo(() => {
+      return groupServicesByCategory(categories, services)
+    }, [categories, services])
 
     return (
       <div className="flex flex-col space-y-6 mt-6">
@@ -11,18 +19,7 @@ export default function ServicePage () {
             <Link href="services/new/category" className="btn">create category</Link>
             <Link href="services/new/service" className="btn">create service</Link>
           </span>
-          <section aria-labelledby="category-heading">
-            <h3 id="category-heading">Categories</h3>
-            <ul className="p-4">
-              <li>Consultation</li>
-            </ul>
-          </section>
-          <section aria-labelledby="service-heading">
-            <h3 id="service-heading">Services</h3>
-            <ul className="p-4">
-              <li>Service vice</li>
-            </ul>
-          </section>
+          <CategoryAccordians items={categoriesWithServices} />
       </div>
     );
 }

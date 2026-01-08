@@ -70,7 +70,7 @@ export default function DropdownButton<T extends string | number>({
         type="button"
         onClick={toggleDrawer}
         className={twMerge(
-          "snappy spaced gap-x-2 text-sm capitalize w-full border border-whitesmoke/40 rounded-lg normal-space",
+          "snappy spaced gap-x-2 text-sm capitalize w-full border border-whitesmoke/40 rounded-lg normal-space text-whitesmoke/87",
           buttonStyle
         )}
       >
@@ -103,7 +103,7 @@ export default function DropdownButton<T extends string | number>({
                     <button
                       type="button"
                       onClick={() => handleSelect(option)}
-                      className="flex items-center w-full text-sm text-left capitalize px-3 py-1 hover:surface-2 easy-transition gap-x-2"
+                      className="flex items-center text-whitesmoke/87 w-full text-sm text-left capitalize px-3 py-1 hover:bg-darker hover:text-alternate easy-transition gap-x-2"
                     >
                       {multiple && (
                         <span className="w-4">

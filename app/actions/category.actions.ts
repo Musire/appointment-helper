@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { safeAction } from "@/lib/safeAction";
 import { CategoryCreationSchema, CategoryCreationType } from "@/validation/Category.schema";
+import { revalidatePath } from "next/cache";
 
 
 export async function createCategory (formData: CategoryCreationType) {
@@ -21,5 +22,7 @@ export async function createCategory (formData: CategoryCreationType) {
                 name
             }
         })
+
+        revalidatePath('/admin/store/title/services')
     }, ['ADMIN'])
 }
