@@ -6,9 +6,11 @@ import { useState } from "react"
 export default function SignupPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [role, setRole] = useState<"staff" | "user">("user")
+  const [fullName, setFullName] = useState("")
+  const [role, setRole] = useState<"STAFF" | "USER">("USER")
 
   async function handleSignup() {
+    console.log({email, password, fullName, role})
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -16,6 +18,7 @@ export default function SignupPage() {
         emailRedirectTo: `${location.origin}/auth/callback`,
         data: {
           role,
+          full_name: fullName
         },
       },
     })
@@ -35,16 +38,19 @@ export default function SignupPage() {
         placeholder="email"
         onChange={(e) => setEmail(e.target.value)}
       />
-
+      <input
+        placeholder="full name"
+        onChange={(e) => setFullName(e.target.value)}
+      />
       <input
         type="password"
         placeholder="password"
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <select onChange={(e) => setRole(e.target.value as "staff" | "user")}>
-        <option value="user">User</option>
-        <option value="staff">Staff</option>
+      <select onChange={(e) => setRole(e.target.value as "STAFF" | "USER")}>
+        <option value="USER">User</option>
+        <option value="STAFF">Staff</option>
       </select>
 
       <button onClick={handleSignup}>Sign up</button>
