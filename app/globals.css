@@ -211,6 +211,7 @@
 
   html {
     scroll-behavior: smooth;
+    data-scroll-behavior: smooth;
     background-color: var(--color-deep)
   }
 

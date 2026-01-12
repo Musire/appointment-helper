@@ -226,10 +226,10 @@ exports.Prisma.NotificationScalarFieldEnum = {
 exports.Prisma.InviteScalarFieldEnum = {
   id: 'id',
   storeId: 'storeId',
-  email: 'email',
+  userId: 'userId',
   role: 'role',
-  token: 'token',
-  expiresAt: 'expiresAt',
+  invitedBy: 'invitedBy',
+  status: 'status',
   createdAt: 'createdAt'
 };
 
@@ -308,6 +308,13 @@ exports.NotificationType = exports.$Enums.NotificationType = {
   APPOINTMENT_UPDATED: 'APPOINTMENT_UPDATED',
   APPOINTMENT_CANCELLED: 'APPOINTMENT_CANCELLED',
   STORE_INVITATION: 'STORE_INVITATION'
+};
+
+exports.InviteStatus = exports.$Enums.InviteStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+  REVOKED: 'REVOKED'
 };
 
 exports.Prisma.ModelName = {

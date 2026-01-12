@@ -8,3 +8,4 @@ export { default as AdminControl } from './AdminControl';
 export { default as SelectableDisplay } from './SelectableDisplay';
 export { default as StoreActionTray } from './StoreActionTray';
 export * from "./services"
+export * from "./staff"

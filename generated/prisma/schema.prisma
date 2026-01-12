@@ -16,6 +16,7 @@ model User {
   staff        StaffProfile?
   stores       Store[]
   roles        UserRole[]
+  invites      Invite[]
 }
 
 model Role {
@@ -36,7 +37,7 @@ model UserRole {
 
 model Store {
   id           String            @id @default(uuid())
-  name         String
+  name         String            @unique
   description  String?
   timezone     String
   status       StoreStatus       @default(DRAFT)
@@ -161,15 +162,19 @@ model Notification {
 }
 
 model Invite {
-  id        String    @id @default(uuid())
+  id        String       @id @default(uuid())
   storeId   String
-  email     String
+  userId    String
   role      StoreRole
-  token     String    @unique
-  expiresAt DateTime
-  createdAt DateTime  @default(now())
-  store     Store     @relation(fields: [storeId], references: [id])
+  invitedBy String
+  status    InviteStatus @default(PENDING)
+  createdAt DateTime     @default(now())
 
+  store Store @relation(fields: [storeId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+
+  @@unique([storeId, userId])
+  @@index([userId])
   @@index([storeId])
 }
 
@@ -182,6 +187,13 @@ model AuditLog {
   createdAt DateTime @default(now())
 
   @@index([actorId])
+}
+
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  REVOKED
 }
 
 enum RoleName {

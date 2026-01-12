@@ -10,12 +10,14 @@ datasource db {
 model User {
   id           String         @id
   email        String         @unique
+  fullName     String?        @map("full_name")
   createdAt    DateTime       @default(now()) @map("created_at")
   appointments Appointment[]  @relation("UserAppointments")
   notices      Notification[]
   staff        StaffProfile?
   stores       Store[]
   roles        UserRole[]
+  invites      Invite[]
 }
 
 model Role {
@@ -161,15 +163,19 @@ model Notification {
 }
 
 model Invite {
-  id        String    @id @default(uuid())
-  storeId   String
-  email     String
-  role      StoreRole
-  token     String    @unique
-  expiresAt DateTime
-  createdAt DateTime  @default(now())
-  store     Store     @relation(fields: [storeId], references: [id])
+  id         String     @id @default(uuid())
+  storeId    String
+  userId     String
+  role       StoreRole
+  invitedBy  String
+  status     InviteStatus @default(PENDING)
+  createdAt  DateTime   @default(now())
 
+  store   Store @relation(fields: [storeId], references: [id])
+  user    User  @relation(fields: [userId], references: [id])
+
+  @@unique([storeId, userId])
+  @@index([userId])
   @@index([storeId])
 }
 
@@ -182,6 +188,13 @@ model AuditLog {
   createdAt DateTime @default(now())
 
   @@index([actorId])
+}
+
+enum InviteStatus {
+	PENDING
+	ACCEPTED
+	REJECTED
+	REVOKED
 }
 
 enum RoleName {
