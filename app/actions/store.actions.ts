@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { safeAction } from "@/lib/safeAction";
 import { getCurrentUser } from "./auth.actions";
+import { revalidatePath } from "next/cache";
 
 export async function editStoreConfig (storeId: string) {
 
@@ -61,7 +62,7 @@ export async function createServiceCategory ({ storeId, name }: { storeId: strin
     }, ['ADMIN'])
 }
 
-export async function sendInvite({ targetId, storeId }: { targetId: string; storeId: string;}) {
+export async function sendInvite({ targetId, storeId, storeName }: { targetId: string; storeId: string; storeName: string;}) {
   return safeAction(async () => {
     const user = await getCurrentUser()
     if (!user) throw new Error("User not logged in")
@@ -95,7 +96,9 @@ export async function sendInvite({ targetId, storeId }: { targetId: string; stor
         },
       })
 
+      revalidatePath(`/admin/store/${storeName}/staff/invite`)
       return invite
     })
   })
 }
+

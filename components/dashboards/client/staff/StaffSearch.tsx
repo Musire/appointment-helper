@@ -2,6 +2,7 @@
 import { sendInvite } from "@/app/actions/store.actions";
 import { useDebouncedValue } from "@/hooks";
 import { useStore } from "@/stores";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import CandidateCard from "./CandidateCard";
 import SearchBar from "./SearchBar";
@@ -11,7 +12,7 @@ export type SearchListProps = {
 }
 
 export default function StaffSearch ({ data }: SearchListProps) {
-
+    const router = useRouter()
     const [query, setQuery] = useState("")
     const debouncedQuery = useDebouncedValue(query, 300)
     const { store } = useStore()
@@ -30,6 +31,19 @@ export default function StaffSearch ({ data }: SearchListProps) {
         )
     }, [data, debouncedQuery])
 
+    const handleInvite = async (targetId: string) => {
+        const { success, error } = await sendInvite({
+            targetId,
+            storeId: store.id,
+            storeName: store.name
+        })
+
+        if (success) {
+            router.refresh()
+        }
+
+    }
+
     return (
         <div className="">
             <SearchBar query={query} setQuery={setQuery} />
@@ -38,10 +52,7 @@ export default function StaffSearch ({ data }: SearchListProps) {
                     <CandidateCard 
                         key={i.id} 
                         data={i}  
-                        onInvite={() => sendInvite({
-                            targetId: i.id,
-                            storeId: store.id
-                        })}
+                        onInvite={async() => await handleInvite(i.id) }
                     />
                 ))}
             </ul>
