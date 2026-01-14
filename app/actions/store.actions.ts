@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { safeAction } from "@/lib/safeAction";
+import { getCurrentUser } from "./auth.actions";
 
 export async function editStoreConfig (storeId: string) {
 
@@ -58,4 +59,43 @@ export async function createServiceCategory ({ storeId, name }: { storeId: strin
             }
         })
     }, ['ADMIN'])
+}
+
+export async function sendInvite({ targetId, storeId }: { targetId: string; storeId: string;}) {
+  return safeAction(async () => {
+    const user = await getCurrentUser()
+    if (!user) throw new Error("User not logged in")
+
+    return prisma.$transaction(async (tx) => {
+      const existingInvite = await tx.invite.findFirst({
+        where: {
+          userId: targetId,
+          storeId,
+        },
+      })
+
+      if (existingInvite) {
+        throw new Error("User already invited to this store")
+      }
+
+      const invite = await tx.invite.create({
+        data: {
+          userId: targetId,
+          storeId,
+          invitedBy: user.id,
+          role: "STAFF",
+        },
+      })
+
+      await tx.notification.create({
+        data: {
+          userId: targetId,
+          type: "STORE_INVITATION",
+          payload: {},
+        },
+      })
+
+      return invite
+    })
+  })
 }

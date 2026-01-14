@@ -406,6 +406,7 @@
   @apply border border-whitesmoke/37 hover:bg-whitesmoke/87 normal-space hover:cursor-pointer hover:text-deep
 }
 
+
 @layer utilities {
   .border-fade-inner {
     @apply border border-transparent rounded-md; /* border-width 1px, solid, transparent, border-radius 0.5rem */
