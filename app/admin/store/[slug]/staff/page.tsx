@@ -1,5 +1,5 @@
 'use client';
-import { InvitationCard } from "@/components/dashboards/client";
+import { InvitationCard } from "@/components/dashboards";
 import { useStore } from "@/stores";
 import Link from "next/link";
 

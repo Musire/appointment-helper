@@ -403,7 +403,7 @@
 }
 
 @utility btn {
-  @apply border border-whitesmoke/37 hover:bg-whitesmoke/87 normal-space hover:cursor-pointer hover:text-deep
+  @apply border border-whitesmoke/37 hover:bg-whitesmoke/87 normal-space hover:cursor-pointer hover:text-deep active:bg-whitesmoke/87 active:text-deep
 }
 
 

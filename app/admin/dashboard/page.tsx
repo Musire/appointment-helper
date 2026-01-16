@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/app/actions/auth.actions";
-import { AdminControl } from "@/components/dashboards/client";
+import { AdminControl } from "@/components/dashboards";
 import { LogoutButton } from "@/components/UI/buttons";
 import { prisma } from "@/lib/prisma";
 

@@ -1,6 +1,7 @@
 "use client"
 
 import { useNotifications } from "@/hooks"
+import InviteNotification from "./InviteNotification"
 
 type Props = {
   userId: string | null
@@ -22,15 +23,7 @@ export default function NotificationsClient({ userId }: Props) {
 
       <ul className="space-y-1">
         {notifications.map((n) => (
-          <li
-            key={n.id}
-            className="rounded-md border p-2 text-sm"
-          >
-            <p className="font-medium">{n.type}</p>
-            <p className="text-muted text-xs">
-              {new Date(n.createdAt).toLocaleString()}
-            </p>
-          </li>
+          <InviteNotification key={n.id} notification={n} />
         ))}
       </ul>
     </section>

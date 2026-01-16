@@ -65,12 +65,15 @@ model StoreConfig {
 }
 
 model StoreStaff {
-  id      String      @id @default(uuid())
-  storeId String
-  userId  String
-  role    StoreRole
-  status  StaffStatus
-  store   Store       @relation(fields: [storeId], references: [id])
+  id           String              @id @default(uuid())
+  storeId      String
+  userId       String
+  role         StoreRole
+  status       StaffStatus
+
+  availability StaffAvailability[]
+  appointments Appointment[]       @relation("StaffAppointments") 
+  store        Store               @relation(fields: [storeId], references: [id])
 
   @@unique([storeId, userId])
 }
@@ -80,20 +83,20 @@ model StaffProfile {
   userId       String              @unique
   bio          String?
   active       Boolean             @default(true)
-  appointments Appointment[]
-  availability StaffAvailability[]
+
   user         User                @relation(fields: [userId], references: [id])
 }
 
 model StaffAvailability {
-  id        String       @id @default(uuid())
-  staffId   String
-  dayOfWeek Int
-  startTime DateTime
-  endTime   DateTime
-  staff     StaffProfile @relation(fields: [staffId], references: [id])
+  id           String      @id @default(uuid())
+  storeStaffId String
+  dayOfWeek    DayOfWeek
+  startTime    DateTime
+  endTime      DateTime
 
-  @@index([staffId, dayOfWeek])
+  storeStaff   StoreStaff @relation(fields: [storeStaffId], references: [id])
+
+  @@index([storeStaffId, dayOfWeek])
 }
 
 model Service {
@@ -123,18 +126,21 @@ model ServiceCategory {
 }
 
 model Appointment {
-  id        String               @id @default(uuid())
-  storeId   String
-  staffId   String
-  userId    String?
-  startTime DateTime
-  endTime   DateTime
-  status    AppointmentStatus
-  createdAt DateTime             @default(now())
-  staff     StaffProfile         @relation(fields: [staffId], references: [id])
-  store     Store                @relation(fields: [storeId], references: [id])
-  client    User?                @relation("UserAppointments", fields: [userId], references: [id])
-  items     AppointmentService[]
+  id            String               @id @default(uuid())
+  storeId       String
+  staffId       String
+  userId        String
+
+  startTime     DateTime
+  endTime       DateTime
+  status        AppointmentStatus
+  createdAt     DateTime             @default(now())
+
+  staff         StoreStaff           @relation("StaffAppointments", fields: [staffId], references: [id])
+  store         Store                @relation(fields: [storeId], references: [id])
+  client        User                @relation("UserAppointments", fields: [userId], references: [id])
+
+  items         AppointmentService[]
 
   @@index([storeId, startTime])
   @@index([staffId, startTime])
@@ -188,6 +194,16 @@ model AuditLog {
   createdAt DateTime @default(now())
 
   @@index([actorId])
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
 }
 
 enum InviteStatus {

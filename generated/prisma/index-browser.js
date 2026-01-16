@@ -175,7 +175,7 @@ exports.Prisma.StaffProfileScalarFieldEnum = {
 
 exports.Prisma.StaffAvailabilityScalarFieldEnum = {
   id: 'id',
-  staffId: 'staffId',
+  storeStaffId: 'storeStaffId',
   dayOfWeek: 'dayOfWeek',
   startTime: 'startTime',
   endTime: 'endTime'
@@ -289,6 +289,16 @@ exports.StaffStatus = exports.$Enums.StaffStatus = {
   INVITED: 'INVITED',
   ACTIVE: 'ACTIVE',
   SUSPENDED: 'SUSPENDED'
+};
+
+exports.DayOfWeek = exports.$Enums.DayOfWeek = {
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY',
+  SATURDAY: 'SATURDAY',
+  SUNDAY: 'SUNDAY'
 };
 
 exports.ServiceType = exports.$Enums.ServiceType = {

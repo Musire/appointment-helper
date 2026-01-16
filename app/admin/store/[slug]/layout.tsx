@@ -1,5 +1,5 @@
 
-import { PanelNav } from "@/components/dashboards/client";
+import { PanelNav } from "@/components/dashboards";
 import { getStoreContext } from "@/lib/store/data-loader";
 import { unslugify } from "@/lib/stringMutate";
 import StoreProvider from "@/stores/StoreContext";

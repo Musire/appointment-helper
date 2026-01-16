@@ -1,8 +1,10 @@
 'use server'; 
 
-import { redirect } from "next/navigation"
-import { createSupabaseServerClient, createSupabaseServerClientReadOnly } from "@/lib/supabase/server"
-import { supabaseAdminClient } from "@/lib/supabase/admin"
+import { prisma } from "@/lib/prisma";
+import { safeAction } from "@/lib/safeAction";
+import { supabaseAdminClient } from "@/lib/supabase/admin";
+import { createSupabaseServerClient, createSupabaseServerClientReadOnly } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 export async function logout() {
 
@@ -27,8 +29,6 @@ export async function login(email: string, password: string) {
 
   redirect("/dashboard")
 }
-
-
 
 
 export async function inviteAdmin(email: string) {
@@ -58,4 +58,19 @@ export async function getCurrentUser() {
 
   if (error) throw new Error(error.message)
   return user
+}
+
+export async function hasStaffProfile() {
+    return safeAction( async () => {
+      const user = await getCurrentUser()
+      if (!user) {
+        throw new Error('not signed in')
+      }
+      const exists = await prisma.staffProfile.findUnique({
+        where: { userId: user.id },
+        select: { id: true },
+      })
+
+      return Boolean(exists)
+    })
 }

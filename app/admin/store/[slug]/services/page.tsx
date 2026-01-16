@@ -4,7 +4,7 @@ import { useStore } from "@/stores";
 import Link from "next/link";
 import { useMemo } from "react";
 
-import CategoryAccordians from "@/components/dashboards/client/services/CategoryAccordians";
+import CategoryAccordians from "@/components/dashboards/services/CategoryAccordians";
 
 export default function ServicePage () {
     const { categories, services } = useStore()

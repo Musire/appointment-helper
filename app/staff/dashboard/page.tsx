@@ -1,18 +1,15 @@
-
-import { getCurrentUser } from "@/app/actions/auth.actions";
-import NotificationsClient from "@/components/dashboards/client/staff/NotificationClient";
-import { LogoutButton } from "@/components/UI/buttons";
+import { getCurrentUser, hasStaffProfile } from "@/app/actions/auth.actions";
+import { ProfileCreation } from "@/components/dashboards";
+import NotificationsClient from "@/components/dashboards/staff/NotificationClient";
 
 export default async function StaffDashboard () {
   const user = await getCurrentUser()
+  const { data: profile } = await hasStaffProfile()
 
   return (
-    <main className="page-layout">
-        <div className="display-layout py-6 space-y-6">
-            <h1 className="text-3xl capitalize w-full text-center">staff dashboard</h1>
-            <LogoutButton />
-            <NotificationsClient userId={user?.id ?? null} />
-        </div>
-    </main>
+    <div className="py-6 relative">
+      <ProfileCreation profile={profile} />
+      <NotificationsClient userId={user?.id ?? null} />
+    </div>
   );
 }

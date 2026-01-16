@@ -1,4 +1,4 @@
-import { StaffSearch } from "@/components/dashboards/client";
+import { StaffSearch } from "@/components/dashboards";
 import { BackButton } from "@/components/UI/buttons";
 import { getInvitableStaffUsers } from "@/lib/queries/users";
 
