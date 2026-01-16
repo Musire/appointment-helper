@@ -20,8 +20,8 @@ export default function InviteNotification ({ notification }: InviteNotification
                 </p>
             </span>
             <span className="w-full spaced space-x-4 ">
-                <button onClick={handleAccept} type="button" className="active:bg-whitesmoke/87 active:text-deep grow flex-1 h-full border border-whitesmoke/20 py-2 capitalize">accept</button>
-                <button onClick={handleReject} type="button" className="grow  h-full flex-1 active:bg-rose-950/30 border border-whitesmoke/20 active:border-error-dark py-2 active:text-rose-100 capitalize">reject</button>
+                <button onClick={handleAccept} type="button" className="active:bg-whitesmoke/87 active:text-deep grow flex-1 h-full border border-whitesmoke/20 py-2 capitalize hover:cursor-pointer">accept</button>
+                <button onClick={handleReject} type="button" className="grow  h-full flex-1 active:bg-rose-950/30 border border-whitesmoke/20 active:border-error-dark py-2 active:text-rose-100 capitalize hover:cursor-pointer">reject</button>
             </span>
         </li>
     );
