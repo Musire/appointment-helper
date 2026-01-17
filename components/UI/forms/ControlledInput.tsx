@@ -1,8 +1,8 @@
 
 "use client";
 
-import { Controller, useFormContext, FieldError  } from "react-hook-form";
 import React from "react";
+import { Controller, FieldError, get, useFormContext } from "react-hook-form";
 
 type ControlledInputProps = {
   name: string;
@@ -27,7 +27,7 @@ export default function ControlledInput({
   } = useFormContext();
 
   
-  const error = errors[name] as FieldError | undefined;
+  const error = get(errors, name) as FieldError | undefined;
 
   return (
     <div className="flex flex-col w-full gap-y-1">
@@ -40,7 +40,7 @@ export default function ControlledInput({
       />
 
       <p className={`text-sm relative text-error-dark snappy h-4 ${
-            errors[name] ? "visible animate-ghostIn" : "invisible"
+            error ? "visible animate-ghostIn" : "invisible"
           }`}
         >
           {error?.message}

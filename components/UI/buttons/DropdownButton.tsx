@@ -1,10 +1,10 @@
 "use client";
 
-import { twMerge } from "tailwind-merge";
 import { useDrawer } from "@/hooks";
 import clsx from "clsx";
 import { Check } from "lucide-react";
 import { ElementType, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 interface DropdownButtonProps<T> {
   Icon?: ElementType;
@@ -85,7 +85,7 @@ export default function DropdownButton<T extends string | number>({
           <aside
             className={twMerge(
               clsx(
-                "absolute bg-darkest min-w-40 w-full border border-adjust z-20 max-h-40 overflow-y-auto scrollbar-none top-12 rounded-xl",
+                "absolute bg-darkest min-w-32 w-full border border-adjust z-20 max-h-40 overflow-y-auto scrollbar-none top-12 rounded-xl",
                 animation ? "animate-ghostIn" : "animate-ghostOut"
               ),
               drawerStyle

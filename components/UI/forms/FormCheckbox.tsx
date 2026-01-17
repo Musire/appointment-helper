@@ -1,3 +1,4 @@
+'use client';
 import { useFormContext } from "react-hook-form";
 
 type FormToggleProps = {
@@ -6,15 +7,16 @@ type FormToggleProps = {
   description?: string;
 };
 
-export function FormCheckbox({
+export default function FormCheckbox({
   name,
   label,
   description,
 }: FormToggleProps) {
   const { register } = useFormContext();
-
+  
   return (
     <label className="flex items-center gap-4 cursor-pointer select-none">
+      <p className="text-sm font-medium capitalize">{label}</p>
       <input
         type="checkbox"
         {...register(name)}
@@ -43,7 +45,6 @@ export function FormCheckbox({
       </div>
 
       <div>
-        <p className="text-sm font-medium">{label}</p>
         {description && (
           <p className="text-xs text-white/60">{description}</p>
         )}
