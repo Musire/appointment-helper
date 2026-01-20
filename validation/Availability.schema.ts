@@ -1,4 +1,4 @@
-import z from "zod";
+import z, { string } from "zod";
 
 const TimeSlotSchema = z
   .object({
@@ -39,8 +39,12 @@ const DaySchema = z
   )
 
 export const AvailabilitySchema = z.object({
+    storeId: z.string().min(1, 'storeId is required'),
     monday: DaySchema,
     tuesday: DaySchema,
+    wednesday: DaySchema,
+    thursday: DaySchema,
+    friday: DaySchema,
 })
 
 export type AvailabilityType = z.infer<typeof AvailabilitySchema>;

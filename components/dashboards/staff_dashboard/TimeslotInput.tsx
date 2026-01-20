@@ -17,7 +17,6 @@ export type SlotType = {
 export default function TimeslotInput ({ trigger }: TimeslotInputProps) {
     const { watch, control } = useFormContext()
     const required = watch(`${trigger}.enabled`)
-    console.log(watch(`${trigger}.slots`))
 
     const { append, remove } = useFieldArray({
         control,
