@@ -1,30 +1,56 @@
 'use client';
+import AvailabilitySteps from "@/components/forms/steps/AvailabilitySteps";
+import { MultiForm } from "@/components/UI";
 import { AvailabilitySchema, AvailabilityType } from "@/validation/Availability.schema";
-import { Form } from "../UI";
-import { TimeslotInput } from "../dashboards";
+import { useRouter } from "next/navigation";
 
-export type AvailabilityFormProps = {
-    data: AvailabilityType;
-    isUpdate?: boolean
-    
-}
+export default function AvailabilityForm () {
+    const router = useRouter()
 
-export default function AvailabilityForm ({ data, isUpdate }: AvailabilityFormProps) {
-    const handleSubmit = async(formData: AvailabilityType) => {
+    const onSubmit = async (formData: AvailabilityType ) => {
         console.log(formData)
+        router.refresh()
     }
+
+    const data = {
+        storeId: '',
+        monday: {
+            enabled: false,
+            slots: []
+        },
+        tuesday: {
+            enabled: false,
+            slots: []
+        },
+        wednesday: {
+            enabled: false,
+            slots: []
+        },
+        thursday: {
+            enabled: false,
+            slots: []
+        },
+        friday: {
+            enabled: false,
+            slots: []
+        },
+        saturday: {
+            enabled: false,
+            slots: []
+        },
+        sunday: {
+            enabled: false,
+            slots: []
+        },
+    }
+
     return (
-        <Form 
+        <MultiForm 
             schema={AvailabilitySchema}
+            onSubmit={onSubmit}
             initialValues={data}
-            onSubmit={handleSubmit}
-        >
-            <TimeslotInput 
-                trigger="monday"
-            />
-            <TimeslotInput 
-                trigger="tuesday"
-            />
-        </Form>
+            steps={AvailabilitySteps}
+            ctx={{ stores: [{id: '123456', name: 'first'}] }}
+        />
     );
 }
