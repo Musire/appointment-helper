@@ -16,7 +16,7 @@ export default function FormCheckbox({
   
   return (
     <label className="flex items-center gap-4 cursor-pointer select-none">
-      <p className="text-sm font-medium capitalize">{label}</p>
+      <p className="text-sm font-medium capitalize w-24">{label}</p>
       <input
         type="checkbox"
         {...register(name)}

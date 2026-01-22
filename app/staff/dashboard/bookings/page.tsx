@@ -1,11 +1,15 @@
 'use client';
+import AvailabilitySteps from "@/components/forms/steps/AvailabilitySteps";
 import { MultiForm } from "@/components/UI";
 import { AvailabilitySchema, AvailabilityType } from "@/validation/Availability.schema";
+import { useRouter } from "next/navigation";
 
 export default function BookingPanel () {
+    const router = useRouter()
 
     const onSubmit = async (formData: AvailabilityType ) => {
         console.log(formData)
+        router.refresh()
     }
 
     const data = {
@@ -29,7 +33,15 @@ export default function BookingPanel () {
         friday: {
             enabled: false,
             slots: []
-        }
+        },
+        saturday: {
+            enabled: false,
+            slots: []
+        },
+        sunday: {
+            enabled: false,
+            slots: []
+        },
     }
 
     return (
@@ -38,6 +50,8 @@ export default function BookingPanel () {
                 schema={AvailabilitySchema}
                 onSubmit={onSubmit}
                 initialValues={data}
+                steps={AvailabilitySteps}
+                ctx={{ stores: [{id: '123456', name: 'first'}] }}
             />
         </div>
     );

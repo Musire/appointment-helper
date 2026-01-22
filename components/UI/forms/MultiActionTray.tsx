@@ -2,30 +2,41 @@ import { clsx } from "clsx";
 import { Check, LoaderCircle } from "lucide-react";
 
 type ActionTrayProps = {
-  index: number;
-  isLast: boolean;
-  onBack: () => void;
-  onNext: () => void;
-  formState: {
-    isSubmitting: boolean;
-    showError: boolean;
-    showSuccess: boolean;
-  };
+    controls: {
+        index: number;
+        isFirst: boolean;
+        isLast: boolean;
+        onBack: () => void;
+        onNext: () => void;
+    }
+    formState: {
+        isSubmitting: boolean;
+        showError: boolean;
+        showSuccess: boolean;
+    };
 };
 
-export default function ActionTray({ index, isLast, onBack, onNext, formState }: ActionTrayProps) {
+export default function ActionTray({ controls, formState }: ActionTrayProps) {
     const {
         isSubmitting,
         showError,
         showSuccess
     } = formState
 
+    const  {
+        index,
+        isFirst,
+        isLast,
+        onNext,
+        onBack
+    } = controls
+
 
     return (
         <div 
             className="flex justify-end w-full"
         >
-            {index > 0 && (
+            {!isFirst && (
                 <button 
                     type="button" 
                     onClick={onBack}

@@ -1,22 +1,34 @@
-import { AvailabilityStoreSelection, AvailabilityWeekdays } from "@/components/partials";
-import { AvailabilityType } from "@/validation/Availability.schema";
-import { Path } from "react-hook-form";
+'use client';
 
-const AvailabilitySteps: {
+import {
+  AvailabilityStoreSelection,
+  AvailabilityWeekdays,
+  AvailabilityWeekend
+} from "@/components/partials";
+import { FieldPath, FieldValues } from "react-hook-form";
+
+export type Step<Ctx, T extends FieldValues> = {
   id: string;
-  fields: Path<AvailabilityType>[];
-  Panel: React.ComponentType;
-}[] = [
+  fields: FieldPath<T>[];
+  render: (ctx: Ctx) => React.ReactNode;
+};
+
+const AvailabilitySteps = [
   {
     id: "store_selection",
-    fields: ["storeId"] as (keyof AvailabilityType)[],
-    Panel: AvailabilityStoreSelection,
+    fields: ["storeId"],
+    render: ({ stores }: { stores: any[]}) => <AvailabilityStoreSelection stores={stores} />,
   },
   {
     id: "weekdays",
-    fields: ["monday", "tuesday", "wednesday", "thursday", "friday"] as (keyof AvailabilityType)[],
-    Panel: AvailabilityWeekdays
-  }
+    fields: ["monday", "tuesday", "wednesday", "thursday", "friday"],
+    render: () => <AvailabilityWeekdays />,
+  },
+  {
+    id: "weekend",
+    fields: ["saturday", "sunday"],
+    render: () => <AvailabilityWeekend />,
+  } 
 ];
 
 export default AvailabilitySteps;

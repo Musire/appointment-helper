@@ -1,23 +1,24 @@
-// FormError.tsx
 import { FieldError, FieldErrors, FieldValues } from "react-hook-form";
 
-export type FormErrorProps<TFieldValues extends FieldValues = FieldValues> = {
+type FormErrorProps = {
   showError: boolean;
-  errors: FieldErrors<TFieldValues>;
+  errors: FieldErrors<FieldValues>;
 };
 
-function flattenErrors(errors: FieldErrors): FieldError[] {
+function flattenErrors(errors: FieldErrors<FieldValues>): FieldError[] {
   const result: FieldError[] = [];
 
-  const walk = (obj: any) => {
-    for (const value of Object.values(obj)) {
-      if (!value) continue;
+  const walk = (value: unknown) => {
+    if (!value || typeof value !== "object") return;
 
-      if (typeof value === "object" && "message" in value) {
-        result.push(value as FieldError);
-      } else if (typeof value === "object") {
-        walk(value);
-      }
+    // RHF FieldError shape
+    if ("message" in value && typeof (value as any).message === "string") {
+      result.push(value as FieldError);
+      return;
+    }
+
+    for (const child of Object.values(value as Record<string, unknown>)) {
+      walk(child);
     }
   };
 
@@ -25,13 +26,12 @@ function flattenErrors(errors: FieldErrors): FieldError[] {
   return result;
 }
 
-export default function FormError<TFieldValues extends FieldValues>({
-  showError,
-  errors,
-}: FormErrorProps<TFieldValues>) {
+export default function FormError({ showError, errors }: FormErrorProps) {
   if (!showError) return null;
 
   const list = flattenErrors(errors);
+
+  if (list.length === 0) return null;
 
   return (
     <div className="space-y-1 text-sm text-error-dark">

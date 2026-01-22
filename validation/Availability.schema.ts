@@ -45,6 +45,8 @@ export const AvailabilitySchema = z.object({
     wednesday: DaySchema,
     thursday: DaySchema,
     friday: DaySchema,
+    saturday: DaySchema,
+    sunday: DaySchema
 })
 
 export type AvailabilityType = z.infer<typeof AvailabilitySchema>;

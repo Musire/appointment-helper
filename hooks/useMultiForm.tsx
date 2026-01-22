@@ -1,18 +1,17 @@
 'use client'; 
 
-import { AvailabilityType } from "@/validation/Availability.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import z, { output } from "zod";
 
-export default function useMultiForm <S extends z.ZodObject<any>> (
-    initialValues: unknown, 
-    schema: unknown,
+export default function useMultiForm <T extends FieldValues, S extends z.ZodType<T>> (
+    schema: S,
+    initialValues: z.infer<S>,
     onSubmit: (x: output<S>) => void,
     error?: string | null
 ) {
-    const methods = useForm<AvailabilityType>({
+    const methods = useForm<T>({
         resolver: zodResolver(schema as any),
         defaultValues: initialValues as any,
         mode: "onBlur",
@@ -46,18 +45,6 @@ export default function useMultiForm <S extends z.ZodObject<any>> (
     useEffect(() => {
           if(error) setError("root.server", { type: "server", message: error })
     }, [error])
-    
-    // reset form after 1s if successful
-    useEffect(() => {
-        if (!isSubmitSuccessful) return;
-        console.log('successful submit and timeout started ')
-
-        const timeoutId = setTimeout(() => {
-        reset();
-    }, 1000)
-
-        return () => clearTimeout(timeoutId);
-    }, [isSubmitSuccessful, reset]);
 
     return {
         trigger,

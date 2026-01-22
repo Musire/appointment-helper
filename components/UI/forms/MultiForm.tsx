@@ -1,58 +1,73 @@
 'use client';
 
-import { AvailibilitySteps } from "@/components/forms/steps";
-import { useMultiForm } from "@/hooks";
-import { stepReducer } from "@/reducers";
-import { AvailabilityType } from "@/validation/Availability.schema";
-import { useReducer } from "react";
+import { Step } from "@/components/forms/steps/AvailabilitySteps";
+import { useMultiForm, useStepper } from "@/hooks";
+import { useEffect } from "react";
 import { FieldValues, FormProvider, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { FormError, MultiActionTray } from ".";
 
-interface FormProps<S extends z.ZodTypeAny> {
-  schema: S;
-  initialValues: z.infer<S>;
-  onSubmit: (x: z.infer<S>) => void;
-  error?: string | null;
+interface FormProps<
+    Ctx,
+    T extends FieldValues,
+    S extends z.ZodType<T>
+  > {
+    schema: S;
+    initialValues: z.infer<S>;
+    onSubmit: (x: z.infer<S>) => void;
+    steps: Step<Ctx, T>[];
+    ctx: Ctx;
+    error?: string | null;
 }
 
-export default function MultiForm<S extends z.ZodObject<any>> ({ initialValues, onSubmit, schema, error }: FormProps<S>) {
+export default function MultiForm<
+  Ctx,
+  T extends FieldValues,
+  S extends z.ZodType<T>
+>({
+  initialValues,
+  onSubmit,
+  schema,
+  steps,
+  ctx,
+  error,
+}: FormProps<Ctx, T, S>) {
     const {
         handleSubmit,
         isSubmitting,
         errors,
         showError,
         showSuccess,
+        isSubmitSuccessful,
         trigger,
+        reset,
         methods,
         wrappedSubmit
-    } = useMultiForm<S>(initialValues, schema, onSubmit, error)
+    } = useMultiForm<T, S>(schema, initialValues, onSubmit, error)
 
-    const [state, dispatch] = useReducer(stepReducer, { index: 0 });
-    const isLast = state.index === AvailibilitySteps.length - 1;
+    const { controls, currentStep } = useStepper<Ctx, T>(steps, trigger)
 
-    const Panel = AvailibilitySteps[state.index]?.Panel
+    // reset form after 1s if successful
+    useEffect(() => {
+          if (!isSubmitSuccessful) return;
 
-    const onNext = async () => {
-      const fields = AvailibilitySteps[state.index].fields;
-      const isValid = await trigger(fields);
-      if (!isValid) return;
-      dispatch({ type: "NEXT" });
-      console.log('moving to next')
-    };
+          const timeoutId = setTimeout(() => {
+              reset();
+              controls.resetStepper()
+          }, 1000)
 
+          return () => clearTimeout(timeoutId);
+    }, [isSubmitSuccessful, reset, controls.resetStepper]);
+   
     return (
       <FormProvider {...methods}>
         <form
           className="flex flex-col min-w-72 max-w-lg w-full grow h-full space-y-4 "
           onSubmit={handleSubmit(wrappedSubmit as SubmitHandler<FieldValues>)}
         >
-          <Panel />
+          {currentStep.render(ctx)}
           <MultiActionTray
-            index={state.index}
-            isLast={isLast}
-            onBack={() => dispatch({ type: 'BACK' })}
-            onNext={onNext}
+            controls={controls}
             formState={{
               isSubmitting,
               showError,
@@ -60,7 +75,7 @@ export default function MultiForm<S extends z.ZodObject<any>> ({ initialValues, 
             }}
           />
         </form>
-        <FormError<AvailabilityType>
+        <FormError
           showError={showError}
           errors={errors}
         />

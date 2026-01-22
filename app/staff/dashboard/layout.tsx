@@ -12,7 +12,6 @@ export default async function StaffLayout ({ children }: StaffLayoutProps) {
     const tabs = [
         { label: 'Overview', href: `/staff/dashboard`, index: true },
         { label: 'Stores', href: `/staff/dashboard/stores` },
-        { label: 'Availability', href: `/staff/dashboard/availability` },
         { label: 'Bookings', href: `/staff/dashboard/bookings` },
         { label: 'History', href: `/staff/dashboard/history` },
     ];
