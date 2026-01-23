@@ -2266,6 +2266,7 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     appointments: number
+    storeStaff: number
     notices: number
     stores: number
     roles: number
@@ -2274,6 +2275,7 @@ export namespace Prisma {
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     appointments?: boolean | UserCountOutputTypeCountAppointmentsArgs
+    storeStaff?: boolean | UserCountOutputTypeCountStoreStaffArgs
     notices?: boolean | UserCountOutputTypeCountNoticesArgs
     stores?: boolean | UserCountOutputTypeCountStoresArgs
     roles?: boolean | UserCountOutputTypeCountRolesArgs
@@ -2296,6 +2298,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAppointmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AppointmentWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountStoreStaffArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StoreStaffWhereInput
   }
 
   /**
@@ -2719,6 +2728,7 @@ export namespace Prisma {
     fullName?: boolean
     createdAt?: boolean
     appointments?: boolean | User$appointmentsArgs<ExtArgs>
+    storeStaff?: boolean | User$storeStaffArgs<ExtArgs>
     notices?: boolean | User$noticesArgs<ExtArgs>
     staff?: boolean | User$staffArgs<ExtArgs>
     stores?: boolean | User$storesArgs<ExtArgs>
@@ -2751,6 +2761,7 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "fullName" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     appointments?: boolean | User$appointmentsArgs<ExtArgs>
+    storeStaff?: boolean | User$storeStaffArgs<ExtArgs>
     notices?: boolean | User$noticesArgs<ExtArgs>
     staff?: boolean | User$staffArgs<ExtArgs>
     stores?: boolean | User$storesArgs<ExtArgs>
@@ -2765,6 +2776,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       appointments: Prisma.$AppointmentPayload<ExtArgs>[]
+      storeStaff: Prisma.$StoreStaffPayload<ExtArgs>[]
       notices: Prisma.$NotificationPayload<ExtArgs>[]
       staff: Prisma.$StaffProfilePayload<ExtArgs> | null
       stores: Prisma.$StorePayload<ExtArgs>[]
@@ -3171,6 +3183,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     appointments<T extends User$appointmentsArgs<ExtArgs> = {}>(args?: Subset<T, User$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    storeStaff<T extends User$storeStaffArgs<ExtArgs> = {}>(args?: Subset<T, User$storeStaffArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreStaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notices<T extends User$noticesArgs<ExtArgs> = {}>(args?: Subset<T, User$noticesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     staff<T extends User$staffArgs<ExtArgs> = {}>(args?: Subset<T, User$staffArgs<ExtArgs>>): Prisma__StaffProfileClient<$Result.GetResult<Prisma.$StaffProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     stores<T extends User$storesArgs<ExtArgs> = {}>(args?: Subset<T, User$storesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3618,6 +3631,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AppointmentScalarFieldEnum | AppointmentScalarFieldEnum[]
+  }
+
+  /**
+   * User.storeStaff
+   */
+  export type User$storeStaffArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreStaff
+     */
+    select?: StoreStaffSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreStaff
+     */
+    omit?: StoreStaffOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreStaffInclude<ExtArgs> | null
+    where?: StoreStaffWhereInput
+    orderBy?: StoreStaffOrderByWithRelationInput | StoreStaffOrderByWithRelationInput[]
+    cursor?: StoreStaffWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StoreStaffScalarFieldEnum | StoreStaffScalarFieldEnum[]
   }
 
   /**
@@ -8312,6 +8349,7 @@ export namespace Prisma {
     status?: boolean
     availability?: boolean | StoreStaff$availabilityArgs<ExtArgs>
     appointments?: boolean | StoreStaff$appointmentsArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
     _count?: boolean | StoreStaffCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["storeStaff"]>
@@ -8322,6 +8360,7 @@ export namespace Prisma {
     userId?: boolean
     role?: boolean
     status?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["storeStaff"]>
 
@@ -8331,6 +8370,7 @@ export namespace Prisma {
     userId?: boolean
     role?: boolean
     status?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["storeStaff"]>
 
@@ -8346,13 +8386,16 @@ export namespace Prisma {
   export type StoreStaffInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     availability?: boolean | StoreStaff$availabilityArgs<ExtArgs>
     appointments?: boolean | StoreStaff$appointmentsArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
     _count?: boolean | StoreStaffCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StoreStaffIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
   }
   export type StoreStaffIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
   }
 
@@ -8361,6 +8404,7 @@ export namespace Prisma {
     objects: {
       availability: Prisma.$StaffAvailabilityPayload<ExtArgs>[]
       appointments: Prisma.$AppointmentPayload<ExtArgs>[]
+      user: Prisma.$UserPayload<ExtArgs>
       store: Prisma.$StorePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -8765,6 +8809,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     availability<T extends StoreStaff$availabilityArgs<ExtArgs> = {}>(args?: Subset<T, StoreStaff$availabilityArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffAvailabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appointments<T extends StoreStaff$appointmentsArgs<ExtArgs> = {}>(args?: Subset<T, StoreStaff$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -19411,6 +19456,7 @@ export namespace Prisma {
     fullName?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     appointments?: AppointmentListRelationFilter
+    storeStaff?: StoreStaffListRelationFilter
     notices?: NotificationListRelationFilter
     staff?: XOR<StaffProfileNullableScalarRelationFilter, StaffProfileWhereInput> | null
     stores?: StoreListRelationFilter
@@ -19424,6 +19470,7 @@ export namespace Prisma {
     fullName?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     appointments?: AppointmentOrderByRelationAggregateInput
+    storeStaff?: StoreStaffOrderByRelationAggregateInput
     notices?: NotificationOrderByRelationAggregateInput
     staff?: StaffProfileOrderByWithRelationInput
     stores?: StoreOrderByRelationAggregateInput
@@ -19440,6 +19487,7 @@ export namespace Prisma {
     fullName?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     appointments?: AppointmentListRelationFilter
+    storeStaff?: StoreStaffListRelationFilter
     notices?: NotificationListRelationFilter
     staff?: XOR<StaffProfileNullableScalarRelationFilter, StaffProfileWhereInput> | null
     stores?: StoreListRelationFilter
@@ -19715,6 +19763,7 @@ export namespace Prisma {
     status?: EnumStaffStatusFilter<"StoreStaff"> | $Enums.StaffStatus
     availability?: StaffAvailabilityListRelationFilter
     appointments?: AppointmentListRelationFilter
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
   }
 
@@ -19726,6 +19775,7 @@ export namespace Prisma {
     status?: SortOrder
     availability?: StaffAvailabilityOrderByRelationAggregateInput
     appointments?: AppointmentOrderByRelationAggregateInput
+    user?: UserOrderByWithRelationInput
     store?: StoreOrderByWithRelationInput
   }
 
@@ -19741,6 +19791,7 @@ export namespace Prisma {
     status?: EnumStaffStatusFilter<"StoreStaff"> | $Enums.StaffStatus
     availability?: StaffAvailabilityListRelationFilter
     appointments?: AppointmentListRelationFilter
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
   }, "id" | "storeId_userId">
 
@@ -20318,6 +20369,7 @@ export namespace Prisma {
     fullName?: string | null
     createdAt?: Date | string
     appointments?: AppointmentCreateNestedManyWithoutClientInput
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     notices?: NotificationCreateNestedManyWithoutUserInput
     staff?: StaffProfileCreateNestedOneWithoutUserInput
     stores?: StoreCreateNestedManyWithoutCreatedByInput
@@ -20331,6 +20383,7 @@ export namespace Prisma {
     fullName?: string | null
     createdAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
     staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
@@ -20344,6 +20397,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUpdateManyWithoutClientNestedInput
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     notices?: NotificationUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUpdateOneWithoutUserNestedInput
     stores?: StoreUpdateManyWithoutCreatedByNestedInput
@@ -20357,6 +20411,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -20628,11 +20683,11 @@ export namespace Prisma {
 
   export type StoreStaffCreateInput = {
     id?: string
-    userId: string
     role: $Enums.StoreRole
     status: $Enums.StaffStatus
     availability?: StaffAvailabilityCreateNestedManyWithoutStoreStaffInput
     appointments?: AppointmentCreateNestedManyWithoutStaffInput
+    user: UserCreateNestedOneWithoutStoreStaffInput
     store: StoreCreateNestedOneWithoutStaffInput
   }
 
@@ -20648,11 +20703,11 @@ export namespace Prisma {
 
   export type StoreStaffUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
     status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
     availability?: StaffAvailabilityUpdateManyWithoutStoreStaffNestedInput
     appointments?: AppointmentUpdateManyWithoutStaffNestedInput
+    user?: UserUpdateOneRequiredWithoutStoreStaffNestedInput
     store?: StoreUpdateOneRequiredWithoutStaffNestedInput
   }
 
@@ -20676,7 +20731,6 @@ export namespace Prisma {
 
   export type StoreStaffUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
     status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
   }
@@ -21274,6 +21328,12 @@ export namespace Prisma {
     none?: AppointmentWhereInput
   }
 
+  export type StoreStaffListRelationFilter = {
+    every?: StoreStaffWhereInput
+    some?: StoreStaffWhereInput
+    none?: StoreStaffWhereInput
+  }
+
   export type NotificationListRelationFilter = {
     every?: NotificationWhereInput
     some?: NotificationWhereInput
@@ -21309,6 +21369,10 @@ export namespace Prisma {
   }
 
   export type AppointmentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type StoreStaffOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -21488,21 +21552,11 @@ export namespace Prisma {
     isNot?: StoreConfigWhereInput | null
   }
 
-  export type StoreStaffListRelationFilter = {
-    every?: StoreStaffWhereInput
-    some?: StoreStaffWhereInput
-    none?: StoreStaffWhereInput
-  }
-
   export type ServiceOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type ServiceCategoryOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type StoreStaffOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -22113,6 +22167,13 @@ export namespace Prisma {
     connect?: AppointmentWhereUniqueInput | AppointmentWhereUniqueInput[]
   }
 
+  export type StoreStaffCreateNestedManyWithoutUserInput = {
+    create?: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput> | StoreStaffCreateWithoutUserInput[] | StoreStaffUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StoreStaffCreateOrConnectWithoutUserInput | StoreStaffCreateOrConnectWithoutUserInput[]
+    createMany?: StoreStaffCreateManyUserInputEnvelope
+    connect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+  }
+
   export type NotificationCreateNestedManyWithoutUserInput = {
     create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
@@ -22152,6 +22213,13 @@ export namespace Prisma {
     connectOrCreate?: AppointmentCreateOrConnectWithoutClientInput | AppointmentCreateOrConnectWithoutClientInput[]
     createMany?: AppointmentCreateManyClientInputEnvelope
     connect?: AppointmentWhereUniqueInput | AppointmentWhereUniqueInput[]
+  }
+
+  export type StoreStaffUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput> | StoreStaffCreateWithoutUserInput[] | StoreStaffUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StoreStaffCreateOrConnectWithoutUserInput | StoreStaffCreateOrConnectWithoutUserInput[]
+    createMany?: StoreStaffCreateManyUserInputEnvelope
+    connect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
   }
 
   export type NotificationUncheckedCreateNestedManyWithoutUserInput = {
@@ -22212,6 +22280,20 @@ export namespace Prisma {
     update?: AppointmentUpdateWithWhereUniqueWithoutClientInput | AppointmentUpdateWithWhereUniqueWithoutClientInput[]
     updateMany?: AppointmentUpdateManyWithWhereWithoutClientInput | AppointmentUpdateManyWithWhereWithoutClientInput[]
     deleteMany?: AppointmentScalarWhereInput | AppointmentScalarWhereInput[]
+  }
+
+  export type StoreStaffUpdateManyWithoutUserNestedInput = {
+    create?: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput> | StoreStaffCreateWithoutUserInput[] | StoreStaffUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StoreStaffCreateOrConnectWithoutUserInput | StoreStaffCreateOrConnectWithoutUserInput[]
+    upsert?: StoreStaffUpsertWithWhereUniqueWithoutUserInput | StoreStaffUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: StoreStaffCreateManyUserInputEnvelope
+    set?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    disconnect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    delete?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    connect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    update?: StoreStaffUpdateWithWhereUniqueWithoutUserInput | StoreStaffUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: StoreStaffUpdateManyWithWhereWithoutUserInput | StoreStaffUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
   }
 
   export type NotificationUpdateManyWithoutUserNestedInput = {
@@ -22292,6 +22374,20 @@ export namespace Prisma {
     update?: AppointmentUpdateWithWhereUniqueWithoutClientInput | AppointmentUpdateWithWhereUniqueWithoutClientInput[]
     updateMany?: AppointmentUpdateManyWithWhereWithoutClientInput | AppointmentUpdateManyWithWhereWithoutClientInput[]
     deleteMany?: AppointmentScalarWhereInput | AppointmentScalarWhereInput[]
+  }
+
+  export type StoreStaffUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput> | StoreStaffCreateWithoutUserInput[] | StoreStaffUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StoreStaffCreateOrConnectWithoutUserInput | StoreStaffCreateOrConnectWithoutUserInput[]
+    upsert?: StoreStaffUpsertWithWhereUniqueWithoutUserInput | StoreStaffUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: StoreStaffCreateManyUserInputEnvelope
+    set?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    disconnect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    delete?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    connect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    update?: StoreStaffUpdateWithWhereUniqueWithoutUserInput | StoreStaffUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: StoreStaffUpdateManyWithWhereWithoutUserInput | StoreStaffUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
   }
 
   export type NotificationUncheckedUpdateManyWithoutUserNestedInput = {
@@ -22722,6 +22818,12 @@ export namespace Prisma {
     connect?: AppointmentWhereUniqueInput | AppointmentWhereUniqueInput[]
   }
 
+  export type UserCreateNestedOneWithoutStoreStaffInput = {
+    create?: XOR<UserCreateWithoutStoreStaffInput, UserUncheckedCreateWithoutStoreStaffInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStoreStaffInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type StoreCreateNestedOneWithoutStaffInput = {
     create?: XOR<StoreCreateWithoutStaffInput, StoreUncheckedCreateWithoutStaffInput>
     connectOrCreate?: StoreCreateOrConnectWithoutStaffInput
@@ -22776,6 +22878,14 @@ export namespace Prisma {
     update?: AppointmentUpdateWithWhereUniqueWithoutStaffInput | AppointmentUpdateWithWhereUniqueWithoutStaffInput[]
     updateMany?: AppointmentUpdateManyWithWhereWithoutStaffInput | AppointmentUpdateManyWithWhereWithoutStaffInput[]
     deleteMany?: AppointmentScalarWhereInput | AppointmentScalarWhereInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutStoreStaffNestedInput = {
+    create?: XOR<UserCreateWithoutStoreStaffInput, UserUncheckedCreateWithoutStoreStaffInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStoreStaffInput
+    upsert?: UserUpsertWithoutStoreStaffInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStoreStaffInput, UserUpdateWithoutStoreStaffInput>, UserUncheckedUpdateWithoutStoreStaffInput>
   }
 
   export type StoreUpdateOneRequiredWithoutStaffNestedInput = {
@@ -23513,6 +23623,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type StoreStaffCreateWithoutUserInput = {
+    id?: string
+    role: $Enums.StoreRole
+    status: $Enums.StaffStatus
+    availability?: StaffAvailabilityCreateNestedManyWithoutStoreStaffInput
+    appointments?: AppointmentCreateNestedManyWithoutStaffInput
+    store: StoreCreateNestedOneWithoutStaffInput
+  }
+
+  export type StoreStaffUncheckedCreateWithoutUserInput = {
+    id?: string
+    storeId: string
+    role: $Enums.StoreRole
+    status: $Enums.StaffStatus
+    availability?: StaffAvailabilityUncheckedCreateNestedManyWithoutStoreStaffInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutStaffInput
+  }
+
+  export type StoreStaffCreateOrConnectWithoutUserInput = {
+    where: StoreStaffWhereUniqueInput
+    create: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput>
+  }
+
+  export type StoreStaffCreateManyUserInputEnvelope = {
+    data: StoreStaffCreateManyUserInput | StoreStaffCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type NotificationCreateWithoutUserInput = {
     id?: string
     type: $Enums.NotificationType
@@ -23672,6 +23810,33 @@ export namespace Prisma {
     endTime?: DateTimeFilter<"Appointment"> | Date | string
     status?: EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
     createdAt?: DateTimeFilter<"Appointment"> | Date | string
+  }
+
+  export type StoreStaffUpsertWithWhereUniqueWithoutUserInput = {
+    where: StoreStaffWhereUniqueInput
+    update: XOR<StoreStaffUpdateWithoutUserInput, StoreStaffUncheckedUpdateWithoutUserInput>
+    create: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput>
+  }
+
+  export type StoreStaffUpdateWithWhereUniqueWithoutUserInput = {
+    where: StoreStaffWhereUniqueInput
+    data: XOR<StoreStaffUpdateWithoutUserInput, StoreStaffUncheckedUpdateWithoutUserInput>
+  }
+
+  export type StoreStaffUpdateManyWithWhereWithoutUserInput = {
+    where: StoreStaffScalarWhereInput
+    data: XOR<StoreStaffUpdateManyMutationInput, StoreStaffUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type StoreStaffScalarWhereInput = {
+    AND?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
+    OR?: StoreStaffScalarWhereInput[]
+    NOT?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
+    id?: StringFilter<"StoreStaff"> | string
+    storeId?: StringFilter<"StoreStaff"> | string
+    userId?: StringFilter<"StoreStaff"> | string
+    role?: EnumStoreRoleFilter<"StoreStaff"> | $Enums.StoreRole
+    status?: EnumStaffStatusFilter<"StoreStaff"> | $Enums.StaffStatus
   }
 
   export type NotificationUpsertWithWhereUniqueWithoutUserInput = {
@@ -23865,6 +24030,7 @@ export namespace Prisma {
     fullName?: string | null
     createdAt?: Date | string
     appointments?: AppointmentCreateNestedManyWithoutClientInput
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     notices?: NotificationCreateNestedManyWithoutUserInput
     staff?: StaffProfileCreateNestedOneWithoutUserInput
     stores?: StoreCreateNestedManyWithoutCreatedByInput
@@ -23877,6 +24043,7 @@ export namespace Prisma {
     fullName?: string | null
     createdAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
     staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
@@ -23926,6 +24093,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUpdateManyWithoutClientNestedInput
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     notices?: NotificationUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUpdateOneWithoutUserNestedInput
     stores?: StoreUpdateManyWithoutCreatedByNestedInput
@@ -23938,6 +24106,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -24064,6 +24233,7 @@ export namespace Prisma {
     fullName?: string | null
     createdAt?: Date | string
     appointments?: AppointmentCreateNestedManyWithoutClientInput
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     notices?: NotificationCreateNestedManyWithoutUserInput
     staff?: StaffProfileCreateNestedOneWithoutUserInput
     roles?: UserRoleCreateNestedManyWithoutUserInput
@@ -24076,6 +24246,7 @@ export namespace Prisma {
     fullName?: string | null
     createdAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
     staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
@@ -24112,11 +24283,11 @@ export namespace Prisma {
 
   export type StoreStaffCreateWithoutStoreInput = {
     id?: string
-    userId: string
     role: $Enums.StoreRole
     status: $Enums.StaffStatus
     availability?: StaffAvailabilityCreateNestedManyWithoutStoreStaffInput
     appointments?: AppointmentCreateNestedManyWithoutStaffInput
+    user: UserCreateNestedOneWithoutStoreStaffInput
   }
 
   export type StoreStaffUncheckedCreateWithoutStoreInput = {
@@ -24242,6 +24413,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUpdateManyWithoutClientNestedInput
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     notices?: NotificationUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUpdateOneWithoutUserNestedInput
     roles?: UserRoleUpdateManyWithoutUserNestedInput
@@ -24254,6 +24426,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
@@ -24303,17 +24476,6 @@ export namespace Prisma {
   export type StoreStaffUpdateManyWithWhereWithoutStoreInput = {
     where: StoreStaffScalarWhereInput
     data: XOR<StoreStaffUpdateManyMutationInput, StoreStaffUncheckedUpdateManyWithoutStoreInput>
-  }
-
-  export type StoreStaffScalarWhereInput = {
-    AND?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
-    OR?: StoreStaffScalarWhereInput[]
-    NOT?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
-    id?: StringFilter<"StoreStaff"> | string
-    storeId?: StringFilter<"StoreStaff"> | string
-    userId?: StringFilter<"StoreStaff"> | string
-    role?: EnumStoreRoleFilter<"StoreStaff"> | $Enums.StoreRole
-    status?: EnumStaffStatusFilter<"StoreStaff"> | $Enums.StaffStatus
   }
 
   export type StoreCreateWithoutConfigInput = {
@@ -24448,6 +24610,37 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserCreateWithoutStoreStaffInput = {
+    id: string
+    email: string
+    fullName?: string | null
+    createdAt?: Date | string
+    appointments?: AppointmentCreateNestedManyWithoutClientInput
+    notices?: NotificationCreateNestedManyWithoutUserInput
+    staff?: StaffProfileCreateNestedOneWithoutUserInput
+    stores?: StoreCreateNestedManyWithoutCreatedByInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    invites?: InviteCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutStoreStaffInput = {
+    id: string
+    email: string
+    fullName?: string | null
+    createdAt?: Date | string
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
+    notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
+    stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutStoreStaffInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutStoreStaffInput, UserUncheckedCreateWithoutStoreStaffInput>
+  }
+
   export type StoreCreateWithoutStaffInput = {
     id?: string
     name: string
@@ -24526,6 +24719,43 @@ export namespace Prisma {
     data: XOR<AppointmentUpdateManyMutationInput, AppointmentUncheckedUpdateManyWithoutStaffInput>
   }
 
+  export type UserUpsertWithoutStoreStaffInput = {
+    update: XOR<UserUpdateWithoutStoreStaffInput, UserUncheckedUpdateWithoutStoreStaffInput>
+    create: XOR<UserCreateWithoutStoreStaffInput, UserUncheckedCreateWithoutStoreStaffInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutStoreStaffInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutStoreStaffInput, UserUncheckedUpdateWithoutStoreStaffInput>
+  }
+
+  export type UserUpdateWithoutStoreStaffInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    appointments?: AppointmentUpdateManyWithoutClientNestedInput
+    notices?: NotificationUpdateManyWithoutUserNestedInput
+    staff?: StaffProfileUpdateOneWithoutUserNestedInput
+    stores?: StoreUpdateManyWithoutCreatedByNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    invites?: InviteUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutStoreStaffInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
+    notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
+    stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type StoreUpsertWithoutStaffInput = {
     update: XOR<StoreUpdateWithoutStaffInput, StoreUncheckedUpdateWithoutStaffInput>
     create: XOR<StoreCreateWithoutStaffInput, StoreUncheckedCreateWithoutStaffInput>
@@ -24573,6 +24803,7 @@ export namespace Prisma {
     fullName?: string | null
     createdAt?: Date | string
     appointments?: AppointmentCreateNestedManyWithoutClientInput
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     notices?: NotificationCreateNestedManyWithoutUserInput
     stores?: StoreCreateNestedManyWithoutCreatedByInput
     roles?: UserRoleCreateNestedManyWithoutUserInput
@@ -24585,6 +24816,7 @@ export namespace Prisma {
     fullName?: string | null
     createdAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
     stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
     roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
@@ -24613,6 +24845,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUpdateManyWithoutClientNestedInput
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     notices?: NotificationUpdateManyWithoutUserNestedInput
     stores?: StoreUpdateManyWithoutCreatedByNestedInput
     roles?: UserRoleUpdateManyWithoutUserNestedInput
@@ -24625,6 +24858,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
     roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
@@ -24633,10 +24867,10 @@ export namespace Prisma {
 
   export type StoreStaffCreateWithoutAvailabilityInput = {
     id?: string
-    userId: string
     role: $Enums.StoreRole
     status: $Enums.StaffStatus
     appointments?: AppointmentCreateNestedManyWithoutStaffInput
+    user: UserCreateNestedOneWithoutStoreStaffInput
     store: StoreCreateNestedOneWithoutStaffInput
   }
 
@@ -24667,10 +24901,10 @@ export namespace Prisma {
 
   export type StoreStaffUpdateWithoutAvailabilityInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
     status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
     appointments?: AppointmentUpdateManyWithoutStaffNestedInput
+    user?: UserUpdateOneRequiredWithoutStoreStaffNestedInput
     store?: StoreUpdateOneRequiredWithoutStaffNestedInput
   }
 
@@ -24970,10 +25204,10 @@ export namespace Prisma {
 
   export type StoreStaffCreateWithoutAppointmentsInput = {
     id?: string
-    userId: string
     role: $Enums.StoreRole
     status: $Enums.StaffStatus
     availability?: StaffAvailabilityCreateNestedManyWithoutStoreStaffInput
+    user: UserCreateNestedOneWithoutStoreStaffInput
     store: StoreCreateNestedOneWithoutStaffInput
   }
 
@@ -25031,6 +25265,7 @@ export namespace Prisma {
     email: string
     fullName?: string | null
     createdAt?: Date | string
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     notices?: NotificationCreateNestedManyWithoutUserInput
     staff?: StaffProfileCreateNestedOneWithoutUserInput
     stores?: StoreCreateNestedManyWithoutCreatedByInput
@@ -25043,6 +25278,7 @@ export namespace Prisma {
     email: string
     fullName?: string | null
     createdAt?: Date | string
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
     staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
@@ -25088,10 +25324,10 @@ export namespace Prisma {
 
   export type StoreStaffUpdateWithoutAppointmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
     status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
     availability?: StaffAvailabilityUpdateManyWithoutStoreStaffNestedInput
+    user?: UserUpdateOneRequiredWithoutStoreStaffNestedInput
     store?: StoreUpdateOneRequiredWithoutStaffNestedInput
   }
 
@@ -25161,6 +25397,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     notices?: NotificationUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUpdateOneWithoutUserNestedInput
     stores?: StoreUpdateManyWithoutCreatedByNestedInput
@@ -25173,6 +25410,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -25322,6 +25560,7 @@ export namespace Prisma {
     fullName?: string | null
     createdAt?: Date | string
     appointments?: AppointmentCreateNestedManyWithoutClientInput
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     staff?: StaffProfileCreateNestedOneWithoutUserInput
     stores?: StoreCreateNestedManyWithoutCreatedByInput
     roles?: UserRoleCreateNestedManyWithoutUserInput
@@ -25334,6 +25573,7 @@ export namespace Prisma {
     fullName?: string | null
     createdAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
     roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
@@ -25362,6 +25602,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUpdateManyWithoutClientNestedInput
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUpdateOneWithoutUserNestedInput
     stores?: StoreUpdateManyWithoutCreatedByNestedInput
     roles?: UserRoleUpdateManyWithoutUserNestedInput
@@ -25374,6 +25615,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
     roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
@@ -25421,6 +25663,7 @@ export namespace Prisma {
     fullName?: string | null
     createdAt?: Date | string
     appointments?: AppointmentCreateNestedManyWithoutClientInput
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     notices?: NotificationCreateNestedManyWithoutUserInput
     staff?: StaffProfileCreateNestedOneWithoutUserInput
     stores?: StoreCreateNestedManyWithoutCreatedByInput
@@ -25433,6 +25676,7 @@ export namespace Prisma {
     fullName?: string | null
     createdAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
     staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
@@ -25502,6 +25746,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUpdateManyWithoutClientNestedInput
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     notices?: NotificationUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUpdateOneWithoutUserNestedInput
     stores?: StoreUpdateManyWithoutCreatedByNestedInput
@@ -25514,6 +25759,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -25528,6 +25774,13 @@ export namespace Prisma {
     endTime: Date | string
     status: $Enums.AppointmentStatus
     createdAt?: Date | string
+  }
+
+  export type StoreStaffCreateManyUserInput = {
+    id?: string
+    storeId: string
+    role: $Enums.StoreRole
+    status: $Enums.StaffStatus
   }
 
   export type NotificationCreateManyUserInput = {
@@ -25591,6 +25844,31 @@ export namespace Prisma {
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreStaffUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
+    availability?: StaffAvailabilityUpdateManyWithoutStoreStaffNestedInput
+    appointments?: AppointmentUpdateManyWithoutStaffNestedInput
+    store?: StoreUpdateOneRequiredWithoutStaffNestedInput
+  }
+
+  export type StoreStaffUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    storeId?: StringFieldUpdateOperationsInput | string
+    role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
+    availability?: StaffAvailabilityUncheckedUpdateManyWithoutStoreStaffNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutStaffNestedInput
+  }
+
+  export type StoreStaffUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    storeId?: StringFieldUpdateOperationsInput | string
+    role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
   }
 
   export type NotificationUpdateWithoutUserInput = {
@@ -25869,11 +26147,11 @@ export namespace Prisma {
 
   export type StoreStaffUpdateWithoutStoreInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
     status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
     availability?: StaffAvailabilityUpdateManyWithoutStoreStaffNestedInput
     appointments?: AppointmentUpdateManyWithoutStaffNestedInput
+    user?: UserUpdateOneRequiredWithoutStoreStaffNestedInput
   }
 
   export type StoreStaffUncheckedUpdateWithoutStoreInput = {

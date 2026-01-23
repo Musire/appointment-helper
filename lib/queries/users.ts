@@ -32,3 +32,42 @@ export async function getInvitableStaffUsers(storeSlug: string) {
     },
   })
 }
+
+export function getStoreFromSlug(storeSlug: string) {
+  return prisma.store.findFirst({
+    where: {
+      name: unslugify(storeSlug)
+    }    
+  })
+
+}
+
+export async function getStoreStaff(storeSlug: string) { 
+  const store = await getStoreFromSlug(storeSlug)
+  if (!store) return []
+
+  const staff = await prisma.storeStaff.findMany({
+    where: { storeId: store.id },
+    select: {
+      role: true,
+      user: {
+        select: {
+          id: true,
+          fullName: true,
+          email: true,
+        },
+      },
+    },
+  })
+   
+  if (!staff) return []
+
+  const flatStaff = staff.map(({ role, user }) => ({
+    id: user.id,
+    name: user.fullName,
+    email: user.email,
+    role,
+  }))
+
+  return flatStaff
+}

@@ -1,10 +1,11 @@
-'use client';
-import { InvitationCard } from "@/components/dashboards";
-import { useStore } from "@/stores";
+import { getStoreStaff } from "@/lib/queries/users";
 import Link from "next/link";
 
-export default function StaffPage () {
-    const { store } = useStore()
+export default async function StaffPage ({ params }: { params: { slug: string } }) {
+    const { slug } = await params
+    const staff = await getStoreStaff(slug)
+
+    console.log('found staff: ', staff)
 
     return (
       <div className="flex flex-col space-y-6 py-6 ">
@@ -12,10 +13,7 @@ export default function StaffPage () {
           <section aria-labelledby="staff-heading">
             <h3 id="staff-heading">Invitations</h3>
             <ul className="p-6 grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
-              <InvitationCard />
-              <InvitationCard />
-              <InvitationCard />
-              <InvitationCard />
+              
             </ul>
           </section>
       </div>
