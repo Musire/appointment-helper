@@ -48,23 +48,39 @@ export default function useNotifications(userId: string | null) {
       if (!user) return;
 
       channel = supabase
-        .channel(`notifications:${userId}`)
-        .on(
-          "postgres_changes",
-          {
-            event: "INSERT",
-            schema: "public",
-            table: "Notification",
-            filter: `userId=eq.${userId}`,
-          },
-          (payload) => {
-            setNotifications(prev => {
-              if (prev.some(n => n.id === payload.new.id)) return prev
-              return [payload.new as Notification, ...prev]
-            })
-          }
-        )
-        .subscribe()
+      .channel(`notifications:${userId}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "Notification",
+          filter: `userId=eq.${userId}`,
+        },
+        (payload) => {
+          setNotifications((prev) => {
+            switch (payload.eventType) {
+              case "INSERT":
+                if (prev.some((n) => n.id === payload.new.id)) return prev
+                return [payload.new as Notification, ...prev]
+
+              case "UPDATE":
+                return prev.map((n) =>
+                  n.id === payload.new.id
+                    ? (payload.new as Notification)
+                    : n
+                )
+
+              case "DELETE":
+                return prev.filter((n) => n.id !== payload.old.id)
+
+              default:
+                return prev
+            }
+          })
+        }
+      )
+      .subscribe()
         
     }
 

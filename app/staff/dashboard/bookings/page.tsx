@@ -1,10 +1,12 @@
-'use client';
 import { AvailabilityForm } from "@/components/forms";
+import { getStores } from "@/lib/queries/stores";
 
-export default function BookingPanel () {
+export default async function BookingPanel () {
+    const real = await getStores()
+    
     return (
         <div className="py-6">
-            <AvailabilityForm />
+            <AvailabilityForm stores={real} />
         </div>
     );
 }

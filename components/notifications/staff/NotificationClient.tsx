@@ -10,7 +10,7 @@ type Props = {
 export default function NotificationsClient({ notifications }: Props) {
 
   return (
-    <section className="space-y-2 absolute left-6 top-20 overflow-y-scroll bg-darkest scrollbar-none h-[85dvh] w-[calc(100%-3rem)]">
+    <section className="space-y-2 absolute left-6 top-20 overflow-y-scroll bg-deep scrollbar-none h-[85dvh] w-[calc(100%-3rem)] z-40">
       <ul className="space-y-1">
         {notifications.map((n) => (
           <InviteNotification key={n.id} notification={n} />

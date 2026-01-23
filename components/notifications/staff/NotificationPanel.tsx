@@ -2,7 +2,7 @@
 
 import { useDrawer, useNotifications } from "@/hooks";
 import { Bell } from "lucide-react";
-import NotificationsClient from "../staff/NotificationClient";
+import NotificationsClient from "./NotificationClient";
 
 export type NotificationPanelProps = {
     userId: string | null

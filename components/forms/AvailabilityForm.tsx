@@ -4,7 +4,12 @@ import { MultiForm } from "@/components/UI";
 import { AvailabilitySchema, AvailabilityType } from "@/validation/Availability.schema";
 import { useRouter } from "next/navigation";
 
-export default function AvailabilityForm () {
+export type store = {
+    id: string;
+    name: string;
+}
+
+export default function AvailabilityForm ({ stores }: { stores: store[] }) {
     const router = useRouter()
 
     const onSubmit = async (formData: AvailabilityType ) => {
@@ -50,7 +55,7 @@ export default function AvailabilityForm () {
             onSubmit={onSubmit}
             initialValues={data}
             steps={AvailabilitySteps}
-            ctx={{ stores: [{id: '123456', name: 'first'}] }}
+            ctx={{stores}}
         />
     );
 }
