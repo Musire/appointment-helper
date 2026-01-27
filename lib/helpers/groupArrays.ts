@@ -1,18 +1,15 @@
 export type CategoryType = {
     id: string;
-    storeId: string;
     name: string;
 }
 
 export type ServiceType = {
     id: string;
-    storeId: string;
     name: string;
     categoryId: string | null;
     durationMin: number;
     priceCents: number;
     type: 'SINGLE' | 'COMBO';
-    createdAt: Date;
 }
 
 export type CategoryWithServicesType = CategoryType & {

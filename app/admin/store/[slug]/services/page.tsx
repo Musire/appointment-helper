@@ -1,17 +1,20 @@
-'use client';
 import { groupServicesByCategory } from "@/lib/helpers/groupArrays";
-import { useStore } from "@/stores";
 import Link from "next/link";
-import { useMemo } from "react";
 
 import CategoryAccordians from "@/components/dashboards/services/CategoryAccordians";
+import { getServices } from "@/lib/queries/services";
 
-export default function ServicePage () {
-    const { categories, services } = useStore()
+type ServicePageProps = {
+  params: {
+    slug: string
+  }
+}
+
+export default async function ServicePage ({ params }: ServicePageProps) {
+    const { slug } = await params
+    const { categories, services } = await getServices(slug)
     
-    const categoriesWithServices = useMemo(() => {
-      return groupServicesByCategory(categories, services)
-    }, [categories, services])
+    const categoriesWithServices = groupServicesByCategory(categories, services)
 
     return (
       <div className="flex flex-col space-y-6 mt-6">

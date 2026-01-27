@@ -14,6 +14,8 @@ export type InviteNotificationProp = {
 
 export default function InviteNotification ({ notification }: InviteNotificationProp) {
     const { read, createdAt, payload, id } = notification
+    if (!payload) return null;
+    
     const { inviteId, inviteStatus } = parseSchemaSync(InviteNotificationPayloadSchema, payload)
 
     const [msg, setMsg] = useState<string | null>(null)

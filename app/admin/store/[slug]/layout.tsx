@@ -1,7 +1,6 @@
 
 import { PanelNav } from "@/components/dashboards";
 import { getStoreContext } from "@/lib/store/data-loader";
-import { unslugify } from "@/lib/stringMutate";
 import StoreProvider from "@/stores/StoreContext";
 
 type StoreDetailsProps = {
@@ -13,9 +12,9 @@ type StoreDetailsProps = {
 
 export default async function StoreLayout ({ params, children }: StoreDetailsProps ) {
     const {slug} = await params
-    const data = await getStoreContext(unslugify(slug))
+    const ctx = await getStoreContext(slug)
 
-    if (!data || !data.store) {
+    if (!ctx) {
         return <p className="">no store found</p>
     }
 
@@ -32,7 +31,7 @@ export default async function StoreLayout ({ params, children }: StoreDetailsPro
                 <h1 className="">Store Details</h1>
                 <h2 className="">{slug}</h2>
                 <PanelNav items={tabs} />
-                <StoreProvider data={data} >
+                <StoreProvider data={ctx} >
                     { children }
                 </StoreProvider>
             </div>

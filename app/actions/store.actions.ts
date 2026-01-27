@@ -2,8 +2,8 @@
 
 import { prisma } from "@/lib/prisma";
 import { safeAction } from "@/lib/safeAction";
-import { getCurrentUser } from "./auth.actions";
 import { revalidatePath } from "next/cache";
+import { getCurrentUser } from "./auth.actions";
 
 export async function editStoreConfig (storeId: string) {
 
@@ -92,7 +92,10 @@ export async function sendInvite({ targetId, storeId, storeName }: { targetId: s
         data: {
           userId: targetId,
           type: "STORE_INVITATION",
-          payload: {},
+          payload: {
+            inviteId: invite.id,
+            inviteStatus: 'PENDING'
+          },
         },
       })
 

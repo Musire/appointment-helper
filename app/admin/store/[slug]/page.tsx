@@ -3,7 +3,7 @@ import { useStore } from "@/stores";
 import { Check, X } from "lucide-react";
 
 export default function StoreDetails () {
-  const { store, activation} = useStore()
+  const { store, isReady, requirements } = useStore()
   const { name, description, status } = store 
 
   const determineIcon = (check: boolean| undefined) => {
@@ -21,18 +21,21 @@ export default function StoreDetails () {
             <ul className="ml-6 mt-6 grid grid-cols-[1fr_4rem] w-48 capitalize">
               <li className="">configuration</li>
               <li className="">
-                {determineIcon(activation?.hasConfig)}
+                {determineIcon(requirements?.hasConfig)}
               </li>
               <li className="">services</li>
               <li className="">
-                {determineIcon(activation?.hasServices)}
+                {determineIcon(requirements?.hasServices)}
               </li>
               <li className="">staff</li>
               <li className="">
-                {determineIcon(activation?.hasActiveStaff)}
+                {determineIcon(requirements?.hasActiveStaff)}
               </li>
             </ul>
           </article>
+        )}
+        { status === "ACTIVE" && (
+          <p className="">Your store is currently active</p>
         )}
     </div>
   );

@@ -1,32 +1,23 @@
 import { prisma } from "@/lib/prisma"
-import { getStoreActivationState, StoreActivationState } from "./store-activation"
-
-import type {
-  StoreConfig,
-  ServiceCategory,
-  Service,
-  StoreStaff,
-  Store,
-} from "@/generated/prisma"
+import type { Store } from "@/generated/prisma"
+import { unslugify } from "../stringMutate"
+import { getStoreActivationState, reconcileStoreStatus, StoreActivationState } from "./store-activation"
 
 export type StoreWithCreator = Store & {
   createdBy: {
     email: string
   }
-}
+} 
 
-export type StoreContextData = {
+export type StoreContextData = StoreActivationState & {
   store: StoreWithCreator
-  activation: StoreActivationState
-  config: StoreConfig | null
-  categories: ServiceCategory[]
-  services: Service[]
-  storeStaff: StoreStaff[]
 }
 
 
-export async function getStoreContext(name: string): Promise<StoreContextData | null> {
-  const store = await prisma.store.findFirst({
+export async function getStoreContext(slug: string): Promise<StoreContextData | null> {
+  const name = unslugify(slug)
+
+  const foundStore = await prisma.store.findFirst({
     where: {
       name,
     },
@@ -37,34 +28,14 @@ export async function getStoreContext(name: string): Promise<StoreContextData | 
     },
   })
 
-  if (!store) {
-    return null
-  }
+  if (!foundStore) return null;
 
-  const activation = await getStoreActivationState(store.id)
-
-  const [config, categories, services, storeStaff] = await Promise.all([
-    prisma.storeConfig.findUnique({
-      where: { storeId: store.id },
-    }),
-    prisma.serviceCategory.findMany({
-      where: { storeId: store.id },
-      orderBy: { name: "asc" },
-    }),
-    prisma.service.findMany({
-      where: { storeId: store.id },
-    }),
-    prisma.storeStaff.findMany({
-      where: { storeId: store.id },
-    }),
-  ])
+  const { isReady, requirements } = await getStoreActivationState(foundStore.id)
+  const store = await reconcileStoreStatus(foundStore.id, isReady)
 
   return {
     store,
-    activation,
-    config,
-    categories,
-    services,
-    storeStaff,
+    requirements,
+    isReady
   }
 }

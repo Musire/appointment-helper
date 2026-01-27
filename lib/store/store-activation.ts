@@ -1,20 +1,41 @@
 // lib/store/store-activation.ts
 import { prisma } from "@/lib/prisma"
+import { StoreWithCreator } from "./data-loader"
 
 export type StoreActivationState = {
-  hasConfig: boolean
-  hasActiveStaff: boolean
-  hasServices: boolean
+  requirements: {
+    hasConfig: boolean
+    hasActiveStaff: boolean
+    hasServices: boolean
+  },
   isReady: boolean
 }
 
+export async function reconcileStoreStatus(
+  storeId: string,
+  isReady: boolean
+): Promise<StoreWithCreator> {
+  return prisma.store.update({
+    where: { id: storeId },
+    data: {
+      status: isReady ? "ACTIVE" : "DRAFT",
+    },
+    include: {
+      createdBy: {
+        select: { email: true },
+      },
+    },
+  })
+}
 
 export async function getStoreActivationState(storeId: string | undefined): Promise<StoreActivationState> {
 
   if (!storeId) return {
-    hasConfig: false,
-    hasActiveStaff: false,
-    hasServices: false,
+    requirements: {
+      hasConfig: false,
+      hasActiveStaff: false,
+      hasServices: false,
+    },
     isReady: false
   };
 
@@ -35,13 +56,20 @@ export async function getStoreActivationState(storeId: string | undefined): Prom
     })
   ])
 
+  const hasConfig = Boolean(config)
+  const hasActiveStaff = activeStaffCount > 0
+  const hasServices = servicesCount > 0
+
+  const requirements = {
+    hasConfig,
+    hasActiveStaff,
+    hasServices
+  }
+
   return {
-    hasConfig: Boolean(config),
-    hasActiveStaff: activeStaffCount > 0,
-    hasServices: servicesCount > 0,
-    isReady:
-      Boolean(config) &&
-      activeStaffCount > 0 &&
-      servicesCount > 0
+    requirements,
+    isReady: Object.values(requirements).every(r => Boolean(r))
   }
 }
+
+
