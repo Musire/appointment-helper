@@ -1,14 +1,16 @@
 'use client';
 
-import useSelectable from "@/hooks/useSelectable";
-import { useRouter } from "next/navigation";
-import StoreActionTray from "./StoreActionTray";
-import SelectableDisplay from "./SelectableDisplay";
-import ContinueButton from "./ContinueButton";
-import { DeleteModal } from "@/components/UI";
 import { createExcerpt, slugify } from "@/lib/stringMutate";
 import { deleteStores } from "@/app/actions/admin.actions";
+import useSelectable from "@/hooks/useSelectable";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+    ContinueButton,
+    StoreActionTray,
+    SelectableDisplay
+} from "../components"
+import { DeleteModal } from "@/components/UI";
 
 export default function AdminControl ({ items }: { items: any }) {
     const { 

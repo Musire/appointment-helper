@@ -1,6 +1,7 @@
-
 import { PanelNav } from "@/components/dashboards";
+import { BackButton, LogoutButton } from "@/components/UI/buttons";
 import { getStoreContext } from "@/lib/store/data-loader";
+import { unslugify } from "@/lib/stringMutate";
 import StoreProvider from "@/stores/StoreContext";
 
 type StoreDetailsProps = {
@@ -28,8 +29,11 @@ export default async function StoreLayout ({ params, children }: StoreDetailsPro
     return (
         <div className="page-layout">
             <div className="display-layout">
-                <h1 className="">Store Details</h1>
-                <h2 className="">{slug}</h2>
+                <span className="spaced">
+                    <BackButton href="/admin/dashboard" />
+                    <h2 className="capitalize">{unslugify(slug)}</h2>
+                    <LogoutButton />
+                </span>
                 <PanelNav items={tabs} />
                 <StoreProvider data={ctx} >
                     { children }

@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/app/actions/auth.actions";
-import { AdminControl } from "@/components/dashboards";
 import { LogoutButton } from "@/components/UI/buttons";
 import { prisma } from "@/lib/prisma";
+import { AdminControl } from "./components";
 
 export type StoreType = {
   id: string;
@@ -25,8 +25,10 @@ export default async function AdminDashboard () {
   return (
     <div className="page-layout">
         <div className="display-layout py-6">
-            <h1 className="text-3xl capitalize w-full text-center">admin dashboard</h1>
-            <LogoutButton />
+            <span className="flex mb-6">
+              <h1 className="text-3xl capitalize w-full text-left">admin dashboard</h1>
+              <LogoutButton />
+            </span>
             <AdminControl items={stores} />
         </div>
     </div>

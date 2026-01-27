@@ -1,7 +1,7 @@
 'use server';
 
-import { prisma } from "@/lib/prisma";
 import { safeAction } from "@/lib/safeAction";
+import { prisma } from "@/lib/prisma";
 import { CategoryCreationSchema, CategoryCreationType } from "@/validation/Category.schema";
 import { revalidatePath } from "next/cache";
 

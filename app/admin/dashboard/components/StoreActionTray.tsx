@@ -1,9 +1,9 @@
 "use client";
 
+import { ContainerMode } from "@/hooks/useSelectable";
+import { Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Plus, Pencil, Trash2 } from "lucide-react";
-import { ContainerMode } from "@/hooks/useSelectable"
 
 interface AdminHeaderProps {
   resourceBasePath: "/admin/post" | "/admin/category" | string;
@@ -18,10 +18,7 @@ export default function StoreActionTray({
 }: AdminHeaderProps) {
   const pathname = usePathname();
 
-  const tabs = [
-    { label: "Post", href: "/admin/post" },
-    { label: "Category", href: "/admin/category" },
-  ];
+
 
   const actions = [
     {
@@ -46,29 +43,7 @@ export default function StoreActionTray({
 
   return (
     <div className="spaced">
-      {/* Tabs */}
-      <span className="flex items-center space-x-4 capitalize h-14">
-        {tabs.map(tab => {
-          const isActive =
-            pathname === tab.href ||
-            pathname.startsWith(`${tab.href}/`);
-
-          return (
-            <Link
-              key={tab.href}
-              href={tab.href}
-              className={`h-full centered w-fit px-3 border-b ${
-                isActive
-                  ? "text-whitesmoke border-whitesmoke"
-                  : "text-whitesmoke/60 border-transparent hover:text-whitesmoke"
-              }`}
-            >
-              {tab.label}
-            </Link>
-          );
-        })}
-      </span>
-
+      <h2 className="text-2xl">Stores</h2>
       {/* Actions */}
       <span className="flex space-x-2 justify-end items-center">
         {actions.map(action => {

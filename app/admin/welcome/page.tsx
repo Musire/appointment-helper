@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase/client";
 import { AdminWelcomeSchema, AdminWelcomeType } from "@/validation/AdminWelcome.schema";
 import { useRouter } from 'next/navigation';
 
+
 export default function AdminWelcome () {
   const router = useRouter()
 

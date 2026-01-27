@@ -1,5 +1,5 @@
 import { ContainerMode } from "@/hooks/useSelectable";
-import SelectableCard from "./SelectableCard";
+import SelectableCard from "../../../../components/dashboards/SelectableCard";
 
 interface CardDisplayProps<T> {
   items: T[];
