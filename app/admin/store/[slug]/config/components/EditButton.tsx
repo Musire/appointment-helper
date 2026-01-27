@@ -3,10 +3,7 @@
 import { editStoreConfig } from "@/app/actions/store.actions";
 import { useRouter } from "next/navigation";
 
-export default function EditButton ({ storeId }: { storeId: string | null }) {
-    if (!storeId) return null;
-
-    
+export default function EditButton ({ storeId }: { storeId: string }) {
     const router = useRouter()
     
     const updateConfig = async () => {

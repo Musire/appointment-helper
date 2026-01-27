@@ -21,11 +21,10 @@ type DayHours = {
 type WeeklyHours = Record<DayKey, DayHours>
 
 type ConfigTableProps = {
-    config: StoreConfig | null
+    config: StoreConfig
 }
 
 export default function ConfigTable ({ config }: ConfigTableProps) {
-    if (!config) return null;
 
     const hours = config.hours as WeeklyHours | undefined
     

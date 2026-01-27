@@ -18,7 +18,6 @@ export async function getServices(slug: string) {
         name: true,
     }
   })
-  console.log(categories)
 
   const services = await prisma.service.findMany({
     where: { storeId: store.id },
@@ -31,8 +30,6 @@ export async function getServices(slug: string) {
         type: true
     }
   })
-  console.log(services)
-
 
 
   return {

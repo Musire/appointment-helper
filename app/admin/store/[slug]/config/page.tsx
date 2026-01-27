@@ -1,5 +1,6 @@
 import { getStoreConfig } from "@/lib/queries/storeConfig";
 import { ConfigTable, EditButton } from "./components";
+import { notFound } from "next/navigation";
 
 type ConfigProps = {
   params: { 
@@ -9,13 +10,22 @@ type ConfigProps = {
 
 export default async function ConfigPage ({ params }: ConfigProps) {
     const { slug } = await params
-    const result = await getStoreConfig(slug)
+    const result = await getStoreConfig(slug);
 
-    return (
-      <div className="py-6 flex flex-col ">
-          <EditButton storeId={result?.storeId ?? null} /> 
-          <ConfigTable config={result?.config ?? null} />
-      </div>
-    );
+    switch (result.status) {
+      case "STORE_NOT_FOUND":
+        notFound();
+
+      case "CONFIG_MISSING":
+        return <EditButton storeId={result.storeId} />;
+
+      case "OK":
+        return (
+          <div className="py-6 flex flex-col">
+            <EditButton storeId={result.storeId} />
+            <ConfigTable config={result.config} />
+          </div>
+        );
+    } 
 }
 
