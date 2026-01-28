@@ -1,4 +1,4 @@
-import { StaffSearch } from "@/components/dashboards";
+import { StaffSearch } from "@/app/admin/store/[slug]/staff/components";
 import { BackButton } from "@/components/UI/buttons";
 import { getInvitableStaffUsers } from "@/lib/queries/users";
 

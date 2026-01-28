@@ -1,7 +1,7 @@
 import { groupServicesByCategory } from "@/lib/helpers/groupArrays";
 import Link from "next/link";
 
-import CategoryAccordians from "@/components/dashboards/services/CategoryAccordians";
+import { CategoryAccordians } from "./components";
 import { getServices } from "@/lib/queries/services";
 
 type ServicePageProps = {

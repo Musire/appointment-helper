@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/app/actions/auth.actions";
-import { NotificationPanel, PanelNav } from "@/components/dashboards";
+import { NotificationPanel, PanelNav } from "@/app/staff/components";
 import { LogoutButton } from "@/components/UI/buttons";
 
 export type StaffLayoutProps = {

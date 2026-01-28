@@ -1,5 +1,5 @@
 import { hasStaffProfile } from "@/app/actions/auth.actions";
-import { ProfileCreation } from "@/components/dashboards";
+import { ProfileCreation } from "@/app/staff/components";
 
 export default async function StaffDashboard () {
   const { data: profile } = await hasStaffProfile()

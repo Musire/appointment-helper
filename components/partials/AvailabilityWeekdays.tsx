@@ -1,4 +1,4 @@
-import { TimeslotInput } from "../dashboards";
+import { TimeslotInput } from "@/app/staff/components";
 
 
 export default function AvailabilityWeekdays () {
