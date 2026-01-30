@@ -71,3 +71,28 @@ export async function getStoreStaff(storeSlug: string) {
 
   return flatStaff
 }
+
+export async function getActiveStaff() {
+  const staff = await prisma.staffProfile.findMany({
+    where: {
+      active: true
+    },
+    select: {
+      bio: true,
+      user: {
+        select: {
+          id: true,
+          email: true,
+          fullName: true
+        }
+      }
+    }
+  })
+
+  const flattened = staff.map(({bio, user}) => {
+    if (!bio) return {bio: null, ...user}
+    return {bio, ...user}
+  })
+
+  return flattened
+}

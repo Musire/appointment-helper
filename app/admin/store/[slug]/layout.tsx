@@ -2,7 +2,7 @@ import { BackButton, LogoutButton } from "@/components/UI/buttons";
 import { getStoreContext } from "@/lib/store/data-loader";
 import { unslugify } from "@/lib/stringMutate";
 import StoreProvider from "@/stores/StoreContext";
-import { PanelNav } from "../../components";
+import { PanelNav } from "@/app/staff/components";
 
 type StoreDetailsProps = {
     params: {
