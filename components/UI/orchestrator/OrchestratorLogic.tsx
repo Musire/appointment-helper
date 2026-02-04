@@ -1,28 +1,32 @@
 'use client';
+import { useOrchestrator } from "@/hooks";
 import { QuerySerializable, StepResolver, syncQuery } from "@/lib/orchestrator";
 import { useRouter } from "next/navigation";
 import Orchestrator from "./Orchestrator";
-import { useOrchestrator } from "@/hooks";
 
 export type OrchestratorLogicProps<
   C extends Record<string, QuerySerializable>,
+  E,
   Step extends string
 > = {
   resolver: StepResolver<C, Step>;
   context: C;
   registry: any;
+  external: E;
   onSubmit: (data:C) => void;
 };
 
 export default function OrchestratorLogic<
   C extends Record<string, QuerySerializable>,
+  E,
   Step extends string
 >({
   resolver,
   context,
+  external,
   registry,
   onSubmit,
-}: OrchestratorLogicProps<C, Step>) {
+}: OrchestratorLogicProps<C, E, Step>) {
   const router = useRouter()
   const { push, pop } = useOrchestrator<Step>("orchestrator-history");
   const step = resolver(context);
@@ -50,6 +54,7 @@ export default function OrchestratorLogic<
     <Orchestrator
       step={step}
       context={context}
+      external={external}
       registry={registry}
       onUpdate={onUpdate}
       onBack={onBack}

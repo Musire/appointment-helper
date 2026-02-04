@@ -5,18 +5,21 @@ export type StoreBrief = {
 }
 
 type StoreCardProps = {
-    data: StoreBrief
+    data: StoreBrief;
+    selected: boolean;
+    onSelect: () => void;
 }
 
-export default function StoreCard ({ data }: StoreCardProps) {
-    const { id, name, description } = data
+export default function StoreCard ({ data, selected, onSelect }: StoreCardProps) {
+    const { name } = data
     return (
-        <li className="">
-            <article className="">
-                <p className="">{ id }</p>
-                <p className="">{ name }</p>
-                <p className="">{ description }</p>
-            </article>
+        <li
+            onClick={onSelect}
+            className={`p-3 cursor-pointer rounded ring-2 
+                ${selected ? "ring-whitesmoke/30" : "ring-transparent"}
+            `}
+        >
+            {name}
         </li>
     );
 }

@@ -1,10 +1,7 @@
+import { SearchParamsType } from "@/lib/queries/types";
 import { TestOrchestrator } from "../components";
 
-type TestPageProps = {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-
-export default async function TestPage ({ searchParams }: TestPageProps) {
+export default async function TestPage ({ searchParams }: SearchParamsType) {
     const query = await searchParams;
 
     return (

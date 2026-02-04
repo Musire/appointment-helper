@@ -1,6 +1,7 @@
+import { StoreBrief } from "@/app/user/components/StoreCard";
 import { getParam, RouteParams } from "./getParam";
 
-export function contextFromQuery<C extends Record<string, string | string[] | undefined>>(
+export function contextFromQuery<C extends Record<string, string | string[] | StoreBrief[] | undefined>>(
   params: RouteParams,
   context: C
 ): C {

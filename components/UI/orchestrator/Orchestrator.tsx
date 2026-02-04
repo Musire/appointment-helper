@@ -1,5 +1,6 @@
-export type OrchestratorEnv<C> = {
+export type OrchestratorEnv<C, E> = {
   context: C
+  external: E
   onUpdate: <K extends keyof C>(update: { key: K; value: C[K]; }) => void
   onBack: () => void;
   onSubmit: (data:C) => void
@@ -18,21 +19,24 @@ export type StepRegistry<Step extends string, Env> = Record<
 export type OrchestratorProps<
   Step extends string,
   C,
-  Registry extends StepRegistry<Step, OrchestratorEnv<C>>
-> = OrchestratorEnv<C> & {
+  E,
+  Registry extends StepRegistry<Step, OrchestratorEnv<C, E>>
+> = OrchestratorEnv<C, E> & {
   step: Step
   registry: Registry
+  external: E
 }
 
 export default function Orchestrator<
   Step extends string,
   C,
-  Registry extends StepRegistry<Step, OrchestratorEnv<C>>
+  E,
+  Registry extends StepRegistry<Step, OrchestratorEnv<C, E>>
 >({
   step,
   registry,
   ...env
-}: OrchestratorProps<Step, C, Registry>) {
+}: OrchestratorProps<Step, C, E, Registry>) {
   const { mapProps, render } = registry[step]
   return <>{render(mapProps(env))}</>
 }

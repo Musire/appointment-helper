@@ -8,8 +8,7 @@ export type UserLayoutProps = {
 export default async function UserLayout ({ children }: UserLayoutProps) {
 
     const tabs = [
-        { label: 'Store', href: `/user/dashboard`, index: true },
-        { label: 'Staff', href: `/user/dashboard/search/staff`},
+        { label: 'overview', href: `/user/dashboard`, index: true },
     ];
     return (
         <main className="page-layout relative">

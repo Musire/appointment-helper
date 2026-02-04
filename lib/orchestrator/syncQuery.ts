@@ -1,9 +1,12 @@
+import { StoreBrief } from "@/app/user/components/StoreCard"
+
 export type QuerySerializable =
   | string
   | number
   | boolean
   | undefined
   | null
+  | StoreBrief
 
 export type RouterLike = {
   replace: (url: string, opts?: { scroll?: boolean }) => void
