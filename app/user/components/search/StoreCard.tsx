@@ -10,7 +10,7 @@ type StoreCardProps = {
     onSelect: () => void;
 }
 
-export default function StoreCard ({ data, selected, onSelect }: StoreCardProps) {
+export function StoreCard ({ data, selected, onSelect }: StoreCardProps) {
     const { name } = data
     return (
         <li

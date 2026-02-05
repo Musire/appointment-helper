@@ -3,8 +3,7 @@
 import { BookingRegistry } from "@/components/registries/BookingRegistry";
 import { OrchestratorLogic } from "@/components/UI";
 import { contextFromQuery, RouteParams, StepResolver } from "@/lib/orchestrator";
-import { StoreBrief } from "./StoreCard";
-import { StaffBrief } from "./StaffCard";
+import { StaffBrief, StoreBrief } from "../search";
 
 export type BookingStep = 'store' | 'staff' | 'review' | 'anchor' | 'stores' ;
 

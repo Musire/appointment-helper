@@ -2,7 +2,7 @@
 
 import { SearchList } from "@/components/UI";
 import { useState } from "react";
-import StoreCard, { StoreBrief } from "./StoreCard";
+import { StoreBrief, StoreCard } from "./StoreCard";
 
 export default function StoreSearch ({ stores }: { stores: StoreBrief[]}) {
 
@@ -18,16 +18,16 @@ export default function StoreSearch ({ stores }: { stores: StoreBrief[]}) {
     
     return (
         <>
-        <SearchList 
-            data={stores}
-            getId={store => store.id}
-            filterFn={filterStoreByName}
-            selectedId={selectedId}
-            onSelect={handleSelect}
-            renderItem={({ item, selected, onSelect }) => (
-                <StoreCard key={item.id} data={item} {...{selected}} {...{onSelect}} />
-            )}
-        />
+            <SearchList 
+                data={stores}
+                getId={store => store.id}
+                filterFn={filterStoreByName}
+                selectedId={selectedId}
+                onSelect={handleSelect}
+                renderItem={({ item, selected, onSelect }) => (
+                    <StoreCard key={item.id} data={item} {...{selected}} {...{onSelect}} />
+                )}
+            />
             {!!selectedId && (
                 <button className="btn absolute right-6 bottom-6">view details</button>
             )}

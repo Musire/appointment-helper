@@ -1,4 +1,4 @@
-import { StoreBrief } from "@/app/user/components/StoreCard";
+import { StoreBrief } from "@/app/user/components/search/StoreCard";
 import { getParam, RouteParams } from "./getParam";
 
 export function contextFromQuery<C extends Record<string, string | string[] | StoreBrief[] | undefined>>(

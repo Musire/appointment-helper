@@ -1,6 +1,6 @@
 'use client';
-import { StoreBrief } from "./StoreCard";
-import StoreSearch from "./StoreSearch";
+
+import { StoreBrief, StoreSearch } from "@/app/user/components";
 
 type StoreStepProps = { 
     changeAnchor: (v: string) => void;

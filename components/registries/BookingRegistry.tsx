@@ -1,5 +1,4 @@
-import { StaffStep, StoreStep } from "@/app/user/components";
-import { BookingContextType, BookingExternal } from "@/app/user/components/BookingOrchestrator";
+import { StaffStep, StoreStep, BookingContextType, BookingExternal } from "@/app/user/components";
 import ReviewStep from "@/app/user/components/ReviewStep";
 import { OrchestratorEnv, StepRegistry } from "@/components/UI/orchestrator/Orchestrator";
 

@@ -1,7 +1,6 @@
 'use client';
 
-import { StaffBrief } from "./StaffCard";
-import StaffSearch from "./StaffSearch";
+import { StaffBrief, StaffSearch } from "@/app/user/components";
 
 type StaffStepProps = { 
     changeAnchor: (v: string) => void;
@@ -11,8 +10,6 @@ type StaffStepProps = {
 export default function StaffStep ({ changeAnchor, staff }: StaffStepProps) {
     const activeStyle = 'border-b-2 border-whitesmoke/87 text-whitesmoke/87'
     const inActiveStyle = 'text-whitesmoke/37 hover:text-whitesmoke/60'
-
-    console.log('staff', staff)
 
     return (
         <div className="flex flex-col space-y-6">

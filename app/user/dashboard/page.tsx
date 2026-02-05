@@ -1,7 +1,7 @@
 import { getActiveStores } from "@/lib/queries/stores";
-import BookingOrchestrator from "../components/BookingOrchestrator";
 import { SearchParamsType } from "@/lib/queries/types";
 import { getActiveStaff } from "@/lib/queries/users";
+import BookingOrchestrator from "../components/orchestrator/BookingOrchestrator";
 
 export default async function UserDashboard ({ searchParams }: SearchParamsType) {
     const stores = await getActiveStores();
@@ -10,7 +10,7 @@ export default async function UserDashboard ({ searchParams }: SearchParamsType)
 
     return (
         <div className="">
-            <BookingOrchestrator 
+            <BookingOrchestrator
                 query={query} 
                 stores={stores}
                 staff={staff} 
