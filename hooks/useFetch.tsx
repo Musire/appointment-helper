@@ -8,9 +8,22 @@ type FetchState<T> =
   | { status: 'success'; data: T; error: null }
   | { status: 'error'; data: null; error: string }
 
-export function useFetch<T>(
+/**
+ * Custom fetch options
+ * We DO NOT extend RequestInit to avoid leaking BodyInit
+ */
+type FetchOptions = {
+  method?: RequestInit['method']
+  headers?: HeadersInit
+  body?: unknown
+  credentials?: RequestInit['credentials']
+  cache?: RequestInit['cache']
+  mode?: RequestInit['mode']
+}
+
+export default function useFetch<T>(
   url: string | null,
-  options?: RequestInit
+  options?: FetchOptions
 ) {
   const [state, setState] = useState<FetchState<T>>({
     status: 'idle',
@@ -18,40 +31,47 @@ export function useFetch<T>(
     error: null,
   })
 
+  // 🔑 Ensures refetch when body changes (e.g. selectedId)
+  const bodyKey = JSON.stringify(options?.body ?? null)
+
   useEffect(() => {
     if (!url) {
-      setState({
-        status: 'idle',
-        data: null,
-        error: null,
-      })
+      setState({ status: 'idle', data: null, error: null })
       return
     }
 
     const controller = new AbortController()
 
-    setState({
-      status: 'loading',
-      data: null,
-      error: null,
-    })
+    setState({ status: 'loading', data: null, error: null })
+
+    const isJsonBody =
+      options?.body !== undefined &&
+      typeof options.body === 'object' &&
+      !(options.body instanceof FormData)
 
     fetch(url, {
-      ...options,
+      method: options?.method ?? (options?.body ? 'POST' : 'GET'),
+      body: isJsonBody
+        ? JSON.stringify(options?.body)
+        : (options?.body as BodyInit | undefined),
+      headers: {
+        ...(isJsonBody ? { 'Content-Type': 'application/json' } : {}),
+        ...options?.headers,
+      },
+      credentials: options?.credentials,
+      cache: options?.cache,
+      mode: options?.mode,
       signal: controller.signal,
     })
       .then(async (res) => {
         if (!res.ok) {
-          throw new Error(`Request failed: ${res.status}`)
+          const text = await res.text()
+          throw new Error(text || `Request failed: ${res.status}`)
         }
         return res.json()
       })
       .then((data: T) => {
-        setState({
-          status: 'success',
-          data,
-          error: null,
-        })
+        setState({ status: 'success', data, error: null })
       })
       .catch((err) => {
         if (err.name === 'AbortError') return
@@ -63,7 +83,7 @@ export function useFetch<T>(
       })
 
     return () => controller.abort()
-  }, [url])
+  }, [url, bodyKey])
 
   return state
 }

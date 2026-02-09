@@ -4,7 +4,12 @@ import { SearchList } from "@/components/UI";
 import { useState } from "react";
 import { StaffCard, StaffBrief, StaffDetails } from "./"
 
-export default function StaffSearch ({ staff }: { staff: StaffBrief[]}) {
+type StaffSearchProps = {
+    staff: StaffBrief[];
+    onChange: (v: string) => void; 
+}
+
+export default function StaffSearch ({ staff, onChange }: StaffSearchProps) {
 
     const filterStaff = (employee: StaffBrief, query: string) => {
         const q = query.toLowerCase()
@@ -25,6 +30,11 @@ export default function StaffSearch ({ staff }: { staff: StaffBrief[]}) {
     const handleBack = () => {
         setSelectedId(null)
         setView('search')
+    }
+
+    const handleUpdate = () => {
+        if (!selectedId) return;
+        onChange(selectedId)
     }
     
     return (
@@ -52,6 +62,7 @@ export default function StaffSearch ({ staff }: { staff: StaffBrief[]}) {
             {(view === 'details' && (
                 <StaffDetails 
                     onBack={handleBack}
+                    onChange={handleUpdate}
                 />
             ))}
         </>

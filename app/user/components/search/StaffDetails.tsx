@@ -1,12 +1,13 @@
 'use client';
 
-import { useFetch } from "@/hooks/useFetch";
+import { useFetch } from "@/hooks";
 
 type StaffDetailsProps = {
     onBack: () => void;
+    onChange: () => void;
 }
 
-export default function StaffDetails ({ onBack }: StaffDetailsProps) {
+export default function StaffDetails ({ onBack, onChange }: StaffDetailsProps) {
 
     const { status, error, data } = useFetch('/api/staffDetails')
 
@@ -33,7 +34,12 @@ export default function StaffDetails ({ onBack }: StaffDetailsProps) {
             >
                     back
             </button>
-            <button className="btn absolute right-6 bottom-20">continue</button>
+            <button 
+                onClick={onChange}
+                className="btn absolute right-6 bottom-20"
+            >
+                continue
+            </button>
         </div>
     );
 }

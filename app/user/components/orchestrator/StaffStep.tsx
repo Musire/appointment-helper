@@ -2,12 +2,13 @@
 
 import { StaffBrief, StaffSearch } from "@/app/user/components";
 
-type StaffStepProps = { 
+type StaffStepProps = {
+    onChange: (v: string) => void;
     changeAnchor: (v: string) => void;
     staff: StaffBrief[]
 }
 
-export default function StaffStep ({ changeAnchor, staff }: StaffStepProps) {
+export default function StaffStep ({ onChange, changeAnchor, staff }: StaffStepProps) {
     const activeStyle = 'border-b-2 border-whitesmoke/87 text-whitesmoke/87'
     const inActiveStyle = 'text-whitesmoke/37 hover:text-whitesmoke/60'
 
@@ -22,7 +23,7 @@ export default function StaffStep ({ changeAnchor, staff }: StaffStepProps) {
                 </button>
                 <p className={`px-3 py-2 ${activeStyle}`}>Staff</p>
             </span>
-            <StaffSearch staff={staff} />
+            <StaffSearch staff={staff} onChange={onChange} />
         </div>
     );
 }
