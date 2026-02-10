@@ -1,8 +1,17 @@
-import { StaffStep, StoreStep, BookingContextType, BookingExternal, StaffStoreStep, ServicesStep } from "@/app/user/components";
+import { StaffStep, StoreStep, BookingContextType, BookingExternal, StaffStoreStep, ServicesStep, DateTimeStep } from "@/app/user/components";
 import ReviewStep from "@/app/user/components/ReviewStep";
 import { OrchestratorEnv, StepRegistry } from "@/components/UI/orchestrator/Orchestrator";
 
-export const BookingRegistry: StepRegistry< 'store' | 'staff' | 'staffStore' | 'services' | 'review', OrchestratorEnv<BookingContextType, BookingExternal>> = {
+type Step = 
+    'store' |
+    'staff' |
+    'storeStaff' |
+    'staffStore' |
+    'services' |
+    'dateTime' |
+    'review';
+
+export const BookingRegistry: StepRegistry<Step, OrchestratorEnv<BookingContextType, BookingExternal>> = {
     store: {
         mapProps: env => ({
             value: env.context.store,
@@ -23,6 +32,14 @@ export const BookingRegistry: StepRegistry< 'store' | 'staff' | 'staffStore' | '
         }),
         render: props => <StaffStep {...props} />
     },
+    storeStaff: {
+        mapProps: env => ({
+            staffId: env.context.staff,
+            onChange: (v: string) => env.onUpdate({ key: 'staffStore', value: v }),
+            onBack: () => env.onBack()
+        }),
+        render: props => <StaffStoreStep {...props} />
+    },
     staffStore: {
         mapProps: env => ({
             staffId: env.context.staff,
@@ -38,6 +55,14 @@ export const BookingRegistry: StepRegistry< 'store' | 'staff' | 'staffStore' | '
             onBack: () => env.onBack()
         }),
         render: props => <ServicesStep {...props} />
+    },
+    dateTime: {
+        mapProps: env => ({
+            storeId: env.context.store || env.context.staffStore,
+            onChange: (v: string) => env.onUpdate({ key: 'dateTime', value: v }),
+            onBack: () => env.onBack()
+        }),
+        render: props => <DateTimeStep {...props} />
     },
     review: {
         mapProps: env => ({

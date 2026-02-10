@@ -5,7 +5,15 @@ import { contextFromQuery, RouteParams, StepResolver } from "@/lib/orchestrator"
 import { StaffBrief, StoreBrief } from "../search";
 import { BookingRegistry } from "./BookingRegistry";
 
-export type BookingStep = 'store' | 'staff' | 'review' | 'anchor' | 'stores'| 'storeStaff' | 'staffStore' | 'services' ;
+export type BookingStep = 
+    'store' | 
+    'staff' | 
+    'storeStaff' | 
+    'staffStore' | 
+    'dateTime' |
+    'review' | 
+    'services' |
+    'dateTime';
 
 export type BookingContextType = {
     anchor: string | undefined;
@@ -14,8 +22,35 @@ export type BookingContextType = {
     staff: string | undefined;
     staffStore: string | undefined;
     review: string | undefined
-    services: string | undefined
+    services: string | undefined;
+    dateTime: string | undefined;
 };
+
+const storeFlow: BookingStep[] = [
+  'store',
+  'storeStaff',
+  'services',
+  'dateTime',
+  'review',
+]
+
+const staffFlow: BookingStep[] = [
+  'staff',
+  'staffStore',
+  'services',
+  'dateTime',
+  'review',
+]
+
+const stepCompleted: Record<BookingStep, (ctx: BookingContextType) => boolean> = {
+  store: ctx => !!ctx.store,
+  staff: ctx => !!ctx.staff,
+  storeStaff: ctx => !!ctx.storeStaff,
+  staffStore: ctx => !!ctx.staffStore,
+  services: ctx => !!ctx.services?.length,
+  dateTime: ctx => !!ctx.dateTime,
+  review: ctx => false,
+}
 
 type BookingProps = {
     query: RouteParams;
@@ -37,10 +72,11 @@ export default function BookingOrchestrator ({ query, stores, staff }: BookingPr
         staff: undefined,
         staffStore: undefined,
         services: undefined,
+        dateTime: undefined,
         review: undefined
     })
 
-    const resolver: StepResolver<BookingContextType, BookingStep> = (context) => {
+    const resolver2: StepResolver<BookingContextType, BookingStep> = (context) => {
         if (context.anchor === 'store' && !context.store) return 'store'
         if (context.anchor === 'staff' && !context.staff) return 'staff'
         if (context.store && !context.storeStaff) return 'storeStaff'
@@ -49,6 +85,17 @@ export default function BookingOrchestrator ({ query, stores, staff }: BookingPr
 
         return 'review';
     };
+
+    const resolver: StepResolver<BookingContextType, BookingStep> = (context) => {
+        const flow =
+            context.anchor === 'store'
+            ? storeFlow
+            : staffFlow
+
+        const nextStep = flow.find(step => !stepCompleted[step](context))
+
+        return nextStep ?? 'review'
+    }
 
     const handleSubmit = (data: BookingContextType) => {
         console.log(data)
