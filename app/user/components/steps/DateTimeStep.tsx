@@ -1,21 +1,21 @@
 'use client';
 
-import { ArrowLeft } from "lucide-react";
+import { ContinueButton, Header } from "../page";
 
 type DateTimeStepProps = {
     onBack: () => void;
+    onChange: (v: string) => void;
 }
 
-export default function DateTimeStep ({ onBack }: DateTimeStepProps) {
+export default function DateTimeStep ({ onBack, onChange }: DateTimeStepProps) {
+    const handleContinue = () => {
+        onChange('test')
+    }
+    
     return (
         <div className="">
-            <button
-                onClick={onBack}
-                className="hover:cursor-pointer"
-            >
-                <ArrowLeft />
-            </button>
-            <button className="btn absolute bottom-6 left-1/2 -translate-x-1/2 w-3/4 ">Continue</button>
+            <Header onBack={onBack} title={'Select Date and Time'} />
+            <ContinueButton onContinue={handleContinue} />
         </div>
-    );
+    )
 }

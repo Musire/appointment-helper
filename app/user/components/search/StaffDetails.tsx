@@ -1,14 +1,9 @@
 'use client';
 
 import { useFetch } from "@/hooks";
-import { ArrowLeft } from "lucide-react";
 
-type StaffDetailsProps = {
-    onBack: () => void;
-    onChange: () => void;
-}
 
-export default function StaffDetails ({ onBack, onChange }: StaffDetailsProps) {
+export default function StaffDetails () {
 
     const { status, error, data } = useFetch('/api/staffDetails')
 
@@ -26,12 +21,6 @@ export default function StaffDetails ({ onBack, onChange }: StaffDetailsProps) {
 
     return (
         <div className="flex flex-col space-y-6">
-            <button 
-                onClick={onBack}
-                className="hover:cursor-pointer w-fit"
-            >
-                    <ArrowLeft />
-            </button>
             <pre className="">
                 {JSON.stringify(data, null, 2)}
             </pre>

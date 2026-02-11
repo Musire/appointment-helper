@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft } from "lucide-react";
+import BackButton from "./BackButton";
 
 type HeaderProps = {
     title?: string,
@@ -10,11 +10,7 @@ type HeaderProps = {
 export default function Header ({ title, onBack }: HeaderProps) {
     return (
         <span className="w-full flex">
-            {onBack && (
-                <button onClick={onBack} className="hover:cursor-pointer">
-                    <ArrowLeft size={30} />
-                </button>
-            )}
+            {onBack && <BackButton onBack={onBack} />}
             <p className="mx-auto capitalize">{title}</p>
         </span>
     );

@@ -67,6 +67,7 @@ export const BookingRegistry: StepRegistry<Step, OrchestratorEnv<BookingContextT
     review: {
         mapProps: env => ({
             value: env.context,
+            onBack: () => env.onBack(),
             onSubmit: (data: BookingContextType) => env.onSubmit(data)
         }),
         render: props => <ReviewStep {...props} />
