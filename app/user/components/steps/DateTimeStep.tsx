@@ -1,5 +1,7 @@
 'use client';
 
+import { ArrowLeft } from "lucide-react";
+
 type DateTimeStepProps = {
     onBack: () => void;
 }
@@ -9,10 +11,11 @@ export default function DateTimeStep ({ onBack }: DateTimeStepProps) {
         <div className="">
             <button
                 onClick={onBack}
-                className="btn absolute bottom-20 left-6"
+                className="hover:cursor-pointer"
             >
-                back
+                <ArrowLeft />
             </button>
+            <button className="btn absolute bottom-6 left-1/2 -translate-x-1/2 w-3/4 ">Continue</button>
         </div>
     );
 }

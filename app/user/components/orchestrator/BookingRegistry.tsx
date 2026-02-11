@@ -1,5 +1,5 @@
 import { StaffStep, StoreStep, BookingContextType, BookingExternal, StaffStoreStep, ServicesStep, DateTimeStep } from "@/app/user/components";
-import ReviewStep from "@/app/user/components/ReviewStep";
+import ReviewStep from "@/app/user/components/steps/ReviewStep";
 import { OrchestratorEnv, StepRegistry } from "@/components/UI/orchestrator/Orchestrator";
 
 type Step = 

@@ -28,9 +28,11 @@ export default function StoreSearch ({ stores }: { stores: StoreBrief[]}) {
                     <StoreCard key={item.id} data={item} {...{selected}} {...{onSelect}} />
                 )}
             />
-            {!!selectedId && (
-                <button className="btn absolute right-6 bottom-6">view details</button>
-            )}
+            <button 
+                className="btn absolute left-1/2 -translate-x-1/2 w-3/4 bottom-6"
+            >
+                Continue
+            </button>
         </>
     );
 }

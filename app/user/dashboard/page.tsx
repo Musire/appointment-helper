@@ -1,20 +1,12 @@
-import { getActiveStores } from "@/lib/queries/stores";
 import { SearchParamsType } from "@/lib/queries/types";
-import { getActiveStaff } from "@/lib/queries/users";
-import BookingOrchestrator from "../components/orchestrator/BookingOrchestrator";
+import Link from "next/link";
 
 export default async function UserDashboard ({ searchParams }: SearchParamsType) {
-    const stores = await getActiveStores();
-    const staff = await getActiveStaff()
-    const query = await searchParams
 
     return (
         <div className="">
-            <BookingOrchestrator
-                query={query} 
-                stores={stores}
-                staff={staff} 
-            />
+            this is the dashboard page
+            <Link href={"/user/booking"} className="btn" >create a booking</Link>
         </div>
     );
 }

@@ -3,7 +3,8 @@
 import { useFetch } from "@/hooks";
 import { useState } from "react";
 import StoreSelector from "./StoreSelector";
-import { StoreBrief, StoreCard } from "./search";
+import { StoreBrief, StoreCard } from "../search";
+import { StoreDetails } from ".";
 
 type StoreSelectionProps = {
     staffId: string;
@@ -31,7 +32,11 @@ export default function StoreSelection ({ onChange, staffId }: StoreSelectionPro
     )
 
 
-    const handleChange = () => {
+    const handleContinue = () => {
+        if (view === 'stores') {
+            setView('details')
+            return
+        }
         if (!selectedId) return;
         onChange(selectedId)
     }
@@ -49,10 +54,8 @@ export default function StoreSelection ({ onChange, staffId }: StoreSelectionPro
                     all stores that barber works at
                     <StoreSelector 
                         stores={result?.data}
-                        onChange={handleChange}
                         selected={selectedId}
                         onSelect={handleUpdate}
-                        setView={setView}
                         getId={(store: StoreBrief) => store.id}
                         renderItem={({item, selected, onSelect}) => (
                             <StoreCard
@@ -65,22 +68,13 @@ export default function StoreSelection ({ onChange, staffId }: StoreSelectionPro
                     />
                 </div>
             )}
-            {view === 'details' && (
-                <div className="">
-                    <pre className="">
-                        {JSON.stringify(storeDetails?.data, null, 2)}
-                    </pre>
-                    
-                </div>
-            )}
-            {view === 'details' && (
-                <button 
-                    onClick={handleChange}
-                    className="btn absolute bottom-20 right-6"
-                >
-                    continue
-                </button>
-            )}
+            <StoreDetails view={view} data={storeDetails?.data} />
+            <button
+                disabled={!selectedId}
+                onClick={handleContinue}
+                className="btn absolute bottom-6 left-1/2 -translate-x-1/2 w-3/4">
+                    Continue
+            </button>
         </>
     );
 }

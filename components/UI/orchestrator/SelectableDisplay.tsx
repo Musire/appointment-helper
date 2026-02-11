@@ -47,14 +47,12 @@ export default function SelectableDisplay<T>({
                         })
                     )})}
             </ul>
-            {selectedId && (
-                <button 
-                    onClick={handleContinue} 
-                    className="btn absolute bottom-20 right-6"
-                >
-                    continue
-                </button>
-            )}
+            <button 
+                onClick={handleContinue} 
+                className="btn absolute bottom-6 left-1/2 -translate-x-1/2 w-3/4"
+            >
+                Continue
+            </button>
         </div>
     );
 }

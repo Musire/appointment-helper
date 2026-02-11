@@ -14,7 +14,7 @@ export default function ServiceCard ({ item, selected, onSelect }: ServiceCardPr
     return (
         <li 
             onClick={onSelect}
-            className={`ring-2 hover:cursor-pointer ${selected ? 'ring-whitesmoke/30' : 'ring-transparent'}`}
+            className={`ring-2 normal-space hover:cursor-pointer ${selected ? 'ring-whitesmoke/30' : 'ring-transparent '}`}
         >
             {item.name}
         </li>

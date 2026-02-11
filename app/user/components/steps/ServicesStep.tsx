@@ -2,6 +2,7 @@
 
 import { SelectableDisplay } from "@/components/UI";
 import { useFetch } from "@/hooks";
+import { ArrowLeft } from "lucide-react";
 import ServiceCard from "../cards/ServicesCard";
 
 type ServiceStepProps = {
@@ -42,8 +43,13 @@ export default function ServicesStep ({ storeId, onBack, onChange }: ServiceStep
     }
 
     return (
-        <div className="">
-            services Step
+        <div className="flex flex-col space-y-6">
+            <button 
+                onClick={onBack} 
+                className="hover:cursor-pointer **:"
+            >
+                <ArrowLeft />
+            </button>
             <SelectableDisplay 
                 data={result.data}
                 getId={item => item.id}
@@ -53,12 +59,6 @@ export default function ServicesStep ({ storeId, onBack, onChange }: ServiceStep
                 )}
             />
             
-            <button 
-                onClick={onBack} 
-                className="btn absolute bottom-20 left-6"
-            >
-                back
-            </button>
         </div>
     );
 }

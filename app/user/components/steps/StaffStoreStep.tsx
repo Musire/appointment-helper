@@ -1,4 +1,5 @@
-import StoreSelection from "../StoreSelection";
+import { ArrowLeft } from "lucide-react";
+import { StoreSelection } from "../selectors";
 
 type StaffStoreProps = {
     staffId: string;
@@ -8,14 +9,14 @@ type StaffStoreProps = {
 
 export default function StaffStoreStep ({ staffId, onBack, onChange }: StaffStoreProps) {
     return (
-        <div className="">
-            <StoreSelection {...{onChange}} {...{staffId}} />
+        <div className="flex-col flex space-y-6">
             <button 
                 onClick={onBack}
-                className="btn absolute bottom-20 left-6"
+                className="hover:cursor-pointer"
             >
-                Back
+                <ArrowLeft />
             </button>
+            <StoreSelection {...{onChange}} {...{staffId}} />
         </div>
     );
 }

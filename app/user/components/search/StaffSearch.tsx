@@ -2,7 +2,7 @@
 
 import { SearchList } from "@/components/UI";
 import { useState } from "react";
-import { StaffCard, StaffBrief, StaffDetails } from "./"
+import { StaffBrief, StaffCard, StaffDetails } from "./";
 
 type StaffSearchProps = {
     staff: StaffBrief[];
@@ -36,6 +36,15 @@ export default function StaffSearch ({ staff, onChange }: StaffSearchProps) {
         if (!selectedId) return;
         onChange(selectedId)
     }
+
+    const handleContinue = () =>{
+        if (view === 'search') {
+            setView('details')
+            return
+        }
+
+        handleUpdate()
+    }
     
     return (
         <>
@@ -56,9 +65,13 @@ export default function StaffSearch ({ staff, onChange }: StaffSearchProps) {
                     )}
                 />
             )}
-            {!!selectedId && (view === 'search') && (
-                <button onClick={() => setView('details')} className="btn absolute right-6 bottom-6">view details</button>
-            )}
+            <button 
+                onClick={handleContinue}
+                disabled={!selectedId}
+                className="btn absolute left-1/2 -translate-x-1/2 w-3/4 bottom-6"
+            >
+                Continue
+            </button>
             {(view === 'details' && (
                 <StaffDetails 
                     onBack={handleBack}

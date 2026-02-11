@@ -1,9 +1,7 @@
 type StoreSelectorProps<T, K extends string | null> = {
     stores: T[]
-    onChange: () => void;
     selected: K;
     onSelect: (v: K) => void;
-    setView: (v: 'stores' | 'details') => void;
     getId: (item: T) => K
     renderItem: (args: {
         item: T
@@ -14,10 +12,8 @@ type StoreSelectorProps<T, K extends string | null> = {
 
 export default function StoreSelector<T, K extends string | null> ({ 
     stores,
-    onChange,
     selected,
     onSelect,
-    setView,
     getId,
     renderItem
 }: StoreSelectorProps<T, K>) {
@@ -37,12 +33,6 @@ export default function StoreSelector<T, K extends string | null> ({
                         })
                     )})}
             </ul>
-            <button 
-                onClick={() => setView('details')}
-                className="btn absolute bottom-20 right-6"
-            >
-                check details
-            </button>
         </div>
     );
 }
