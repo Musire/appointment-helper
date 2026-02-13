@@ -9,6 +9,7 @@ type ServiceStepProps = {
     storeId: string;
     onBack: () => void;
     onChange: (v: string | null) => void;
+    steps: string[];
 }
 
 type StoreServices = {
@@ -16,7 +17,7 @@ type StoreServices = {
     name: string
 }
 
-export default function ServicesStep ({ storeId, onBack, onChange }: ServiceStepProps) {
+export default function ServicesStep ({ storeId, onBack, onChange, steps }: ServiceStepProps) {
     const result = useFetch<StoreServices[]>(
         '/api/storeServices',
         {
@@ -43,10 +44,10 @@ export default function ServicesStep ({ storeId, onBack, onChange }: ServiceStep
     }
 
     return (
-        <div className="flex flex-col space-y-6">
+        <div className="flex flex-col space-y-6 ">
             <Header onBack={onBack} title="Select Services" />
             <Indicator  
-                steps={['staff', 'store', 'services', 'date time', 'review']}
+                steps={steps}
                 index={3}
             />
             <SelectableDisplay 
@@ -57,7 +58,6 @@ export default function ServicesStep ({ storeId, onBack, onChange }: ServiceStep
                     <ServiceCard key={props.item.id} {...props}/>
                 )}
             />
-            
         </div>
     );
 }

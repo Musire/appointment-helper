@@ -1,15 +1,16 @@
 'use client';
-import { StoreSelection } from "../selectors";
-import { ContinueButton, Header } from "../page";
 import { useState } from "react";
+import { ContinueButton, Header, Indicator } from "../page";
+import { StoreSelection } from "../selectors";
 
 type StaffStoreProps = {
     staffId: string;
     onBack: () => void;
     onChange: (v:string) => void;
+    steps: string[];
 }
 
-export default function StaffStoreStep ({ staffId, onBack, onChange }: StaffStoreProps) {
+export default function StaffStoreStep ({ staffId, onBack, onChange, steps }: StaffStoreProps) {
     const [selectedId, setSelectedId] = useState< string | null >(null);
     const [view, setView] = useState<'stores' | 'details'>('stores');
 
@@ -43,6 +44,7 @@ export default function StaffStoreStep ({ staffId, onBack, onChange }: StaffStor
     return (
         <div className="flex-col flex space-y-6">
             <Header onBack={handleBack} title="Select Store" />
+            <Indicator {...{steps}} index={2} />
             <StoreSelection 
                 {...{staffId}} 
                 {...{selectedId}}

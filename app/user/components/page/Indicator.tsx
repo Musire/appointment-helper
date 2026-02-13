@@ -1,5 +1,8 @@
 import { Check } from "lucide-react";
 
+export const StaffSteps = ['staff', 'store', 'services', 'date time', 'review']
+export const StoreSteps = ['store', 'staff', 'services', 'date time', 'review']
+
 function Dot ({ completed }: { completed: boolean }) {
     const isComplete = completed
         ? 'bg-whitesmoke/87 text-deep'
@@ -35,7 +38,7 @@ function Segment ({
         <div className="flex items-center relative" >
             <Dot {...{completed}} />
             {!isLast && <Line {...{completed}} />}
-            <p className={`absolute capitalize top-7 left-0 -translate-x-[35%] w-20 text-center text-sm  ${completed ? "text-whitesmoke/87" : "text-whitesmoke/37"}`}>{step}</p>
+            <p className={`absolute capitalize top-12 left-0 -translate-x-[35%] w-20 text-center text-sm  ${completed ? "text-whitesmoke/87" : "text-whitesmoke/37"}`}>{step}</p>
         </div>
     )
 }
@@ -48,14 +51,14 @@ type IndicatorProps = {
 export default function Indicator ({ steps, index }: IndicatorProps) {
     const lastStep = (steps.length - 1)
     return (
-        <div className="flex w-full justify-center mb-6">
+        <div className="flex w-full justify-center mb-12 h-16 ">
             {steps.map((s, i) => {
                 return (
                     <Segment 
                         key={`${s}-${i}`}
                         completed={i < (index - 1)}
                         step={s}
-                        isLast={index === lastStep}  
+                        isLast={i === lastStep}  
                     />
                 )
             })}

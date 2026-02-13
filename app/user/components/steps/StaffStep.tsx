@@ -1,19 +1,22 @@
 'use client';
 
-import { ContinueButton, Header, StaffBrief, StaffSearch } from "@/app/user/components";
+import { ContinueButton, Header, Indicator, StaffBrief, StaffSearch } from "@/app/user/components";
+import { useOrchestrator } from "@/hooks";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type StaffStepProps = {
     onChange: (v: string) => void;
     changeAnchor: (v: string) => void;
-    staff: StaffBrief[]
+    staff: StaffBrief[];
+    steps: string[];
 }
 
-export default function StaffStep ({ onChange, changeAnchor, staff }: StaffStepProps) {
+export default function StaffStep ({ onChange, changeAnchor, staff, steps }: StaffStepProps) {
     const activeStyle = 'border-b-2 border-whitesmoke/87 text-whitesmoke/87'
     const inActiveStyle = 'text-whitesmoke/37 hover:text-whitesmoke/60'
     const router = useRouter()
+    const { clear } = useOrchestrator('orchestrator-history')
 
     const [selectedId, setSelectedId] = useState<string | null>(null)
     const [view, setView] = useState<'search' | 'details'>('search');
@@ -45,12 +48,18 @@ export default function StaffStep ({ onChange, changeAnchor, staff }: StaffStepP
         setSelectedId((prev) => (prev === id ? null : id))
     }
 
+    const handleAnchor = () => {
+        changeAnchor('store')
+        clear()
+    }
+
     return (
         <div className="flex flex-col space-y-6">
             <Header onBack={handleBack} title="Select Staff" />
+            <Indicator steps={steps} index={1} />
             <span className="flex items-center space-x-4 ">
                 <button 
-                    onClick={() => changeAnchor('store')}
+                    onClick={handleAnchor}
                     className={`px-3 py-2 transition-colors hover:cursor-pointer ${inActiveStyle}`}
                 >
                     Store

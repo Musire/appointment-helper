@@ -9,9 +9,9 @@ type HeaderProps = {
 
 export default function Header ({ title, onBack }: HeaderProps) {
     return (
-        <span className="w-full flex">
+        <div className="w-full flex">
             {onBack && <BackButton onBack={onBack} />}
             <p className="mx-auto capitalize">{title}</p>
-        </span>
+        </div>
     );
 }

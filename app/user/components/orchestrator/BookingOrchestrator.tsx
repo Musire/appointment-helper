@@ -2,6 +2,7 @@
 
 import { OrchestratorLogic } from "@/components/UI";
 import { contextFromQuery, RouteParams, StepResolver } from "@/lib/orchestrator";
+import { StaffSteps, StoreSteps } from "../page/Indicator";
 import { StaffBrief, StoreBrief } from "../search";
 import { BookingRegistry } from "./BookingRegistry";
 
@@ -61,9 +62,10 @@ type BookingProps = {
 export type BookingExternal = {
     stores: StoreBrief[];
     staff: StaffBrief[];
+    steps: string[]
 };
 
-export default function BookingOrchestrator ({ query, stores, staff }: BookingProps) {
+export function BookingOrchestrator ({ query, stores, staff }: BookingProps) {
 
     const context: BookingContextType = contextFromQuery(query, {
         anchor: 'store',
@@ -76,15 +78,9 @@ export default function BookingOrchestrator ({ query, stores, staff }: BookingPr
         review: undefined
     })
 
-    const resolver2: StepResolver<BookingContextType, BookingStep> = (context) => {
-        if (context.anchor === 'store' && !context.store) return 'store'
-        if (context.anchor === 'staff' && !context.staff) return 'staff'
-        if (context.store && !context.storeStaff) return 'storeStaff'
-        if (context.staff && !context.staffStore) return 'staffStore'
-        if (context.staffStore || context.storeStaff) return 'services'
-
-        return 'review';
-    };
+    const steps = context.anchor === 'store' 
+        ? StoreSteps
+        : StaffSteps
 
     const resolver: StepResolver<BookingContextType, BookingStep> = (context) => {
         const flow =
@@ -107,7 +103,7 @@ export default function BookingOrchestrator ({ query, stores, staff }: BookingPr
             registry={BookingRegistry}
             onSubmit={handleSubmit}
             context={context}
-            external={{ stores, staff }}
+            external={{ stores, staff, steps }}
         />
     );
 }
