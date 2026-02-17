@@ -2,7 +2,7 @@
 
 import { SelectableDisplay } from "@/components/UI";
 import { useFetch } from "@/hooks";
-import ServiceCard from "../cards/ServicesCard";
+import ServiceCard, { ServiceType } from "../cards/ServicesCard";
 import { Header, Indicator } from "../page";
 
 type ServiceStepProps = {
@@ -12,13 +12,8 @@ type ServiceStepProps = {
     steps: string[];
 }
 
-type StoreServices = {
-    id: string;
-    name: string
-}
-
 export default function ServicesStep ({ storeId, onBack, onChange, steps }: ServiceStepProps) {
-    const result = useFetch<StoreServices[]>(
+    const result = useFetch<ServiceType[]>(
         '/api/storeServices',
         {
             body: {

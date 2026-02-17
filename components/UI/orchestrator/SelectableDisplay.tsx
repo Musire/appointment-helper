@@ -35,7 +35,7 @@ export default function SelectableDisplay<T>({
 
     return (
         <div className="">
-            <ul className="">
+            <ul className="flex flex-col space-y-4">
                 {data?.map(item => {
                     const id = getId(item)
 

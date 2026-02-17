@@ -18,7 +18,9 @@ export async function POST(request: Request) {
             services: {
                 select: {
                     id: true,
-                    name: true
+                    name: true,
+                    durationMin: true,
+                    priceCents: true
                 }
             }
         }
