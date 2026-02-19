@@ -44,3 +44,21 @@ export function sortByWeekday<T extends { day: Weekday }>(
 }
 
 
+export function formatCurrency(
+  amount: string | number,
+  currency: string = "USD",
+  locale: string = "en-US"
+): string {
+  const numericAmount =
+    typeof amount === "string" ? Number(amount) : amount;
+
+  if (isNaN(numericAmount)) {
+    throw new Error("Invalid amount");
+  }
+
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+  }).format(numericAmount);
+}
+

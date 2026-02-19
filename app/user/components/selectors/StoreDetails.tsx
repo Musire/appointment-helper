@@ -1,18 +1,17 @@
+import { ConfigTable } from "@/app/admin/store/[slug]/config/components";
+import { StoreConfig } from "@/generated/prisma";
 
-type StoreDetailsProps<T> = {
+type StoreDetailsProps = {
     view: 'stores' | 'details';
-    data: T;
+    data: StoreConfig;
 }
 
-export default function StoreDetails<T> ({ view, data }: StoreDetailsProps<T>) {
+export default function StoreDetails ({ view, data }: StoreDetailsProps) {
     if (view !== 'details') return null;
 
     return (
         <div className="max-h-[55dvh]  overflow-scroll scrollbar-none ">
-            <pre className="">
-                {JSON.stringify(data, null, 2)}
-            </pre>
-            
+            <ConfigTable config={data} />
         </div>
     );
 }

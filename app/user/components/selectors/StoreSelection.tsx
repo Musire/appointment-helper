@@ -1,9 +1,10 @@
 'use client';
 
 import { useFetch } from "@/hooks";
-import StoreSelector from "./StoreSelector";
-import { StoreBrief, StoreCard } from "../search";
 import { StoreDetails } from ".";
+import { StoreBrief, StoreCard } from "../search";
+import StoreSelector from "./StoreSelector";
+import { StoreConfig } from "@/generated/prisma";
 
 type StoreSelectionProps = {
     staffId: string;
@@ -27,7 +28,7 @@ export default function StoreSelection ({
         }
     )
 
-    const storeDetails = useFetch<StoreBrief | null>(
+    const storeDetails = useFetch<StoreConfig>(
         selectedId ? '/api/storeDetails' : null,
         {
             method: 'POST',
@@ -37,6 +38,7 @@ export default function StoreSelection ({
 
 
     if (!result?.data) return null;
+    
 
     return (
         <>
@@ -56,7 +58,7 @@ export default function StoreSelection ({
                     )}
                 />
             )}
-            <StoreDetails view={view} data={storeDetails?.data} />
+            {storeDetails?.data && <StoreDetails view={view} data={storeDetails.data} />}
         </>
     );
 }

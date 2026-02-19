@@ -1,5 +1,7 @@
 'use client';
-import dayjs, { Dayjs } from 'dayjs';
+import { generateCurrentWeek } from '@/lib/time';
+import { Dayjs } from 'dayjs';
+import { useMemo } from 'react';
 
 type DataType = {
     day: string;
@@ -29,31 +31,21 @@ function DaySelector ({ data, selected, onSelect }: DaySelectorProps) {
     )
 }
 
-const testData = [
-  { id: 'mon-123', day: 'mon', date: dayjs('2026-02-09') },
-  { id: 'tue-123', day: 'tue', date: dayjs('2026-02-10') },
-  { id: 'wed-123', day: 'wed', date: dayjs('2026-02-11') },
-  { id: 'thu-123', day: 'thu', date: dayjs('2026-02-12') },
-  { id: 'fri-123', day: 'fri', date: dayjs('2026-02-13') },
-  { id: 'sat-123', day: 'sat', date: dayjs('2026-02-14') },
-  { id: 'sun-123', day: 'sun', date: dayjs('2026-02-15') },
-]
-
 type WeeklySelectorProps = {
     selectedDate: Dayjs;
     onSelect: (d: Dayjs) => void;
 }
 
 export default function WeeklySelector ({ selectedDate, onSelect }: WeeklySelectorProps) {
-
+    const week = useMemo(() => generateCurrentWeek(), [])
     return (
         <ul className=" h-20 w-full flex">
-            {testData.map((item) => {
+            {week.map((item) => {
                 return (
                     <DaySelector 
                         key={item.id}
                         data={item}
-                        selected={item.date.toString() === selectedDate.toString()}
+                        selected={item.date.isSame(selectedDate, "day")}
                         onSelect={() => onSelect(item.date)}
                     />
                 )

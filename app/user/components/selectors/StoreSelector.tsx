@@ -21,7 +21,7 @@ export default function StoreSelector<T, K extends string | null> ({
 
     return (
         <div className="">
-            <ul className="">
+            <ul className="flex flex-col space-y-4">
                 {stores?.map(item => {
                     const id = getId(item)
 

@@ -53,7 +53,7 @@ export default function StaffSearch<T extends StaffBrief> ({
                 />
             )}
 
-            {(view === 'details') && <StaffDetails />}       
+            {(view === 'details') && <StaffDetails userId={selectedId} />}       
         </>
     );
 }

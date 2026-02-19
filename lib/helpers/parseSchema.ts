@@ -25,3 +25,11 @@ export function parseSchemaSync<T>(
 
   return parsed.data
 }
+
+export function quickParse<T>(
+  schema: ZodType<T>,
+  data: unknown
+) {
+  const parsed = schema.safeParse(data)
+  return parsed
+}

@@ -23,18 +23,18 @@ export default function ServiceCard ({ item, selected, onSelect }: ServiceCardPr
     return (
         <li 
             onClick={onSelect}
-            className={`ring-2 normal-space flex-col flex space-y-4 hover:cursor-pointer  relative p-6 ${isSelected}`}
+            className={`ring-2 normal-space flex-col flex space-y-4 hover:cursor-pointer  relative p-6  ${isSelected}`}
         >
             <article className="flex items-center space-x-6" >
-                <Scissors size={40} />
+                <Scissors size={40} className={`${selected ? "text-alternate" : "text-whitesmoke/60 hover:text-whitesmoke/87"}`} />
                 <span className="flex flex-col space-y-2">
                     <p className="capitalize">{item.name}</p>
                     <p className="">{`$${item.priceCents} | ${item.durationMin} mins`}</p>
                 </span>
             </article>
             <p className="">description of the service</p>
-            <div className={`absolute size-6 right-6 top-1/2 -translate-y-1/2  rounded-full ring-2 ${selected ? "ring-whitesmoke/20": "hidden"} centered`}>
-                <Check size={20} className="text-whitesmoke/87" />
+            <div className={`absolute size-6 right-6 top-1/2 -translate-y-1/2  rounded-full ring-2 ${selected ? "ring-alternate/50": "hidden"} centered`}>
+                <Check size={20} className="text-alternate" />
             </div>
         </li>
     );
