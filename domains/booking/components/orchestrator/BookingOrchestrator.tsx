@@ -2,25 +2,33 @@
 
 import { OrchestratorLogic } from "@/components/UI";
 import { contextFromQuery, RouteParams, StepResolver } from "@/lib/orchestrator";
-import { StaffSteps, StoreSteps } from "../page/Indicator";
 import { StaffBrief, StoreBrief } from "../search";
 import { BookingRegistry } from "./BookingRegistry";
 
+export const StaffSteps = [
+    'staff', 
+    'staffDetails', 'staffStore', 'storeDetails', 'services', 'date time', 'review']
+export const StoreSteps = ['store', 'storeDetails', 'storeStaff', 'staffDetails', 'services', 'date time', 'review']
+
 export type BookingStep = 
-    'store' | 
+    'store' |
+    'storeDetails' | 
     'staff' | 
+    'staffDetails' |
     'storeStaff' | 
     'staffStore' | 
     'dateTime' |
-    'review' | 
     'services' |
-    'dateTime';
+    'dateTime' |
+    'review' ;
 
 export type BookingContextType = {
     anchor: string | undefined;
     store: string | undefined;
+    storeDetails: boolean;
     storeStaff: string | undefined;
     staff: string | undefined;
+    staffDetails: boolean;
     staffStore: string | undefined;
     review: string | undefined
     services: string | undefined;
@@ -45,7 +53,9 @@ const staffFlow: BookingStep[] = [
 
 const stepCompleted: Record<BookingStep, (ctx: BookingContextType) => boolean> = {
   store: ctx => !!ctx.store,
+  storeDetails: ctx => !!ctx.storeDetails,
   staff: ctx => !!ctx.staff,
+  staffDetails: ctx => !!ctx.staffDetails,
   storeStaff: ctx => !!ctx.storeStaff,
   staffStore: ctx => !!ctx.staffStore,
   services: ctx => !!ctx.services?.length,
@@ -70,8 +80,10 @@ export function BookingOrchestrator ({ query, stores, staff }: BookingProps) {
     const context: BookingContextType = contextFromQuery(query, {
         anchor: 'store',
         store: undefined,
+        storeDetails: false,
         storeStaff: undefined,
         staff: undefined,
+        staffDetails: false,
         staffStore: undefined,
         services: undefined,
         dateTime: undefined,

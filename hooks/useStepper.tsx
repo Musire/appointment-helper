@@ -1,3 +1,5 @@
+'use client';
+
 import { Step } from "@/components/forms/steps/AvailabilitySteps";
 import { stepReducer } from "@/reducers";
 import { useReducer } from "react";

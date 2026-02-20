@@ -1,12 +1,10 @@
 'use client';
 
-import { DatetimeSlot, ServiceSlot, StaffSlot, StoreSlot } from "@/domains/booking";
+import { BookingContextType, DatetimeSlot, ServiceSlot, StaffBrief, StaffSlot, StoreBrief, StoreSlot } from "@/domains/booking";
 import { Service, Store, User } from "@/generated/prisma";
 import { useFetch } from "@/hooks";
 import { formatCurrency } from "@/lib/stringMutate";
-import { BookingContextType } from "../orchestrator";
 import { ContinueButton, Header, Indicator } from "../page";
-import { StaffBrief, StoreBrief } from "../search";
 
 type ReviewData = {
     store: Store,

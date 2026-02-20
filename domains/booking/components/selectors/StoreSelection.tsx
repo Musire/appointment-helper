@@ -58,7 +58,7 @@ export default function StoreSelection ({
                     )}
                 />
             )}
-            {storeDetails?.data && <StoreDetails view={view} data={storeDetails.data} />}
+            {selectedId && <StoreDetails  userId={selectedId} />}
         </>
     );
 }

@@ -1,10 +1,22 @@
-import { BookingContextType, BookingExternal, DateTimeStep, ServicesStep, StaffStep, StaffStoreStep, StoreStep } from "@/app/user/components";
-import ReviewStep from "@/app/user/components/steps/ReviewStep";
 import { OrchestratorEnv, StepRegistry } from "@/components/UI/orchestrator/Orchestrator";
+import { 
+    BookingContextType, 
+    BookingExternal, 
+    DateTimeStep, 
+    ServicesStep, 
+    StaffStep, 
+    StaffStoreStep, 
+    StoreStep,
+    StoreStaffStep,
+    ReviewStep, 
+    StaffDetailsStep,
+    StoreDetailsStep} from "@/domains/booking/components";
 
 type Step = 
     'store' |
+    'storeDetails' |
     'staff' |
+    'staffDetails' |
     'storeStaff' |
     'staffStore' |
     'services' |
@@ -23,6 +35,17 @@ export const BookingRegistry: StepRegistry<Step, OrchestratorEnv<BookingContextT
         }),
         render: props => <StoreStep {...props} />
     },
+    storeDetails: {
+        mapProps: env => ({
+            value: env.context.store,
+            stores: env.external.stores,
+            steps: env.external.steps,
+            onChange: (v: string) => env.onUpdate({ key: 'store', value: v }),
+            changeAnchor: (v: string) => env.onUpdate({ key: 'anchor', value: v}),
+            onBack: () => env.onBack()
+        }),
+        render: props => <StoreDetailsStep {...props} />
+    },
     staff: {
         mapProps: env => ({
             value: env.context.staff,
@@ -34,14 +57,25 @@ export const BookingRegistry: StepRegistry<Step, OrchestratorEnv<BookingContextT
         }),
         render: props => <StaffStep {...props} />
     },
-    storeStaff: {
+    staffDetails: {
         mapProps: env => ({
-            staffId: env.context.staff,
+            value: env.context.staff,
+            staff: env.external.staff,
             steps: env.external.steps,
-            onChange: (v: string) => env.onUpdate({ key: 'staffStore', value: v }),
+            onChange: (v: string) => env.onUpdate({ key: 'staff', value: v }),
+            changeAnchor: (v: string) => env.onUpdate({ key: 'anchor', value: v}),
             onBack: () => env.onBack()
         }),
-        render: props => <StaffStoreStep {...props} />
+        render: props => <StaffDetailsStep {...props} />
+    },
+    storeStaff: {
+        mapProps: env => ({
+            storeId: env.context.store,
+            steps: env.external.steps,
+            onChange: (v: string) => env.onUpdate({ key: 'storeStaff', value: v }),
+            onBack: () => env.onBack()
+        }),
+        render: props => <StoreStaffStep {...props} />
     },
     staffStore: {
         mapProps: env => ({

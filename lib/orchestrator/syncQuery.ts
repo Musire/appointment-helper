@@ -1,4 +1,4 @@
-import { StoreBrief } from "@/app/user/components/search/StoreCard"
+import { StoreBrief } from "@/domains/booking/components/cards/StoreCard"
 
 export type QuerySerializable =
   | string

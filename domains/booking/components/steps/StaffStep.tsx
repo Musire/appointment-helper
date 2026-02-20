@@ -1,6 +1,6 @@
 'use client';
 
-import { ContinueButton, Header, Indicator, StaffBrief, StaffSearch } from "@/app/user/components";
+import { ContinueButton, Header, Indicator, StaffBrief, StaffSearch } from "@/domains/booking";
 import { useOrchestrator } from "@/hooks";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

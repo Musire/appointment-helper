@@ -1,7 +1,7 @@
 'use client';
 
 import { SearchList } from "@/components/UI";
-import { StaffBrief, StaffCard, StaffDetails } from "./";
+import { StaffBrief, StaffCard, StaffDetails } from ".";
 
 type StaffSearchProps<T extends StaffBrief> = {
     staff: T[];

@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from "react";
+'use client';
+import { useEffect, useRef, useState } from "react";
 
 type AnimationState = true | false | null;  
 // true  = animate in

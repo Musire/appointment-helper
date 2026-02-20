@@ -1,7 +1,6 @@
 import { Check } from "lucide-react";
 
-export const StaffSteps = ['staff', 'store', 'services', 'date time', 'review']
-export const StoreSteps = ['store', 'staff', 'services', 'date time', 'review']
+
 
 function Dot ({ completed }: { completed: boolean }) {
     const isComplete = completed

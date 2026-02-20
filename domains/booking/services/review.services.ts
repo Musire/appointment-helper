@@ -1,4 +1,3 @@
-import { Service, StaffAvailability, Store, User } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { convertUTC } from "@/lib/time";
 

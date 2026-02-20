@@ -1,24 +1,36 @@
 'use client';
 
-import { Header, Indicator, StoreBrief, StoreSearch } from "@/app/user/components";
+import { ContinueButton, Header, Indicator, StoreBrief, StoreSearch } from "@/domains/booking";
 import { useOrchestrator } from "@/hooks";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-type StoreStepProps = { 
+type StoreStepProps = {
+    onChange: (v: string) => void;
     changeAnchor: (v: string) => void;
     stores: StoreBrief[];
     steps: string[];
 }
 
-export default function StoreStep ({ changeAnchor, stores, steps }: StoreStepProps) {
+export default function StoreStep ({ onChange, changeAnchor, stores, steps }: StoreStepProps) {
     const activeStyle = 'border-b-2 border-whitesmoke/87 text-whitesmoke/87'
     const inActiveStyle = 'text-whitesmoke/37 hover:text-whitesmoke/60'
 
+    const [selectedId, setSelectedId] = useState<string | null>(null)
     const router = useRouter()
     const { clear } = useOrchestrator('orchestrator-history')
 
+    const handleSelect = (id: string | null) => {
+        setSelectedId((prev) => (prev === id ? null : id))
+    }
+
     const handleBack = () => {
         router.push('/user/dashboard')
+    }
+
+    const handleContinue = () => {
+        if (!selectedId) return;
+        onChange(selectedId)
     }
 
     const handleAnchor = () => {
@@ -39,7 +51,12 @@ export default function StoreStep ({ changeAnchor, stores, steps }: StoreStepPro
                     Staff
                 </button>
             </span>
-            <StoreSearch stores={stores} />
+            <StoreSearch 
+                stores={stores}
+                {...{selectedId}}
+                onSelect={handleSelect}
+            />
+            <ContinueButton isDisabled={false} onContinue={handleContinue} />
         </div>
     );
 }

@@ -1,3 +1,5 @@
+'use client';
+
 import { getNotifications } from "@/app/actions/user.actions";
 import { $Enums } from "@/generated/prisma";
 import { supabase } from "@/lib/supabase/client";

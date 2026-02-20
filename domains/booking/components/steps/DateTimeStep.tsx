@@ -1,6 +1,6 @@
 'use client';
 
-import { AlternateDate, SlotSelector, WeeklySelector } from "@/domains/booking";
+import { AlternateDate, SlotSelector, WeeklySelector } from "@/domains/booking/components";
 import dayjs, { Dayjs } from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";

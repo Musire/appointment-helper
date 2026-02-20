@@ -1,7 +1,7 @@
+import { BookingOrchestrator } from "@/domains/booking";
 import { getActiveStores } from "@/lib/queries/stores";
 import { SearchParamsType } from "@/lib/queries/types";
 import { getActiveStaff } from "@/lib/queries/users";
-import { BookingOrchestrator } from "../components/";
 
 export default async function BookingPage ({ searchParams }: SearchParamsType) {
     const stores = await getActiveStores();
