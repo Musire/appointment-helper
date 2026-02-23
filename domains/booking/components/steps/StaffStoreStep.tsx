@@ -8,33 +8,14 @@ type StaffStoreProps = {
     onBack: () => void;
     onChange: (v:string) => void;
     steps: string[];
+    anchor: string;
 }
 
-export default function StaffStoreStep ({ staffId, onBack, onChange, steps }: StaffStoreProps) {
+export default function StaffStoreStep ({ staffId, onBack, onChange, steps, anchor }: StaffStoreProps) {
     const [selectedId, setSelectedId] = useState< string | null >(null);
-    const [view, setView] = useState<'stores' | 'details'>('stores');
-
-    const handleBack = () => {
-        if (view === 'details') {
-            setView('stores')
-            setSelectedId(null)
-            return
-        }
-        
-        if (!selectedId) {
-            onBack()
-        }
-    }
 
     const handleContinue = () => {
-        if (view === 'stores') {
-            setView('details')
-            return
-        }
-        
-        if (selectedId) {
-            onChange(selectedId)
-        }
+        if (selectedId) onChange(selectedId); 
     }
 
     const handleSelect = (id: string | null) => {
@@ -43,13 +24,12 @@ export default function StaffStoreStep ({ staffId, onBack, onChange, steps }: St
     
     return (
         <div className="flex-col flex space-y-6">
-            <Header onBack={handleBack} title="Select Store" />
-            <Indicator {...{steps}} index={2} />
-            <StoreSelection 
+            <Header onBack={onBack} title="Select staff store" />
+            <Indicator {...{steps}} index={anchor === 'store' ? 2 : 4} />
+            <StoreSelection
                 {...{staffId}} 
                 {...{selectedId}}
                 onSelect={handleSelect}
-                {...{view}}
             />
             <ContinueButton isDisabled={!selectedId} onContinue={handleContinue} />
         </div>

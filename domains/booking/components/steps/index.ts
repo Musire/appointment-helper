@@ -6,3 +6,4 @@ export { default as StoreStep } from './StoreStep';
 export { default as ReviewStep } from './ReviewStep';
 export { default as StoreDetailsStep } from './StoreDetailsStep';
 export { default as StaffDetailsStep } from './StaffDetailsStep';
+export { default as StoreStaffStep } from './StoreStaffStep';

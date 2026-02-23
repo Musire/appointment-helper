@@ -1,7 +1,6 @@
 'use client';
-import { ContinueButton, Header, Indicator } from "@/domains/booking";
+import { ContinueButton, Header, Indicator, StaffSelector } from "@/domains/booking";
 import { useState } from "react";
-import StaffSelector from "./StaffSelector";
 
 type StoreStaffProps = {
     storeId: string;
@@ -12,29 +11,10 @@ type StoreStaffProps = {
 
 export default function StoreStaffStep ({ storeId, onBack, onChange, steps }: StoreStaffProps) {
     const [selectedId, setSelectedId] = useState< string | null >(null);
-    const [view, setView] = useState<'staff' | 'details'>('staff');
-
-    const handleBack = () => {
-        if (view === 'details') {
-            setView('staff')
-            setSelectedId(null)
-            return
-        }
-        
-        if (!selectedId) {
-            onBack()
-        }
-    }
 
     const handleContinue = () => {
-        if (view === 'staff') {
-            setView('details')
-            return
-        }
-        
-        if (selectedId) {
-            onChange(selectedId)
-        }
+        if (!selectedId) return;
+        onChange(selectedId)
     }
 
     const handleSelect = (id: string | null) => {
@@ -43,12 +23,11 @@ export default function StoreStaffStep ({ storeId, onBack, onChange, steps }: St
     
     return (
         <div className="flex-col flex space-y-6">
-            <Header onBack={handleBack} title="Select Store" />
-            <Indicator {...{steps}} index={2} />
+            <Header onBack={onBack} title="Select Store" />
+            <Indicator {...{steps}} index={3} />
             <StaffSelector
                 {...{storeId}}
                 {...{selectedId}}
-                {...{view}}
                 onSelect={handleSelect}
             />
             <ContinueButton isDisabled={!selectedId} onContinue={handleContinue} />

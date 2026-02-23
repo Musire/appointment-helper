@@ -46,7 +46,7 @@ export default function DateTimeStep ({ onBack, onChange, steps }: DateTimeStepP
     return (
         <div className="w-full flex flex-col space-y-6">
             <Header onBack={onBack} title={'Select Date and Time'} />
-            <Indicator {...{steps}} index={4} />
+            <Indicator {...{steps}} index={6} />
             <WeeklySelector 
                 {...{selectedDate}}
                 onSelect={setSelectedDate}

@@ -60,7 +60,7 @@ export default function ReviewStep ({
     return (
         <div className="w-full flex flex-col space-y-6">
             <Header {...{onBack}} title="Review and Confirm" />
-            <Indicator {...{steps}} index={5} />
+            <Indicator {...{steps}} index={7} />
             <h2 className="font-semibold text-lg">Summary</h2>
             <ul className="flex space-y-2 flex-col items-center">
                 <StoreSlot store={store} />

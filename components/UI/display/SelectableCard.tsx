@@ -6,7 +6,7 @@ type SelectableCardProps = {
   children: React.ReactNode
 }
 
-export function SelectableCard({
+export default function SelectableCard({
   selected,
   onSelect,
   children

@@ -1,6 +1,11 @@
 'use client';
 
-import { ContinueButton, Header, Indicator, StaffBrief, StaffSearch } from "@/domains/booking";
+import { 
+    ContinueButton, 
+    Header, 
+    Indicator, 
+    StaffBrief, 
+    StaffSearch } from "@/domains/booking";
 import { useOrchestrator } from "@/hooks";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -19,33 +24,14 @@ export default function StaffStep ({ onChange, changeAnchor, staff, steps }: Sta
     const { clear } = useOrchestrator('orchestrator-history')
 
     const [selectedId, setSelectedId] = useState<string | null>(null)
-    const [view, setView] = useState<'search' | 'details'>('search');
 
-    const handleBack = () => {
-        if (view === 'details') {
-            setView('search')
-            setSelectedId(null)
-            return
-        }
-        
-        if (!selectedId) {
-            router.push('/user/dashboard')
-        }
-    }
-
-    const handleContinue = () => {
-        if (view === 'search') {
-            setView('details');
-            return;
-        }
-
-        if (selectedId) {
-            onChange(selectedId);
-        }
-    }
 
     const handleSelect = (id: string | null) => {
         setSelectedId((prev) => (prev === id ? null : id))
+    }
+
+    const handleContinue = () => {
+        if (selectedId) onChange(selectedId); 
     }
 
     const handleAnchor = () => {
@@ -55,7 +41,7 @@ export default function StaffStep ({ onChange, changeAnchor, staff, steps }: Sta
 
     return (
         <div className="flex flex-col space-y-6">
-            <Header onBack={handleBack} title="Select Staff" />
+            <Header onBack={() => router.push('/user/dashboard')} title="Select Staff" />
             <Indicator steps={steps} index={1} />
             <span className="flex items-center space-x-4 ">
                 <button 
@@ -68,10 +54,8 @@ export default function StaffStep ({ onChange, changeAnchor, staff, steps }: Sta
             </span>
             <StaffSearch 
                 staff={staff} 
-                onChange={onChange}
                 {...{selectedId}}
                 onSelect={handleSelect}
-                {...{view}}
             />
             <ContinueButton isDisabled={false} onContinue={handleContinue} />
         </div>

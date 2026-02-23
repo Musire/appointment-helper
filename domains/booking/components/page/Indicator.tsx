@@ -20,7 +20,7 @@ function Line ({ completed }: { completed: boolean }) {
         : "bg-whitesmoke/15"
 
     return (
-        <div className={`h-0.5 w-16 ${isComplete}`} />
+        <div className={`h-0.5 w-12 ${isComplete}`} />
     )
 }
 
@@ -37,7 +37,7 @@ function Segment ({
         <div className="flex items-center relative" >
             <Dot {...{completed}} />
             {!isLast && <Line {...{completed}} />}
-            <p className={`absolute capitalize top-12 left-0 -translate-x-[35%] w-20 text-center text-sm  ${completed ? "text-whitesmoke/87" : "text-whitesmoke/37"}`}>{step}</p>
+            <p className={`absolute capitalize top-12 left-0 -translate-x-[35%] w-20 text-center text-xs  ${completed ? "text-whitesmoke/87" : "text-whitesmoke/37"}`}>{step}</p>
         </div>
     )
 }

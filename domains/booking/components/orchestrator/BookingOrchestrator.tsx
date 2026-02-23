@@ -5,11 +5,6 @@ import { contextFromQuery, RouteParams, StepResolver } from "@/lib/orchestrator"
 import { StaffBrief, StoreBrief } from "../search";
 import { BookingRegistry } from "./BookingRegistry";
 
-export const StaffSteps = [
-    'staff', 
-    'staffDetails', 'staffStore', 'storeDetails', 'services', 'date time', 'review']
-export const StoreSteps = ['store', 'storeDetails', 'storeStaff', 'staffDetails', 'services', 'date time', 'review']
-
 export type BookingStep = 
     'store' |
     'storeDetails' | 
@@ -17,7 +12,6 @@ export type BookingStep =
     'staffDetails' |
     'storeStaff' | 
     'staffStore' | 
-    'dateTime' |
     'services' |
     'dateTime' |
     'review' ;
@@ -25,10 +19,10 @@ export type BookingStep =
 export type BookingContextType = {
     anchor: string | undefined;
     store: string | undefined;
-    storeDetails: boolean;
+    storeDetails: boolean | undefined;
     storeStaff: string | undefined;
     staff: string | undefined;
-    staffDetails: boolean;
+    staffDetails: boolean| undefined;
     staffStore: string | undefined;
     review: string | undefined
     services: string | undefined;
@@ -37,7 +31,9 @@ export type BookingContextType = {
 
 const storeFlow: BookingStep[] = [
   'store',
+  'storeDetails',
   'storeStaff',
+  'staffDetails',
   'services',
   'dateTime',
   'review',
@@ -45,7 +41,9 @@ const storeFlow: BookingStep[] = [
 
 const staffFlow: BookingStep[] = [
   'staff',
+  'staffDetails',
   'staffStore',
+  'storeDetails',
   'services',
   'dateTime',
   'review',
@@ -80,10 +78,10 @@ export function BookingOrchestrator ({ query, stores, staff }: BookingProps) {
     const context: BookingContextType = contextFromQuery(query, {
         anchor: 'store',
         store: undefined,
-        storeDetails: false,
+        storeDetails: undefined,
         storeStaff: undefined,
         staff: undefined,
-        staffDetails: false,
+        staffDetails: undefined,
         staffStore: undefined,
         services: undefined,
         dateTime: undefined,
@@ -91,8 +89,8 @@ export function BookingOrchestrator ({ query, stores, staff }: BookingProps) {
     })
 
     const steps = context.anchor === 'store' 
-        ? StoreSteps
-        : StaffSteps
+        ? storeFlow
+        : staffFlow
 
     const resolver: StepResolver<BookingContextType, BookingStep> = (context) => {
         const flow =

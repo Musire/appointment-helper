@@ -1,29 +1,21 @@
 import { OrchestratorEnv, StepRegistry } from "@/components/UI/orchestrator/Orchestrator";
-import { 
-    BookingContextType, 
-    BookingExternal, 
-    DateTimeStep, 
-    ServicesStep, 
-    StaffStep, 
-    StaffStoreStep, 
-    StoreStep,
-    StoreStaffStep,
-    ReviewStep, 
+import {
+    BookingContextType,
+    BookingExternal,
+    BookingStep,
+    DateTimeStep,
+    ReviewStep,
+    ServicesStep,
     StaffDetailsStep,
-    StoreDetailsStep} from "@/domains/booking/components";
+    StaffStep,
+    StaffStoreStep,
+    StoreDetailsStep,
+    StoreStaffStep,
+    StoreStep
+} from "@/domains/booking/components";
 
-type Step = 
-    'store' |
-    'storeDetails' |
-    'staff' |
-    'staffDetails' |
-    'storeStaff' |
-    'staffStore' |
-    'services' |
-    'dateTime' |
-    'review';
 
-export const BookingRegistry: StepRegistry<Step, OrchestratorEnv<BookingContextType, BookingExternal>> = {
+export const BookingRegistry: StepRegistry<BookingStep, OrchestratorEnv<BookingContextType, BookingExternal>> = {
     store: {
         mapProps: env => ({
             value: env.context.store,
@@ -37,11 +29,10 @@ export const BookingRegistry: StepRegistry<Step, OrchestratorEnv<BookingContextT
     },
     storeDetails: {
         mapProps: env => ({
-            value: env.context.store,
-            stores: env.external.stores,
+            store: env.context.store,
+            staffStore: env.context.staffStore,
             steps: env.external.steps,
-            onChange: (v: string) => env.onUpdate({ key: 'store', value: v }),
-            changeAnchor: (v: string) => env.onUpdate({ key: 'anchor', value: v}),
+            onChange: () => env.onUpdate({ key: 'storeDetails', value: true }),
             onBack: () => env.onBack()
         }),
         render: props => <StoreDetailsStep {...props} />
@@ -59,10 +50,11 @@ export const BookingRegistry: StepRegistry<Step, OrchestratorEnv<BookingContextT
     },
     staffDetails: {
         mapProps: env => ({
-            value: env.context.staff,
-            staff: env.external.staff,
+            storeStaffId: env.context.storeStaff,
+            staffId: env.context.staff,
             steps: env.external.steps,
-            onChange: (v: string) => env.onUpdate({ key: 'staff', value: v }),
+            anchor: env.context.anchor,
+            onChange: () => env.onUpdate({ key: 'staffDetails', value: true }),
             changeAnchor: (v: string) => env.onUpdate({ key: 'anchor', value: v}),
             onBack: () => env.onBack()
         }),
@@ -72,6 +64,7 @@ export const BookingRegistry: StepRegistry<Step, OrchestratorEnv<BookingContextT
         mapProps: env => ({
             storeId: env.context.store,
             steps: env.external.steps,
+            anchor: env.context.anchor,
             onChange: (v: string) => env.onUpdate({ key: 'storeStaff', value: v }),
             onBack: () => env.onBack()
         }),

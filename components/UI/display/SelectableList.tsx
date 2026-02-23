@@ -1,6 +1,6 @@
 'use client'
 
-import { SelectableCard } from "./SelectableCard";
+import SelectableCard from "./SelectableCard";
 
 type SelectableListProps<T, K extends string | null> = {
     items: T[]

@@ -1,6 +1,6 @@
 'use client';
 
-import { SelectableDisplay } from "@/components/UI";
+import { FetchGuard, SelectableDisplay } from "@/components/UI";
 import { useFetch } from "@/hooks";
 import ServiceCard, { ServiceType } from "../cards/ServicesCard";
 import { Header, Indicator } from "../page";
@@ -15,44 +15,28 @@ type ServiceStepProps = {
 export default function ServicesStep ({ storeId, onBack, onChange, steps }: ServiceStepProps) {
     const result = useFetch<ServiceType[]>(
         '/api/storeServices',
-        {
-            body: {
-                storeId
-            }
-        }
+        { body: { storeId } }
     )
-
-    if (result.status === 'idle') {
-        return null
-    }
-
-    if (result.status === 'loading') {
-        return <p className="">loading ...</p>
-    }
-
-    if (result.error) {
-        return <p className="text-error-dark">{result.error}</p>
-    }
-
-    if (!result?.data) {
-        return null
-    }
 
     return (
         <div className="flex flex-col space-y-6 ">
             <Header onBack={onBack} title="Select Services" />
             <Indicator  
                 steps={steps}
-                index={3}
+                index={5}
             />
-            <SelectableDisplay 
-                data={result.data}
-                getId={item => item.id}
-                onChange={onChange}
-                renderItem={(props) => (
-                    <ServiceCard key={props.item.id} {...props}/>
+            <FetchGuard state={result} >
+                {(data) => (
+                    <SelectableDisplay 
+                        data={data}
+                        getId={item => item.id}
+                        onChange={onChange}
+                        renderItem={(props) => (
+                            <ServiceCard key={props.item.id} {...props}/>
+                        )}
+                    />
                 )}
-            />
+            </FetchGuard>
         </div>
     );
 }

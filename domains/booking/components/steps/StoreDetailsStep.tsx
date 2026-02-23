@@ -1,26 +1,34 @@
 import { ConfigTable } from "@/app/admin/store/[slug]/config/components";
 import { StoreConfig } from "@/generated/prisma";
 import { useFetch } from "@/hooks";
+import { ContinueButton, Header, Indicator } from "../page";
 
 type StoreDetailsProps = {
-    staffId: string;
+    store: string;
+    staffStore: string;
+    steps: string[];
+    onBack: () => void;
+    onChange: () => void;
 }
 
-export default function StoreDetailsStep ({ staffId }: StoreDetailsProps) {
+export default function StoreDetailsStep ({ store, staffStore, steps, onBack, onChange }: StoreDetailsProps) {
+    
+    const id = store || staffStore
 
     const { status, error, data } = useFetch<StoreConfig>(
-        staffId ? '/api/storeDetails' : null,
+        id ? '/api/storeDetails' : null,
         {
             method: 'POST',
-            body: { 'storeId': staffId }
+            body: { storeId: id }
         }
     )
 
-    if (!data) return null;
-
     return (
-        <div className="max-h-[55dvh]  overflow-scroll scrollbar-none ">
-            <ConfigTable config={data} />
-        </div>
+        <>  
+            <Header onBack={onBack} title="store details" />
+            <Indicator steps={steps} index={(!!store) ? 2 : 4} />
+            { data && <ConfigTable config={data} />}
+            <ContinueButton onContinue={onChange} />
+        </>
     );
 }

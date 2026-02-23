@@ -1,7 +1,6 @@
 'use client';
 
 import { SelectableList } from "@/components/UI";
-import { StaffDetails } from "@/domains/booking/components";
 import { useFetch } from "@/hooks";
 import { LoaderCircle } from "lucide-react";
 import { StaffSlot } from "../review";
@@ -13,14 +12,12 @@ interface StaffUser {
 }
 
 type StaffSelectorProps = {
-    view: 'staff' | 'details';
     storeId: string;
     selectedId: string | null;
     onSelect: (s: string) => void;
 }
 
 export default function StaffSelector({ 
-    view, 
     storeId, 
     selectedId, 
     onSelect
@@ -43,23 +40,16 @@ export default function StaffSelector({
     }
 
     return (
-        <>
-            {(view === 'staff') && data && (
-                <div className="">
-                    <SelectableList 
-                        items={data}
-                        selected={selectedId}
-                        onSelect={onSelect}
-                        getId={user => user.id}
-                        renderItem={(item) => (
-                            <StaffSlot staff={item} />
-                        )}
-                    />
-                </div>
-            )}
-            {(view === 'details') && (
-                <StaffDetails userId={selectedId} />
-            )}
-        </>
+        <div className="">
+            <SelectableList 
+                items={data}
+                selected={selectedId}
+                onSelect={onSelect}
+                getId={user => user.id}
+                renderItem={(item) => (
+                    <StaffSlot staff={item} />
+                )}
+            />
+        </div>
     )
 }
