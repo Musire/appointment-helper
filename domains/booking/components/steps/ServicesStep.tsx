@@ -1,42 +1,56 @@
 'use client';
 
-import { FetchGuard, SelectableDisplay } from "@/components/UI";
+import { FetchGuard, SelectableList } from "@/components/UI";
 import { useFetch } from "@/hooks";
+import { useState } from "react";
+import { useStepper } from "../../context";
 import ServiceCard, { ServiceType } from "../cards/ServicesCard";
-import { Header, Indicator } from "../page";
+import { ContinueButton, Header, Indicator } from "../page";
 
-type ServiceStepProps = {
-    storeId: string;
-    onBack: () => void;
-    onChange: (v: string | null) => void;
-    steps: string[];
-}
 
-export default function ServicesStep ({ storeId, onBack, onChange, steps }: ServiceStepProps) {
-    const result = useFetch<ServiceType[]>(
+export default function ServicesStep () {
+    const [selectedId, setSelectedId] = useState<string | null>(null)
+    const { steps, formData, back, updateData, next } = useStepper()
+
+    console.log(formData)
+
+    const res = useFetch<ServiceType[]>(
         '/api/storeServices',
-        { body: { storeId } }
+        { body: { storeId: formData?.storeId } }
     )
+
+    const handleSelect = (id: string | null) => {
+        setSelectedId((prev) => (prev === id ? null : id))
+    }
+    
+    const handleContinue = () => {
+        if (!selectedId) return;
+        updateData('serviceId', selectedId)
+        next()
+    }
+
 
     return (
         <div className="flex flex-col space-y-6 ">
-            <Header onBack={onBack} title="Select Services" />
+            <Header onBack={back} title="Select Services" />
             <Indicator  
                 steps={steps}
-                index={5}
+                index={3}
             />
-            <FetchGuard state={result} >
+            <FetchGuard state={res} >
                 {(data) => (
-                    <SelectableDisplay 
-                        data={data}
+                    <SelectableList 
+                        items={data}
                         getId={item => item.id}
-                        onChange={onChange}
-                        renderItem={(props) => (
-                            <ServiceCard key={props.item.id} {...props}/>
+                        selected={selectedId}
+                        onSelect={handleSelect}
+                        renderItem={(item) => (
+                            <ServiceCard data={item} />
                         )}
                     />
                 )}
             </FetchGuard>
+            <ContinueButton onContinue={handleContinue} />
         </div>
     );
 }

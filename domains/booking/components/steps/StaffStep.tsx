@@ -1,63 +1,62 @@
 'use client';
 
+import { FetchGuard, SelectableList } from "@/components/UI";
 import { 
     ContinueButton, 
     Header, 
     Indicator, 
     StaffBrief, 
-    StaffSearch } from "@/domains/booking";
-import { useOrchestrator } from "@/hooks";
+    StaffCard } from "@/domains/booking";
+import { useFetch } from "@/hooks";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useStepper } from "../../context";
 
-type StaffStepProps = {
-    onChange: (v: string) => void;
-    changeAnchor: (v: string) => void;
-    staff: StaffBrief[];
-    steps: string[];
-}
 
-export default function StaffStep ({ onChange, changeAnchor, staff, steps }: StaffStepProps) {
-    const activeStyle = 'border-b-2 border-whitesmoke/87 text-whitesmoke/87'
-    const inActiveStyle = 'text-whitesmoke/37 hover:text-whitesmoke/60'
-    const router = useRouter()
-    const { clear } = useOrchestrator('orchestrator-history')
-
+export default function StaffStep () {
     const [selectedId, setSelectedId] = useState<string | null>(null)
-
+    const router = useRouter()
+    const { steps, formData, changeFlow, next, updateData, back } = useStepper()
+    
+    const res = useFetch<StaffBrief[]>('/api/staff',
+        { 
+            method: 'POST',
+            body: {
+                storeId: formData.storeId
+            }
+        }
+    )
 
     const handleSelect = (id: string | null) => {
         setSelectedId((prev) => (prev === id ? null : id))
     }
 
     const handleContinue = () => {
-        if (selectedId) onChange(selectedId); 
-    }
-
-    const handleAnchor = () => {
-        changeAnchor('store')
-        clear()
+        if (!selectedId) return;
+        updateData('staffId', selectedId)
+        next()
     }
 
     return (
         <div className="flex flex-col space-y-6">
-            <Header onBack={() => router.push('/user/dashboard')} title="Select Staff" />
-            <Indicator steps={steps} index={1} />
-            <span className="flex items-center space-x-4 ">
-                <button 
-                    onClick={handleAnchor}
-                    className={`px-3 py-2 transition-colors hover:cursor-pointer ${inActiveStyle}`}
-                >
-                    Store
-                </button>
-                <p className={`px-3 py-2 ${activeStyle}`}>Staff</p>
-            </span>
-            <StaffSearch 
-                staff={staff} 
-                {...{selectedId}}
-                onSelect={handleSelect}
-            />
-            <ContinueButton isDisabled={false} onContinue={handleContinue} />
+            <Header onBack={back} title="Select Staff" />
+            <Indicator steps={steps} index={2} />
+            <FetchGuard
+                state={res}
+            >
+                {(data) => (
+                    <SelectableList 
+                        items={data}
+                        selected={selectedId}
+                        onSelect={handleSelect}
+                        getId={item => item.id}
+                        renderItem={(item) => (
+                            <StaffCard data={item}/>  
+                        )}
+                    />
+                )}
+            </FetchGuard>
+            <ContinueButton isDisabled={!selectedId} onContinue={handleContinue} />
         </div>
     );
 }

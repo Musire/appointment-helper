@@ -1,32 +1,27 @@
-import { prisma } from "@/lib/prisma";
+import { getServices } from "@/domains/booking/services/storeService.services";
 import { NextResponse } from "next/server";
-
 
 type POST_Request = {
   storeId: string
 }
 
 export async function POST(request: Request) {
-    const body = await (request.json()) as POST_Request
-    const { storeId } = body
-    
-    const serviceCategories = await prisma.serviceCategory.findMany({
-        where: {
-            storeId
-        },
-        select: {
-            services: {
-                select: {
-                    id: true,
-                    name: true,
-                    durationMin: true,
-                    priceCents: true
-                }
-            }
+    try {
+        const body = await (request.json()) as POST_Request
+        const { storeId } = body
+        
+        const { data, error } = await getServices(storeId)
+
+        if (error) {
+            return NextResponse.json({ data: null, error: error}, { status: 400 })
         }
-    })
 
-    const flattened = serviceCategories.flatMap(item => item.services)
-
-    return NextResponse.json(flattened)
+        return NextResponse.json(data)
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            { error: 'INTERNAL_ERROR' },
+            { status: 500 }
+        )
+    }
 }

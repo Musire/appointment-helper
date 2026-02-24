@@ -1,8 +1,5 @@
-type FetchState<T> =
-  | { status: 'idle' }
-  | { status: 'loading' }
-  | { status: 'error'; error: string }
-  | { status: 'success'; data: T }
+import { FetchState } from "@/hooks/useFetch"
+
 
 type FetchGuardProps<T> = {
   state: FetchState<T>

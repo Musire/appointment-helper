@@ -4,6 +4,7 @@ import { BookingContextType, DatetimeSlot, ServiceSlot, StaffBrief, StaffSlot, S
 import { Service, Store, User } from "@/generated/prisma";
 import { useFetch } from "@/hooks";
 import { formatCurrency } from "@/lib/stringMutate";
+import { useStepper } from "../../context";
 import { ContinueButton, Header, Indicator } from "../page";
 
 type ReviewData = {
@@ -14,29 +15,14 @@ type ReviewData = {
     time: string
 }
 
-
-type ReviewStepProps = {
-    stores: StoreBrief[];
-    staff: StaffBrief[];
-    value: BookingContextType;
-    onBack: () => void;
-    onSubmit: (value: BookingContextType) => void;
-    steps: string[];
-}
-
-export default function ReviewStep ({ 
-    value, 
-    onBack, 
-    onSubmit, 
-    steps 
-}: ReviewStepProps) {
-    const {anchor, ...booking} = value
+export default function ReviewStep () {
+    const { flow, formData, back, steps } = useStepper()
 
     const { status, data, error } = useFetch<ReviewData | null>('/api/review', { method: 'POST', body: {
-            store: booking.store || booking.staffStore,
-            staff: booking.staff || booking.storeStaff,
-            services: booking.services,
-            dateTime: booking.dateTime
+            store: formData.storeId,
+            staff: formData.staffId,
+            services: formData.serviceId,
+            dateTime: formData.dateTime
         } 
     })
 
@@ -54,12 +40,12 @@ export default function ReviewStep ({
     const {store, staff, services, date, time} = data
 
     const handleContinue = () => {
-        onSubmit(value)
+        console.log(formData)
     }
 
     return (
         <div className="w-full flex flex-col space-y-6">
-            <Header {...{onBack}} title="Review and Confirm" />
+            <Header {...{back}} title="Review and Confirm" />
             <Indicator {...{steps}} index={7} />
             <h2 className="font-semibold text-lg">Summary</h2>
             <ul className="flex space-y-2 flex-col items-center">

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-type FetchState<T> =
+export type FetchState<T> =
   | { status: 'idle'; data: null; error: null }
   | { status: 'loading'; data: null; error: null }
   | { status: 'success'; data: T; error: null }
