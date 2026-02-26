@@ -1,27 +1,25 @@
-'use client';
-import { User } from "lucide-react";
+import { User as Icon } from "lucide-react";
 
-export type StaffBrief = {
+export interface StaffUser {
     id: string;
-    fullName: string | null;
+    fullName?: string | null;
     email: string;
-    bio: string | null;
+    createdAt?: Date
 }
 
-type StaffCardProps = {
-    data: StaffBrief;
+type StaffSlotProps = {
+    staff: StaffUser,
 }
 
-export function StaffCard ({ data }: StaffCardProps) {
-    const { fullName } = data
+export default function StaffCard ({ staff }: StaffSlotProps) {
     
     return (
-        <article className="flex space-x-6">
-            <User size={40} strokeWidth={1} className="" />
-            <span className="flex flex-col">
-                <p className="capitalize text-whitesmoke/87">{ fullName }</p>
-                <p className="capitalize text-whitesmoke/60">barber</p>
+        <li  className={`flex items-center space-x-6 w-72`}>
+            <Icon size={30} strokeWidth={1} />
+            <span className="">
+                <p className="capitalize">{staff.fullName}</p>
+                <p className="capitalize">barber</p>
             </span>
-        </article>
-);
+        </li>
+    );
 }

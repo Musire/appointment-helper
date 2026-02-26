@@ -1,27 +1,19 @@
-'use client';
+import { Store } from "@/generated/prisma";
+import { Store as Icon } from "lucide-react";
 
-import { Store } from "lucide-react";
-
-export type StoreBrief = {
-    id: string;
-    name: string;
-    description: string | null;
+type StoreSlotProps = {
+    store: Store
 }
 
-type StoreCardProps = {
-    data: StoreBrief;
-}
-
-export function StoreCard ({ data }: StoreCardProps) {
-    const { name, description } = data
-
+export default function StoreCard ({ store }: StoreSlotProps) {
     return (
-        <article className="flex space-x-6 items-center group-hover:text-alternate">
-            <Store size={40} strokeWidth={1} className="" />
+        <li className="flex items-center space-x-6 w-72">
+            <Icon size={30} strokeWidth={1} />
             <span className="">
-                <p className="capitalize text-whitesmoke/87 ">{name}</p>
-                <p className="text-whitesmoke/60 capitalize">{description}</p>
+                <p className="capitalize">{store.name}</p>
+                <p className="">{store.description}</p>
             </span>
-        </article>
+            
+        </li>
     );
 }

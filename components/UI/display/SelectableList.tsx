@@ -4,7 +4,7 @@ import SelectableCard from "./SelectableCard";
 
 type SelectableListProps<T, K extends string | null> = {
     items: T[]
-    selected: K | null;
+    selected: K | undefined;
     onSelect: (v: K) => void;
     getId: (item: T) => K
     renderItem: (item: T) => React.ReactNode

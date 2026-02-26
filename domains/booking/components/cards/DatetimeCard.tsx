@@ -9,7 +9,7 @@ type DatetimeSlotProps = {
     }
 }
 
-export default function DatetimeSlot ({ datetime }: DatetimeSlotProps) {
+export default function DatetimeCard ({ datetime }: DatetimeSlotProps) {
     const date = dayjs(datetime.date)
     return (
         <li className="flex items-center space-x-6 w-72">

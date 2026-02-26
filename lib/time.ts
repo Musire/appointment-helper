@@ -15,6 +15,13 @@ type ZonedDateParts = {
   time: string   // HH:mm
 }
 
+type Input = {
+  date: string        // YYYY-MM-DD
+  time: string        // hh:mm A
+  tz: string
+}
+
+
 
 export function timeAgo(date: string | Date) {
   const now = dayjs()
@@ -43,8 +50,21 @@ export function convertUTC( utcIso: string, tz: string): ZonedDateParts {
 
   return {
     date: zoned.format('YYYY-MM-DD'),
-    time: zoned.format('HH:mm')
+    time: zoned.format('hh:mm A')
   }
+}
+
+
+export function convertToUTC({ date, time, tz }: Input): string {
+  if (!date) throw new Error("date is required")
+  if (!time) throw new Error("time is required")
+  if (!tz) throw new Error("timezone is required")
+
+  const localDateTime = `${date} ${time}`
+
+  const zoned = dayjs.tz(localDateTime, "YYYY-MM-DD hh:mm A", tz)
+
+  return zoned.utc().toISOString()
 }
 
 export function getMeridiem(timeString: string) {

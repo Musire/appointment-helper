@@ -3,3 +3,5 @@ export { default as ContinueButton } from './ContinueButton';
 export { default as Display } from './Display';
 export { default as Header } from './Header';
 export { default as Indicator } from './Indicator';
+export { default as SubmitButton } from './SubmitButton';
+export { default as SuccessDisplay } from './SuccessDisplay';

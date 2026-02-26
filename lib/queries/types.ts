@@ -1,3 +1,3 @@
 export type SearchParamsType = {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+    searchParams: Promise<{ [key: string]: string | undefined }>
 }

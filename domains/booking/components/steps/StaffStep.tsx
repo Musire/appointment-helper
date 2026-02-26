@@ -1,62 +1,42 @@
 'use client';
 
-import { FetchGuard, SelectableList } from "@/components/UI";
+import { SelectableList } from "@/components/UI";
 import { 
     ContinueButton, 
     Header, 
     Indicator, 
-    StaffBrief, 
-    StaffCard } from "@/domains/booking";
-import { useFetch } from "@/hooks";
+    StaffCard, 
+    StaffUser} from "@/domains/booking";
+import { useSelect } from "@/hooks";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useStepper } from "../../context";
+
+type StaffStepProps = {
+    staff : StaffUser[]
+}
 
 
-export default function StaffStep () {
-    const [selectedId, setSelectedId] = useState<string | null>(null)
+export default function StaffStep ({ staff }: StaffStepProps) {
     const router = useRouter()
-    const { steps, formData, changeFlow, next, updateData, back } = useStepper()
-    
-    const res = useFetch<StaffBrief[]>('/api/staff',
-        { 
-            method: 'POST',
-            body: {
-                storeId: formData.storeId
-            }
-        }
-    )
+    const { selected, handleSelect } = useSelect<string | undefined>()
 
-    const handleSelect = (id: string | null) => {
-        setSelectedId((prev) => (prev === id ? null : id))
-    }
-
-    const handleContinue = () => {
-        if (!selectedId) return;
-        updateData('staffId', selectedId)
-        next()
+    const handleBack = () => {
+        router.push('/user/booking')
     }
 
     return (
         <div className="flex flex-col space-y-6">
-            <Header onBack={back} title="Select Staff" />
-            <Indicator steps={steps} index={2} />
-            <FetchGuard
-                state={res}
-            >
-                {(data) => (
-                    <SelectableList 
-                        items={data}
-                        selected={selectedId}
-                        onSelect={handleSelect}
-                        getId={item => item.id}
-                        renderItem={(item) => (
-                            <StaffCard data={item}/>  
-                        )}
-                    />
+            <Header onBack={handleBack} title="Select Staff" />
+            <Indicator  index={2} />
+            <SelectableList 
+                items={staff}
+                selected={selected}
+                onSelect={handleSelect}
+                getId={item => item.id}
+                renderItem={(item) => (
+                    <StaffCard staff={item}/>  
                 )}
-            </FetchGuard>
-            <ContinueButton isDisabled={!selectedId} onContinue={handleContinue} />
+            />
+            <ContinueButton {...{selected}} next="service" />
         </div>
     );
 }

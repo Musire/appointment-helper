@@ -4,9 +4,11 @@ import Link from "next/link";
 export default async function UserDashboard ({ searchParams }: SearchParamsType) {
 
     return (
-        <div className="">
-            this is the dashboard page
-            <Link href={"/user/booking"} className="btn" >create a booking</Link>
+        <div className="flex flex-col space-y-6">
+            <p className="">
+                This is the dashboard page
+            </p>
+            <Link href={"/user/booking"} className="btn capitalize" >create a booking</Link>
         </div>
     );
 }

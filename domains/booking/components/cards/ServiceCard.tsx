@@ -5,7 +5,7 @@ type ServiceSlotProps = {
     service: Service
 }
 
-export default function ServiceSlot ({ service }: ServiceSlotProps) {
+export default function ServiceCard ({ service }: ServiceSlotProps) {
     return (
         <li className="flex items-center space-x-6 w-72">
             <Icon size={30} strokeWidth={1} />

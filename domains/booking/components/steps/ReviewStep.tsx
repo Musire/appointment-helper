@@ -1,11 +1,17 @@
 'use client';
 
-import { BookingContextType, DatetimeSlot, ServiceSlot, StaffBrief, StaffSlot, StoreBrief, StoreSlot } from "@/domains/booking";
+import {
+    DatetimeCard,
+    ServiceCard,
+    StaffCard,
+    StoreCard,
+} from "@/domains/booking";
 import { Service, Store, User } from "@/generated/prisma";
-import { useFetch } from "@/hooks";
 import { formatCurrency } from "@/lib/stringMutate";
-import { useStepper } from "../../context";
-import { ContinueButton, Header, Indicator } from "../page";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { createBookingAction } from "../../actions/booking.action";
+import { Header, Indicator, SubmitButton, SuccessDisplay } from "../page";
 
 type ReviewData = {
     store: Store,
@@ -15,51 +21,61 @@ type ReviewData = {
     time: string
 }
 
-export default function ReviewStep () {
-    const { flow, formData, back, steps } = useStepper()
+export default function ReviewStep ({ store, staff, services, date, time }: ReviewData) {
+    const router = useRouter()
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState(false);
+    const [isPending, startTransition] = useTransition();
 
-    const { status, data, error } = useFetch<ReviewData | null>('/api/review', { method: 'POST', body: {
-            store: formData.storeId,
-            staff: formData.staffId,
-            services: formData.serviceId,
-            dateTime: formData.dateTime
-        } 
-    })
+    const action = () => {
+        setError(null);
 
-    if (status === 'idle') return null;
+        startTransition(async () => {
+            const result = await createBookingAction({
+                storeId: store.id,
+                staffId: staff.id,
+                serviceId: services.id,
+                date,
+                time,
+            });
 
-    if (status === 'loading') {
-        return <p className="">loading...</p>
-    }
+            console.log(result)
 
-    if (!data) {
-        return <p className="text-error-dark">{error}</p>
-    }
-
-
-    const {store, staff, services, date, time} = data
-
-    const handleContinue = () => {
-        console.log(formData)
-    }
+            if (result.success) {
+            setSuccess(true);
+            } else {
+            setError(result.error ?? "Something went wrong.");
+            }
+        });
+    };
 
     return (
         <div className="w-full flex flex-col space-y-6">
-            <Header {...{back}} title="Review and Confirm" />
-            <Indicator {...{steps}} index={7} />
-            <h2 className="font-semibold text-lg">Summary</h2>
-            <ul className="flex space-y-2 flex-col items-center">
-                <StoreSlot store={store} />
-                <StaffSlot staff={staff} />
-                <ServiceSlot service={services} />
-                <DatetimeSlot datetime={{date, time}} />
-            </ul>
-            <span className="spaced px-4">
-                <p className="text-lg font-semibold">Total</p>
-                <p className="">{formatCurrency(services.priceCents)}</p>
-            </span>
-            
-            <ContinueButton onContinue={handleContinue} />
+            <Header onBack={() => router.back()} title="Review and Confirm" />
+            <Indicator index={5} />
+            {!success && (
+                <>
+                    <h2 className="font-semibold text-lg">Summary</h2>
+                    <ul className="flex space-y-2 flex-col items-center">
+                        <StoreCard store={store} />
+                        <StaffCard staff={staff} />
+                        <ServiceCard service={services} />
+                        <DatetimeCard datetime={{ date, time }} />
+                    </ul>
+                    <span className="spaced px-4">
+                        <p className="text-lg font-semibold">Total</p>
+                        <p className="">{formatCurrency(services.priceCents)}</p>
+                    </span>
+
+                    {error && (
+                        <div className="p-4 bg-red-100 text-error-dark rounded">
+                            {error}
+                        </div>
+                    )}
+                    <SubmitButton action={action}  />
+                </>
+            )}
+            {success && <SuccessDisplay /> }
         </div>
     );
 }

@@ -6,17 +6,10 @@ import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { useState } from "react";
 import { ContinueButton, Header, Indicator } from "../page";
-import { useStepper } from "../../context";
-
-
+import { useRouter } from "next/navigation";
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-type DateTimeStepProps = {
-    onBack: () => void;
-    onChange: (v: string) => void;
-    steps: string[];
-}
 
 const testSlots = [
   { id: 'slot-1', time: '10:00' },
@@ -30,25 +23,21 @@ const testSlots = [
 ]
 
 export default function DateTimeStep () {
+    const router = useRouter()
     const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
     const [time, setTime] = useState<string>('10:00');
-    const { updateData, back, steps, next } = useStepper()
-    
-    const handleContinue = () => {
-        const local = dayjs.tz(
-            `${selectedDate.format("YYYY-MM-DD")} ${time}`,
-            'America/Guatemala'
-        )
 
-        const utc = local.utc().toISOString()
-        updateData('dateTime', utc)
-    }
+    const local = dayjs.tz(
+        `${selectedDate.format("YYYY-MM-DD")} ${time}`,
+        'America/Guatemala'
+    )
 
-    
+    const selected = local.utc().toISOString()
+        
     return (
         <div className="w-full flex flex-col space-y-6">
-            <Header onBack={back} title={'Select Date and Time'} />
-            <Indicator {...{steps}} index={6} />
+            <Header onBack={() => router.back()} title={'Select Date and Time'} />
+            <Indicator index={4} />
             <WeeklySelector 
                 {...{selectedDate}}
                 onSelect={setSelectedDate}
@@ -62,7 +51,7 @@ export default function DateTimeStep () {
                 selectedTime={time}
                 onSelect={setTime}    
             />
-            <ContinueButton isDisabled={!selectedDate || !time} onContinue={next} />
+            <ContinueButton next="review" {...{selected}} />
         </div>
     )
 }
