@@ -1,6 +1,8 @@
-import { useState } from "react"
-import { MoreVertical, Pencil, Trash2 } from "lucide-react"
-import { ServiceType } from "@/lib/helpers/groupArrays"
+'use client'; 
+
+import { ServiceType } from "@/lib/helpers/groupArrays";
+import { MoreVertical, Pencil, Trash2 } from "lucide-react";
+import { useState } from "react";
 
 type ServiceCardProps = {
   service: ServiceType

@@ -84,3 +84,8 @@ export function generateCurrentWeek() {
     };
   });
 }
+
+export function toMins(time: string | string[]) {
+  const parsed = dayjs(time, 'hh:mm A')
+  return parsed.hour() * 60 + parsed.minute()
+}

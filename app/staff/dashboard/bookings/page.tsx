@@ -1,4 +1,4 @@
-import { AvailabilityForm } from "@/components/forms";
+import { BusinessHoursForm } from "@/domains/hour-selection";
 import { getStores } from "@/lib/queries/stores";
 
 export default async function BookingPanel () {
@@ -6,7 +6,7 @@ export default async function BookingPanel () {
     
     return (
         <div className="py-6">
-            <AvailabilityForm stores={real} />
+            <BusinessHoursForm />
         </div>
     );
 }
