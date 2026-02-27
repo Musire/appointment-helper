@@ -26,10 +26,10 @@
   --font-greatvibes: "Great Vibes", cursive;
 
   --color-silver: #d9d9d9;
-  --color-mid: #979797;
-  --color-smoke: #848884;
-  --color-dark: #444444;
-  --color-darker: #1c1c1c;
+  --color-mid: #999999;
+  --color-smoke: #707070;
+  --color-dark: #484848;
+  --color-darker: #282828;
   --color-darkest: #0d0d0d;
   --color-deep: #080808;
   --color-deeper: #030303;
@@ -45,7 +45,6 @@
 
   --color-background: #121212;        /* App background */
   --color-light: #eeeeee;        /* light background */
-  --color-dark: #121212;        /* dark background */
 
   --color-error: #B00020; /* #FF6B6B*/
   --color-error-dark: hsla(351, 57%, 62%, 1); /* #D06679; */
