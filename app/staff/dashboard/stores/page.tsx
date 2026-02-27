@@ -1,3 +1,4 @@
+import { StoreCard } from "@/domains/staff-store";
 import { getStores } from "@/lib/queries/stores";
 
 export default async function StorePanel () {
@@ -5,9 +6,9 @@ export default async function StorePanel () {
 
     return (
         <div className="py-6">
-            <ul className="">
+            <ul className="flex flex-col space-y-6">
                 {stores.map(s => (
-                    <li key={s.id} className="">{s.name}</li>
+                    <StoreCard key={s.id} store={s} />
                 ))}
             </ul>
         </div>

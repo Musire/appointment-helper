@@ -8,12 +8,7 @@ export async function getStores() {
   const stores = await prisma.storeStaff.findMany({
     where: { userId: user.id },
     select: {
-      store: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
+      store: true
     },
   })
 

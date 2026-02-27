@@ -15,3 +15,10 @@ export type TimeBlock = {
 }
 
 export type Consolidated = Record<Day, [number, number][]>
+
+export type ValidationError = {
+  blockErrors: Record<string, string[]>
+  dayOverlapErrors: Partial<Record<Day, boolean>>
+}
+
+export type ServerError = string | ValidationError
