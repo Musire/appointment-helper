@@ -366,7 +366,7 @@
 }
 
 @utility border-adjust {
-  @apply dark:border-white/12 border-black/23
+  @apply border-2 border-whitesmoke/15
 }
 
 @utility border-disabled {
