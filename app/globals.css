@@ -302,7 +302,7 @@
 }
 
 @utility scrollbar-adjust {
-  @apply scrollbar-thin dark:scrollbar-thumb-white/38 scrollbar-thumb-black/38  scrollbar-track-transparent dark:hover:scrollbar-thumb-white/60 hover:scrollbar-thumb-black/60;
+  @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-darker  hover:scrollbar-thumb-dark;
 }
 
 @utility snappy {

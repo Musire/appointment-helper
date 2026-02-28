@@ -9,7 +9,7 @@ export default function LaterAppointments ({ appointments }: props) {
     return (
         <>
             <h2 className="" >Later Today</h2>
-            <ul className="flex-col flex space-y-2 overflow-y-scroll scrollbar-none h-[50dvh]">
+            <ul className="flex-col flex space-y-2 overflow-y-scroll h-[37dvh] scrollbar-adjust pr-4">
                 {appointments.map(a => (
                     <AppointmentCard key={a.id} data={a} />
                 ))}
