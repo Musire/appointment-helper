@@ -11,7 +11,7 @@ export default function BookingHistory({ history }: Props) {
     );
 
     return (
-        <div className="flex flex-col gap-8 p-6 h-[66dvh] overflow-y-scroll scrollbar-none">
+        <div className="flex py-4 flex-col gap-8 h-[70dvh] overflow-y-scroll scrollbar-adjust pr-4">
             {sortedDateEntries.map(([date, appointments]) => (
                 <HistoryDisplay key={date} {...{date}} {...{appointments}} />
             ))}

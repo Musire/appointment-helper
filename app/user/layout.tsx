@@ -1,7 +1,7 @@
-import { requireRole } from '@/lib/auth/requireRole';
-import { redirect } from 'next/navigation';
 import { PanelNav } from "@/app/staff/components";
 import { PageHeader } from "@/components/UI";
+import { requireRole } from '@/lib/auth/requireRole';
+import { redirect } from 'next/navigation';
 
 
 export default async function UserLayout({ children}: { children: React.ReactNode }) {
@@ -10,12 +10,18 @@ export default async function UserLayout({ children}: { children: React.ReactNod
     if (!user || !access) {
         redirect("/unauthorized")
     }
+
+    const tabs = [
+        { label: 'Upcoming', href: `/user/dashboard`, index: true },
+        { label: 'History', href: `/user/dashboard/history` },
+        { label: 'Profile', href: `/user/dashboard/profile` },
+    ];
     
     return (
         <main className="page-layout relative">
             <div className="display-layout">
                 <PageHeader title="user dashboard" />
-                <PanelNav items={[]} />
+                <PanelNav items={tabs} />
                 { children } 
             </div>
         </main> 

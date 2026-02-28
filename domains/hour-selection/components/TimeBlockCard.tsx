@@ -1,10 +1,10 @@
 'use client';
 
 import { DropdownButton } from '@/components/UI/buttons';
-import { Clock } from 'lucide-react';
-import { Day, TimeBlock } from '../model/types';
 import { toMins } from '@/lib/time';
+import { Clock } from 'lucide-react';
 import { fromMins } from '../model/time.utils';
+import { Day, TimeBlock } from '../model/types';
 
 type Props = {
   block: TimeBlock
@@ -36,10 +36,10 @@ export default function TimeBlockCard({
   }
 
   return (
-    <div className='flex-col flex space-y-4 bg-darker p-6 relative'>
+    <div className='flex-col flex space-y-4 bg-darkest border-adjust p-6 relative'>
       <div className='flex space-x-6'>
         <span className="flex-col flex space-y-2 w-1/2">
-          <p className="capitalize">start</p>
+          <p className="capitalize text-whitesmoke/87">start</p>
           <DropdownButton
             value={fromMins(block.start)}
             onChange={(v: string | string[]) => updateTime('start', toMins(v))}
@@ -50,7 +50,7 @@ export default function TimeBlockCard({
           />
         </span>
         <span className="flex-col flex space-y-2 w-1/2">
-          <p className="capitalize">end</p>
+          <p className="capitalize text-whitesmoke/87">end</p>
           <DropdownButton
             value={fromMins(block.end)}
             onChange={(v: string | string[]) => updateTime('end', toMins(v))}
@@ -63,12 +63,12 @@ export default function TimeBlockCard({
       </div>
       <div className='flex'>
         {DAYS.map(day => (
-          <label key={day} className='capitalize mr-4 flex items-center space-x-1'>
+          <label key={day} className='hover:cursor-pointer capitalize mr-4 flex items-center space-x-1'>
             <input
               type="checkbox"
               checked={block.days.includes(day)}
               onChange={() => toggleDay(day)}
-              className="appearance-none size-3.5 bg-black border-2 border-whitesmoke/20 checked:bg-whitesmoke/87 peer "
+              className="hover:cursor-pointer appearance-none size-3.5 bg-black border-2 border-whitesmoke/20 checked:bg-whitesmoke/87 peer "
             />
             <p className="peer-checked:text-whitesmoke/87 text-whitesmoke/30">{day}</p>
           </label>
