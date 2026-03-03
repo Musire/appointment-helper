@@ -14,7 +14,6 @@ export default async function StoreDetails ({ params }: ParamsType) {
   return (
     <div className="">
         <OverviewPanel {...{requirements}} status={store.status} />
-
     </div>
   );
 }
