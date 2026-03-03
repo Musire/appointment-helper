@@ -28,7 +28,29 @@ export async function reconcileStoreStatus(
   })
 }
 
-export async function getStoreActivationState(storeId: string | undefined): Promise<StoreActivationState> {
+// compute if store has configuration setup, has active staff, and has services setup
+async function deriveStoreState(storeId: string) {
+  const [hasConfig, hasActiveStaff, hasServices] = await Promise.all([
+    prisma.storeConfig.findUnique({ where: { storeId } })
+      .then(Boolean),
+
+    prisma.storeStaff.count({
+      where: { storeId, status: "ACTIVE" },
+    }).then(count => count > 0),
+
+    prisma.service.count({
+      where: { storeId },
+    }).then(count => count > 0),
+  ]);
+
+  return {
+    hasConfig,
+    hasActiveStaff,
+    hasServices,
+  };
+}
+
+export async function getStoreState(storeId: string | undefined): Promise<StoreActivationState> {
 
   if (!storeId) return {
     requirements: {
@@ -39,36 +61,15 @@ export async function getStoreActivationState(storeId: string | undefined): Prom
     isReady: false
   };
 
-  const [config, activeStaffCount, servicesCount] = await Promise.all([
-    prisma.storeConfig.findUnique({
-      where: { storeId }
-    }),
-    prisma.storeStaff.count({
-      where: {
-        storeId,
-        status: "ACTIVE"
-      }
-    }),
-    prisma.service.count({
-      where: {
-        storeId,
-      }
-    })
-  ])
-
-  const hasConfig = Boolean(config)
-  const hasActiveStaff = activeStaffCount > 0
-  const hasServices = servicesCount > 0
-
-  const requirements = {
-    hasConfig,
-    hasActiveStaff,
-    hasServices
-  }
+  const requirements =  await deriveStoreState(storeId)
 
   return {
     requirements,
-    isReady: Object.values(requirements).every(r => Boolean(r))
+    isReady: (
+      requirements.hasConfig &&
+      requirements.hasActiveStaff &&
+      requirements.hasServices
+    )
   }
 }
 

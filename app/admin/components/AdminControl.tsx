@@ -4,7 +4,6 @@ import { deleteStores } from "@/app/actions/admin.actions";
 import { DeleteModal } from "@/components/UI";
 import useSelectable from "@/hooks/useSelectable";
 import { createExcerpt, slugify } from "@/lib/stringMutate";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
     ContinueButton,
@@ -52,12 +51,14 @@ export default function AdminControl ({ items }: { items: any }) {
                 getId={(item: any) => item.id}
                 onSelect={handleSelect}
                 renderItem={(i) => (
-                    <Link 
-                        href={'/admin/store/' + slugify(i.name)}
-                        className="w-full rounded-xl h-full px-3 py-2 flex flex-col space-y-2 relative">
-                        <p className="text-2xl capitalize">{i.name}</p>
-                        <p className="text-sm" >{createExcerpt(i.description, 60)}</p>
-                    </Link>
+                    <article 
+                        className="w-full rounded-xl h-full spaced relative p-6 bg-darkest border-adjust">
+                            <span className="">
+                                <p className="text-2xl capitalize">{i.name}</p>
+                                <p className="text-sm" >{createExcerpt(i.description, 60)}</p>
+                            </span>
+                            <button onClick={() => router.push(`/admin/store/${slugify(i.name)}`)} type="button" className="btn self-end justify-self-end">Check Details</button>
+                    </article>
                 )}
             />
             <ContinueButton 

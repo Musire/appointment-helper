@@ -33,7 +33,7 @@ export default function SelectableCard({
   return (
     <li
       onClick={() => onSelect(id)}
-      className={`w-full h-48 rounded-xl ring-2 bg-darkest p-4 relative  ${color}`}
+      className={`w-full rounded-xl relative ring-2  ${color}`}
     >
       {children}
 

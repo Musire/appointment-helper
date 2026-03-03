@@ -1,20 +1,20 @@
 import { prisma } from "@/lib/prisma"
 import type { Store } from "@/generated/prisma"
 import { unslugify } from "../stringMutate"
-import { getStoreActivationState, reconcileStoreStatus, StoreActivationState } from "./store-activation"
+import { getStoreState, reconcileStoreStatus, StoreActivationState } from "./store-activation"
 
 export type StoreWithCreator = Store & {
   createdBy: {
     email: string
-  }
+  } | null
 } 
 
 export type StoreContextData = StoreActivationState & {
-  store: StoreWithCreator
+  store: StoreWithCreator | null
 }
 
 
-export async function getStoreContext(slug: string): Promise<StoreContextData | null> {
+export async function getStoreContext(slug: string): Promise<StoreContextData> {
   const name = unslugify(slug)
 
   const foundStore = await prisma.store.findFirst({
@@ -28,9 +28,17 @@ export async function getStoreContext(slug: string): Promise<StoreContextData | 
     },
   })
 
-  if (!foundStore) return null;
+  if (!foundStore) return {
+    store: null,
+    requirements: {
+      hasConfig: false,
+      hasActiveStaff: false,
+      hasServices: false
+    },
+    isReady: false
+  };
 
-  const { isReady, requirements } = await getStoreActivationState(foundStore.id)
+  const { isReady, requirements } = await getStoreState(foundStore.id)
   const store = await reconcileStoreStatus(foundStore.id, isReady)
 
   return {
