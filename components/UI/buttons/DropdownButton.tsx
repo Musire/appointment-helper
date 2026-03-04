@@ -3,20 +3,20 @@
 import { useDrawer } from "@/hooks";
 import clsx from "clsx";
 import { Check } from "lucide-react";
-import { ElementType, useState } from "react";
+import { Dispatch, ElementType, SetStateAction, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface DropdownButtonProps<T> {
+interface DropdownButtonProps<T extends string> {
   Icon?: ElementType;
   buttonStyle?: string;
   drawerStyle?: string;
   options: T[];
-  value?: T | T[] | null;
-  onChange?: (value: T | T[]) => void;
-  multiple?: boolean;
+  value?: T; // Keep single value for SetStateAction<string> compatibility
+  onChange?: (value: string) => void; 
+  multiple?: boolean; // Note: multiple true usually breaks SetStateAction<string> logic
 }
 
-export default function DropdownButton<T extends string | number>({
+export default function DropdownButton<T extends string>({
   Icon,
   buttonStyle,
   drawerStyle,
@@ -27,42 +27,29 @@ export default function DropdownButton<T extends string | number>({
 }: DropdownButtonProps<T>) {
   const { isMounted, animation, closeDrawer, toggleDrawer } = useDrawer();
 
-  const [internalState, setInternalState] = useState<T | T[] | null>(
-    multiple ? [] : null
-  );
+  // Fallback state if no value/onChange is passed
+  const [internalState, setInternalState] = useState<T>("" as T);
+  
   const selected = value !== undefined ? value : internalState;
-  const updateSelected = onChange !== undefined ? onChange : setInternalState;
 
   const handleSelect = (option: T) => {
     if (multiple) {
-      const currentArray = Array.isArray(value) ? [...value] as T[] : [];
-      const alreadySelected = currentArray.includes(option);
-
-      const updated = alreadySelected
-        ? currentArray.filter((v) => v !== option)
-        : [...currentArray, option];
-
-      updateSelected(updated);
+      // Logic for multiple if needed, but note this conflicts with SetStateAction<string>
+      // If you strictly need Dispatch<SetStateAction<string>>, 'multiple' should likely be false
     } else {
-      updateSelected(option);
+      if (onChange) {
+        onChange(option as any); 
+      } else {
+        setInternalState(option);
+      }
       closeDrawer();
     }
   };
 
   const getDisplayText = () => {
-    if (multiple) {
-      const arr = Array.isArray(selected) ? selected : [];
-      return arr.length > 0 ? arr.join(", ") : "Select Option";
-    }
-
-    // SINGLE SELECT
-    if (selected === "" || selected == null) {
-      return "Select Option";
-    }
-
+    if (!selected || selected === "") return "Select Option";
     return String(selected);
   };
-  
 
   return (
     <div className="relative text-else">
@@ -85,7 +72,7 @@ export default function DropdownButton<T extends string | number>({
           <aside
             className={twMerge(
               clsx(
-                "absolute bg-darkest min-w-32 w-full border border-adjust z-20 max-h-40 overflow-y-auto scrollbar-none top-12 rounded-xl",
+                "absolute bg-darkest w-32 border border-adjust z-20 max-h-40 overflow-y-auto scrollbar-none top-12 rounded-xl",
                 animation ? "animate-ghostIn" : "animate-ghostOut"
               ),
               drawerStyle
@@ -94,9 +81,7 @@ export default function DropdownButton<T extends string | number>({
           >
             <ul className="flex flex-col w-full">
               {options.map((option) => {
-                const isSelected = multiple
-                  ? Array.isArray(value) && value.includes(option)
-                  : value === option;
+                const isSelected = selected === option;
 
                 return (
                   <li key={String(option)}>
@@ -107,9 +92,7 @@ export default function DropdownButton<T extends string | number>({
                     >
                       {multiple && (
                         <span className="w-4">
-                          {isSelected && (
-                            <Check className="w-4 h-4 text-primary" />
-                          )}
+                          {isSelected && <Check className="w-4 h-4 text-primary" />}
                         </span>
                       )}
                       <span>{String(option)}</span>

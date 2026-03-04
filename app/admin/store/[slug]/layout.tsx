@@ -21,7 +21,7 @@ export default async function StoreLayout ({ params, children }: StoreDetailsPro
 
     const tabs = [
         { label: 'Overview', href: `/admin/store/${slug}`, index: true },
-        { label: 'Config', href: `/admin/store/${slug}/config` },
+        { label: 'Hours', href: `/admin/store/${slug}/hours` },
         { label: 'Services', href: `/admin/store/${slug}/services` },
         { label: 'Staff', href: `/admin/store/${slug}/staff` },
     ];

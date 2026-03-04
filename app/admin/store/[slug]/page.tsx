@@ -1,4 +1,4 @@
-import { OverviewPanel } from "@/domains/staff-overview";
+import { OverviewPanel } from "@/domains/admin-dashboard/overview";
 import { ParamsType } from "@/lib/queries/types";
 import { getStoreContext } from "@/lib/store/data-loader";
 

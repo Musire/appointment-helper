@@ -1,6 +1,7 @@
+import { HoopForm } from "@/domains/admin-dashboard";
 import { getStoreConfig } from "@/lib/queries/storeConfig";
-import { ConfigTable, EditButton } from "./components";
 import { notFound } from "next/navigation";
+import { EditButton } from "./components";
 
 type ConfigProps = {
   params: { 
@@ -22,8 +23,7 @@ export default async function ConfigPage ({ params }: ConfigProps) {
       case "OK":
         return (
           <div className="py-6 flex flex-col">
-            <EditButton storeId={result.storeId} />
-            <ConfigTable config={result.config} />
+            <HoopForm />
           </div>
         );
     } 

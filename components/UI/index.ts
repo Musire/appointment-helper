@@ -1,8 +1,10 @@
+export * from "./calendar"
 export * from "./dashboard"
+export * from "./display"
 export * from "./forms"
 export * from "./modal"
 export * from "./orchestrator"
-export * from "./search"
-export * from "./calendar"
 export * from "./popover"
-export * from "./display"
+export * from "./search"
+export { default as Switch } from './switch'
+export { default as Label } from './label'
