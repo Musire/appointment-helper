@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from "react";
 
-type AnimationState = true | false | null;  
+export type AnimationState = true | false | null;  
 // true  = animate in
 // false = animate out
 // null  = reset

@@ -355,7 +355,7 @@
 
 
 @utility border-adjust {
-  @apply border-2 border-whitesmoke/30
+  @apply  border-whitesmoke/30
 }
 
 @utility border-disabled {
@@ -371,7 +371,7 @@
 }
 
 @utility display-layout {
-  @apply min-h-dvh bg-deeper relative xs:w-screen  md:w-[85dvw] lg:w-[70dvw] px-6 text-whitesmoke pb-12 flex flex-col pt-6
+  @apply min-h-dvh bg-deeper relative xs:w-screen  md:w-[85dvw] lg:w-[70dvw] px-6 text-whitesmoke  flex flex-col py-6
 }
 
 @utility btn {
@@ -379,7 +379,7 @@
 }
 
 @utility card {
-  @apply bg-darkest border-adjust
+  @apply bg-darkest border-adjust border
 }
 
 

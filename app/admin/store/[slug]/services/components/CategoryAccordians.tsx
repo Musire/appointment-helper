@@ -1,31 +1,28 @@
 'use client';
 
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger
+} from "@/components/UI/accordion";
+import { ServiceCard } from "@/domains/admin-dashboard/hair-service";
 import { CategoryWithServicesType } from "@/lib/helpers/groupArrays";
-import { 
-    Accordion, 
-    AccordionContent, 
-    AccordionItem, 
-    AccordionTrigger } from "@/components/UI/accordion";
 import AccordianCategory from "./AccordianCategory";
-import ServiceCard from "./ServiceCard";
 
 export default function CategoryAccordians ({ items }: { items: CategoryWithServicesType[]}) {
+  console.log(items)
   return (
-    <Accordion type="multiple">
+    <Accordion type="multiple" className=" divide-disabled divide-y">
         {items.map(category => (
             <AccordionItem key={category.id} value={category.id}>
             <AccordionTrigger>
                 <AccordianCategory category={category} />
             </AccordionTrigger>
-
-            <AccordionContent className="flex-col flex" >
-                <span className="self-end">
-                <button type="button" className="btn">edit</button>
-                <button type="button" className="btn">delete</button>
-                </span>
-                {category.services.map(service => (
-                <ServiceCard key={service.id} service={service} />
-                ))}
+            <AccordionContent className="grid grid-cols-2 gap-3 " >
+                {category.services.map(service => {
+                    return <ServiceCard key={service.id} data={service} />
+                })}
             </AccordionContent>
             </AccordionItem>
         ))}

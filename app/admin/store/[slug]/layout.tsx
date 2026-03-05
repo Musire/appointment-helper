@@ -13,11 +13,7 @@ type StoreDetailsProps = {
 
 export default async function StoreLayout ({ params, children }: StoreDetailsProps ) {
     const {slug} = await params
-    const ctx = await getStoreContext(slug)
 
-    if (!ctx) {
-        return <p className="">no store found</p>
-    }
 
     const tabs = [
         { label: 'Overview', href: `/admin/store/${slug}`, index: true },
@@ -35,9 +31,9 @@ export default async function StoreLayout ({ params, children }: StoreDetailsPro
                     <LogoutButton />
                 </span>
                 <PanelNav items={tabs} />
-                <StoreProvider data={ctx} >
-                    { children }
-                </StoreProvider>
+                <div className="grow flex ">
+                    {children}
+                </div>
             </div>
         </div>
   );
