@@ -1,12 +1,14 @@
-import { hasStaffProfile } from "@/app/actions/auth.actions";
-import { ProfileCreation } from "@/app/staff/components";
+import { ProfileCreation } from "../components";
 
 export default async function StaffDashboard () {
-  const { data: profile } = await hasStaffProfile()
+  
+  const requirements = {
+    hours: true
+  }
 
   return (
-    <div className="py-6 relative">
-      <ProfileCreation profile={profile} />
+    <div className=" relative flex flex-col divide-y-2 divide-disabled ">
+      <ProfileCreation requirements={requirements} />
     </div>
   );
 }

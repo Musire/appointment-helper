@@ -1,16 +1,16 @@
 import { calculatePercentage } from "@/lib/numberMutate";
 import { RequirementsType } from "./RequirementBadge";
 
-type Props = {
+type Props= {
     label: string;
-    requirements: RequirementsType; 
+    counted: number;
+    totalCount: number;
+    percentage: number;
 }
 
 
-export default function ProgressBar({ label, requirements }: Props) {
-    const counted = Object.values(requirements).filter(Boolean).length
-    const totalCount = Object.values(requirements).length
-    const percentage = calculatePercentage(counted, totalCount)
+export default function ProgressBar({ label, counted, totalCount, percentage }: Props) {
+    
 
     return (
         <div className="relative h-10">

@@ -12,8 +12,9 @@ export default async function StaffLayout ({ children }: StaffLayoutProps) {
     const tabs = [
         { label: 'Overview', href: `/staff/dashboard`, index: true },
         { label: 'Stores', href: `/staff/dashboard/stores` },
-        { label: 'Bookings', href: `/staff/dashboard/bookings` },
+        { label: 'Upcoming', href: `/staff/dashboard/upcoming` },
         { label: 'History', href: `/staff/dashboard/history` },
+        { label: 'Profile', href: `/staff/dashboard/profile` }
     ];
     return (
         <main className="page-layout relative">
