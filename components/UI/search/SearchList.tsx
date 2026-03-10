@@ -3,29 +3,22 @@ import { useDebouncedValue } from "@/hooks"
 import { useMemo, useState } from "react"
 import SearchBar from "./SearchBar"
 
-type SearchListProps<T, K extends string | number> = {
+type SearchListProps<T, K extends string > = {
   data: T[]
   filterFn: (item: T, query: string) => boolean
   getId: (item: T) => K
-
-  selectedId: K | null
-  onSelect: (id: K) => void
-
   renderItem: (args: {
     item: T
-    selected: boolean
-    onSelect: () => void
+    id: K
   }) => React.ReactNode
 
   debounceMs?: number
 }
 
-export default function SearchList<T, K extends string | number>({
+export default function SearchList<T, K extends string>({
   data,
   filterFn,
   getId,
-  selectedId,
-  onSelect,
   renderItem,
   debounceMs = 300,
 }: SearchListProps<T, K>) {
@@ -47,8 +40,7 @@ export default function SearchList<T, K extends string | number>({
 
           return renderItem({
             item,
-            selected: selectedId === id,
-            onSelect: () => onSelect(id),
+            id
           })
         })}
       </ul>

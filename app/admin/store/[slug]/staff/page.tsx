@@ -1,3 +1,4 @@
+import { StaffCard } from "@/domains/booking";
 import { getStoreStaff } from "@/lib/queries/users";
 import Link from "next/link";
 
@@ -13,11 +14,7 @@ export default async function StaffPage ({ params }: { params: { slug: string } 
             <h3 id="staff-heading">Current Staffing</h3>
             <ul className="p-6 grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
               {staff.map(s => (
-                <li key={s.id} className="">
-                  <p className="">{s.name}</p>
-                  <p className="">{s.email}</p>
-                  <p className="">{s.role}</p>
-                </li>
+                <StaffCard key={s.id} staff={s} />
               ))}
             </ul>
           </section>

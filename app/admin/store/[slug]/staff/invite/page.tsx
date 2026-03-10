@@ -9,7 +9,7 @@ export default async function StaffInvitationPage ({ params }: { params : { slug
   return (
     <div className="flex flex-col py-6 space-y-6">
       <BackButton className="w-24" />
-      <StaffSearch data={staff} />
+      <StaffSearch data={staff} store={{ id:'test123', name: 'name'}} />
     </div>
   );
 }

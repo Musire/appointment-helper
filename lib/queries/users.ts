@@ -64,7 +64,7 @@ export async function getStoreStaff(storeSlug: string) {
 
   const flatStaff = staff.map(({ role, user }) => ({
     id: user.id,
-    name: user.fullName,
+    fullName: user.fullName,
     email: user.email,
     role,
   }))
