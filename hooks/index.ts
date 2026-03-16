@@ -7,3 +7,4 @@ export { default as useNotifications } from './useNotifications';
 export { default as useOrchestrator } from './useOrchestrator';
 export { default as useStepper } from './useStepper';
 export { default as useSelect } from './useSelect';
+export { default as useActiveCard } from './useActiveCard';

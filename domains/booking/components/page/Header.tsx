@@ -1,17 +1,16 @@
-'use client';
-
-import BackButton from "./BackButton";
-
-type HeaderProps = {
-    title?: string,
-    onBack?: () => void;
+type Props = {
+    step: number;
+    max: number;
+    title: string;
+    subtitle: string;
 }
 
-export default function Header ({ title, onBack }: HeaderProps) {
+export default function Header ({ step, max, title, subtitle }: Props) {
     return (
-        <div className="w-full flex">
-            {onBack && <BackButton onBack={onBack} />}
-            <p className="mx-auto capitalize">{title}</p>
+        <div className="stacked space-y-2" >
+            <h3 className="text-primary">{`Step ${step} of ${max}`}</h3>
+            <h2 className="text-2xl text-main">{title}</h2>
+            <p className="text-else">{subtitle}</p>
         </div>
     );
 }

@@ -144,6 +144,9 @@
   --color-deeper: #030303;
   --color-deepest: #000300;
 
+  --color-primary: #B08A3C;
+  --color-primary-hover: #C79A3E;
+
   --color-o: #F6AD55; /* testing color*/
   --color-alternate: #B6AB8C; /* accent color */
   --color-error-dark: hsla(351, 57%, 62%, 1); /* #D06679; */
@@ -317,6 +320,10 @@
   @apply flex flex-col justify-center items-center;
 }
 
+@utility stacked {
+  @apply flex flex-col space-y-6
+}
+
 @utility spaced {
   @apply flex flex-row justify-between items-center;
 }
@@ -355,7 +362,7 @@
 
 
 @utility border-adjust {
-  @apply  border-whitesmoke/30
+  @apply  border-disabled
 }
 
 @utility border-disabled {

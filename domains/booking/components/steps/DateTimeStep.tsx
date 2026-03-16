@@ -5,7 +5,7 @@ import dayjs, { Dayjs } from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { useState } from "react";
-import { ContinueButton, Header, Indicator } from "../page";
+import { ContinueButton, Header } from "../page";
 import { useRouter } from "next/navigation";
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -36,8 +36,12 @@ export default function DateTimeStep () {
         
     return (
         <div className="w-full flex flex-col space-y-6">
-            <Header onBack={() => router.back()} title={'Select Date and Time'} />
-            <Indicator index={4} />
+            <Header 
+                step={4}
+                max={5}
+                title={'Select Date and Time'} 
+                subtitle="Pick the perfect moment"
+            />
             <WeeklySelector 
                 {...{selectedDate}}
                 onSelect={setSelectedDate}
@@ -51,7 +55,11 @@ export default function DateTimeStep () {
                 selectedTime={time}
                 onSelect={setTime}    
             />
-            <ContinueButton next="review" {...{selected}} />
+            <ContinueButton 
+                onBack={() => router.back()} 
+                next="review" 
+                selected={selected}
+            />
         </div>
     )
 }

@@ -13,8 +13,8 @@ type SlotProps = {
 
 function Slot ({ data, selected, onSelect }: SlotProps) {
     const isSelected = selected
-        ? "bg-dark ring-whitesmoke/20"
-        : "bg-darkest ring-transparent"
+        ? "bg-primary text-deep font-semibold ring-whitesmoke/20"
+        : "bg-darkest ring-transparent hover:bg-darker"
 
 
     return (

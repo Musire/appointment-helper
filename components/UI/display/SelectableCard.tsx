@@ -12,21 +12,21 @@ export default function SelectableCard({
   children
 }: SelectableCardProps) {
     const isSelected = selected 
-        ? 'ring-whitesmoke/30 bg-darkest' 
-        : 'ring-whitesmoke/15 hover:bg-deep';
+        ? 'ring-primary-hover bg-darkest' 
+        : 'ring-whitesmoke/20 hover:bg-deep';
 
   return (
     
-    <li className={`ring-2 flex  relative  ${isSelected}`}>
+    <li className={`ring-2 flex size-66 relative rounded-xl  ${isSelected}`}>
         <button
             type="button"
             onClick={onSelect}
-            className={` w-full text-left h-full hover:cursor-pointer p-6  ${isSelected}`}
+            className={` w-full text-left h-full hover:cursor-pointer rounded-xl ${isSelected}`}
         >
             {children}
         </button>
-        <div className={`absolute size-6 right-6 top-1/2 -translate-y-1/2  rounded-full ring-2 ${selected ? "ring-alternate/50": "hidden"} centered`}>
-            <Check size={20} className="text-alternate" />
+        <div className={`absolute size-6 right-6 top-6 bg-deep  rounded-full ring-2 ${selected ? "ring-primary-hover": "hidden"} centered`}>
+            <Check size={20} className="text-primary-hover" />
         </div>
     </li>
   )

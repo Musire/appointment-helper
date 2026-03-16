@@ -4,7 +4,6 @@ import { SelectableList } from "@/components/UI";
 import { 
     ContinueButton, 
     Header, 
-    Indicator, 
     StaffCard, 
     StaffUser} from "@/domains/booking";
 import { useSelect } from "@/hooks";
@@ -24,19 +23,28 @@ export default function StaffStep ({ staff }: StaffStepProps) {
     }
 
     return (
-        <div className="flex flex-col space-y-6">
-            <Header onBack={handleBack} title="Select Staff" />
-            <Indicator  index={2} />
+        <div className="flex flex-col space-y-6 ">
+            <Header 
+                step={2}
+                max={5} 
+                title="Select Staff"
+                subtitle="Pick that professional that makes you comfortable"     
+            />
             <SelectableList 
                 items={staff}
                 selected={selected}
                 onSelect={handleSelect}
                 getId={item => item.id}
+                scrollable
                 renderItem={(item) => (
                     <StaffCard staff={item}/>  
                 )}
             />
-            <ContinueButton {...{selected}} next="service" />
+            <ContinueButton 
+                onBack={() => router.back()} 
+                next="service" 
+                selected={selected}
+            />
         </div>
     );
 }
