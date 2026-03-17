@@ -8,10 +8,11 @@ import { formatCurrency } from "@/lib/stringMutate";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { createBookingAction } from "../../actions/booking.action";
-import { Header, SubmitButton, SuccessDisplay } from "../page";
+import { Header, SubmitButton } from "../page";
 import ServiceSlot from "../slots/ServiceSlot";
 import StaffSlot from "../slots/StaffSlot";
 import StoreSlot from "../slots/StoreSlot";
+import SuccessDisplay from "../../../../components/UI/forms/SuccessDisplay";
 
 type ReviewData = {
     store: Store,
