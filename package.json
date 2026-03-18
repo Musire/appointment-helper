@@ -9,12 +9,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "clean": "Remove-Item -Recurse -Force .next && npm run dev:clear",
+    "clean": "rd /s /q .next && npm run dev:clear",
     "typecheck": "tsc --noEmit",
     "validate": "npm run lint && npm run typecheck",
     "build:turbo": "next build --turbo",
     "analyze": "ANALYZE=true npm run build",
-    "nuke": "Remove-Item -Recurse -Force .next node_modules package-lock.json && npm install"
+    "nuke": "rd /s /q .next node_modules && del /f /q package-lock.json && npm install"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

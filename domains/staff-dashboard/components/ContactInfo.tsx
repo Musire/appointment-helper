@@ -7,7 +7,7 @@ export default function ContactInfo () {
             <li className="font-semibold text-main">Contact Info</li>
             <li className="space-x-2 flex items-center ">
                 <Mail strokeWidth={1} />
-            <p className="">mark.johnson@example.com</p>
+                <p className="">mark.johnson@example.com</p>
             </li>
             <li className="space-x-2 flex items-center ">
                 <Smartphone strokeWidth={1} />
