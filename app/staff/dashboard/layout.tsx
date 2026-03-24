@@ -1,31 +1,29 @@
 import { getCurrentUser } from "@/app/actions/auth.actions";
-import { NotificationPanel, PanelNav } from "@/app/staff/components";
-import { LogoutButton } from "@/components/UI/buttons";
+import { Header, Navbar } from "@/domains/tinker";
+import { getCurrentUserRole } from "@/lib/auth/session";
 
-export type StaffLayoutProps = {
+type Props = {
     children: React.ReactNode
+    params: Promise<{
+        slug: string
+    }>
 }
 
-export default async function StaffLayout ({ children }: StaffLayoutProps) {
-    const user = await getCurrentUser()
 
-    const tabs = [
-        { label: 'Overview', href: `/staff/dashboard`, index: true },
-        { label: 'Stores', href: `/staff/dashboard/stores` },
-        { label: 'Upcoming', href: `/staff/dashboard/upcoming` },
-        { label: 'History', href: `/staff/dashboard/history` },
-        { label: 'Profile', href: `/staff/dashboard/profile` }
-    ];
+export default async function StaffLayout ({ children, params }: Props) {
+
+    const {slug} = await params
+    const role = await getCurrentUserRole()
+
+    if (!role) return null;
+
+
     return (
-        <main className="page-layout relative">
-            <div className="display-layout">
-                <span className="flex justify-end">
-                    <h1 className="text-3xl capitalize w-full text-center">staff dashboard</h1>
-                    <NotificationPanel userId={user?.id ?? null} />
-                    <LogoutButton />
-                </span>
-                <PanelNav items={tabs} />
-                { children }
+        <main className="bg-deep text-main w-screen h-dvh flex-col flex overflow-x-hidden px-6 lg:px-60 relative">
+            <Header />
+            <Navbar slug={slug} role={role} />
+            <div className="max-h-[calc(100%-7rem)] w-full flex-1 overflow-x-hidden overflow-y-scroll scrollbar-none" >
+                {children}
             </div>
         </main>
     );

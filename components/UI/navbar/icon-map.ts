@@ -1,11 +1,22 @@
-import { Home, Clock, Scissors, Users } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import {
+    Building2,
+    CalendarDays,
+    Clock,
+    Home,
+    Scissors,
+    Settings,
+    Users
+} from 'lucide-react'
 
 export const iconMap = {
     home: Home,
-    clock: Clock,
     scissors: Scissors,
     users: Users,
+    upcoming: CalendarDays,
+    store: Building2,
+    profile: Settings,
+    history: Clock
 } as const
 
 export type IconKey = keyof typeof iconMap
