@@ -1,13 +1,54 @@
-import { createSupabaseServerClientReadOnly } from "../supabase/server"
+import { createSupabaseServerClientReadOnly } from "@/lib/supabase/server"
+import { prisma } from "../prisma"
 
+// 1. Define roles (source of truth)
+export const Roles = ['SUPERADMIN', 'ADMIN', 'STAFF', 'USER'] as const
+export type Role = typeof Roles[number]
 
-export async function getCurrentUser() {
+// 2. Type guard
+function isRole(role: string): role is Role {
+  return Roles.includes(role as Role)
+}
+
+// 3. Normalize role (safe fallback OR throw)
+function normalizeRole(role: string | undefined | null): Role {
+  if (!role) return 'user' // fallback
+
+  if (!isRole(role)) {
+    throw new Error(`Invalid role: ${role}`)
+  }
+
+  return role
+}
+
+// 4. Main function
+export async function getCurrentUserRole(): Promise<Role> {
   const supabase = createSupabaseServerClientReadOnly()
+
   const {
     data: { user },
     error,
   } = await supabase.auth.getUser()
 
   if (error) throw new Error(error.message)
-  return user
+  if (!user) throw new Error('Not authenticated')
+
+  const dbUser = await prisma.user.findUnique({
+    where: { id: user.id },
+    include: {
+      roles: {
+        include: {
+          role: true, // 👈 THIS pulls Role model
+        },
+      },
+    },
+  })
+
+  if (!dbUser) {
+    throw new Error('User not found in DB')
+  }
+
+  const rawRole = dbUser.roles[0].role.name
+
+  return normalizeRole(rawRole)
 }

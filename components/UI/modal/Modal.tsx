@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, ReactNode, MouseEvent, KeyboardEvent } from "react";
+import { KeyboardEvent, MouseEvent, ReactNode, useEffect } from "react";
 
 interface ModalProps {
   title?: string;
@@ -36,7 +36,7 @@ export default function Modal({ children, isOpen, onClose, title }: ModalProps) 
             >
               <div
                 onClick={(e) => e.stopPropagation()}
-                className="bg-darker p-6 rounded-xl shadow-xl relative w-[93dvw] max-w-sm md:max-w-md duration-300 ease-out animate-ghostIn flex-col flex "
+                className="bg-darkest p-6 relative w-[93dvw] max-w-sm md:max-w-md duration-300 ease-out animate-ghostIn flex-col flex "
               >
                 <button
                   className="absolute text-white/87 top-3 w-7 h-7 right-3  centered rounded-full snappy"
