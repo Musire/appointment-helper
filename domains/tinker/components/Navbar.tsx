@@ -10,11 +10,11 @@ export default function Navbar ({ slug, role }: Props) {
     const tabs = getNav(role, slug)
 
     return (
-        <div className="md:w-full h-14 border-t border-whitesmoke/15 bg-darkest centered  xs:fixed xs:bottom-0 xs:left-6 md:static xs:w-[calc(100%-3rem)]" >
+        <div className="md:w-full h-20  centered  xs:fixed xs:bottom-0 xs:left-6 md:static xs:w-[calc(100%-3rem)] " >
             <div className="xs:hidden md:block">
                 <PanelNav items={tabs} />
             </div>
-            <div className="md:hidden">
+            <div className="md:hidden w-full ">
                 <MobileNav items={tabs} />
             </div>
         </div>

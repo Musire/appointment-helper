@@ -20,7 +20,7 @@ export default function MobileNav({ items }: PanelNavProps) {
   }
 
   return (
-    <nav className="flex border-b border-whitesmoke/20 xs:w-full md:w-[85dvw] lg:w-[70dvw] overflow-x-hidden my-6 space-x-2">
+    <nav className="centered w-full border-t border-whitesmoke/15 h-20 space-x-2 ">
       {items.map(item => {
         const { icon, href, index } = item
         const Icon = getIcon(icon as IconKey)
