@@ -130,6 +130,8 @@
   
   /*development colors*/
   --color-whitesmoke: hsla(0, 0%, 96%, 1);
+  --color-fog: hsla(0, 0%, 87.5%, 1);
+  --color-ash: hsla(0, 0%, 80%, 1);
   --color-main: hsla(0, 0%, 96%, .87);
   --color-else: hsla(0, 0%, 96%, .60);
   --color-disabled: hsla(0, 0%, 96%, .38);

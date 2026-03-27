@@ -1,29 +1,26 @@
-import { PanelNav } from "@/app/staff/components";
-import { PageHeader } from "@/components/UI";
-import { requireRole } from '@/lib/auth/requireRole';
-import { redirect } from 'next/navigation';
+import { Header, Navbar } from "@/domains/tinker";
+import { getCurrentUser } from "@/lib/auth/session";
 
+type Props = {
+    children: React.ReactNode
+    params: Promise<{
+        slug: string
+    }>
+}
 
-export default async function UserLayout({ children}: { children: React.ReactNode }) {
-    const { access, user } = await requireRole(['USER'])
+export default async function UserLayout ({ children, params }: Props) {
+    const {slug} = await params
+    const user = await getCurrentUser()
 
-    if (!user || !access) {
-        redirect("/unauthorized")
-    }
+    if (!user || !user.role ) return null;
 
-    const tabs = [
-        { label: 'Upcoming', href: `/user/dashboard`, index: true },
-        { label: 'History', href: `/user/dashboard/history` },
-        { label: 'Profile', href: `/user/dashboard/profile` },
-    ];
-    
     return (
-        <main className="page-layout relative">
-            <div className="display-layout">
-                <PageHeader title="user dashboard" />
-                <PanelNav items={tabs} />
-                { children } 
+        <main className="bg-deep text-main w-screen h-dvh flex-col flex overflow-x-hidden px-6 lg:px-60 relative">
+            <Header avatarUrl={user.avatarUrl} />
+            <Navbar slug={slug} role={user.role} />
+            <div className="max-h-[calc(100%-7rem)] w-full flex-1 overflow-x-hidden overflow-y-scroll scrollbar-none" >
+                {children}
             </div>
-        </main> 
-    )
+        </main>
+    );
 }

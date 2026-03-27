@@ -1,5 +1,6 @@
 import { createSupabaseServerClientReadOnly } from "@/lib/supabase/server"
 import { prisma } from "../prisma"
+import { User } from "@/generated/prisma"
 
 // 1. Define roles (source of truth)
 export const Roles = ['SUPERADMIN', 'ADMIN', 'STAFF', 'USER'] as const
@@ -48,7 +49,47 @@ export async function getCurrentUserRole(): Promise<Role> {
     throw new Error('User not found in DB')
   }
 
-  const rawRole = dbUser.roles[0].role.name
+  const rawRole = dbUser.roles?.[0]?.role?.name ?? null
 
   return normalizeRole(rawRole)
+}
+
+export async function getCurrentUser() {
+  const supabase = createSupabaseServerClientReadOnly()
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser()
+
+  if (error) {
+    console.error(error.message)
+    return null
+  }
+
+  if (!user) return null
+
+  const dbUser = await prisma.user.findUnique({
+    where: { id: user.id },
+    include: {
+      roles: {
+        include: {
+          role: true, 
+        },
+      },
+    },
+  })
+
+  if (!dbUser) return null
+
+  const rawRole = dbUser.roles[0]?.role?.name
+  const role = normalizeRole(rawRole)
+
+  const { roles, ...rest } = dbUser
+
+  return {
+    ...rest,
+    role,
+  }
+
 }
