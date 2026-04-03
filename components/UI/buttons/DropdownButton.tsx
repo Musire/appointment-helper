@@ -3,7 +3,7 @@
 import { useDrawer } from "@/hooks";
 import clsx from "clsx";
 import { Check } from "lucide-react";
-import { Dispatch, ElementType, SetStateAction, useState } from "react";
+import { ElementType, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface DropdownButtonProps<T extends string> {
@@ -45,6 +45,8 @@ export default function DropdownButton<T extends string>({
       closeDrawer();
     }
   };
+
+  console.log(value)
 
   const getDisplayText = () => {
     if (!selected || selected === "") return "Select Option";

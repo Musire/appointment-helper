@@ -1,16 +1,13 @@
 // components/UI/StatusButton.tsx
-import { UploadState } from "@/domains/image-validation/actions/image-uploading.actions"
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { cn } from "@/lib/utils";
+import { Button } from "../buttons";
 
-// Utility to merge tailwind classes safely
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
+export type FormState = { success: boolean, error: string | null }
+
 
 type StatusButtonProps = {
   isPending: boolean;
-  state: UploadState;
+  state: FormState;
   className?: string;
   idleText?: string;
 }
@@ -19,20 +16,20 @@ export default function StatusButton({
   isPending,
   state,
   className,
-  idleText = "Save"
+  idleText = "Submit"
 }: StatusButtonProps) {
   
   // 1. Determine current status
-  const isSuccess = state.success
-  const isError = !state.success && state.message !== ""
+  const isSuccess = state?.success
+  const isError = !!state?.error
 
   return (
-    <button
+    <Button
       type="submit"
       disabled={isPending || isSuccess}
       className={cn(
         // Base styles
-        "px-3 py-2",
+        "px-3 py-2 self-end",
         // Conditional colors
         {
           "bg-success-dark text-deep disabled:hover:cursor-not-allowed hover:bg-success-dark": isSuccess,
@@ -51,6 +48,6 @@ export default function StatusButton({
       ) : (
         idleText
       )}
-    </button>
+    </Button>
   )
 }

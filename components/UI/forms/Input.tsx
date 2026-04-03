@@ -1,120 +1,85 @@
 "use client";
 
-import {
-  useFormContext,
-  FieldError,
-  FieldValues,
-  Path,
-} from "react-hook-form";
-import {
-  InputHTMLAttributes,
-  TextareaHTMLAttributes,
-} from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { InputHTMLAttributes, TextareaHTMLAttributes, useState } from "react";
+import { FieldValues, Path, useFormContext } from "react-hook-form";
 
-// Discriminated union for input vs textarea
-type FormFieldProps<T extends FieldValues> =
-  | ({
-      label?: string;
-      name: Path<T>;
-      as?: "input"; // default
-      type?: InputHTMLAttributes<HTMLInputElement>["type"];
-    } & InputHTMLAttributes<HTMLInputElement>)
-  | ({
-      label?: string;
-      name: Path<T>;
-      as: "textarea";
-      type?: string;
-    } & TextareaHTMLAttributes<HTMLTextAreaElement>);
+type BaseProps<T extends FieldValues> = {
+  label?: string;
+  name: Path<T>;
+  as?: "input" | "textarea";
+};
 
+type FormFieldProps<T extends FieldValues> = BaseProps<T> &
+  InputHTMLAttributes<HTMLInputElement> &
+  TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-export default function Input<T extends FieldValues>(
-  props: FormFieldProps<T>
-) {
-  const {
-    label,
-    name,
-    as = "input",
-    ...rest
-  } = props;
+export default function FormField<T extends FieldValues>({
+  label,
+  name,
+  as = "input",
+  type = "text",
+  className = "",
+  ...props
+}: FormFieldProps<T>) {
+  const [showPassword, setShowPassword] = useState(false);
+  const { register, formState: { errors } } = useFormContext<T>();
 
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext<T>();
+  const error = errors[name];
+  const isHidden = type === "hidden";
+  const isPassword = type === "password";
+  const Tag = as;
 
-  const fieldError = errors[name] as FieldError | undefined;
+  // Final type logic for password toggling
+  const inputType = isPassword ? (showPassword ? "text" : "password") : type;
 
-  const baseClasses =
-    "grow bg-transparent border border-white/40 rounded-lg focus:outline-none text-base normal-space text-white/60";
+  const baseClasses = `w-full bg-transparent border rounded-lg focus:ring-2 focus:outline-none transition-all
+    ${error ? "border-red-500 focus:ring-red-500/20" : "border-white/40 focus:ring-white/20"}
+    ${as === "textarea" ? "min-h-[128px] py-2 px-3" : "h-10 px-3"} 
+    ${isPassword ? "pr-10" : ""} ${className}`;
 
-  if (as === "textarea") {
-    return (
-      <div>
-        <label className="flex flex-col w-full space-y-1">
-          <span className="w-fit capitalize text-white/75 text-lg">{label}</span>
+  if (isHidden) return <input type="hidden" {...register(name)} />;
 
-          <textarea
-            {...register(name)}
-            {...(rest as TextareaHTMLAttributes<HTMLTextAreaElement>)}
-            className={`min-h-32 ${baseClasses} ${
-              fieldError ? "border-error-dark snappy scrollbar-adjust" : ""
-            }`}
-          />
-
-          <p className="text-sm relative text-error-dark snappy h-4">
-            {fieldError?.message}
-          </p>
-        </label>
-      </div>
-    );
-  }
-
-  // ⬇️ TypeScript KNOWS this is the input branch here
   return (
-    <div className={`${props.type === 'hidden' ? "hidden" : ""}`}>
-      <label className="flex flex-col w-full space-y-1">
-        <span className="w-fit capitalize text-white/75 text-lg">{label}</span>
+    <div className="flex flex-col space-y-1.5 w-full">
+      {label && (
+        <label htmlFor={name} className="w-fit text-sm font-medium text-white/80 capitalize">
+          {label}
+        </label>
+      )}
 
-        <input
-          type={props.type === 'number' ? 'text' : props.type}
-          inputMode={props.type === 'number' ? 'numeric' : undefined}
-          onWheel={
-            props.type === 'number'
-              ? (e) => {
-                  ;(e.currentTarget as HTMLInputElement).blur()
-                }
-              : null
-          }
-          onBeforeInput={
-            props.type === 'number'
-              ? (e) => {
-                  const event = e as InputEvent
-                  if (event.data && /\D/.test(event.data)) {
-                    e.preventDefault()
-                  }
-                }
-              : undefined
-          }
-          onPaste={
-            props.type === 'number'
-              ? (e) => {
-                  const pasted = e.clipboardData.getData('text')
-                  if (/\D/.test(pasted)) {
-                    e.preventDefault()
-                  }
-                }
-              : undefined
-          }
-          {...register(name)}
-          {...(rest as InputHTMLAttributes<HTMLInputElement>)}
-          className={`${baseClasses} ${
-            fieldError ? 'border-error-dark snappy' : ''
-          }`}
+      <div className="relative">
+        <Tag
+          id={name}
+          type={as === "input" ? inputType : undefined}
+          aria-invalid={!!error}
+          aria-describedby={error ? `${name}-error` : undefined}
+          {...register(name, { valueAsNumber: type === "number" })}
+          {...props}
+          className={baseClasses}
+          onWheel={(e) => type === "number" && e.currentTarget.blur()}
         />
-        <p className="text-sm relative text-error-dark snappy h-4">
-          {fieldError?.message}
-        </p>
-      </label>
+
+        {isPassword && (
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition-colors"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-pressed={showPassword}
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        )}
+      </div>
+
+      <div id={`${name}-error`} role="alert" className="min-h-5">
+        {error && (
+          <span className="text-xs text-red-400 animate-in fade-in slide-in-from-top-1">
+            {String(error.message)}
+          </span>
+        )}
+      </div>
     </div>
   );
 }

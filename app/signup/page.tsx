@@ -1,59 +1,55 @@
 "use client"
 
-import { supabase } from "@/lib/supabase/client"
-import { useState } from "react"
+import { ControlledInput, Input } from "@/components/UI"
+import { DropdownButton } from "@/components/UI/buttons"
+import ActionForm from "@/components/UI/forms/ActionForm"
+import z from "zod"
+import { signup } from "../actions/auth.actions"
 
 export default function SignupPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [fullName, setFullName] = useState("")
-  const [role, setRole] = useState<"STAFF" | "USER">("USER")
 
-  async function handleSignup() {
-    console.log({email, password, fullName, role})
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
-        data: {
-          role,
-          full_name: fullName
-        },
-      },
-    })
-
-
-
-    if (error) {
-      alert(error.message)
-    } else {
-      alert("Check your email")
-    }
-  }
+  const schema = z.object({
+    email: z.email(),
+    password: z.string().min(1, 'you need to send password'),
+    fullName: z.string().min(1, 'you need fullname'),
+    role: z.string().min(1, 'you need to select role')
+  })
 
   return (
-    <div>
-      <input
-        placeholder="email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        placeholder="full name"
-        onChange={(e) => setFullName(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-
-      <select onChange={(e) => setRole(e.target.value as "STAFF" | "USER")}>
-        <option value="USER">User</option>
-        <option value="STAFF">Staff</option>
-      </select>
-
-      <button onClick={handleSignup}>Sign up</button>
-    </div>
+    <main className=" bg-darkest w-dvw h-dvh xs:px-6 centered-col space-y-6 py-6 text-else">
+      <h2 className="text-3xl">Signup Form</h2>
+      <ActionForm 
+        initialValues={{ email: "", password: "TONY", fullName: '', role: 'USER'}}
+        actionFn={signup}
+        schema={schema}
+      >
+        <Input 
+          label="email"
+          name="email"
+        />
+        <Input 
+          label="full name"
+          name="fullName"
+        />
+        <Input 
+          label="password"
+          name="password"
+          type="password"
+        />
+        <ControlledInput
+          name="role"
+          label="role"
+          children={(field) => (
+            <DropdownButton 
+              options={['USER', 'STAFF']}
+              value={field.value}
+              onChange={field.onChange}
+            />
+          )}
+        />
+      </ActionForm>
+    </main>
   )
 }
+
+

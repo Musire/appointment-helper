@@ -1,50 +1,44 @@
 "use client"
 
-import { useState } from "react"
+import { Input } from "@/components/UI"
+import z from "zod"
 import { login } from "../actions/auth.actions"
+import ActionForm from "@/components/UI/forms/ActionForm"
+import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+  const schema = z.object({
+    email: z.email(),
+    password: z.string().min(1),
+  });
 
-    try {
-      await login(email, password)
-    } catch (err: any) {
-      setError(err.message)
-      setLoading(false)
-    }
+  const onSuccess = () => {
+    router.push('/dashboard')
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-sm">
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-
-      {error && <p className="text-red-500">{error}</p>}
-
-      <button disabled={loading} type="submit">
-        {loading ? "Logging in..." : "Login"}
-      </button>
-    </form>
+    <main className=" bg-darkest w-dvw h-dvh xs:px-6 centered-col space-y-6 py-6 text-else">
+      <h2 className="text-3xl">Login Form</h2>
+      <ActionForm 
+        initialValues={{ email: "", password: ""}}
+        actionFn={login}
+        schema={schema}
+        onSuccess={onSuccess}
+      >
+        <Input
+          label="email" 
+          name="email"
+        />
+        <Input
+          label="password" 
+          name="password"
+          type="password"
+        />
+      </ActionForm>
+    </main>
   )
 }
+
+

@@ -2,18 +2,12 @@
 "use client";
 
 import React from "react";
-import { Controller, FieldError, get, useFormContext } from "react-hook-form";
+import { Controller, ControllerRenderProps, FieldError, get, useFormContext } from "react-hook-form";
 
 type ControlledInputProps = {
   name: string;
   label?: string;
-  children: (field: {
-    value: any;
-    onChange: (value: any) => void;
-    onBlur: () => void;
-    name: string;
-    ref: React.Ref<any>;
-  }) => React.ReactElement;
+  children: (field: ControllerRenderProps<any, string>) => React.ReactElement;
 };
 
 export default function ControlledInput({

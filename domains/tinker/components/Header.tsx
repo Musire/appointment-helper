@@ -1,10 +1,12 @@
 "use client";
 
+import { Button } from "@/components/UI/buttons";
+import { useDrawer } from "@/hooks";
 import { Bell } from "lucide-react";
-import Link from "next/link";
 import { useHeaderTitle } from "../hooks/useHeaderTitle";
 import AvatarButton from "./AvatarButton";
 import BackButton from "./BackButton";
+import { SidePanel } from "@/components/UI/sidepanel";
 
 
 type Props = {
@@ -13,6 +15,7 @@ type Props = {
 
 export default function Header({ avatarUrl }: Props) {
   const title = useHeaderTitle()
+  const { isMounted, animation, openDrawer, closeDrawer } = useDrawer()
 
   return (
     // 'h-20' and 'spaced' (flex justify-between) ensure dimensions are retained
@@ -26,12 +29,17 @@ export default function Header({ avatarUrl }: Props) {
       </div>
 
       <div className="flex items-center space-x-2">
-        <Link 
-          href="/notification" 
-          className="bg-transparent border border-adjust hover:bg-darkest rounded-full size-10 flex items-center justify-center"
+        <Button
+          onClick={openDrawer}
+          className="border border-adjust rounded-full  flex items-center justify-center min-w-10 h-10 w-10 p-0"
         >
-          <Bell size={15} strokeWidth={1} />
-        </Link>
+          <Bell size={20} strokeWidth={1} />
+        </Button>
+        <SidePanel 
+          onClose={closeDrawer} 
+          isMounted={isMounted}
+          animation={animation} 
+        />
         {avatarUrl && <AvatarButton avatarUrl={avatarUrl} />}
       </div>
     </div>

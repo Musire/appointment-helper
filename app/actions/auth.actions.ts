@@ -15,8 +15,20 @@ export async function logout() {
   redirect("/login")
 }
 
+export type FormState = { success: boolean, error: string | null }
 
-export async function login(email: string, password: string) {
+
+export async function login(
+  _: FormState, 
+  formData: FormData
+) {
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+
+  if (!email || !password) {
+    return { success: false, error: 'missing credentials'}
+  }
+
   const supabase = createSupabaseServerClient()
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -24,10 +36,11 @@ export async function login(email: string, password: string) {
   })
 
   if (error) {
-    throw new Error(error.message)
+    return { success: false, error: error.message}
   }
 
-  redirect("/dashboard")
+  return { success: true, error: null}
+
 }
 
 
@@ -73,4 +86,38 @@ export async function hasStaffProfile() {
 
       return Boolean(exists)
     })
+}
+
+export async function signup(
+  _: FormState, 
+  formData: FormData
+) {
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+  const fullName = formData.get('fullName') as string
+  const role = formData.get('role') as string
+
+  if (!email || !password || !role) {
+    return { success: false, error: 'missing credentials'}
+  }
+
+  const supabase = createSupabaseServerClient()
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: `${location.origin}/auth/callback`,
+      data: {
+        role,
+        full_name: fullName
+      },
+    },
+  })
+
+  if (error) {
+    return { success: false, error: error.message}
+  }
+
+  return { success: true, error: null}
+
 }

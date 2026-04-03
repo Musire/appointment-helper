@@ -1,11 +1,11 @@
 'use client';
 
-import { useForm, FormProvider, SubmitHandler, FieldValues } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, LoaderCircle } from "lucide-react";
 import clsx from "clsx";
-import { z } from "zod";
+import { Check, LoaderCircle } from "lucide-react";
 import { useEffect } from "react";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
 
 interface FormProps<S extends z.ZodObject<any>> {
   schema: S;
@@ -64,7 +64,7 @@ export default function Form<S extends z.ZodObject<any>> ({ initialValues, onSub
       <FormProvider {...methods}>
         <form
           className="flex flex-col min-w-72 max-w-lg w-full grow h-full space-y-4 "
-          onSubmit={handleSubmit(wrappedSubmit as SubmitHandler<FieldValues>)}
+          onSubmit={handleSubmit(wrappedSubmit)}
         >
           {children}
           <button
