@@ -12,3 +12,4 @@ export * from "./search"
 export { default as Skeleton } from './Skeleton'
 export { default as Switch } from './switch'
 export * from "./theme"
+export * from "./typography"

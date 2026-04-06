@@ -29,7 +29,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={` font-poppins`}
+        className="font-poppins text-main"
       >
         {children}
       </body>

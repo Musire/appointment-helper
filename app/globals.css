@@ -48,7 +48,11 @@
     --shadow-surface-1: 0 3px 10px rgba(0,0,0,0.15);
     --shadow-surface-2: 0 10px 15px rgba(0,0,0,0.15);
     --shadow-surface-3: 0 25px 50px rgba(0,0,0,0.25);
-    --border: 
+
+    --main: 0, 0%, 13%;
+    --else: 0, 0%, 40%;
+    --disabled: 0, 0%, 63%;
+
 
 
   }
@@ -88,6 +92,13 @@
     --shadow-surface-1: none;
     --shadow-surface-2: none;
     --shadow-surface-3: none;
+
+
+    --main: 0, 0%, 87%;
+    --else: 0, 0%, 60%;
+    --disabled: 0, 0%, 37%;
+
+    
   }
 
   * {
@@ -154,12 +165,12 @@
   /*development colors*/
   
   --color-whitesmoke: hsla(0, 0%, 96%, 1);
-  --color-whitesmoke: hsla(0, 0%, 96%, 1);
   --color-fog: hsla(0, 0%, 87.5%, 1);
   --color-ash: hsla(0, 0%, 80%, 1);
-  --color-main: hsla(0, 0%, 96%, .87);
-  --color-else: hsla(0, 0%, 96%, .60);
-  --color-disabled: hsla(0, 0%, 96%, .38);
+
+  --color-main: hsl(var(--main));
+  --color-else: hsl(var(--else));
+  --color-disabled: hsl(var(--disabled));
   
   --color-silver: #d9d9d9;
   --color-mid: #999999;
@@ -176,8 +187,10 @@
 
   --color-o: #F6AD55; /* testing color*/
   --color-alternate: #B6AB8C; /* accent color */
-  --color-error-dark: hsla(351, 57%, 62%, 1); /* #D06679; */
-  --color-success-dark: hsla(150, 57%, 62%, 1); /* #78CCAA; */
+  --color-error-dark: hsl(351, 57%, 62%); /* #D06679; */
+  --color-error: hsl(349, 37%, 49%); /* #AC4F60; */
+  --color-success-dark: hsla(150, 57%, 62%, 1); /* #67D59E; */
+  --color-success: hsl(150, 40%, 35%); /* #357C59; */
 
   /*surface-colors*/
   --color-surface-0a:  #171717; /* 00dp */
@@ -434,4 +447,49 @@
 
 @utility surface-3 {
   @apply bg-surface-3 shadow-(--shadow-surface-3) 
+}
+
+@utility heading-1 {
+  font-size: var(--text-fluid-4xl);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+}
+
+@utility heading-2 {
+  font-size: var(--text-fluid-3xl);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+}
+
+@utility heading-3 {
+  font-size: var(--text-fluid-xl);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+}
+
+@utility body {
+  font-size: var(--text-fluid);
+  line-height: var(--leading-normal);
+}
+
+@utility body-sm {
+  font-size: var(--text-fluid-sm);
+  line-height: var(--leading-normal);
+}
+
+@utility caption {
+  font-size: var(--text-fluid-xs);
+  line-height: var(--leading-normal);
+}
+
+@utility label {
+  font-size: var(--text-fluid-sm);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-tight);
+}
+
+@utility legend {
+  font-size: var(--text-fluid-sm);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
 }
