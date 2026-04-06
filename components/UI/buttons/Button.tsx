@@ -13,7 +13,7 @@ const buttonVariants = cva(
         variants: {
             variant: {
                 primary: "bg-deep text-whitesmoke hover:bg-darker active:bg-darkest  dark:bg-whitesmoke dark:text-deep dark:hover:bg-fog dark:active:bg-ash",
-                secondary: "bg-transparent border border-border hover:bg-fog active:bg-ash  dark:hover:bg-surface-2 dark:active:bg-darkest  ",
+                secondary: "bg-transparent border border-border hover:bg-fog active:bg-ash  dark:hover:bg-surface-1 dark:active:bg-darkest  ",
                 ghost: "bg-transparent hover:bg-fog active:bg-ash  dark:text-else dark:hover:text-main dark:hover:bg-darkest dark:active:bg-darker",
             },
         }
