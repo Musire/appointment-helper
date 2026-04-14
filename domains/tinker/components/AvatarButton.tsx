@@ -3,10 +3,11 @@
 import { logout } from "@/app/actions/auth.actions";
 import { Drawer } from "@/components/UI";
 import { useDrawer } from "@/hooks";
+import { User } from "lucide-react";
 
 
 type Props = {
-  avatarUrl: string;
+  avatarUrl: string | null;
 }
 
 export default function AvatarButton({ avatarUrl }: Props) {
@@ -21,13 +22,17 @@ export default function AvatarButton({ avatarUrl }: Props) {
         aria-label="Toggle Menu"
         className="relative size-10 rounded-full bg-mid overflow-hidden hover:ring-2 ring-main transition-all"
       >
-        <img 
-          src={avatarUrl} 
-          alt="User Profile" 
-          className="w-full h-full object-cover"
-        />
+        {!avatarUrl
+          ? <div className="text-deep centered">
+              <User />
+            </div>
+          : <img 
+              src={avatarUrl} 
+              alt="User Profile" 
+              className="w-full h-full object-cover"
+            />
+        }
       </button>
-
       {/* The Drawer Instance */}
       <Drawer 
         isMounted={isMounted} 

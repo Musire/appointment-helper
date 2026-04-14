@@ -40,7 +40,7 @@ export default function Header({ avatarUrl }: Props) {
           isMounted={isMounted}
           animation={animation} 
         />
-        {avatarUrl && <AvatarButton avatarUrl={avatarUrl} />}
+        <AvatarButton avatarUrl={avatarUrl} />
       </div>
     </div>
   );
