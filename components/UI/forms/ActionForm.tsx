@@ -64,7 +64,7 @@ export default function ActionForm<S extends z.ZodObject<any>> ({
     return (
       <FormProvider {...form}>
         <form
-          className="flex flex-col min-w-72 max-w-lg w-full xs:w-dvw p-6 bg-darker  space-y-4 "
+          className="flex flex-col rounded-xl max-w-lg w-full p-6 bg-darker  space-y-4 "
           onSubmit={form.handleSubmit(onSubmit)}
         >
           {children}
