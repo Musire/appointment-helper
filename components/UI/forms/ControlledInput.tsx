@@ -3,6 +3,7 @@
 
 import React from "react";
 import { Controller, ControllerRenderProps, FieldError, get, useFormContext } from "react-hook-form";
+import { LabelTag } from "../typography";
 
 type ControlledInputProps = {
   name: string;
@@ -33,12 +34,13 @@ export default function ControlledInput({
         render={({ field }) => children(field)}
       />
 
-      <p className={`text-sm relative text-error-dark snappy h-4 ${
+      <LabelTag className={`text-sm relative text-console.error();
+       snappy h-4 ${
             error ? "visible animate-ghostIn" : "invisible"
           }`}
         >
           {error?.message}
-      </p>
+      </LabelTag>
     </div>
   );
 }

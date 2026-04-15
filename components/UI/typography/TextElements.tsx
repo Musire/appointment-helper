@@ -1,4 +1,4 @@
-import Typography  from "./Typography";
+import Typography from "./Typography";
 
 export const H1 = (props: React.ComponentProps<"h1">) => (
   <Typography as="h1" variant="h1" {...props} />
@@ -24,7 +24,7 @@ export const Caption = (props: React.ComponentProps<"span">) => (
   <Typography as="span" variant="caption" {...props} />
 );
 
-export const Label = (props: React.ComponentProps<"label">) => (
+export const LabelTag = (props: React.ComponentProps<"label">) => (
   <Typography as="label" variant="label" {...props} />
 );
 

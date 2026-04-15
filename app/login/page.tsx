@@ -23,7 +23,8 @@ export default function LoginPage() {
     <main className=" bg-background w-dvw h-dvh xs:px-6 centered-col space-y-6 py-6 text-else">
       <Theme />
       <h2 className="text-3xl text-main">Login Form</h2>
-      <ActionForm 
+      <div className="surface-1 rounded-xl">
+        <ActionForm 
         initialValues={{ email: "", password: ""}}
         actionFn={login}
         schema={schema}
@@ -39,6 +40,7 @@ export default function LoginPage() {
           type="password"
         />
       </ActionForm>
+      </div>
     </main>
   )
 }

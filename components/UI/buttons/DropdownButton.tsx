@@ -59,7 +59,7 @@ export default function DropdownButton<T extends string>({
         type="button"
         onClick={toggleDrawer}
         className={twMerge(
-          "snappy spaced gap-x-2 text-sm capitalize w-full border border-whitesmoke/40 rounded-lg normal-space text-whitesmoke/87",
+          "snappy spaced gap-x-2 bg-background hover:bg-surface-1 text-sm capitalize w-full border border-border rounded-lg normal-space text-else",
           buttonStyle
         )}
       >
@@ -74,7 +74,7 @@ export default function DropdownButton<T extends string>({
           <aside
             className={twMerge(
               clsx(
-                "absolute bg-darkest w-32 border border-adjust z-20 max-h-40 overflow-y-auto scrollbar-none top-12 rounded-xl",
+                "absolute bg-background w-32 border border-adjust z-20 max-h-40 overflow-y-auto scrollbar-none top-12 rounded-xl",
                 animation ? "animate-ghostIn" : "animate-ghostOut"
               ),
               drawerStyle
@@ -90,7 +90,7 @@ export default function DropdownButton<T extends string>({
                     <button
                       type="button"
                       onClick={() => handleSelect(option)}
-                      className="flex items-center text-whitesmoke/87 w-full text-sm text-left capitalize px-3 py-1 hover:bg-darker hover:text-alternate easy-transition gap-x-2"
+                      className="flex items-center text-else w-full text-sm text-left capitalize px-3 py-1  hover:bg-surface-1 hover:text-main easy-transition gap-x-2"
                     >
                       {multiple && (
                         <span className="w-4">

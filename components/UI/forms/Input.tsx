@@ -3,6 +3,7 @@
 import { Eye, EyeOff } from "lucide-react";
 import { InputHTMLAttributes, TextareaHTMLAttributes, useState } from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
+import { LabelTag } from "../typography";
 
 type BaseProps<T extends FieldValues> = {
   label?: string;
@@ -33,8 +34,8 @@ export default function FormField<T extends FieldValues>({
   // Final type logic for password toggling
   const inputType = isPassword ? (showPassword ? "text" : "password") : type;
 
-  const baseClasses = `w-full bg-transparent border rounded-lg focus:ring-2 focus:outline-none transition-all
-    ${error ? "border-red-500 focus:ring-red-500/20" : "border-white/40 focus:ring-white/20"}
+  const baseClasses = `bg-background w-full border rounded-lg focus:ring-2 focus:outline-none transition-all
+    ${error ? "border-error focus:ring-error" : "border-border focus:ring-border"}
     ${as === "textarea" ? "min-h-[128px] py-2 px-3" : "h-10 px-3"} 
     ${isPassword ? "pr-10" : ""} ${className}`;
 
@@ -43,9 +44,9 @@ export default function FormField<T extends FieldValues>({
   return (
     <div className="flex flex-col space-y-1.5 w-full">
       {label && (
-        <label htmlFor={name} className="w-fit text-sm font-medium text-white/80 capitalize">
+        <LabelTag htmlFor={name} className="w-fit text-sm font-medium text-else capitalize">
           {label}
-        </label>
+        </LabelTag>
       )}
 
       <div className="relative">
@@ -64,7 +65,7 @@ export default function FormField<T extends FieldValues>({
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition-colors"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-else hover:text-else/70 transition-colors hover:cursor-pointer"
             aria-label={showPassword ? "Hide password" : "Show password"}
             aria-pressed={showPassword}
           >
@@ -75,7 +76,7 @@ export default function FormField<T extends FieldValues>({
 
       <div id={`${name}-error`} role="alert" className="min-h-5">
         {error && (
-          <span className="text-xs text-red-400 animate-in fade-in slide-in-from-top-1">
+          <span className="text-xs text-error animate-in fade-in slide-in-from-top-1">
             {String(error.message)}
           </span>
         )}
