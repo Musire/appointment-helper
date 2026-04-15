@@ -3,7 +3,7 @@
 
 import React from "react";
 import { Controller, ControllerRenderProps, FieldError, get, useFormContext } from "react-hook-form";
-import { LabelTag } from "../typography";
+import { Caption, LabelTag } from "../typography";
 
 type ControlledInputProps = {
   name: string;
@@ -26,7 +26,7 @@ export default function ControlledInput({
 
   return (
     <div className="flex flex-col w-full gap-y-1">
-      {label && <legend className="w-full text-lg capitalize mb-1" >{label}</legend>}
+      {label && <LabelTag className="w-fit text-sm font-medium text-else capitalize mb-1" >{label}</LabelTag>}
 
       <Controller
         name={name}
@@ -34,13 +34,13 @@ export default function ControlledInput({
         render={({ field }) => children(field)}
       />
 
-      <LabelTag className={`text-sm relative text-console.error();
+      <Caption className={`text-sm relative text-console.error();
        snappy h-4 ${
             error ? "visible animate-ghostIn" : "invisible"
           }`}
         >
           {error?.message}
-      </LabelTag>
+      </Caption>
     </div>
   );
 }
