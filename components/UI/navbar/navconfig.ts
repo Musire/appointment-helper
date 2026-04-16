@@ -59,7 +59,7 @@ export const navByRole: Record<Role, (slug: string) => NavItem[]> = {
       { 
         label: 'Upcoming', 
         href: `/user/dashboard`,
-        icon: 'home',
+        icon: 'upcoming',
         index: true 
       },
       { 

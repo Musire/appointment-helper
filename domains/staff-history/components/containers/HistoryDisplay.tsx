@@ -8,8 +8,8 @@ type props = {
 
 export default function HistoryDisplay ({ date, appointments }: props) {
     return (
-        <section  className="flex flex-col gap-3 divide-y-2 divide-whitesmoke/30">
-            <h2 className="text-sm font-bold text-whitesmoke/87 uppercase tracking-wider  pb-4">
+        <section  className="flex flex-col gap-3 divide-y-2 divide-border">
+            <h2 className="text-sm text-else uppercase tracking-wide  pb-4">
                 {new Date(date).toLocaleDateString('en-US', { 
                     weekday: 'long', 
                     month: 'short', 

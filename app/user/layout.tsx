@@ -15,7 +15,7 @@ export default async function UserLayout ({ children, params }: Props) {
     if (!user || !user.role ) return null;
 
     return (
-        <main className="bg-deep text-main w-screen h-dvh flex-col flex overflow-x-hidden px-6 lg:px-60 relative">
+        <main className="bg-background text-main w-screen h-dvh flex-col flex overflow-x-hidden px-6 lg:px-60 relative">
             <Header avatarUrl={user.avatarUrl} />
             <Navbar slug={slug} role={user.role} />
             <div className="max-h-[calc(100%-7rem)] w-full flex-1 overflow-x-hidden overflow-y-scroll scrollbar-none" >

@@ -7,19 +7,19 @@ interface props {
 }
 
 const statusStyles: Record<AppointmentStatus, string> = {
-  COMPLETED: 'text-success-dark',
-  NOSHOW: 'text-error-dark',
-  CANCELLED: 'text-error-dark/60',
-  CONFIRMED: 'text-whitesmoke/87',
-  PENDING: 'text-whitesmoke/60', // include ALL enum values
+  COMPLETED: 'text-success',
+  NOSHOW: 'text-error',
+  CANCELLED: 'text-disabled',
+  CONFIRMED: 'text-main',
+  PENDING: 'text-else', // include ALL enum values
 };
 
 
 export default function HistoryCard ({ data }: props) {
-    const { items, client, status } = data
+    const { client, status } = data
     return (
         <li className="">
-            <article className="bg-darkest p-4 border-adjust">
+            <article className="bg-surface-1 p-4 border-border">
                 <span className="spaced">
                     <p className="">{`${client.name}`}</p>
                     <p 

@@ -30,7 +30,7 @@ export default function AppointmentCard ({ data }: props) {
 
     return (
         <li className="">
-            <article className="p-6 border-2 border-whitesmoke/30 flex-col flex space-y-6 divide-y-2 divide-dark relative">
+            <article className="p-6 border-2 border-border flex-col flex space-y-6 divide-y-2 divide-border relative surface-1">
                 <button 
                     type="button" 
                     onClick={toggleDrawer}

@@ -3,6 +3,7 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Caption } from '../typography';
 import { getIcon, IconKey } from './icon-map';
 import { NavItem } from './navconfig';
 
@@ -14,27 +15,35 @@ export default function MobileNav({ items }: PanelNavProps) {
   const pathname = usePathname();
 
   const styles = {
-    standard: "px-3 py-2 transition-colors flex space-x-2 rounded-full size-12  centered",
-    active: " text-whitesmoke/87 bg-blue-500",
-    inactive: "text-else hover:text-main border-disabled border hover:bg-whitesmoke/10 "
+    standard: "  px-3 py-2 transition-colors flex centered-col space-y-1",
+    active: " text-main  text-blue-600 ",
+    inactive: "text-else hover:text-else  "
   }
 
   return (
-    <nav className="centered w-full border-t border-whitesmoke/15 h-20 space-x-2 ">
-      {items.map(item => {
-        const { icon, href, index } = item
-        const Icon = getIcon(icon as IconKey)
-        const isActive = index ? pathname === href : pathname.startsWith(href);
-        return (
-          <Link
-            key={href}
-            href={href}
-            className={clsx(styles.standard, isActive ? styles.active : styles.inactive)}
-          >
-            {Icon && <Icon size={30} strokeWidth={isActive ? 2 : 1} />}
-          </Link>
-        );
-      })}
+    <nav className="centered  w-full border-t border-border p-4  space-y-2 ">
+      <div className="centered rounded-3xl surface-1 w-fit px-6">
+        {items.map(item => {
+          const { icon, href, index, label } = item
+          const Icon = getIcon(icon as IconKey)
+          const isActive = index ? pathname === href : pathname.startsWith(href);
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={clsx(styles.standard, isActive ? styles.active : styles.inactive)}
+            >
+              {Icon && (
+                <div className={`centered rounded-full size-8 ${isActive ? "bg-blue-300/40 text-blue-600 dark:text-primary dark:bg-primary/20 " : "bg-background/40"}`}>
+                  <Icon size={15} />
+                </div>
+              )}
+              <Caption className={`${isActive ? "text-blue-600 dark:text-primary": ""}`} >{label}</Caption>
+            </Link>
+          );
+        })}
+      </div>
+      
     </nav>
   );
 }
