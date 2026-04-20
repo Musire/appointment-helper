@@ -18,7 +18,7 @@ export default function AvatarImage({ imageUrl, className }: Props) {
     }
 
     return (
-        <div className={cn("relative overflow-hidden", className)}>
+        <div className={cn("relative overflow-hidden rounded-full border border-border ", className)}>
             {isLoading && (
                 <Skeleton className="absolute inset-0 h-full w-full" />
             )}
