@@ -11,7 +11,7 @@ export default async function BookingService ({ searchParams }: SearchParamsType
     const data = await getBookingReviewData(params);
 
     return (
-        <div className="">
+        <div className="flex w-full h-full">
             <ReviewStep {...data}/>   
         </div>
     );

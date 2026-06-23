@@ -1,0 +1,19 @@
+STAFF
+    requirements:
+        Display a list of cards displaying [time, client name, services]
+        Cards has option to cancel or reschedule appointment / mark completed or noshow
+
+    data fetch:
+        db query for appointments where the barber name is the user name and day is today
+
+
+
+
+USER
+    requirements:
+        Display a list of cards displaying [time, barber name, services]
+        Cards has option to cancel or reschedule appointment
+
+    data fetch:
+        db query for appointments where the client name is the user name and day is today
+        

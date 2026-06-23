@@ -1,9 +1,11 @@
 "use client";
 
 import { logout } from "@/app/actions/auth.actions";
-import { Drawer } from "@/components/UI";
+import { Drawer, Theme } from "@/components/UI";
+import { Button } from "@/components/ui/button";
 import { useDrawer } from "@/hooks";
 import { User } from "lucide-react";
+import Link from "next/link";
 
 
 type Props = {
@@ -20,7 +22,7 @@ export default function AvatarButton({ avatarUrl }: Props) {
         onClick={toggleDrawer}
         type="button"
         aria-label="Toggle Menu"
-        className="relative size-10 rounded-full bg-mid overflow-hidden hover:ring-2 ring-main transition-all"
+        className="relative size-10 rounded-full bg-mid overflow-hidden hover:ring-2 ring-main transition-all hover:cursor-pointer"
       >
         {!avatarUrl
           ? <div className="text-deep centered">
@@ -40,9 +42,11 @@ export default function AvatarButton({ avatarUrl }: Props) {
         withOverlay 
         onClose={closeDrawer} 
       >
-        <div className="fixed inset-y-0 right-0 w-80 bg-darkest shadow-2xl p-6">
+        <div className="fixed inset-y-0 right-0 w-80 surface-1 shadow-2xl p-6 stacked space-y-4">
            {/* Drawer content goes here */}
-           <button type="button" className="btn" onClick={logout}>logout</button>
+           <Theme />
+           <Link href={`profile`} onClick={closeDrawer}>View Profile</Link>
+           <Button type="button" className="w-24" onClick={logout}>logout</Button>
         </div>
       </Drawer>
     </div>

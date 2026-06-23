@@ -23,20 +23,20 @@ export default function ContinueButton ({ onBack, next, selected }: ContinueButt
     }
 
     return (
-        <span className="spaced w-[calc(100%-3rem)] absolute gap-x-4 bottom-6  left-1/2 -translate-x-1/2">
-            <button type="button" onClick={onBack} className="btn flex-1">Back</button>
+        <span className="spaced  gap-x-4 mt-auto">
+            <button type="button" onClick={onBack} className="btn flex-1 max-w-60">Back</button>
             {!selected ? (
                 <button 
                     type="button" 
                     disabled 
-                    className="btn flex-1"
+                    className="btn max-w-60 normal-space flex-1"
                 >
                     Continue
                 </button>
             ) : (
                 <Link
                     href={buildQuery(next, nextParams)}
-                    className="normal-space bg-primary flex-1 hover:bg-primary-hover text-center  text-deep " 
+                    className="normal-space bg-primary flex-1 max-w-60 hover:bg-primary-hover text-center  text-deep " 
                 >
                     Continue
                 </Link>

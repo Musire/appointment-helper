@@ -1,0 +1,59 @@
+Authentication
+    Create Account
+    Log In
+    Log Out
+    Accept Staff Invitation
+    Activate Staff Account
+
+Profile Management
+    Manage Contact Information
+    Manage Staff Profile
+    Manage Staff Specialties
+
+Discovery
+    View Stores
+    View Staff Profiles
+    View Services
+    View Available Time Slots
+
+Booking
+    Book Appointment
+    Receive Booking Confirmation
+    Receive Appointment QR Code
+
+Appointment Management
+    View Upcoming Appointments
+    Reschedule Appointment
+    Cancel Appointment
+
+Availability Management
+    Configure Working Hours
+    Configure Available Time Slots
+    Create Time Off
+
+Client Management
+    Search Clients
+    View Client Profile
+    View Client Appointment History
+
+Check-In
+    QR Code Check-In
+    Manual Check-In
+
+Service Management
+    Start Service
+    Complete Service
+    Mark No Show
+
+History
+    View Appointment History
+
+Notifications
+    Appointment Scheduled Notification
+    Appointment Cancelled Notification
+    Appointment Rescheduled Notification
+
+Realtime Updates
+    Live Appointment Updates
+    Live Check-In Updates
+    Live Schedule Updates

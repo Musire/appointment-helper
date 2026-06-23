@@ -21,8 +21,8 @@ export default function MobileNav({ items }: PanelNavProps) {
   }
 
   return (
-    <nav className="centered  w-full border-t border-border p-4  space-y-2 ">
-      <div className="centered rounded-3xl surface-1 w-fit px-6">
+    <nav className="centered  w-full space-y-2 z-40">
+      <div className="centered rounded-xl surface-1 w-full px-6">
         {items.map(item => {
           const { icon, href, index, label } = item
           const Icon = getIcon(icon as IconKey)

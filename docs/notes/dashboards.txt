@@ -1,0 +1,30 @@
+1. Roles and Authority Boundaries (Non-Negotiable)
+
+    Super Admin (developer)
+        admins
+
+
+    Admin (Store Owner)
+        stores
+            overview
+            config
+            services
+            staff
+        analytics*
+
+
+    Staff
+        profile (overview)
+        stores
+            availability
+        Upcoming
+        History
+
+
+    End User (Customer)
+        Upcoming
+        History
+        Profile
+
+
+

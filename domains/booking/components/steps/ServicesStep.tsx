@@ -16,7 +16,7 @@ export default function ServicesStep ({ services }: ServiceStepProps ) {
     const router = useRouter()
 
     return (
-        <div className="flex flex-col space-y-6 ">
+        <div className="flex flex-col max-w-full  space-y-6 ">
             <Header 
                 step={3}
                 max={5} 

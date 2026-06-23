@@ -1,0 +1,35 @@
+Domains
+    Identity
+    Store
+    Service
+    Profile
+    Availability
+    Appointment
+    Notification
+
+______________________________________________________
+BY SEPARATION
+
+
+Client Domain
+    Authentication
+    Discovery
+    Booking
+    Appointment Management
+    Check-In
+    History
+
+Staff Domain
+    Authentication
+    Profile
+    Availability
+    Client Management
+    Appointment Management
+    Service Lifecycle
+
+System Domain
+    Notifications
+    QR Check-In
+    Realtime Updates
+    Scheduling Engine
+    Double Booking Prevention

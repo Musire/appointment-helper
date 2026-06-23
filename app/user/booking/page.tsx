@@ -1,12 +1,13 @@
 import { StoreStep } from "@/domains/booking";
+import { Store } from "@/generated/prisma";
 import { getActiveStores } from "@/lib/queries/stores";
 import { SearchParamsType } from "@/lib/queries/types";
 
 export default async function BookingPage ({ searchParams }: SearchParamsType) {
-    const stores = await getActiveStores();
+    const stores = await getActiveStores() as Store[]
 
     return (
-        <div className="">
+        <div className="flex w-full h-full ">
             <StoreStep {...{stores}} />   
         </div>
     );

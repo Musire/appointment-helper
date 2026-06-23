@@ -250,9 +250,10 @@ enum ServiceType {
 
 enum AppointmentStatus {
   PENDING
-  CONFIRMED
-  CANCELLED
+  CHECKIN
+  INPROGRESS
   COMPLETED
+  CANCELLED
   NOSHOW
 }
 

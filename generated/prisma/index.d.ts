@@ -162,9 +162,10 @@ export type ServiceType = (typeof ServiceType)[keyof typeof ServiceType]
 
 export const AppointmentStatus: {
   PENDING: 'PENDING',
-  CONFIRMED: 'CONFIRMED',
-  CANCELLED: 'CANCELLED',
+  CHECKIN: 'CHECKIN',
+  INPROGRESS: 'INPROGRESS',
   COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
   NOSHOW: 'NOSHOW'
 };
 
@@ -224,7 +225,9 @@ export const NotificationType: typeof $Enums.NotificationType
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
- * const prisma = new PrismaClient()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
  * // Fetch zero or more Users
  * const users = await prisma.user.findMany()
  * ```
@@ -245,7 +248,9 @@ export class PrismaClient<
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
-   * const prisma = new PrismaClient()
+   * const prisma = new PrismaClient({
+   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * })
    * // Fetch zero or more Users
    * const users = await prisma.user.findMany()
    * ```
@@ -325,7 +330,7 @@ export class PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
   $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
@@ -534,8 +539,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.2.0
-   * Query Engine version: 0c8ef2ce45c83248ab3df073180d5eda9e8be7a3
+   * Prisma Client JS version: 7.5.0
+   * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
    */
   export type PrismaVersion = {
     client: string
@@ -3444,6 +3449,11 @@ export namespace Prisma {
      * Skip the first `n` Users.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
@@ -4614,6 +4624,11 @@ export namespace Prisma {
      * Skip the first `n` Roles.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Roles.
+     */
     distinct?: RoleScalarFieldEnum | RoleScalarFieldEnum[]
   }
 
@@ -5670,6 +5685,11 @@ export namespace Prisma {
      * Skip the first `n` UserRoles.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserRoles.
+     */
     distinct?: UserRoleScalarFieldEnum | UserRoleScalarFieldEnum[]
   }
 
@@ -6793,6 +6813,11 @@ export namespace Prisma {
      * Skip the first `n` Stores.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Stores.
+     */
     distinct?: StoreScalarFieldEnum | StoreScalarFieldEnum[]
   }
 
@@ -8004,6 +8029,11 @@ export namespace Prisma {
      * Skip the first `n` StoreConfigs.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StoreConfigs.
+     */
     distinct?: StoreConfigScalarFieldEnum | StoreConfigScalarFieldEnum[]
   }
 
@@ -9080,6 +9110,11 @@ export namespace Prisma {
      * Skip the first `n` StoreStaffs.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StoreStaffs.
+     */
     distinct?: StoreStaffScalarFieldEnum | StoreStaffScalarFieldEnum[]
   }
 
@@ -10173,6 +10208,11 @@ export namespace Prisma {
      * Skip the first `n` StaffProfiles.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StaffProfiles.
+     */
     distinct?: StaffProfileScalarFieldEnum | StaffProfileScalarFieldEnum[]
   }
 
@@ -11231,6 +11271,11 @@ export namespace Prisma {
      * Skip the first `n` StaffAvailabilities.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StaffAvailabilities.
+     */
     distinct?: StaffAvailabilityScalarFieldEnum | StaffAvailabilityScalarFieldEnum[]
   }
 
@@ -12380,6 +12425,11 @@ export namespace Prisma {
      * Skip the first `n` Services.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Services.
+     */
     distinct?: ServiceScalarFieldEnum | ServiceScalarFieldEnum[]
   }
 
@@ -13461,6 +13511,11 @@ export namespace Prisma {
      * Skip the first `n` ServiceCategories.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ServiceCategories.
+     */
     distinct?: ServiceCategoryScalarFieldEnum | ServiceCategoryScalarFieldEnum[]
   }
 
@@ -14604,6 +14659,11 @@ export namespace Prisma {
      * Skip the first `n` Appointments.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Appointments.
+     */
     distinct?: AppointmentScalarFieldEnum | AppointmentScalarFieldEnum[]
   }
 
@@ -15668,6 +15728,11 @@ export namespace Prisma {
      * Skip the first `n` AppointmentServices.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AppointmentServices.
+     */
     distinct?: AppointmentServiceScalarFieldEnum | AppointmentServiceScalarFieldEnum[]
   }
 
@@ -16735,6 +16800,11 @@ export namespace Prisma {
      * Skip the first `n` Notifications.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Notifications.
+     */
     distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
   }
 
@@ -17827,6 +17897,11 @@ export namespace Prisma {
      * Skip the first `n` Invites.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Invites.
+     */
     distinct?: InviteScalarFieldEnum | InviteScalarFieldEnum[]
   }
 
@@ -18863,6 +18938,11 @@ export namespace Prisma {
      * Skip the first `n` AuditLogs.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AuditLogs.
+     */
     distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
   }
 

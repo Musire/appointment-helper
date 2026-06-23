@@ -6,6 +6,7 @@ import {
     Home,
     Scissors,
     Settings,
+    Plus,
     Users
 } from 'lucide-react'
 
@@ -13,9 +14,10 @@ export const iconMap = {
     home: Home,
     scissors: Scissors,
     users: Users,
-    upcoming: CalendarDays,
+    pool: CalendarDays,
     store: Building2,
     profile: Settings,
+    booking: Plus,
     history: Clock
 } as const
 

@@ -1,0 +1,6 @@
+Booked → Confirmed
+Confirmed → Checked In
+Checked In → In Progress
+In Progress → Completed
+Confirmed → Cancelled
+Confirmed → No Show

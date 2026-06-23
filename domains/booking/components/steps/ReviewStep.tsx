@@ -7,12 +7,12 @@ import { Service, Store, User } from "@/generated/prisma";
 import { formatCurrency } from "@/lib/stringMutate";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import SuccessDisplay from "../../../../components/UI/forms/SuccessDisplay";
 import { createBookingAction } from "../../actions/booking.action";
 import { Header, SubmitButton } from "../page";
 import ServiceSlot from "../slots/ServiceSlot";
 import StaffSlot from "../slots/StaffSlot";
 import StoreSlot from "../slots/StoreSlot";
-import SuccessDisplay from "../../../../components/UI/forms/SuccessDisplay";
 
 type ReviewData = {
     store: Store,
@@ -51,7 +51,7 @@ export default function ReviewStep ({ store, staff, services, date, time }: Revi
     };
 
     return (
-        <div className="w-full flex flex-col space-y-6  h-[70dvh]">
+        <div className="w-full flex flex-1  flex-col space-y-6 ">
             <Header 
                 step={5}
                 max={5}

@@ -1,8 +1,10 @@
-import { BookingHistory, AppointmentHistory } from "@/domains/staff-history";
+import { getAppointmentHistory } from "@/domains/appointments/queries/getHistoryItems";
+import { BookingHistory } from "@/domains/staff-history";
 
 export default function HistoryPanel () {
+    const AppointmentHistory = getAppointmentHistory()
     return (
-        <div className="py-6">
+        <div className="pt-6 w-full ">
             <BookingHistory history={AppointmentHistory} />
         </div>
     );

@@ -1,0 +1,49 @@
+Onboarding
+    Create Account
+    Log In
+    Receive Invite to stores
+    complete activation of profile
+
+Profile Management
+    Contact information
+    Profile information (specialities)
+    Rating + Stats *
+
+Manage Availability
+    Establish the Time Slots per store per weekday
+    Create time-off for emergencies
+
+Client Management
+    Search Clients
+    View Client Profile
+    View Client Appointment History
+
+Managing Upcoming Appointments
+    View Upcoming Appointment
+    Reschedule Appointment
+    Cancel Appointment
+
+Receiving for Service
+    Scan QR Code for Check-In
+    Manual Check-In
+    Mark Client as No Show
+
+Service Management
+    Start Service
+    Complete Service  
+
+After Service
+    View Appointment History
+    Rate interaaction of service
+
+Notifications
+    appointment scheduled
+    appointment cancelled
+    appointment rescheduled
+
+Cancellation Management *
+    offer space when a cancellation or reschedule occur to fill with priority and possibly a discount
+    offer discount on all haircuts on a slow day to attract clients
+
+
+

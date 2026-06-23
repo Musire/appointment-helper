@@ -14,7 +14,7 @@ export default function AvatarImage({ imageUrl, className }: Props) {
     const [isLoading, setIsLoading] = useState(true);
 
     if (!imageUrl) {
-        return <div className={cn("bg-darkest mx-auto mb-3", className)} />;
+        return <div className={cn("surface-2 mx-auto mb-3 rounded-full", className)} />;
     }
 
     return (

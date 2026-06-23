@@ -1,8 +1,10 @@
-import { AppointmentHistory, BookingHistory } from "@/domains/staff-history";
+import { getAppointmentHistory } from "@/domains/appointments/queries/getHistoryItems";
+import { BookingHistory } from "@/domains/staff-history";
 
-export default function HistoryPage () {
+export default function HistoryPanel () {
+    const AppointmentHistory = getAppointmentHistory()
     return (
-        <div className=" ">
+        <div className="pt-6 w-full ">
             <BookingHistory history={AppointmentHistory} />
         </div>
     );

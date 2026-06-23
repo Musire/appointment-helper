@@ -1,20 +1,16 @@
-import { H2 } from "@/components/UI";
-import { Appointment } from "@/generated/prisma";
+import { AppointmentWithRelations } from "@/domains/appointments/queries/getUpcomingAppointments";
 import AppointmentCard from "../cards/AppointmentCard";
 
 type props = {
-    appointments: Appointment[]
+    appointments: AppointmentWithRelations[]
 }
 
 export default function LaterAppointments ({ appointments }: props) {
     return (
-        <>
-            <H2 className="text-main text-fluid-lg" >Later Today</H2>
-            <ul className="flex-col flex space-y-2 overflow-y-scroll md:h-[40dvh] xs:max-md:h-[47dvh] scrollbar-adjust pr-4 pb-6">
-                {appointments.map(a => (
-                    <AppointmentCard key={a.id} data={a} />
-                ))}
-            </ul>
-        </>
+        <ul className="flex-col xs:grid-cols-1 grid gap-4 md:grid-cols-2 flex-1 space-y-2  pr-4 pb-6">
+            {appointments.map(a => (
+                <AppointmentCard key={a.id} data={a} />
+            ))}
+        </ul>
     );
 }

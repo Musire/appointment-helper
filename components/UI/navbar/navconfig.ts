@@ -29,31 +29,26 @@ export const navByRole: Record<Role, (slug: string) => NavItem[]> = {
   ],
   STAFF: (slug) => [
     { 
-      label: 'Overview', 
-      href: `/staff/dashboard`,
+      label: 'home',
       icon: 'home',
+      href: `/dashboard`,
       index: true 
     },
     { 
-      label: 'Stores',
-      icon: 'store',
-      href: `/staff/dashboard/stores` 
-    },
-    { 
-      label: 'Upcoming',
-      icon: 'upcoming',
-      href: `/staff/dashboard/upcoming` 
+      label: 'pool',
+      icon: 'pool',
+      href: `/pool` 
     },
     { 
       label: 'History',
       icon: 'history',
-      href: `/staff/dashboard/history` 
+      href: `/history` 
     },
     { 
-      label: 'Profile',
-      icon: "profile",
-      href: `/staff/dashboard/profile` 
-    }
+      label: 'Stores',
+      icon: 'store',
+      href: `/stores` 
+    },
   ],
   USER: (slug) => [
       { 
@@ -68,9 +63,9 @@ export const navByRole: Record<Role, (slug: string) => NavItem[]> = {
         icon: 'history'
       },
       { 
-        label: 'Profile', 
-        icon: 'profile',
-        href: `/user/dashboard/profile` 
+        label: 'Booking', 
+        icon: 'booking',
+        href: `/user/booking` 
       },
   ],
   SUPERADMIN: (slug) => [

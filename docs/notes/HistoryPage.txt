@@ -1,0 +1,17 @@
+STAFF
+    requirements:
+        Display a list of cards displaying [client name, services] grouped descending per date
+
+    data fetch:
+        db query for appointments where the barber name is the user name in the last 30 days
+
+
+
+
+USER
+    requirements:
+        Display a list of cards displaying [barber name, services] grouped descending per date
+
+    data fetch:
+        db query for appointments where the client name is the user name in the last 30 days
+        

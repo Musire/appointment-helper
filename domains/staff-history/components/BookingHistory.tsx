@@ -1,19 +1,37 @@
-import { GroupedAppointments } from "../model/types";
-import { HistoryDisplay } from "./";
+import { AppointmentHistoryItem } from "@/domains/appointments/queries/getHistoryItems";
+import { HistoryDisplay } from "./containers";
 
 type Props = {
-    history: GroupedAppointments
+    history: AppointmentHistoryItem[]
 }
 
 export default function BookingHistory({ history }: Props) {
-    const sortedDateEntries = Object.entries(history).sort(
-        ([dateA], [dateB]) => new Date(dateB).getTime() - new Date(dateA).getTime()
-    );
+    const sortedHistory = [...history].sort(
+        (a, b) => b.scheduledAt.getTime() - a.scheduledAt.getTime()
+    )
+
+    const groupedHistory = sortedHistory.reduce<Record<string, AppointmentHistoryItem[]>>((acc, appointment) => {
+        const date = appointment.scheduledAt.toISOString().split('T')[0]
+
+        if (!acc[date]) {
+            acc[date] = []
+        }
+
+        acc[date].push(appointment)
+
+        return acc
+    }, {})
+
+    const dateEntries = Object.entries(groupedHistory)
 
     return (
-        <div className="flex py-4 flex-col gap-8 h-[70dvh] overflow-y-scroll scrollbar-adjust pr-4">
-            {sortedDateEntries.map(([date, appointments]) => (
-                <HistoryDisplay key={date} {...{date}} {...{appointments}} />
+        <div className=" grid grid-cols-1 md:grid-cols-2 py-4 gap-8 ">
+            {dateEntries.map(([date, appointments]) => (
+                <HistoryDisplay
+                    key={date}
+                    date={date}
+                    appointments={appointments}
+                />
             ))}
         </div>
     );

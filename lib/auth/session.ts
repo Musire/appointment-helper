@@ -13,7 +13,7 @@ function isRole(role: string): role is Role {
 
 // 3. Normalize role (safe fallback OR throw)
 function normalizeRole(role: string | undefined | null): Role {
-  if (!role) return 'user' // fallback
+  if (!role) return 'USER' // fallback
 
   if (!isRole(role)) {
     throw new Error(`Invalid role: ${role}`)
@@ -92,4 +92,16 @@ export async function getCurrentUser() {
     role,
   }
 
+}
+
+export async function getUserById(targetId: string) {
+  const user =  await prisma.user.findUnique({
+    where: {
+      id: targetId
+    }
+  })
+
+  if (!user) return null
+
+  return user.fullName
 }

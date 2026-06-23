@@ -1,0 +1,61 @@
+1. Roles and Authority Boundaries (Non-Negotiable)
+
+    Super Admin (developer)
+
+        Purpose: Platform governance
+
+        Can ✅
+            Create admins
+            View all stores
+            Suspend admins or stores
+
+        Cannot ❌
+            Create availability
+            Accept bookings
+            Act as staff or owner
+
+    Admin (Store Owner)
+
+        Purpose: Business entity owner
+
+        Can ✅
+            Create stores
+            Configure services
+            Invite staff
+            Set store-level rules (hours, buffers, policies)
+            View all bookings for their store
+
+        Cannot ❌
+            Book appointments as customers
+            Modify platform-level rules
+
+    Staff
+
+        Purpose: Service provider
+
+        Can ✅
+
+            Create availability
+            View own bookings
+            Block time
+            Accept/decline assigned bookings (optional) *
+
+        Cannot ❌
+
+            Create stores
+            Invite admins
+            Override store rules
+
+    End User (Customer)
+
+        Purpose: Consumer
+
+        Can ✅
+            Discover stores
+            Browse services
+            Select staff
+            Book appointments
+            Cancel/reschedule (policy-bound)
+
+        Cannot ❌
+            Create availability

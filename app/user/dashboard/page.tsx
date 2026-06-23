@@ -1,19 +1,13 @@
-import { NextAppointment, LaterAppointments } from "@/domains/upcoming/components";
-import { appointments } from "@/domains/upcoming/mockData/test-appointments"
-import Link from "next/link";
+import { getAppointments } from "@/domains/appointments/queries/getUpcomingAppointments";
+import { LaterAppointments } from "@/domains/upcoming/components";
 
 
 export default function UpcomingPage () {
+    const appointments = getAppointments()
+    
     return (
-        <div className="py-6 flex flex-col space-y-6">
-            <NextAppointment />
+        <div className="py-6 flex flex-col w-full  space-y-6 h-[80dvh]">
             <LaterAppointments {...{appointments}} />
-            <Link 
-                href={"/user/booking"} 
-                className="btn capitalize size-10 centered text-2xl rounded-full absolute right-6 bottom-6" 
-            >
-                +
-            </Link>
         </div>
     );
 }

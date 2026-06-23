@@ -1,0 +1,58 @@
+SUPERADMIN -
+    layout change
+
+
+ADMIN - 
+    HOURS PAGE
+        update the slot options and logic
+
+    SERVICES PAGE
+        the creation and edit of SERVICES
+
+    STAFF PAGE
+        The editing of staff status
+        Invite pages missing
+
+    
+
+END USER - 
+    BOOKING FLOW
+        STORE
+        STAFF
+            fetch only active staff members
+        SERVICES
+            update db model to show description
+            complete the service cards
+        DATE&TIME
+            weekly selector to start today
+            alternate selector to only after today
+            time slot to show text conversation
+            time slots based on the staff availability and date
+        REVIEW
+            submit button is weird
+            success display sizing
+
+    UPCOMING PAGE
+        responsive layout + card design
+
+    HISTORY PAGE
+        responsive layout + card design
+
+    PROFILE PAGE
+        design and creation
+
+
+STAFF USER -
+    UPCOMING PAGE
+        responsive layout + card design
+
+    HISTORY PAGE
+        responsive layout + card design
+
+    PROFIL PAGE
+        edit profile
+
+    STORES PAGE
+        finish the updating logic
+
+

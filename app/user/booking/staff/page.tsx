@@ -11,7 +11,7 @@ export default async function BookingStaff ({ searchParams }: SearchParamsType) 
     const staff = await getStoreStaff(store);
 
     return (
-        <div className="">
+        <div className="flex w-full h-full">
             <StaffStep {...{staff}} />   
         </div>
     );

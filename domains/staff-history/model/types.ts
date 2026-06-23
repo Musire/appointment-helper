@@ -29,7 +29,7 @@ export type AppointmentWithRelations = {
   createdAt: Date;
   client: {
     id: string;
-    name: string;
+    fullName: string | null;
   };
   items: AppointmentServiceMock[]; // The array of services
 };

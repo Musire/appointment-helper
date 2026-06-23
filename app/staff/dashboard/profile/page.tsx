@@ -1,4 +1,5 @@
-import { AvatarCard, BioCard, ContactInfo } from "@/domains/staff-dashboard";
+import { Body } from "@/components/UI";
+import { ListItem, ProfileHeader, SegmentCard } from "@/domains/user-profile";
 
 export default async function StaffDashboard () {
 
@@ -9,10 +10,30 @@ export default async function StaffDashboard () {
   }
 
   return (
-    <div className=" relative flex flex-col divide-y-2 divide-disabled ">
-      <AvatarCard data={testData} />
-      <ContactInfo />
-      <BioCard bio={testData.bio}  />
+    <div className="h-[77dvh] overflow-y-scroll scrollbar-none grid grid-cols-1 md:grid-cols-2 py-6 divide-y-2 divide-disabled gap-6 ">
+      <div className="md:row-span-2 h-full">
+        <ProfileHeader />
+      </div>
+      <SegmentCard title="Contact Information">
+        <ListItem 
+          icon="mail"
+          label="Email"
+          value="neoteric.languageservices@gmail.com"
+        />
+        <ListItem 
+          icon="phone"
+          label="Phone"
+          value="+52 (614) 123 4567"
+        />
+        <ListItem 
+          icon="instagram"
+          label="Instagram"
+          value="@markthebarber"
+        />
+      </SegmentCard>
+      <SegmentCard title="Biography" >
+        <Body>{testData.bio}</Body>
+      </SegmentCard>
     </div>
   );
 }

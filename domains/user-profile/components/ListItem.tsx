@@ -1,12 +1,15 @@
-import { Bell, ChevronRight, HelpCircle, LogOut, Mail, Phone, Shield } from "lucide-react";
+import { Bell, ChevronRight, HelpCircle, LogOut, Mail, Phone, Shield, Smartphone } from "lucide-react";
+import { CustomInstagram } from "@/domains/staff-dashboard";
 
 const iconMap: any = {
   mail: Mail,
-  phone: Phone,
   shield: Shield,
   bell: Bell,
   help: HelpCircle,
   logout: LogOut,
+  phone: Smartphone,
+  instagram: CustomInstagram
+
 };
 
 export default function ListItem({

@@ -1,13 +1,15 @@
-import { NextAppointment, LaterAppointments } from "@/domains/upcoming/components";
-import { appointments } from "@/domains/upcoming/mockData/test-appointments"
+import { getAppointments } from "@/domains/appointments/queries/getUpcomingAppointments";
+import { LaterAppointments } from "@/domains/upcoming/components";
 
 export default async function BookingPanel () {
 
+    const appointments = getAppointments()
     
     return (
-        <div className="py-6 flex flex-col space-y-6">
-            <NextAppointment />
-            <LaterAppointments {...{appointments}} />
+        <div className="py-6 flex  w-full flex-col space-y-6">
+            <LaterAppointments
+                appointments={appointments}
+            />
         </div>
     );
 }

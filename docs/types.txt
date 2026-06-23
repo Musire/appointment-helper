@@ -1,0 +1,5 @@
+Story = user need.
+Requirement = specific behavior the system must implement.
+
+Journey = what the user experiences.
+Process = what the system does behind the scenes.

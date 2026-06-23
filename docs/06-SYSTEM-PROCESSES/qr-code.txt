@@ -1,0 +1,41 @@
+Appointment Check-In
+
+1. Scan QR Code
+
+2. Validate QR Payload
+    - QR format is valid JSON
+    - Required fields exist
+        - appointmentId
+        - storeId (optional)
+        - expiration (optional)
+    - Signature/token is valid (if using signed QR)
+
+3. Redirect
+    /staff/dashboard/checkin/[appointmentId]
+
+4. Fetch Appointment
+
+5. Validate Appointment
+    - Appointment exists
+    - Appointment belongs to current store
+    - Appointment status is BOOKED
+        reject CANCELLED
+        reject NO_SHOW
+        reject COMPLETED
+        reject IN_PROGRESS (optional)
+
+6. Validate Check-In Window
+    - Too early
+    - Too late
+    - Within allowed window
+
+7. Mark Appointment as CHECKED_IN
+
+8. Display Success Screen
+    - Client name
+    - Service
+    - Appointment time
+    - Check-in timestamp
+
+
+    _____________________________________________________________

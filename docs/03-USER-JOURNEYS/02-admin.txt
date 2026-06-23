@@ -1,0 +1,2 @@
+create and manage stores
+invite staff to join store

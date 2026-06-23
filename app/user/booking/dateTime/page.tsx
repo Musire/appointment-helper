@@ -8,7 +8,7 @@ export default async function BookingDateTime ({ searchParams }: SearchParamsTyp
     if (!store) return <div className="">some error</div>;
 
     return (
-        <div className="">
+        <div className="flex w-full h-full">
             <DateTimeStep />   
         </div>
     );

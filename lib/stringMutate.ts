@@ -1,3 +1,5 @@
+import { ServiceType } from "@/generated/prisma";
+
 export function slugify(value: string) {
   return value
     .toLowerCase()
@@ -62,4 +64,13 @@ export function formatCurrency(
   }).format(numericAmount);
 }
 
+export type ServiceDetails = {
+  id: string;
+  name: string;
+}
 
+export function getServices(items: ServiceDetails[]): string {
+  return items
+        .map(item => item.name)
+        .join(' • ');
+}

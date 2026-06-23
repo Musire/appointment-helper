@@ -1,7 +1,7 @@
 'use client';
 
 import { ProgressBar } from "@/domains/admin-dashboard";
-import RequirementBadge, { RequirementsType } from "@/domains/admin-dashboard/overview/components/overview/RequirementBadge";
+import RequirementBadge from "@/domains/admin-dashboard/overview/components/overview/RequirementBadge";
 import { StaffStatusBadge } from "@/domains/staff-dashboard";
 import { extractPercentage } from "@/lib/numberMutate";
 
@@ -26,7 +26,7 @@ export default function ProfileCreation ({ requirements }: Props) {
 
     return (
         <>
-            <article className="flex flex-col space-y-4 p-6 card">
+            <article className="flex max-w-xl surface-1 flex-col space-y-4 p-6 card">
                 <StaffStatusBadge active={requirements.hours} />
                 <p className="text-sm text-else">Complete setup to activate store </p>
                 <ProgressBar 

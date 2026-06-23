@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Place allowedDevOrigins at the root level, NOT inside experimental
+  allowedDevOrigins: ["192.168.1.73"], 
   experimental: {
     serverActions: {
       bodySizeLimit: "5mb"

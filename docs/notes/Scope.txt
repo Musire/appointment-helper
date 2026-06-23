@@ -1,0 +1,25 @@
+REQUIREMENTS
+    qr code checkin
+    30 min before appointment reminder
+    plan up to 1mo in the future
+    view open blocks
+
+
+
+Nice to Have
+    distance alert - reminder
+    cancellation - discount offer (advantage dental)
+    3 noshow and move to prepaid plan
+    payment integration (stripe)
+
+
+USER STORY
+    appointment created
+    barber notified - realtime
+
+
+NOTIFICATION EVENTS
+    discount rates
+    cancellation
+    creation
+    reschedules

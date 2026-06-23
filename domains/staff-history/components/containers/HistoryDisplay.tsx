@@ -1,9 +1,9 @@
-import { AppointmentWithRelations } from "../../model/types";
+import { AppointmentHistoryItem } from "@/domains/appointments/queries/getHistoryItems";
 import { HistoryCard } from "../cards";
 
 type props = {
     date: string;
-    appointments: AppointmentWithRelations[]
+    appointments: AppointmentHistoryItem[]
 }
 
 export default function HistoryDisplay ({ date, appointments }: props) {
@@ -18,7 +18,7 @@ export default function HistoryDisplay ({ date, appointments }: props) {
             </h2>
             <ul className="flex flex-col gap-4 pl-6 pt-6">
                 {appointments.map((a) => (
-                    <HistoryCard key={a.id} data={a} />
+                    <HistoryCard key={a.id}  data={a} />
                 ))}
             </ul>
         </section>

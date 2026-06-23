@@ -15,7 +15,7 @@ export default function StoreStep ({ stores }: StoreStepProps ) {
     const { selected, handleSelect } = useSelect<string | undefined>()
 
     return (
-        <div className="flex flex-col space-y-6 ">
+        <div className="flex flex-col space-y-6  flex-1">
             <Header 
                 step={1}
                 max={5}

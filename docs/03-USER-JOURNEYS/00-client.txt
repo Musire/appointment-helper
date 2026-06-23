@@ -1,0 +1,26 @@
+
+New Client Journey
+    Account Registration
+    Account Login
+    View Available Time Slots
+    Book Appointment
+    Receive Appointment QR Code
+    View Upcoming Appointment
+
+Returning Client Journey
+    Account Login
+    View Available Time Slots
+    Book Appointment
+    Receive Appointment QR Code
+
+Appointment Management Journey
+    View Upcoming Appointment
+    Reschedule Appointment
+    Cancel Appointment
+
+Appointment Check-In Journey
+    View Upcoming Appointment
+    Present QR Code
+
+History Journey
+    View Appointment History    

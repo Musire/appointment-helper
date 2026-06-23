@@ -15,12 +15,12 @@ export const ROUTE_TITLES: Record<string, string> = {
   "/admin/welcome": "Welcome",
 
   // Staff Routes
-  "/staff/dashboard": "Staff Portal",
-  "/staff/dashboard/history": "Appointment History",
-  "/staff/dashboard/profile": "My Profile",
-  "/staff/dashboard/stores": "Available Stores",
-  "/staff/dashboard/stores/:storeId": "Store Dashboard",
-  "/staff/dashboard/upcoming": "Upcoming Shifts",
+  "/staff/dashboard": "",
+  "/staff/dashboard/history/:appointmentId": "Appointment Details",
+  "/staff/dashboard/profile": "",
+  "/staff/dashboard/stores": "",
+  "/staff/dashboard/stores/:storeId": "Availability",
+  "/staff/dashboard/upcoming": "",
 
   // User Routes
   "/user/dashboard": "",

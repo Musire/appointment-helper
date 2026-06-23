@@ -1,0 +1,37 @@
+STORE STEP
+    input:
+        city
+    output:
+        array of all active stores
+STAFF STEP
+    input:
+        store id
+    output:
+        array of all barbers active under store
+SERVICE STEP
+    input: 
+        store id, staff id
+    output:
+        array of all services offered at the store and that the staff member is capable of offering 
+DATEANDTIME STEP
+    input: 
+        date, staff id
+    output:
+        array of the timeslots still available for the staff member for the selected date
+    logic:
+        check start and end time for the staff's availability for that day of the week
+        check if the staff has blocked off that time manually
+        check if the staff has any scheduled appointments that might overlap
+        return only the slots for the day that are not otherwise occupied
+REVIEW STEP
+    input:
+        sotre id, staff id, service ids, datetime
+    output:
+        array is displayed of all previous points of selections
+
+SUBMISSION
+    the information is submitted to the server action
+    data is validated
+    use transaction to batch create an appointment and notification
+    
+

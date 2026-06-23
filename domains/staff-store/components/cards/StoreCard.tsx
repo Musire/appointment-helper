@@ -8,15 +8,17 @@ type props = {
 export default function StoreCard ({ store }: props) {
     const { id, name, description } = store
     return (
-        <li className="">
-            <article className="card p-6 spaced">
+        <li className="surface-1 ">
+            <article className=" p-4 stacked">
                 <span className="flex flex-col space-y-2">
-                    <p className="text-lg capitalize text-whitesmoke/87">{name}</p>
-                    <p className="text-whitesmoke/60">{description}</p>
+                    <p className="text-lg capitalize text-main">{name}</p>
+                    <p className="text-else">{description}</p>
                 </span>
-                <Link href={`stores/${id}`} className="btn border-0 bg-darker">
-                    Update
-                </Link>
+                <span className="spaced">
+                    <Link href={`stores/${id}`} className="px-2 py-1 centered border border-border bg-surface-2 ml-auto hover:bg-surface-4 active:bg-surface-3">
+                        Update
+                    </Link>
+                </span>
             </article>
         </li>
     );

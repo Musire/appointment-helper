@@ -1,11 +1,12 @@
 'use client';
 
 import { SelectableList } from "@/components/UI";
-import { 
-    ContinueButton, 
-    Header, 
-    StaffCard, 
-    StaffUser} from "@/domains/booking";
+import {
+    ContinueButton,
+    Header,
+    StaffCard,
+    StaffUser
+} from "@/domains/booking";
 import { useSelect } from "@/hooks";
 import { useRouter } from "next/navigation";
 
@@ -23,7 +24,7 @@ export default function StaffStep ({ staff }: StaffStepProps) {
     }
 
     return (
-        <div className="flex flex-col space-y-6 ">
+        <div className="flex flex-1 max-w-full flex-col space-y-6 ">
             <Header 
                 step={2}
                 max={5} 

@@ -11,7 +11,7 @@ export default async function BookingService ({ searchParams }: SearchParamsType
     const services = await getStoreService(store);
 
     return (
-        <div className="">
+        <div className="flex w-full h-full">
             <ServicesStep {...{services}} />   
         </div>
     );
