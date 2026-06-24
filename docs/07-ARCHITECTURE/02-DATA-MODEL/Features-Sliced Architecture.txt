@@ -1,0 +1,18 @@
+
+
+[ Incoming Request ]
+        │
+        ▼
+1. INPUT VALIDATION (Zod parsing drops malicious payloads instantly)
+        │
+        ▼
+2. AUTHORIZATION (createSecureAction + Policies check RBAC & ABAC via DB lookup)
+        │
+        ▼
+3. SERVICE LAYER (Domain logic executes business logic / validation rules)
+        │
+        ▼
+4. REPOSITORY LAYER (Handles the actual clean SQL/Prisma database execution)
+        │
+        ▼
+[ Secure Response ] (All wrapped in a clean, global error-catching shield)

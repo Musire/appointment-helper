@@ -1,0 +1,97 @@
+
+// domains/appointments/schemas.ts
+import { z } from "zod";
+
+export const RescheduleSchema = z.object({
+  appointmentId: z.string().uuid("Invalid appointment format"),
+  newDate: z.string().datetime("Invalid date-time format").transform(val => new Date(val)),
+});
+
+// domains/appointments/policies.ts
+import { appointmentRepository } from "./repository";
+
+export const AppointmentPolicies = {
+  isOwner: async (user: any, rawInput: any) => {
+    // 1. Zod parses first, so we know rawInput is safe to extract from
+    const appointment = await appointmentRepository.getById(rawInput.appointmentId);
+    return appointment?.userId === user.id;
+  }
+};
+
+
+// domains/appointments/repository.ts
+import { db } from "@/lib/db";
+
+export const appointmentRepository = {
+  async getById(id: string) {
+    return await db.appointment.findUnique({ where: { id } });
+  },
+  async updateDate(id: string, date: Date) {
+    return await db.appointment.update({
+      where: { id },
+      data: { dateTime: date }
+    });
+  }
+};
+
+// domains/appointments/service.ts
+import { appointmentRepository } from "./repository";
+
+export const appointmentService = {
+  async reschedule(appointmentId: string, newDate: Date) {
+    // Put complex core business rules here!
+    // Example: Can't reschedule if the appointment is less than 24 hours away
+    const appointment = await appointmentRepository.getById(appointmentId);
+    if (!appointment) throw new Error("Appointment not found");
+    
+    const 24HoursFromNow = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    if (appointment.dateTime < 24HoursFromNow) {
+      throw new Error("Cannot reschedule within 24 hours of the appointment.");
+    }
+
+    return await appointmentRepository.updateDate(appointmentId, newDate);
+  }
+};
+
+
+"use server"
+
+import { createSecureAction } from "@/lib/auth/actions";
+import { RescheduleSchema } from "./schemas";
+import { AppointmentPolicies } from "./policies";
+import { appointmentService } from "./service";
+
+export const rescheduleAppointmentAction = createSecureAction(
+  {
+    allowedRoles: ["ADMIN", "STAFF"],
+    ownerRoles: {
+      roles: ["ENDUSER"],
+      // Receives parsed or raw inputs directly to check DB relations
+      check: (user, data) => AppointmentPolicies.isOwner(user, data)
+    }
+  },
+  async (rawInput: unknown) => {
+    try {
+      // 1. ZOD VALIDATION: Drop bad data instantly
+      const parsed = RescheduleSchema.safeParse(rawInput);
+      if (!parsed.success) {
+        return { success: false, error: "Validation failed", details: parsed.error.format() };
+      }
+
+      const { appointmentId, newDate } = parsed.data;
+
+      // 2. SERVICE LAYER EXECUTION: Fire business rules & DB update via Service
+      const updatedAppointment = await appointmentService.reschedule(appointmentId, newDate);
+
+      return { success: true, data: updatedAppointment };
+
+    } catch (error: any) {
+      // 3. TRY/CATCH PROTECTION: Catch database crashes or business rule violations safely
+      console.error("Action error:", error);
+      return { 
+        success: false, 
+        error: error.message || "An unexpected error occurred during processing." 
+      };
+    }
+  }
+);

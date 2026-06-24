@@ -1,0 +1,23 @@
+
+
+// domains/appointments/security.ts
+export async function isAppointmentOwner(user: any, appointmentId: string) {
+  const item = await db.appointment.findUnique({
+    where: { id: appointmentId },
+    select: { userId: true }
+  });
+  return item?.userId === user.id;
+}
+
+import { isAppointmentOwner } from "./security";
+
+export const cancelAppointment = createSecureAction(
+  {
+    allowedRoles: ["ADMIN", "STAFF"],
+    ownerRoles: { roles: ["ENDUSER"], check: isAppointmentOwner } // ◄ Passed directly!
+  },
+  async (appointmentId: string) => {
+    return await db.appointment.delete({ where: { id: appointmentId } });
+  }
+);
+
