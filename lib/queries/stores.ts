@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/app/actions/auth.actions"
+import { getCurrentUser } from "@/domains/identity/actions/auth.actions"
 import { prisma } from "@/lib/prisma"
 
 export async function getStores() {

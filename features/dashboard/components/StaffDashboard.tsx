@@ -1,7 +1,7 @@
 import { BodySm } from "@/components/UI";
 import { AppointmentCard } from "@/domains/appointments/components/dashboard";
 import { appointmentMocks, filterAppointmentToday } from "@/domains/appointments/queries/getAppointmentDetails";
-import { QrButton } from "@/domains/qr-code/components";
+import { QrButton } from "@/features/qr-code/components";
 import Link from "next/link";
 
 export default async function StaffDashboard () {

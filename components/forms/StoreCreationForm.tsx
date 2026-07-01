@@ -1,10 +1,10 @@
 'use client';
 
-import { createStore, updateStore } from "@/app/actions/admin.actions";
-import { Form, Input } from "@/components/UI"
+import { Form, Input } from "@/components/UI";
+import { createStore, updateStore } from "@/domains/store/actions/admin.actions";
 import { StoreCreationSchema, StoreCreationType } from "@/validation/StoreCreation.schema";
+import { useRouter } from 'next/navigation';
 import { useState } from "react";
-import { useRouter } from 'next/navigation'
 
 function isValidTimeZone(tz: string): boolean {
     return Intl.supportedValuesOf('timeZone').includes(tz);

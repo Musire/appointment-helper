@@ -1,9 +1,9 @@
 'use client';
+import { createStaffProfile } from "@/features/profile/actions/staff.actions";
 import { ProfileCreationSchema, ProfileCreationType } from "@/validation/ProfileCreation.schema";
-import { Form, Input } from "../UI";
-import { createStaffProfile } from "@/app/actions/staff.actions";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Form, Input } from "../UI";
 
 export type ProfileCreationFormProps = {
     data: ProfileCreationType

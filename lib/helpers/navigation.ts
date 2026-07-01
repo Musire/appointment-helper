@@ -8,7 +8,7 @@ export type BookingParams = {
 
 export function buildQuery(step: string, params: BookingParams) {
   return {
-    pathname: `/user/booking/${step}`,
+    pathname: `/booking/${step}`,
     query: params,
   }
 }

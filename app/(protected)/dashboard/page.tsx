@@ -1,23 +1,17 @@
-import { AdminDashboard, EnduserDashboard, StaffDashboard } from "@/features/dashboard"
-import { getCurrentUser } from "@/lib/auth/session"
-import { redirect } from "next/navigation";
+import { RoleRenderer } from "@/components/UI/auth/RoleRenderer";
+import AdminDashboard  from "@/features/dashboard/components/AdminDashboard"
+import StaffDashboard from "@/features/dashboard/components/staff/StaffDashboard"
+import EnduserDashboard  from "@/features/dashboard/components/EnduserDashboard";
 
 export default async function DashboardPage() {
-  const user = await getCurrentUser()
 
-  if (!user) {
-    redirect("/login")
-  }
-
-  switch (user.role) {
-    case "SUPERADMIN":
-    case "ADMIN":
-      return <AdminDashboard />
-
-    case "STAFF":
-      return <StaffDashboard />
-
-    default:
-      return <EnduserDashboard />
-  }
+  return (
+    <RoleRenderer
+      roles={{
+        ADMIN: <AdminDashboard />,
+        STAFF: <StaffDashboard />,
+        USER: <EnduserDashboard />
+      }}>
+    </RoleRenderer>
+  )
 }

@@ -1,5 +1,36 @@
-export default function AdminDashboard () {
-    return (
-        <div className=""></div>
-    );
+import { LogoutButton } from "@/components/UI/buttons";
+import { getCurrentUser } from "@/domains/identity/actions/auth.actions";
+import { prisma } from "@/lib/prisma";
+import AdminControl from "./admin/AdminControl";
+
+export type StoreType = {
+  id: string;
+  name: string;
+  description: string | null;
+  timezone: string;
+  status: string;
+  createdAt: Date;
+  createdById: string;
+}
+
+export default async function AdminDashboard () {
+  const user = await getCurrentUser()
+  const stores: StoreType[] = await prisma.store.findMany({
+    where: {
+      createdById: user?.id,
+      status: { not: 'SUSPENDED'}
+    },
+  })
+
+  return (
+    <div className="page-layout">
+        <div className="display-layout py-6">
+            <span className="flex mb-6">
+              <h1 className="text-3xl capitalize w-full text-left">admin dashboard</h1>
+              <LogoutButton />
+            </span>
+            <AdminControl items={stores} />
+        </div>
+    </div>
+  );
 }

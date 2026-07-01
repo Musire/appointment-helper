@@ -1,6 +1,6 @@
 'use client';
 
-import { getNotifications } from "@/app/actions/user.actions";
+import { getNotifications } from "@/domains/notifications/actions/user.actions";
 import { $Enums } from "@/generated/prisma";
 import { supabase } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";

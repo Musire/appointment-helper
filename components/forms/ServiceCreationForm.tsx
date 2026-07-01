@@ -5,7 +5,7 @@ import { ServiceCreationSchema, ServiceCreationType } from "@/validation/Service
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { DropdownButton } from "@/components/UI/buttons";
-import { createService } from "@/app/actions/service.actions";
+import { createService } from "@/domains/store/actions/service.actions";
 
 type ServiceCreationProps = {
     data: ServiceCreationType;

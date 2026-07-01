@@ -1,5 +1,5 @@
+import { getCurrentUser } from "@/domains/identity/actions/auth.actions"
 import { prisma } from "@/lib/prisma"
-import { getCurrentUser } from "@/app/actions/auth.actions"
 
 export type RoleName =
   | "USER"

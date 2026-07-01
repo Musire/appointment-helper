@@ -1,5 +1,5 @@
 'use client';
-import { createCategory } from "@/app/actions/category.actions";
+import { createCategory } from "@/domains/store/actions/category.actions";
 import { Form, Input } from "@/components/UI";
 import { useStore } from "@/stores";
 import { CategoryCreationSchema, CategoryCreationType } from "@/validation/Category.schema";

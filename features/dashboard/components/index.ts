@@ -1,3 +1,4 @@
-export { default as AdminDashboard } from './AdminDashboard';
+export * from "./admin";
 export { default as EnduserDashboard } from './EnduserDashboard';
-export { default as StaffDashboard } from './StaffDashboard';
+export * from "./staff";
+

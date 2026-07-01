@@ -1,11 +1,10 @@
 "use client"
 
-import { Input } from "@/components/UI"
-import z from "zod"
-import { login } from "../actions/auth.actions"
+import { Input, Theme } from "@/components/UI"
 import ActionForm from "@/components/UI/forms/ActionForm"
 import { useRouter } from "next/navigation"
-import { Theme } from "@/components/UI"
+import z from "zod"
+import { login } from "../../domains/identity/actions/auth.actions"
 
 export default function LoginPage() {
   const router = useRouter()

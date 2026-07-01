@@ -1,0 +1,67 @@
+// lib/auth/actions.ts
+
+type User = {
+  id: string;
+  role: string;
+};
+
+type SecureActionConfig<Input> = {
+  allowedRoles?: string[];
+  ownerRoles?: {
+    roles: string[];
+    check: (user: User, data: Input) => Promise<boolean> | boolean;
+  };
+};
+
+export function createSecureAction<Input, Output>(
+  config: SecureActionConfig<Input>,
+  handler: (input: Input, ctx: { user: User }) => Promise<Output>
+) {
+  return async (rawInput: Input & { user?: User }) => {
+    try {
+      const { user, ...input } = rawInput as any;
+
+      if (!user) {
+        return {
+          success: false,
+          error: "Unauthorized"
+        };
+      }
+
+      // 1. ROLE CHECK (global access)
+      if (config.allowedRoles?.length) {
+        if (!config.allowedRoles.includes(user.role)) {
+          return {
+            success: false,
+            error: "Forbidden: insufficient role permissions"
+          };
+        }
+      }
+
+      // 2. OWNER CHECK (conditional role-based ownership gate)
+      if (config.ownerRoles?.roles?.includes(user.role)) {
+        const isOwner = await config.ownerRoles.check(user, input);
+
+        if (!isOwner) {
+          return {
+            success: false,
+            error: "Forbidden: not resource owner"
+          };
+        }
+      }
+
+      // 3. EXECUTE BUSINESS LOGIC
+      const result = await handler(input as Input, { user });
+
+      return {
+        success: true,
+        data: result
+      };
+    } catch (err: any) {
+      return {
+        success: false,
+        error: err?.message ?? "Unexpected server error"
+      };
+    }
+  };
+}
