@@ -2,15 +2,16 @@
 
 import { useActionState, useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import { hasValidationError } from '../model/error.utils';
-import { getOverlapError } from '../model/time.utils';
-import { TimeBlock } from '../model/types';
-import { validate } from '../model/validation';
+
 import TimeBlockCard from './TimeBlockCard';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { saveBusinessHours } from '@/features/stores/staff-store/actions/staffStore.action';
 import SuccessDisplay from '@/components/UI/forms/SuccessDisplay';
+import { TimeBlock } from '../types';
+import { validate } from '../validation';
+import { hasValidationError } from '../error.utils';
+import { getOverlapError } from '../time.utils';
+import { saveBusinessHours } from '@/domains/store/actions/staffStore.action';
 
 type Props = {
   initialBlocks?: TimeBlock[];

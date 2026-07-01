@@ -1,11 +1,13 @@
 import { Html5QrcodeScanner } from 'html5-qrcode';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface CameraScannerProps {
   onScanSuccess: (decodedText: string) => void;
 }
 
-export const CameraScanner: React.FC<CameraScannerProps> = ({ onScanSuccess }) => {
+export default function CameraScanner({ 
+  onScanSuccess 
+}: CameraScannerProps) {
   const scannerRef = useRef<Html5QrcodeScanner | null>(null);
   const regionId = "html5qr-code-full-region";
 

@@ -1,7 +1,7 @@
 import { LogoutButton } from "@/components/UI/buttons";
 import { getCurrentUser } from "@/domains/identity/actions/auth.actions";
+import { AdminControl } from "@/domains/store/components";
 import { prisma } from "@/lib/prisma";
-import AdminControl from "./admin/AdminControl";
 
 export type StoreType = {
   id: string;
