@@ -1,4 +1,4 @@
-import { ScannerPage } from "@/domains/qr-code/components";
+import { ScannerPage } from "@/features/qr-code/components";
 
 export default function QrScannerPage () {
     return (
