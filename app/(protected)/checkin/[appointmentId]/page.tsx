@@ -1,9 +1,9 @@
 import { AppointmentDetails, Controller, Message, StatusSection } from "@/domains/appointments/components/checkin";
 import { AppointmentStatus } from "@/domains/appointments/components/checkin/StatusSection";
+import dayjs from "@/domains/appointments/helper/dayjs";
 import { getAppointmentDetails } from "@/domains/appointments/queries/getAppointmentDetails";
-import { ParamsType } from "@/lib/queries/types";
-import { checkPendingTimeWindow } from "@/lib/time";
-import dayjs from "@/domains/appointments/helper/dayjs"
+import { ParamsType } from "@/lib/types";
+import { checkPendingTimeWindow } from "@/lib/utils/time";
 import { Dayjs } from "dayjs";
 
 export default async function CheckinPage ({ params }: ParamsType<{appointmentId: string}>) {

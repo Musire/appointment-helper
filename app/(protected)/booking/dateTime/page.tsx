@@ -1,5 +1,5 @@
 import { DateTimeStep } from "@/features/booking";
-import { SearchParamsType } from "@/lib/queries/types";
+import { SearchParamsType } from "@/lib/types";
 
 export default async function BookingDateTime ({ searchParams }: SearchParamsType) {
     const params = await(searchParams)

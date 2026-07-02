@@ -1,4 +1,4 @@
-import { CategoryWithServicesType } from "@/lib/helpers/groupArrays";
+import { CategoryWithServicesType } from "@/lib/utils/groupArrays";
 import CategoryAccordians from "@/new-features/admin-store-services/components/CategoryAccordians";
 import ServiceCreation from "./ServiceCreation";
 

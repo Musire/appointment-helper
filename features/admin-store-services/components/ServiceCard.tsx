@@ -1,6 +1,6 @@
 'use client'; 
 
-import { ServiceType } from "@/lib/helpers/groupArrays";
+import { ServiceType } from "@/lib/utils/groupArrays";
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 

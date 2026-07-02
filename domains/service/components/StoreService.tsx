@@ -1,7 +1,7 @@
-import { groupServicesByCategory } from "@/lib/helpers/groupArrays";
+import { groupServicesByCategory } from "@/lib/utils/groupArrays";
 
 import ServiceContainer from "@/domains/admin-dashboard/hair-service/components/ServiceContainer";
-import { getServices } from "@/lib/queries/services";
+import { getServices } from "@/domains/service/queries/getServices";
 
 type ServicePageProps = {
   params: {

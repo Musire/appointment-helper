@@ -1,7 +1,7 @@
 'use server';
 
-import { requireRole } from "@/lib/auth/requireRole";
-import { safeAction } from "@/lib/safeAction";
+import { requireRole } from "@/domains/identity/auth/requireRole";
+import { safeAction } from "@/domains/identity/auth/safeAction";
 import { prisma } from "@/lib/prisma";
 import { StoreCreationSchema, StoreCreationType } from "@/validation/StoreCreation.schema";
 import { revalidatePath } from "next/cache";

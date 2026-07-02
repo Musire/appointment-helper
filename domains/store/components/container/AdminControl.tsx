@@ -3,7 +3,7 @@
 import { DeleteModal } from "@/components/UI";
 import { deleteStores } from "@/domains/store/actions/admin.actions";
 import useSelectable from "@/hooks/useSelectable";
-import { createExcerpt, slugify } from "@/lib/stringMutate";
+import { createExcerpt } from "@/lib/utils/stringMutate";
 import { useRouter } from "next/navigation";
 import {
     ContinueButton,

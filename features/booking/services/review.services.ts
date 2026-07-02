@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { convertUTC } from "@/lib/time";
+import { convertUTC } from "@/lib/utils/time";
 
 type ReviewInput = {
   store: string;

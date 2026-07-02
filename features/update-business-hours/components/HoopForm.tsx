@@ -1,9 +1,10 @@
 'use client';
 
+import DailySelector from "@/domains/availability/components/DailySelector";
+import { businessHours } from "@/features/dashboard/businessHours";
+import { hoursReducer } from "@/features/dashboard/hoursReducer";
+import { updateBusinessHours } from "@/features/hour-selection/hours.actions";
 import { useActionState, useReducer } from "react";
-import DailySelector from "./DailySelector";
-import { businessHours, hoursReducer } from "../../model";
-import { updateBusinessHours } from "../../actions";
 
 export default function HoopForm () {
     const [state, dispatch] = useReducer(hoursReducer, businessHours);

@@ -1,6 +1,6 @@
 'use server';
 
-import { safeAction } from "@/lib/safeAction";
+import { safeAction } from "@/domains/identity/auth/safeAction";
 import { prisma } from "@/lib/prisma";
 import { CategoryCreationSchema, CategoryCreationType } from "@/validation/Category.schema";
 import { revalidatePath } from "next/cache";

@@ -1,15 +1,15 @@
 'use client'
 import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
 } from "@/components/UI/table";
 import { StoreConfig } from "@/generated/prisma";
-import { sortByWeekday, Weekday } from "@/lib/stringMutate";
+import { sortByWeekday, Weekday } from "@/lib/utils/stringMutate";
 
 
 type DayKey = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun"

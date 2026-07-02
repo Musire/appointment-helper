@@ -1,6 +1,5 @@
 import { createSupabaseServerClientReadOnly } from "@/lib/supabase/server"
-import { prisma } from "../prisma"
-import { User } from "@/generated/prisma"
+import { prisma } from "../../../lib/prisma"
 
 // 1. Define roles (source of truth)
 export const Roles = ['SUPERADMIN', 'ADMIN', 'STAFF', 'USER'] as const

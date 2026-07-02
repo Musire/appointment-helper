@@ -1,11 +1,11 @@
 'use client';
-import { Form, Input, ControlledInput } from "@/components/UI";
-import { useStore } from "@/stores";
+import { ControlledInput, Form, Input } from "@/components/UI";
+import { DropdownButton } from "@/components/UI/buttons";
+import { useStore } from "@/context";
+import { createService } from "@/domains/store/actions/service.actions";
 import { ServiceCreationSchema, ServiceCreationType } from "@/validation/ServiceCreation.schema";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { DropdownButton } from "@/components/UI/buttons";
-import { createService } from "@/domains/store/actions/service.actions";
 
 type ServiceCreationProps = {
     data: ServiceCreationType;

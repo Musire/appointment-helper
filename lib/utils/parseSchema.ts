@@ -1,6 +1,6 @@
 import { ZodType } from 'zod'
 
-export async function parseSchema<T>(
+export async function assertInputAsync<T>(
   schema: ZodType<T>,
   data: unknown
 ): Promise<T> {
@@ -13,7 +13,7 @@ export async function parseSchema<T>(
   return parsed.data
 }
 
-export function parseSchemaSync<T>(
+export function assertInput<T>(
   schema: ZodType<T>,
   data: unknown
 ) {
@@ -26,10 +26,3 @@ export function parseSchemaSync<T>(
   return parsed.data
 }
 
-export function quickParse<T>(
-  schema: ZodType<T>,
-  data: unknown
-) {
-  const parsed = schema.safeParse(data)
-  return parsed
-}

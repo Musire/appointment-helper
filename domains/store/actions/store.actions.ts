@@ -1,7 +1,7 @@
 'use server';
 
+import { safeAction } from "@/domains/identity/auth/safeAction";
 import { prisma } from "@/lib/prisma";
-import { safeAction } from "@/lib/safeAction";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "../../identity/actions/auth.actions";
 
@@ -39,7 +39,7 @@ export async function editStoreConfig (storeId: string) {
             }
         })
 
-    }, ['ADMIN'])
+    })
 }
 
 export async function createServiceCategory ({ storeId, name }: { storeId: string, name: string}) {
@@ -59,7 +59,7 @@ export async function createServiceCategory ({ storeId, name }: { storeId: strin
                 name
             }
         })
-    }, ['ADMIN'])
+    })
 }
 
 export async function sendInvite({ targetId, storeId, storeName }: { targetId: string; storeId: string; storeName: string;}) {

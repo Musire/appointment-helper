@@ -2,7 +2,7 @@
 
 import { StaffStatusBadge } from "@/features/dashboard";
 import { ProgressBar, RequirementBadge } from "@/features/dashboard/components/admin/overview";
-import { extractPercentage } from "@/lib/numberMutate";
+import { extractPercentage } from "@/lib/utils/numberMutate";
 
 type Props = {
     requirements: {

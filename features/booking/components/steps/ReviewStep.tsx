@@ -2,16 +2,16 @@
 
 
 import { Service, Store, User } from "@/generated/prisma";
-import { formatCurrency } from "@/lib/stringMutate";
+import { formatCurrency } from "@/lib/utils/stringMutate";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import SuccessDisplay from "../../../../components/UI/forms/SuccessDisplay";
 import { createBookingAction } from "../../actions/booking.action";
+import { DatetimeCard } from "../cards";
 import { Header, SubmitButton } from "../page";
 import ServiceSlot from "../slots/ServiceSlot";
 import StaffSlot from "../slots/StaffSlot";
 import StoreSlot from "../slots/StoreSlot";
-import { DatetimeCard } from "../cards";
 
 type ReviewData = {
     store: Store,

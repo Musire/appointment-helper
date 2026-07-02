@@ -1,6 +1,6 @@
-import { prisma } from "@/lib/prisma"
 import type { Store } from "@/generated/prisma"
-import { unslugify } from "../stringMutate"
+import { prisma } from "@/lib/prisma"
+import { unslugify } from "../../lib/utils/stringMutate"
 import { getStoreState, reconcileStoreStatus, StoreActivationState } from "./store-activation"
 
 export type StoreWithCreator = Store & {

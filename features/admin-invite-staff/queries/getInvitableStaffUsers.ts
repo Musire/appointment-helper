@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma"
-import { unslugify } from "@/lib/stringMutate"
+import { unslugify } from "@/lib/utils/stringMutate"
 
 export async function getInvitableStaffUsers(storeSlug: string) {
   const storeName = unslugify(storeSlug)

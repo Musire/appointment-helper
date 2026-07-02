@@ -1,6 +1,6 @@
-import { BookingParams } from "../helpers/navigation";
-import { prisma } from "../prisma";
-import { convertUTC } from "../time";
+import { prisma } from "../../../lib/prisma";
+import { BookingParams } from "../../../lib/utils/navigation";
+import { convertUTC } from "../../../lib/utils/time";
 
 export async function getBookingReviewData(data: BookingParams) {
   const { store, staff, service, dateTime } = data;

@@ -6,7 +6,7 @@ export default async function DashboardPage() {
     <RoleRenderer
       roles={{
         ADMIN: <AdminDashboard />,
-        STAFF: <StaffDashboard />,
+        STAFF: <StaffDashboard/>,
         USER: <EnduserDashboard />
       }}>
     </RoleRenderer>

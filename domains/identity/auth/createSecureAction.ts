@@ -6,23 +6,23 @@ export async function createSecureAction<Input, Output>(
   config: SecureActionConfig<Input>,
   handler: () => Promise<Output>
 ): Promise<Output> {
-  // Role authorization
-  if (
-    config.allowedRoles &&
-    !config.allowedRoles.includes(user.role)
-  ) {
+  // 1. Core Role authorization
+  if (config.allowedRoles && !config.allowedRoles.includes(user.role)) {
     throw new Error("Forbidden");
   }
 
-  // Ownership authorization
-  if (config.ownerRoles?.roles.includes(user.role)) {
-    const isOwner = await config.ownerRoles.check(user, input);
+  // 2. Granular Ownership authorization
+  if (config.ownerRoles) {
+    // Find the specific rule that matches the current user's role
+    const specificRule = config.ownerRoles.find(rule => rule.role === user.role);
 
-    if (!isOwner) {
-      throw new Error("Forbidden");
+    if (specificRule) {
+      const isOwner = await specificRule.check(user, input);
+      if (!isOwner) {
+        throw new Error("Forbidden");
+      }
     }
   }
 
-  // Authorized
   return handler();
 }

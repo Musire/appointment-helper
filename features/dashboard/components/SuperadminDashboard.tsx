@@ -1,4 +1,4 @@
-import { Main } from "@/domains/tinker";
+import { Main } from "@/features/tinker";
 
 export default function MainDashboard () {
 

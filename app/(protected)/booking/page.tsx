@@ -1,7 +1,7 @@
+import { getActiveStores } from "@/domains/store/queries/stores";
 import { StoreStep } from "@/features/booking";
 import { Store } from "@/generated/prisma";
-import { getActiveStores } from "@/lib/queries/stores";
-import { SearchParamsType } from "@/lib/queries/types";
+import { SearchParamsType } from "@/lib/types";
 
 export default async function BookingPage ({ searchParams }: SearchParamsType) {
     const stores = await getActiveStores() as Store[]

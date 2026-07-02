@@ -1,10 +1,10 @@
 'use client';
 
 import { DropdownButton } from '@/components/UI/buttons';
-import { toMins } from '@/lib/time';
+import { toMins } from '@/lib/utils/time';
 import { Clock } from 'lucide-react';
-import { fromMins } from '../model/time.utils';
-import { Day, TimeBlock } from '../model/types';
+import { Day, TimeBlock } from '../types';
+import { fromMins } from '../time.utils';
 
 type Props = {
   block: TimeBlock

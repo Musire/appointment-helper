@@ -1,8 +1,8 @@
 'use client';
 import { acceptInvite, rejectInvite } from "@/domains/store/actions/invite.actions";
 import { Notification } from "@/generated/prisma";
-import { parseSchemaSync } from "@/lib/helpers/parseSchema";
-import { timeAgo } from "@/lib/time";
+import { parseSchemaSync } from "@/lib/utils/parseSchema";
+import { timeAgo } from "@/lib/utils/time";
 import { InviteNotificationPayloadSchema } from "@/validation/NotificationPayload.schema";
 import { Check, X } from "lucide-react";
 import { useState } from "react";

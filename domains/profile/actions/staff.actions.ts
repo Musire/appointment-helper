@@ -1,8 +1,8 @@
 'use server';
 
-import { parseSchema } from "@/lib/helpers/parseSchema";
+import { safeAction } from "@/domains/identity/auth/safeAction";
 import { prisma } from "@/lib/prisma";
-import { safeAction } from "@/lib/safeAction";
+import { assertInputAsync } from "@/lib/utils/parseSchema";
 import { ProfileCreationSchema, ProfileCreationType } from "@/validation/ProfileCreation.schema";
 import { getCurrentUser } from "../../../domains/identity/actions/auth.actions";
 
@@ -12,7 +12,7 @@ export async function createStaffProfile (formData: ProfileCreationType) {
         if (!user) {
             throw new Error('User not signed in')
         }
-        const { bio } = await parseSchema(ProfileCreationSchema,formData)
+        const { bio } = await assertInputAsync(ProfileCreationSchema,formData)
 
         return prisma.staffProfile.create({
             data: {

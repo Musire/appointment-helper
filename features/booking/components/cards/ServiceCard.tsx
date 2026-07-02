@@ -1,5 +1,5 @@
 import { Service } from "@/generated/prisma";
-import { formatCurrency } from "@/lib/stringMutate";
+import { formatCurrency } from "@/lib/utils/stringMutate";
 import { Scissors as Icon } from "lucide-react";
 
 type ServiceSlotProps = {

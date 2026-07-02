@@ -1,6 +1,6 @@
 import { generateReviewState } from "@/domains/booking/services/review.services";
 import { ReviewSchema } from "@/domains/booking/validation/review.validation";
-import { quickParse } from "@/lib/helpers/parseSchema";
+import { quickParse } from "@/lib/utils/parseSchema";
 import { NextResponse } from "next/server";
 import z from "zod";
 

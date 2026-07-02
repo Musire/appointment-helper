@@ -1,10 +1,10 @@
 'use server'; 
 
 import { prisma } from "@/lib/prisma";
-import { safeAction } from "@/lib/safeAction";
 import { supabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient, createSupabaseServerClientReadOnly } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { safeAction } from "../auth/safeAction";
 
 export async function logout() {
 

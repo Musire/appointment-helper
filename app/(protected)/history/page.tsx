@@ -1,5 +1,5 @@
-import { EnduserHistory, StaffHistory } from "@/features/history";
-import { getCurrentUser } from "@/lib/auth/session";
+import { getCurrentUser } from "@/domains/identity/auth/session";
+import { EnduserHistory, StaffHistory } from "@/features/history/components";
 import { redirect } from "next/navigation";
 
 export default async function HistoryPage() {

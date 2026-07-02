@@ -1,6 +1,6 @@
 'use client';
 
-import { buildQuery } from "@/lib/helpers/navigation";
+import { buildQuery } from "@/lib/utils/navigation";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 

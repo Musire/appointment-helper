@@ -1,10 +1,10 @@
 import { Body, BottomDrawer, Caption, DrawerContent, DrawerTrigger, H3 } from "@/components/UI";
+import dayjs, { formatAppTimeSplit } from "@/lib/dayjs";
+import { getServices } from "@/lib/utils/stringMutate";
 import { ChevronLeft, Clock, EllipsisVertical, Scissors, Store } from "lucide-react";
 import { ActionType } from "../../helper/PoolDetailsConfig";
 import { AppointmentDetails as AppointmentDetailsType } from "../../queries/getAppointmentDetails";
 import DetailSection from "./DetailSection";
-import dayjs, { formatAppTimeSplit } from "@/lib/dayjs";
-import { getServices } from "@/lib/stringMutate";
 
 export type PendingDetailsProps = {
     appointment: AppointmentDetailsType;

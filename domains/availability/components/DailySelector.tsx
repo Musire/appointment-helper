@@ -2,7 +2,7 @@
 
 import { Switch } from "@/components/UI";
 import { DropdownButton } from "@/components/UI/buttons";
-import { labelToMins, minsToLabel } from "@/lib/time";
+import { labelToMins, minsToLabel } from "@/lib/utils/time";
 import { BusinessDay } from "../model/types";
 
 type Props = BusinessDay & {

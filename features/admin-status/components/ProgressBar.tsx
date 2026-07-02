@@ -1,5 +1,3 @@
-import { calculatePercentage } from "@/lib/numberMutate";
-import { RequirementsType } from "./RequirementBadge";
 
 type Props= {
     label: string;

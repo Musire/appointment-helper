@@ -1,8 +1,8 @@
 // components/store/StoreProvider.tsx
 "use client"
 
+import { StoreContextData } from "@/domains/store/data-loader"
 import { createContext, useContext } from "react"
-import { StoreContextData } from "@/lib/store/data-loader"
 
 
 type StoreProviderProps = {

@@ -1,4 +1,4 @@
-import { getMeridiem } from "@/lib/time";
+import { getMeridiem } from "@/lib/utils/time";
 import dayjs from "dayjs";
 import { Calendar as Icon } from "lucide-react";
 

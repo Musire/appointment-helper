@@ -1,6 +1,6 @@
 import { retrieveStaffStore } from "@/domains/booking/services/storeStaff.services";
 import { StoreStaffSchema } from "@/domains/booking/validation/storeStaff.validation";
-import { quickParse } from "@/lib/helpers/parseSchema";
+import { quickParse } from "@/lib/utils/parseSchema";
 import { NextResponse } from "next/server";
 import z from "zod";
 

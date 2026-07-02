@@ -1,7 +1,7 @@
 
 import { StaffDetails } from "@/domains/appointments/components/details";
-import { getCurrentUser } from "@/lib/auth/session";
-import { ParamsType } from "@/lib/queries/types";
+import { getCurrentUser } from "@/domains/identity/auth/session";
+import { ParamsType } from "@/lib/types";
 import { redirect } from "next/navigation";
 
 type Props = ParamsType<{ appointmentId: string }>;

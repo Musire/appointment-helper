@@ -1,6 +1,6 @@
 import { BodySm, Caption } from "@/components/UI";
 import dayjs, { formatAppTimeSplit } from "@/lib/dayjs";
-import { getServices } from "@/lib/stringMutate";
+import { getServices } from "@/lib/utils/stringMutate";
 import Link from "next/link";
 import { AppointmentDetails } from "../../queries/getAppointmentDetails";
 

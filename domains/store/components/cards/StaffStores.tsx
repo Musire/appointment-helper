@@ -1,5 +1,5 @@
+import { getStores } from "@/domains/store/queries/stores";
 import { StoreCard } from "@/features/booking";
-import { getStores } from "@/lib/queries/stores";
 
 export default async function StorePanel () {
     const stores = await getStores()

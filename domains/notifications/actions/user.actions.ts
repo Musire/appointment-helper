@@ -1,8 +1,8 @@
 'use server';
 
 import { prisma } from "@/lib/prisma";
-import { safeAction } from "@/lib/safeAction";
 import { getCurrentUser } from "../../identity/actions/auth.actions";
+import { safeAction } from "@/domains/identity/auth/safeAction";
 
 
 export async function getNotifications() {

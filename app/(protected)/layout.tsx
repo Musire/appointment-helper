@@ -1,6 +1,6 @@
+import { AuthProvider } from "@/context";
+import { getCurrentUser } from "@/domains/identity/auth/session";
 import { Header, Navbar } from "@/features/tinker";
-import { getCurrentUser } from "@/lib/auth/session";
-import { AuthProvider } from "@/providers";
 import { redirect } from "next/navigation";
 
 type Props = {

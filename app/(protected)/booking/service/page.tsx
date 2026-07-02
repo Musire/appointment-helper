@@ -1,6 +1,6 @@
+import { getStoreService } from "@/domains/store/queries/storeService";
 import { ServicesStep } from "@/features/booking";
-import { getStoreService } from "@/lib/queries/storeService";
-import { SearchParamsType } from "@/lib/queries/types";
+import { SearchParamsType } from "@/lib/types";
 
 export default async function BookingService ({ searchParams }: SearchParamsType) {
     const params = await(searchParams)

@@ -1,5 +1,5 @@
-import { StaffPool } from "@/features/pool";
-import { getCurrentUser } from "@/lib/auth/session"
+import { getCurrentUser } from "@/domains/identity/auth/session";
+import { StaffPool } from "@/domains/pool";
 import { redirect } from "next/navigation";
 
 export default async function PoolPage() {

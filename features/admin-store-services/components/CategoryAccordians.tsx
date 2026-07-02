@@ -6,9 +6,9 @@ import {
     AccordionItem,
     AccordionTrigger
 } from "@/components/UI/accordion";
-import { CategoryWithServicesType } from "@/lib/helpers/groupArrays";
-import ServiceCard from "./ServiceCard";
+import { CategoryWithServicesType } from "@/lib/utils/groupArrays";
 import AccordianCategory from "./AccordianCategory";
+import ServiceCard from "./ServiceCard";
 
 export default function CategoryAccordians ({ items }: { items: CategoryWithServicesType[]}) {
   console.log(items)

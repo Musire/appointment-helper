@@ -1,7 +1,7 @@
-import { HoopForm } from "@/domains/admin-dashboard";
-import { getStoreConfig } from "@/lib/queries/storeConfig";
+import EditButton from "@/domains/availability/components/EditButton";
+import { getStoreConfig } from "@/domains/store/queries/storeConfig";
+import { HoopForm } from "@/features/update-business-hours/components";
 import { notFound } from "next/navigation";
-import { EditButton } from "./components";
 
 type ConfigProps = {
   params: { 

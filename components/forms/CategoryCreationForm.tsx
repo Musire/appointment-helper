@@ -1,7 +1,7 @@
 'use client';
-import { createCategory } from "@/domains/store/actions/category.actions";
 import { Form, Input } from "@/components/UI";
-import { useStore } from "@/stores";
+import { useStore } from "@/context";
+import { createCategory } from "@/domains/store/actions/category.actions";
 import { CategoryCreationSchema, CategoryCreationType } from "@/validation/Category.schema";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

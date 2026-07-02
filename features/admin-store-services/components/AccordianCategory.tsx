@@ -1,5 +1,5 @@
 'use client';
-import { CategoryWithServicesType } from "@/lib/helpers/groupArrays";
+import { CategoryWithServicesType } from "@/lib/utils/groupArrays";
 
 type Props = {
     category: CategoryWithServicesType

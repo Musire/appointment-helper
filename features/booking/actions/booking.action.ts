@@ -1,6 +1,6 @@
 "use server";
 
-import { convertToUTC } from "@/lib/time";
+import { convertToUTC } from "@/lib/utils/time";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 

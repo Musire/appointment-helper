@@ -1,7 +1,8 @@
 import { StoreStatus } from "@/generated/prisma";
-import { extractPercentage } from "@/lib/numberMutate";
-import { ProgressBar, StoreStatusBadge } from "../overview";
-import RequirementBadge, { RequirementsType } from "../overview/RequirementBadge";
+import { extractPercentage } from "@/lib/utils/numberMutate";
+import StoreStatusBadge from "./StoreStatusBadge";
+import ProgressBar from "./ProgressBar";
+import RequirementBadge, { RequirementsType } from "./RequirementBadge";
 
 type Props = {
     requirements: any;

@@ -1,5 +1,5 @@
 'use client';
-import { generateCurrentWeek } from '@/lib/time';
+import { generateCurrentWeek } from '@/lib/utils/time';
 import { Dayjs } from 'dayjs';
 import { useMemo } from 'react';
 

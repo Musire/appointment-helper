@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma"
-import { unslugify } from "../stringMutate"
+import { unslugify } from "../../../lib/utils/stringMutate"
 
 export async function getServices(slug: string) {
 

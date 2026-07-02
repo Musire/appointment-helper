@@ -1,5 +1,5 @@
 import { AppointmentDetails } from "@/domains/appointments/components/details";
-import { ParamsType } from "@/lib/queries/types";
+import { ParamsType } from "@/lib/types";
 
 export default async function AppointmentDetailPage({
   params,

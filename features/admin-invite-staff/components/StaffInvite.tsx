@@ -1,6 +1,6 @@
 import { StaffSearch } from "@/app/admin/store/[slug]/staff/components";
 import { BackButton } from "@/components/UI/buttons";
-import { getInvitableStaffUsers } from "@/lib/queries/users";
+import { getInvitableStaffUsers } from "@/features/admin-invite-staff/queries/getInvitableStaffUsers";
 
 export default async function StaffInvitationPage ({ params }: { params : { slug: string}}) {
   const { slug } = await params

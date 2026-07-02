@@ -1,5 +1,5 @@
 import { getAppointmentHistory } from "@/domains/appointments/queries/getHistoryItems";
-import { BookingHistory } from "../staff-history";
+import BookingHistory from "./staff/BookingHistory";
 
 export default function StaffHistory () {
     const AppointmentHistory = getAppointmentHistory()

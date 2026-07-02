@@ -1,5 +1,5 @@
-import { ServiceType } from "@/lib/helpers/groupArrays";
-import { formatCurrency } from "@/lib/stringMutate";
+import { ServiceType } from "@/lib/utils/groupArrays";
+import { formatCurrency } from "@/lib/utils/stringMutate";
 import { Clock4, SquareScissors, Tag } from "lucide-react";
 
 

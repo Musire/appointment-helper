@@ -1,6 +1,6 @@
-import { prisma } from "@/lib/prisma";
-import { unslugify } from "../stringMutate";
 import { StoreConfig } from "@/generated/prisma";
+import { prisma } from "@/lib/prisma";
+import { unslugify } from "../../../lib/utils/stringMutate";
 
 export type StoreConfigResult =
   | { status: "STORE_NOT_FOUND" }

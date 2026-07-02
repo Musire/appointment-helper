@@ -1,6 +1,7 @@
 "use server"
 
-import { consolidate, validate } from "@/features/hour-selection/model/validation"
+import { consolidate, validate } from "@/features/hour-selection/validation"
+
 
 
 export async function saveBusinessHours(
