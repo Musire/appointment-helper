@@ -17,5 +17,9 @@ export default async function HistoryPage({ params }: Props) {
     return <StaffDetails params={params} />;
   }
 
+  if (user.role === 'USER') {
+    return <StaffDetails params={params} />;
+  }
+
   return redirect("/dashboard")
 }

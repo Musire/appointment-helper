@@ -1,4 +1,5 @@
-import { BodySm, Caption } from "@/components/UI";
+import { BodySm } from "@/components/UI";
+import { StatusPill } from "@/components/UI/pills";
 import dayjs, { formatAppTimeSplit } from "@/lib/dayjs";
 import { getServices } from "@/lib/utils/stringMutate";
 import Link from "next/link";
@@ -32,7 +33,9 @@ export default function AppointmentCard ({
                     <BodySm className="text-main">{appointment.client.name}</BodySm>
                     <BodySm className="text-else">{services}</BodySm>
                 </span>
-                <Caption className={`${style} w-32 centered normal-space rounded-full shrink-0 ml-auto`}>{appointment.status}</Caption>
+                <div className="w-32 centered shrink-0 ml-auto">
+                    <StatusPill variant={appointment.status} />
+                </div>
             </Link>
         </li>
     );

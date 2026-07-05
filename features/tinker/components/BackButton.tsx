@@ -8,7 +8,7 @@ export default function BackButton() {
   const router = useRouter();
   
   const pathSegments = pathname.split("/").filter(Boolean);
-  const isNested = pathSegments.length > 3;
+  const isNested = pathSegments.length > 1;
 
   const handleGoUp = () => {
     // Remove the last segment to go "up" one level
@@ -19,7 +19,7 @@ export default function BackButton() {
   return (
     <button
       type="button"
-      onClick={handleGoUp}
+      onClick={() => router.back()}
       className={`normal-space hover:cursor-pointer text-else hover:text-main flex items-center space-x-4 ${
         !isNested ? "invisible pointer-events-none" : "visible"
       }`}

@@ -29,41 +29,40 @@ export const navByRole: Record<Role, (slug: string) => NavItem[]> = {
   ],
   STAFF: (slug) => [
     { 
-      label: 'home',
+      label: 'Inicio',
       icon: 'home',
       href: `/dashboard`,
-      index: true 
     },
     { 
-      label: 'pool',
+      label: 'Citas',
       icon: 'pool',
       href: `/pool` 
     },
     { 
-      label: 'History',
+      label: 'Historial',
       icon: 'history',
       href: `/history` 
     },
     { 
-      label: 'Stores',
+      label: 'Tiendas',
       icon: 'store',
       href: `/stores` 
     },
   ],
   USER: (slug) => [
       { 
-        label: 'dashboard', 
+        label: 'Inicio', 
         href: `/dashboard`,
         icon: 'home',
         index: true 
       },
       { 
-        label: 'History', 
+        label: 'Historial', 
         href: `/history`,
         icon: 'history'
       },
       { 
-        label: 'Booking', 
+        label: 'Reserva', 
         icon: 'booking',
         href: `/booking` 
       },

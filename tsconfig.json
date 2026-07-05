@@ -30,6 +30,6 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "**/*.d.ts"
-  ],
+, "app/(protected)/discover/stores"  ],
   "exclude": ["node_modules"]
 }

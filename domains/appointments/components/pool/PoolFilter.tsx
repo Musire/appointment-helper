@@ -1,9 +1,10 @@
 'use client';
 
 import { FilterChip } from ".";
+import { OptionType } from "./PoolPage";
 
 type Props = {
-    options: string[];
+    options: OptionType[];
     selected: string[];
     onSelect: (value: string) => void;
 }

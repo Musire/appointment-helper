@@ -1,7 +1,8 @@
 import { Body, BottomDrawer, Caption, DrawerContent, DrawerTrigger, H3 } from "@/components/UI";
+import { StatusPill } from "@/components/UI/pills";
 import dayjs, { formatAppTimeSplit } from "@/lib/dayjs";
 import { getServices } from "@/lib/utils/stringMutate";
-import { ChevronLeft, Clock, EllipsisVertical, Scissors, Store } from "lucide-react";
+import { Clock, EllipsisVertical, Scissors, Store } from "lucide-react";
 import { ActionType } from "../../helper/PoolDetailsConfig";
 import { AppointmentDetails as AppointmentDetailsType } from "../../queries/getAppointmentDetails";
 import DetailSection from "./DetailSection";
@@ -20,31 +21,26 @@ export default function PendingDetails ({
     const services = getServices(appointment.services)
 
     return (
-        <main className=" py-12 flex-1 bg-background stacked overflow-y-auto">
-            <section className="w-full spaced ">
-                <ChevronLeft className="size-8" />
-                <Body className=" p-2 capitalize rounded-md bg-surface-1 w-40 centered ">
-                    {appointment.status}
-                </Body>
-                <BottomDrawer>
-                    <DrawerTrigger>
-                        <button
-                            type="button"
-                            className="surface-1 hover:bg-surface-2 flex size-10 items-center justify-center rounded-full transition-colors"
-                        >
-                            <EllipsisVertical className="size-5" />
-                        </button>
-                    </DrawerTrigger>
-                    <DrawerContent className="flex flex-col space-y-2">
-                        {actions?.map(action => {
-                            const {name, Component} = action
-                            return <Component key={name} appointmentId={appointment.id} />
-                        })}
-                    </DrawerContent>
-                </BottomDrawer>
-            </section>
+        <main className=" py-12 flex-1 bg-background stacked overflow-y-auto relative">
+            <BottomDrawer>
+                <DrawerTrigger>
+                    <button
+                        type="button"
+                        className="surface-1 hover:bg-surface-2 flex size-10 items-center justify-center rounded-full transition-colors absolute right-4 top-4 hover:cursor-pointer"
+                    >
+                        <EllipsisVertical className="size-5" />
+                    </button>
+                </DrawerTrigger>
+                <DrawerContent className="flex flex-col space-y-2">
+                    {actions?.map(action => {
+                        const {name, Component} = action
+                        return <Component key={name} appointmentId={appointment.id} />
+                    })}
+                </DrawerContent>
+            </BottomDrawer>
             <section className="centered-col space-y-4 ">
                 <div className="size-40 rounded-full bg-surface-1 row-span-3 self-center" />
+                <StatusPill variant={appointment.status} />
                 <H3 className=" self-center">{appointment.client.name}</H3>
             </section>
             <DetailSection className="">
