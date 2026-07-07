@@ -1,5 +1,5 @@
-import { getStoreStaff } from "@/domains/store/queries/getStoreStaff";
 import { StaffStep } from "@/features/booking";
+import { getStoreStaff } from "@/features/booking/queries/getStaff";
 import { SearchParamsType } from "@/lib/types";
 
 export default async function BookingStaff ({ searchParams }: SearchParamsType) {
@@ -8,11 +8,13 @@ export default async function BookingStaff ({ searchParams }: SearchParamsType) 
 
     if (!store) return <div className="">some error</div>;
 
-    const staff = await getStoreStaff(store);
+    const { data } = await getStoreStaff(store);
+
+    if (!data) return <div className="">no staff</div>;
 
     return (
         <div className="flex w-full h-full">
-            <StaffStep {...{staff}} />   
+            <StaffStep staff={data} />   
         </div>
     );
 }

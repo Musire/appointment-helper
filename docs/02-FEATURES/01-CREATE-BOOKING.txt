@@ -1,0 +1,20 @@
+5 Step
+
+    1. select store
+        a. data is querying all stores
+        b. display as cards and allow search and sorting
+    2. select barber(staff)
+        a. data is querying all barbers that are associated with that store
+        b. display as cards and allow search and sorting
+    3. select service
+        a. data is querying all services that the store offers and barber can do
+        b. displya as cards and allow search and sorting
+    4. select date & time
+        a. query all hours that the barber has available
+            - store, staff availbility, blocked-off, already booked 
+                => only left over 1hr slots per date
+    5. review before confirming
+        a. validate that the appointment can be submited
+            - store, staff, services, date & time
+        
+

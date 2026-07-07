@@ -1,15 +1,12 @@
 export type RoleType = "SUPERADMIN" | "ADMIN" | "STAFF" | "USER";
 
-export type User = {
-  id: string;
-  role: string;
-};
 
-export type SecureActionConfig<Input> = {
+
+export type SecureActionConfig = {
   allowedRoles?: string[];
   ownerRoles?: Array<{
     role: string; // Changed from roles: string[] to a single role string
-    check: (user: User, data: Input) => Promise<boolean> | boolean;
+    check: () => Promise<boolean> | boolean;
   }>;
 };
 

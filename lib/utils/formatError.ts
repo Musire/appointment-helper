@@ -1,19 +1,38 @@
+import { Prisma } from "@/generated/prisma";
 
 export function formatActionError(err: unknown): { success: false; data: null; error: string } {
-  let msg = "Unknown error";
-  
-  if (err instanceof Error) {
-    msg = err.message;
-  }
-  
-  // Intercept Prisma connection/constraint errors if applicable
-  if (err && typeof err === "object" && "code" in err && err.code === "P2002") {
-    msg = "Cannot create duplicates";
+  // 1. Check for specific Prisma Known Request Errors first
+  if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    if (err.code === "P2002") {
+      return {
+        success: false,
+        data: null,
+        error: "A record with this unique value already exists."
+      }
+    }
+    // Optional: Handle other common Prisma codes here (e.g., P2025 for Record Not Found)
+    if (err.code === "P2025") {
+      return {
+        success: false,
+        data: null,
+        error: "The requested record could not be found."
+      }
+    }
   }
 
+  // 2. Fall back to standard JS Errors next
+  if (err instanceof Error) {
+    return {
+      success: false,
+      data: null,
+      error: err.message
+    }
+  }
+
+  // 3. Absolute fallback for strings/unknowns
   return {
     success: false,
     data: null,
-    error: msg
+    error: typeof err === "string" ? err : "An unexpected server error occurred."
   };
 }

@@ -5,10 +5,12 @@ import Image from "next/image";
 import { useState } from "react";
 
 export interface StaffUser {
-  id: string;
-  fullName?: string | null;
-  email: string;
-  createdAt?: Date;
+    id: string;
+    email: string;
+    fullName: string | null;
+    phone: string | null;
+    avatarUrl: string | null;
+    createdAt: Date;
 }
 
 type StaffSlotProps = {

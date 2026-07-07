@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma"
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
+import { StoreServiceRepository } from "../respositories/StoreServiceRepository"
 dayjs.extend(utc)
 
 type inputType = {
@@ -68,4 +69,8 @@ export async function createBooking({
         console.error(error)
         throw error
     }
+}
+
+export async function getStoreOfferings (storeId: string) {
+    return StoreServiceRepository.getStoreOfferings(storeId)
 }

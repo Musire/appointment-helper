@@ -1,4 +1,6 @@
+import { createSafeAction } from "@/domains/identity/auth/safeAction"
 import { prisma } from "../../../lib/prisma"
+import { getStoreOfferings } from "@/features/booking/services/booking.services"
 
 export async function getStoreService(storeId: string) {
   try {
@@ -10,3 +12,11 @@ export async function getStoreService(storeId: string) {
     throw new Error("Failed to fetch store services")
   }
 }
+
+
+export const getStoreServices = createSafeAction(
+  {
+    allowedRoles: ['USER']
+  },
+  getStoreOfferings
+)

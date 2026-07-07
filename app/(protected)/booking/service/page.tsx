@@ -1,4 +1,4 @@
-import { getStoreService } from "@/domains/store/queries/storeService";
+import { getStoreServices } from "@/domains/store/queries/storeService";
 import { ServicesStep } from "@/features/booking";
 import { SearchParamsType } from "@/lib/types";
 
@@ -8,11 +8,12 @@ export default async function BookingService ({ searchParams }: SearchParamsType
 
     if (!store) return <div className="">some error</div>;
 
-    const services = await getStoreService(store);
+    const { data } = await getStoreServices(store)
+    if (!data) return <div className="">some error</div>;
 
     return (
-        <div className="flex w-full h-full">
-            <ServicesStep {...{services}} />   
+        <div className="flex w-full h-full py-6">
+            <ServicesStep services={data} />   
         </div>
     );
 }
