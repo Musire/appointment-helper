@@ -41,7 +41,7 @@ export const Tabs: FC<TabsProps> = ({ children, className, defaultValue }) => {
 
   return (
     <TabsContext.Provider value={{ activeTab, setActiveTab }}>
-      <div className={twMerge('w-full flex flex-1 flex-col ', className)}>{children}</div>
+      <div className={twMerge('w-full stacked flex-1 ', className)}>{children}</div>
     </TabsContext.Provider>
   );
 };
@@ -88,7 +88,7 @@ export const TabsContent = ({ value, className, children }: TabsContentProps) =>
 
   if (activeTab !== value) return null;
 
-  return <div className={twMerge('w-full h-full p-6', className)}>{children}</div>;
+  return <div className={twMerge('w-full h-full ', className)}>{children}</div>;
 };
 
 

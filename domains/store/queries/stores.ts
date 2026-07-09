@@ -11,19 +11,3 @@ export const getStores = createSafeAction(
 )
 
 
-
-
-export async function getActiveStores() {
-  const stores = await prisma.store.findMany({
-    where: {
-      status: 'ACTIVE'
-    },
-    select: {
-      id: true,
-      name: true,
-      description: true,
-    }
-  })
-
-  return stores
-}

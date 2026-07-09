@@ -31,7 +31,7 @@ export default function SearchList<T, K extends string>({
   }, [data, debouncedQuery, filterFn])
 
   return (
-    <div>
+    <div >
       <SearchBar query={query} setQuery={setQuery} />
 
       <ul className="py-6">
