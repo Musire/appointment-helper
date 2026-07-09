@@ -16,12 +16,8 @@ export default function StoreStep ({ stores }: StoreStepProps ) {
 
     return (
         <div className="flex flex-col space-y-6  flex-1">
-            <Header 
-                step={1}
-                max={5}
-                title="Select Store"
-                subtitle="Choose your preferred shop to continue booking"
-            />
+            <h3 className="text-primary">{`Step ${1} of ${5}`}</h3>
+
             <SelectableList 
                 items={stores}
                 selected={selected}

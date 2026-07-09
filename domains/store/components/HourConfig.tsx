@@ -3,15 +3,13 @@ import { getStoreConfig } from "@/domains/store/queries/storeConfig";
 import { HoopForm } from "@/features/update-business-hours/components";
 import { notFound } from "next/navigation";
 
-type ConfigProps = {
-  params: { 
-    slug: string
-  }
+type Props = {
+  params: Promise<{ storeId: string }>
 }
 
-export default async function ConfigPage ({ params }: ConfigProps) {
-    const { slug } = await params
-    const result = await getStoreConfig(slug);
+export default async function ConfigPage ({ params }: Props) {
+    const { storeId } = await params
+    const result = await getStoreConfig(storeId);
 
     switch (result.status) {
       case "STORE_NOT_FOUND":

@@ -8,7 +8,7 @@ import { useState, useTransition } from "react";
 import SuccessDisplay from "../../../../components/UI/forms/SuccessDisplay";
 import { createBookingAction } from "../../actions/booking.action";
 import { DatetimeCard } from "../cards";
-import { Header, SubmitButton } from "../page";
+import { SubmitButton } from "../page";
 import ServiceSlot from "../slots/ServiceSlot";
 import StaffSlot from "../slots/StaffSlot";
 import StoreSlot from "../slots/StoreSlot";
@@ -50,13 +50,7 @@ export default function ReviewStep ({ store, staff, services, date, time }: Revi
     };
 
     return (
-        <div className="w-full flex flex-1  flex-col space-y-6 ">
-            <Header 
-                step={5}
-                max={5}
-                title="Review the Booking" 
-                subtitle="Make sure everything looks good and confirm"    
-            />
+        <div className="w-full flex flex-1  flex-col space-y-6 py-6">
             {!success && (
                 <>
                     <ul className="stacked space-y-2 ">

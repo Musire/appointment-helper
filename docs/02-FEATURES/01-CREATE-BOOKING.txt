@@ -16,5 +16,8 @@
     5. review before confirming
         a. validate that the appointment can be submited
             - store, staff, services, date & time
+    6. submit appointment
+        a. create the booking and make sure it was taken concurrent 
+        b. using transaction in prisma - also create a notification
         
 

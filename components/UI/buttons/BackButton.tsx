@@ -26,7 +26,6 @@ export default function BackButton ({ className, href }: BackButtonProps) {
         className={cn('spaced space-x-3 text-whitesmoke/60 hover:text-whitesmoke active:text-whitesmoke hover:cursor-pointer', className)}
     >
         <ArrowLeft size={20} />
-        <p className="">Back</p>
     </button>
     );
 }

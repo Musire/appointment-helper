@@ -42,7 +42,7 @@ export default function AdminControl ({ items }: { items: any }) {
             <StoreActionTray 
                 mode={mode}
                 onModeChange={changeMode}
-                resourceBasePath="/stores/"
+                resourceBasePath="/stores"
             />
             <SelectableDisplay 
                 items={items}

@@ -15,6 +15,9 @@ type AlternateDateProps = {
 }
 
 export default function AlternateDate ({ selected, onSelect }: AlternateDateProps) {
+
+    if (!selected) return null 
+    
     return (
         <div className="w-full h-12 spaced space-x-6  items-center">
             <span className="flex space-x-4 items-center h-full">
@@ -23,7 +26,7 @@ export default function AlternateDate ({ selected, onSelect }: AlternateDateProp
             </span>
             <Popover>
                 <PopoverTrigger asChild>
-                    <button type="button" className="btn">change</button>
+                    <button type="button" className="btn opacity-80 hover:opacity-100 hover:cursor-pointer">change</button>
                 </PopoverTrigger>
                 <PopoverContent
                     align="center"

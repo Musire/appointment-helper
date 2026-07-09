@@ -6,13 +6,13 @@ import { redirect } from "next/navigation";
 type Props = {
     children: React.ReactNode
     params: Promise<{
-        slug: string
+        storeId: string
     }>
 }
 
 export default async function DashboardLayout ({ children, params }: Props) {
 
-    const {slug} = await params
+    const { storeId } = await params
     const user = await getCurrentUser()
 
     if (!user || !user.role ) {
@@ -23,7 +23,7 @@ export default async function DashboardLayout ({ children, params }: Props) {
         <AuthProvider fetchedRole={user.role}>
             <main className="bg-background text-main w-screen h-dvh flex-col flex overflow-x-hidden px-6 lg:px-60 relative">
                 <Header avatarUrl={user.avatarUrl} />
-                <Navbar slug={slug} role={user.role} />
+                <Navbar storeId={storeId} role={user.role} />
                 <div className=" w-full flex flex-1 overflow-x-hidden scrollbar-none  pb-20" >
                     {children}
                 </div>

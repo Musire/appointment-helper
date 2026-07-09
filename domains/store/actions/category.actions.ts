@@ -23,6 +23,6 @@ export async function createCategory (formData: CategoryCreationType) {
             }
         })
 
-        revalidatePath('/admin/store/title/services')
-    }, ['ADMIN'])
+        revalidatePath('/stores/[storeId]/services')
+    })
 }

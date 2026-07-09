@@ -1,9 +1,10 @@
+import { formatAppTimeSplit, toAppTime } from "@/lib/dayjs";
 import { prisma } from "../../../lib/prisma";
 import { BookingParams } from "../../../lib/utils/navigation";
-import { convertUTC } from "../../../lib/utils/time";
 
 export async function getBookingReviewData(data: BookingParams) {
   const { store, staff, service, dateTime } = data;
+
 
   const [storeData, staffData, serviceData] = await Promise.all([
       prisma.store.findUnique({
@@ -21,13 +22,18 @@ export async function getBookingReviewData(data: BookingParams) {
     throw new Error("Invalid booking data");
   }
 
-  const { date, time } = convertUTC(dateTime, 'America/Guatemala')
+
+  // 1. Convert the incoming UTC ISO string directly to Chihuahua time
+  const zonedTime = toAppTime(dateTime);
+
+  // 2. Extract the beautifully formatted date and time strings
+  const { dateString, timeString } = formatAppTimeSplit(zonedTime);
 
   return {
     store: storeData,
     staff: staffData,
     services: serviceData,
-    date,
-    time
+    date: dateString, 
+    time: timeString  
   };
 }

@@ -1,7 +1,7 @@
 import { StoreCreationForm } from "@/components/forms";
 import { BackButton } from "@/components/UI/buttons";
 
-export default function NewStore () {
+export default function AdminNewStore () {
 
   return (
     <div className="page-layout">

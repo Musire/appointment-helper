@@ -4,9 +4,9 @@ import { SelectableList } from "@/components/UI";
 
 import { useSelect } from "@/hooks";
 import { useRouter } from "next/navigation";
+import { StaffCard } from "../cards";
 import { ContinueButton, Header } from "../page";
 import { StaffUser } from "../search";
-import { StaffCard } from "../cards";
 
 type StaffStepProps = {
     staff : StaffUser[]
@@ -17,18 +17,10 @@ export default function StaffStep ({ staff }: StaffStepProps) {
     const router = useRouter()
     const { selected, handleSelect } = useSelect<string | undefined>()
 
-    const handleBack = () => {
-        router.push('/user/booking')
-    }
-
     return (
-        <div className="flex flex-1 max-w-full flex-col space-y-6 ">
-            <Header 
-                step={2}
-                max={5} 
-                title="Select Staff"
-                subtitle="Pick that professional that makes you comfortable"     
-            />
+        <div className="flex flex-1 max-w-full flex-col space-y-6 py-6 ">
+            <h3 className="text-primary">{`Step ${2} of ${5}`}</h3>
+
             <SelectableList 
                 items={staff}
                 selected={selected}

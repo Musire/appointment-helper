@@ -1,17 +1,15 @@
 import { groupServicesByCategory } from "@/lib/utils/groupArrays";
 
-import ServiceContainer from "@/domains/admin-dashboard/hair-service/components/ServiceContainer";
 import { getServices } from "@/domains/service/queries/getServices";
+import ServiceContainer from "./ServiceContainer";
 
-type ServicePageProps = {
-  params: {
-    slug: string
-  }
+type Props = {
+  params: Promise<{ storeId: string }>
 }
 
-export default async function ServicePage ({ params }: ServicePageProps) {
-    const { slug } = await params
-    const { categories, services } = await getServices(slug)
+export default async function ServicePage ({ params }: Props) {
+    const { storeId } = await params
+    const { categories, services } = await getServices(storeId)
     
     const categoriesWithServices = groupServicesByCategory(categories, services)
 

@@ -1,16 +1,32 @@
 // components/store/StoreProvider.tsx
 "use client"
 
-import { StoreContextData } from "@/domains/store/data-loader"
-import { createContext, useContext } from "react"
+import { $Enums } from "@/generated/prisma";
+import { createContext, useContext } from "react";
 
+type StoreProviderData = {
+    storeId: string,
+    categories: {
+      id: string;
+      name: string;
+    }[],
+    services: {
+      type: $Enums.ServiceType;
+      name: string;
+      id: string;
+      categoryId: string | null;
+      durationMin: number;
+      priceCents: number;
+    }[]
+  }
 
 type StoreProviderProps = {
-  data: StoreContextData
-  children: React.ReactNode
+  data: StoreProviderData;
+  children: React.ReactNode;
 }
 
-const StoreContext = createContext<StoreContextData | null>(null)
+
+const StoreContext = createContext<StoreProviderData | null>(null)
 
 export default function StoreProvider({ data, children }: StoreProviderProps) {
 
@@ -21,7 +37,7 @@ export default function StoreProvider({ data, children }: StoreProviderProps) {
   )
 }
 
-export function useStore(): StoreContextData {
+export function useStore(): StoreProviderData {
   const storeContext = useContext(StoreContext)
   if (!storeContext) throw new Error("useStore must be inside StoreProvider");
   return storeContext

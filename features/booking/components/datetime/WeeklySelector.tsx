@@ -23,7 +23,7 @@ function DaySelector ({ data, selected, onSelect }: DaySelectorProps) {
     return (
         <li 
             onClick={onSelect} 
-            className="flex flex-col items-center  w-1/7  h-full p-2 hover:cursor-pointer"
+            className="flex flex-col items-center  w-1/7 h-full py-2 hover:cursor-pointer"
         >
             <p className="h-1/3 mb-1 centered capitalize">{day}</p>
             <p className={`${isSelected} rounded-full centered size-10 `}>{date.format("D")}</p>
@@ -39,7 +39,7 @@ type WeeklySelectorProps = {
 export default function WeeklySelector ({ selectedDate, onSelect }: WeeklySelectorProps) {
     const week = useMemo(() => generateCurrentWeek(), [])
     return (
-        <ul className=" h-20 w-full flex">
+        <ul className=" h-20 w-full flex ">
             {week.map((item) => {
                 return (
                     <DaySelector 

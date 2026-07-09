@@ -62,7 +62,7 @@ export async function createServiceCategory ({ storeId, name }: { storeId: strin
     })
 }
 
-export async function sendInvite({ targetId, storeId, storeName }: { targetId: string; storeId: string; storeName: string;}) {
+export async function sendInvite({ targetId, storeId }: { targetId: string; storeId: string; }) {
   return safeAction(async () => {
     const user = await getCurrentUser()
     if (!user) throw new Error("User not logged in")
@@ -99,7 +99,7 @@ export async function sendInvite({ targetId, storeId, storeName }: { targetId: s
         },
       })
 
-      revalidatePath(`/admin/store/${storeName}/staff/invite`)
+      revalidatePath(`/admin/store/${storeId}/staff/invite`)
       return invite
     })
   })

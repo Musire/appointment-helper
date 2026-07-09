@@ -12,6 +12,9 @@ interface PanelNavProps {
 }
 
 export default function MobileNav({ items }: PanelNavProps) {
+
+  if (!items.length) return null;
+
   const pathname = usePathname();
 
   const styles = {
@@ -19,6 +22,8 @@ export default function MobileNav({ items }: PanelNavProps) {
     active: " text-main  text-blue-600 ",
     inactive: "text-else hover:text-else  "
   }
+
+  
 
   return (
     <nav className="centered  w-full space-y-2 z-40">

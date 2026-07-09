@@ -27,7 +27,7 @@ function generateHourlySlots(startTime: Date, endTime: Date): string[] {
 }
 
 export const StaffDatetimeRepository = {
-    async getAvailability(storeId: string, staffId: string, targetDate: Date): Promise<String[]>  {
+    async getAvailability(storeId: string, staffId: string, targetDate: Date): Promise<string[]>  {
         const targetDay = getUTCDayName(targetDate)
         
         const availability = await prisma.staffAvailability.findFirst({
@@ -46,10 +46,10 @@ export const StaffDatetimeRepository = {
 
         return generateHourlySlots(availability.startTime, availability.endTime)
     },
-    async getBlocked(staffId: string, targetDate: Date): Promise<String[]> {
+    async getBlocked(staffId: string, targetDate: Date): Promise<string[]> {
         return []
     },
-    async getBooked(staffId: string, targetDate: Date): Promise<String[]>  {
+    async getBooked(staffId: string, targetDate: Date): Promise<string[]>  {
         return []
     }
 }

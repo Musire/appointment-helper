@@ -16,7 +16,7 @@ export default function DatetimeCard ({ datetime }: DatetimeSlotProps) {
             <Icon size={30} strokeWidth={1} />
             <span className="flex flex-col">
                 <p className="">{date.format('dddd, MMMM D, YYYY')}</p>
-                <p className="">{getMeridiem(datetime.time)}</p>
+                <p className="">{datetime.time}</p>
             </span>
         </li>
     );

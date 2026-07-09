@@ -1,18 +1,9 @@
 import { prisma } from "@/lib/prisma"
-import { unslugify } from "../../../lib/utils/stringMutate"
 
-export async function getServices(slug: string) {
-
-  const store = await prisma.store.findUnique({
-    where: {
-      name: unslugify(slug)
-    }
-  })
-
-  if (!store) return { categories: [], services: []}
+export async function getServices(storeId: string) {
 
   const categories = await prisma.serviceCategory.findMany({
-    where: { storeId: store.id },
+    where: { storeId },
     select: {
         id: true,  
         name: true,
@@ -20,7 +11,7 @@ export async function getServices(slug: string) {
   })
 
   const services = await prisma.service.findMany({
-    where: { storeId: store.id },
+    where: { storeId },
     select: {
         id: true, 
         categoryId: true,
@@ -30,7 +21,6 @@ export async function getServices(slug: string) {
         type: true
     }
   })
-
 
   return {
     categories: categories ?? [],

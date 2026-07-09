@@ -1,5 +1,7 @@
+'use client';
+
 import clsx from 'clsx';
-import { useState, createContext, useContext, ReactNode, FC } from 'react';
+import { createContext, FC, ReactNode, useContext, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 // Types
@@ -34,27 +36,23 @@ interface TabsContentProps {
 // Create Context
 const TabsContext = createContext<TabsContextType | undefined>(undefined);
 
-const Tabs: FC<TabsProps> & {
-  List: FC<TabsListProps>;
-  Trigger: FC<TabsTriggerProps>;
-  Content: FC<TabsContentProps>;
-} = ({ children, className, defaultValue }) => {
+export const Tabs: FC<TabsProps> = ({ children, className, defaultValue }) => {
   const [activeTab, setActiveTab] = useState<string | number>(defaultValue);
 
   return (
     <TabsContext.Provider value={{ activeTab, setActiveTab }}>
-      <div className={twMerge('w-full', className)}>{children}</div>
+      <div className={twMerge('w-full flex flex-1 flex-col ', className)}>{children}</div>
     </TabsContext.Provider>
   );
 };
 
 // Tab List
-Tabs.List = ({ children, className }: TabsListProps) => {
+export const TabsList = ({ children, className }: TabsListProps) => {
   return <div className={twMerge('flex', className)}>{children}</div>;
 };
 
 // Tab Trigger
-Tabs.Trigger = ({ value, className, children }: TabsTriggerProps) => {
+export const TabsTrigger = ({ value, className, children }: TabsTriggerProps) => {
   const context = useContext(TabsContext);
   if (!context) {
     throw new Error('Tabs.Trigger must be used within a Tabs component');
@@ -67,9 +65,9 @@ Tabs.Trigger = ({ value, className, children }: TabsTriggerProps) => {
       onClick={() => setActiveTab(value)}
       className={twMerge(
         clsx(
-          'capitalize border px-4 py-2 text-sm font-medium transition-all -mb-2 flex-1',
+          'capitalize border px-4 py-2 text-sm font-medium transition-all -mb-2 grow-0 hover:bg-surface-1 active:bg-surface-3 hover:cursor-pointer min-w-24',
           activeTab === value
-            ? 'surface-2 border-adjust text-main dark:bg-blue-400/30'
+            ? 'surface-2 border-adjust hover:bg-surface-1 '
             : 'border-transparent dark:hover:surface-4 hover:bg-mid/30 hover:text-else'
         ),
         className
@@ -81,7 +79,7 @@ Tabs.Trigger = ({ value, className, children }: TabsTriggerProps) => {
 };
 
 // Tab Content
-Tabs.Content = ({ value, className, children }: TabsContentProps) => {
+export const TabsContent = ({ value, className, children }: TabsContentProps) => {
   const context = useContext(TabsContext);
   if (!context) {
     throw new Error('Tabs.Content must be used within a Tabs component');
@@ -93,4 +91,4 @@ Tabs.Content = ({ value, className, children }: TabsContentProps) => {
   return <div className={twMerge('w-full h-full p-6', className)}>{children}</div>;
 };
 
-export default Tabs;
+

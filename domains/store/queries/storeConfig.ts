@@ -7,9 +7,9 @@ export type StoreConfigResult =
   | { status: "CONFIG_MISSING"; storeId: string }
   | { status: "OK"; storeId: string; config: StoreConfig };
 
-export async function getStoreConfig(slug: string): Promise<StoreConfigResult> {
+export async function getStoreConfig(storeId: string): Promise<StoreConfigResult> {
     const store = await prisma.store.findUnique({
-        where: { name: unslugify(slug) },
+        where: { id: storeId },
         select: { id: true },
     });
 

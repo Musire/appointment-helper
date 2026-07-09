@@ -20,12 +20,11 @@ export default function BackButton() {
     <button
       type="button"
       onClick={() => router.back()}
-      className={`normal-space hover:cursor-pointer text-else hover:text-main flex items-center space-x-4 ${
+      className={`normal-space hover:cursor-pointer text-else hover:text-main flex items-center space-x-4 active:bg-surface-1 ${
         !isNested ? "invisible pointer-events-none" : "visible"
       }`}
     >
       <ArrowLeft />
-      <p>Back</p>
     </button>
   );
 }

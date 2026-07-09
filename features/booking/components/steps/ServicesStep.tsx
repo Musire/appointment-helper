@@ -17,12 +17,8 @@ export default function ServicesStep ({ services }: ServiceStepProps ) {
 
     return (
         <div className="flex flex-col max-w-full  space-y-6 ">
-            <Header 
-                step={3}
-                max={5} 
-                title="Select Services"
-                subtitle="Time to pick what needs to get done"
-            />
+            <h3 className="text-primary">{`Step ${3} of ${5}`}</h3>
+
             <SelectableList 
                 items={services}
                 getId={item => item.id}

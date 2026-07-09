@@ -1,13 +1,13 @@
 import { getNav, MobileNav, PanelNav, Role } from "@/components/UI";
 
 type Props = {
-    slug: string;
+    storeId: string;
     role: Role
 }
 
-export default function Navbar ({ slug, role }: Props) {
+export default function Navbar ({ storeId, role }: Props) {
 
-    const tabs = getNav(role, slug)
+    const tabs = getNav(role, storeId)
 
     return (
         <div className="md:w-full h-20  centered  xs:fixed xs:bottom-0 xs:left-6 md:static xs:w-[calc(100%-3rem)] " >

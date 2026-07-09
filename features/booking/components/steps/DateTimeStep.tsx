@@ -1,64 +1,76 @@
 'use client';
 
 import { AlternateDate, SlotSelector, WeeklySelector } from "@/features/booking/components";
-import dayjs, { Dayjs } from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
-import { useState } from "react";
-import { ContinueButton, Header } from "../page";
+import dayjs, { parseTo24H } from "@/lib/dayjs";
+import { Dayjs } from "dayjs";
 import { useRouter } from "next/navigation";
-dayjs.extend(utc)
-dayjs.extend(timezone)
+import { useState, useTransition } from "react";
+import { getDatetime } from "../../actions/booking.action";
+import { ContinueButton } from "../page";
 
+type timeslot = {
+    id: string;
+    time: string;
+}
 
-const testSlots = [
-  { id: 'slot-1', time: '10:00' },
-  { id: 'slot-2', time: '11:00' },
-  { id: 'slot-3', time: '12:00' },
-  { id: 'slot-4', time: '13:00' },
-  { id: 'slot-5', time: '14:00' },
-  { id: 'slot-6', time: '15:00' },
-  { id: 'slot-7', time: '16:00' },
-  { id: 'slot-8', time: '17:00' }
-]
+type Props = {
+  initialSlots: timeslot[];
+  storeId: string;
+  barberId: string;
+}
 
-export default function DateTimeStep () {
+export default function DateTimeStep ({ 
+    initialSlots,
+    storeId,
+    barberId
+}: Props) {
     const router = useRouter()
+
+    const [timeslots, setTimeslots] = useState<timeslot[]>(initialSlots);
+  
     const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
-    const [time, setTime] = useState<string>('10:00');
+    const [time, setTime] = useState<string>(initialSlots[0]?.time ?? '09:00 AM');
+   
+    const [isPending, startTransition] = useTransition();
 
-    const local = dayjs.tz(
-        `${selectedDate.format("YYYY-MM-DD")} ${time}`,
-        'America/Guatemala'
-    )
+    function handleDateChange(newDate: Dayjs) {
+        startTransition(async () => {
+            setSelectedDate(newDate);
 
-    const selected = local.utc().toISOString()
+            const response = await getDatetime(storeId, barberId, newDate.toDate());
+            
+            if (response.success && response.data) {
+                setTimeslots(response.data);
+            }
+        });
+    }
         
     return (
         <div className="w-full flex flex-col space-y-6">
-            <Header 
-                step={4}
-                max={5}
-                title={'Select Date and Time'} 
-                subtitle="Pick the perfect moment"
-            />
+            <h3 className="text-primary">{`Step ${4} of ${5}`}</h3>
             <WeeklySelector 
                 {...{selectedDate}}
-                onSelect={setSelectedDate}
+                onSelect={handleDateChange}
             />
             <AlternateDate
                 selected={selectedDate}
-                onSelect={setSelectedDate}
+                onSelect={handleDateChange}
             />
             <SlotSelector 
-                slots={testSlots} 
+                slots={timeslots} 
                 selectedTime={time}
                 onSelect={setTime}    
             />
             <ContinueButton 
                 onBack={() => router.back()} 
                 next="review" 
-                selected={selected}
+                selected={(() => {
+                    const datePart = selectedDate.format("YYYY-MM-DD");
+                    const timePart = parseTo24H(time) ;
+                    const combinedZoneTime = dayjs.tz(`${datePart} ${timePart}`)
+                    
+                    return combinedZoneTime.toISOString();
+                })()}
             />
         </div>
     )

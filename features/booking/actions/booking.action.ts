@@ -1,8 +1,10 @@
 "use server";
 
+import { createSafeAction } from "@/domains/identity/auth/safeAction";
 import { convertToUTC } from "@/lib/utils/time";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { getDatetimeService } from "../services/dateTime.services";
 
 dayjs.extend(utc);
 
@@ -76,3 +78,10 @@ export async function createBookingAction({
       return { success: false, error: 'internal server error'}
     }
 }
+
+
+
+export const getDatetime = createSafeAction(
+    {},
+    getDatetimeService
+)

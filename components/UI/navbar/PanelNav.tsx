@@ -10,6 +10,8 @@ interface PanelNavProps {
 }
 
 export default function PanelNav({ items }: PanelNavProps) {
+  if (!items.length) return null;
+
   const pathname = usePathname();
 
   return (

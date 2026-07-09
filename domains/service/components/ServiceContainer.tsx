@@ -1,6 +1,6 @@
 import { CategoryWithServicesType } from "@/lib/utils/groupArrays";
-import CategoryAccordians from "@/new-features/admin-store-services/components/CategoryAccordians";
 import ServiceCreation from "./ServiceCreation";
+import { CategoryAccordians } from "@/features/admin-store-services/components";
 
 type Props = {
     categories: CategoryWithServicesType[]

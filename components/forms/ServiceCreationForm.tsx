@@ -14,12 +14,12 @@ type ServiceCreationProps = {
 
 export default function ServiceCreationForm ({ data, isUpdate }: ServiceCreationProps) {
     const [formError, setError] = useState<string | null>(null)
-    const { store, categories } = useStore()
+    const { storeId, categories } = useStore()
     const router = useRouter()
 
 
     const handleSubmit = async (formData: ServiceCreationType) => {
-        const payload = {...formData, storeId: store.id}
+        const payload = {...formData, storeId}
         
         const { success, error} = await createService(payload)
         if (!success) {
@@ -43,7 +43,7 @@ export default function ServiceCreationForm ({ data, isUpdate }: ServiceCreation
                     <DropdownButton 
                         options={categories.map(c => c.name)}
                         value={
-                            categories.find(c => c.id === field.value)?.name ?? null
+                            categories.find(c => c.id === field.value)?.name ?? undefined
                         }
                         onChange={(selectedName) => {
                             const category = categories.find(c => c.name === selectedName)

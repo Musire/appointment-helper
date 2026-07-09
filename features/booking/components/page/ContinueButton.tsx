@@ -1,8 +1,7 @@
 'use client';
 
 import { buildQuery } from "@/lib/utils/navigation";
-import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type ContinueButtonType = {
     onBack: () => void;
@@ -11,6 +10,7 @@ type ContinueButtonType = {
 }
 
 export default function ContinueButton ({ onBack, next, selected }: ContinueButtonType) {
+    const router = useRouter()
     const searchParams = useSearchParams()
     const params = Object.fromEntries(searchParams.entries())
 
@@ -22,25 +22,25 @@ export default function ContinueButton ({ onBack, next, selected }: ContinueButt
         [current!]: selected,
     }
 
+    const handleContinue = () => {
+        const destinationUrl = buildQuery(next, nextParams); 
+        router.push(destinationUrl); 
+    };
+
     return (
-        <span className="spaced  gap-x-4 mt-auto">
-            <button type="button" onClick={onBack} className="btn flex-1 max-w-60">Back</button>
-            {!selected ? (
-                <button 
-                    type="button" 
-                    disabled 
-                    className="btn max-w-60 normal-space flex-1"
-                >
-                    Continue
-                </button>
-            ) : (
-                <Link
-                    href={buildQuery(next, nextParams)}
-                    className="normal-space bg-primary flex-1 max-w-60 hover:bg-primary-hover text-center  text-deep " 
-                >
-                    Continue
-                </Link>
-            )}
+        <span className="flex items-center gap-x-4 mt-auto">
+            <button
+                type="button"
+                disabled={!selected}
+                onClick={handleContinue}
+                className={`normal-space flex-1 max-w-60 text-center ml-auto ${
+                    !selected 
+                        ? "btn" 
+                        : "bg-primary hover:bg-primary-hover hover:cursor-pointer text-deep cursor-pointer "
+                }`}
+            >
+                Continue
+            </button>
         </span>
     );
 }

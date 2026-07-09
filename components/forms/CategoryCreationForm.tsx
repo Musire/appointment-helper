@@ -13,10 +13,10 @@ type CreationCategoryProps = {
 
 export default function CategoryCreationForm ({ data, isUpdate }: CreationCategoryProps) {
     const [formError, setError] = useState<string | null>(null)
-    const { store } = useStore()
+    const { storeId } = useStore()
     const router = useRouter()
     const handleSubmit = async (formData: CategoryCreationType) => {
-        const payload = {...formData, storeId: store.id}
+        const payload = {...formData, storeId }
         
         const { success, error} = await createCategory(payload)
         if (!success) {

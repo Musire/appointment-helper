@@ -31,6 +31,8 @@ export function createSafeAction<Args extends any[], Output>(
     try {
       const user = await getCurrentUser();
 
+      console.log('user', user)
+
       if (!user || !user.user_metadata.role) {
         return {
           success: false,

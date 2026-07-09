@@ -7,27 +7,10 @@ export type NavItem = {
 
 export type Role = 'SUPERADMIN' | 'ADMIN' | 'STAFF' | 'USER'
 
-export const navByRole: Record<Role, (slug: string) => NavItem[]> = {
-  ADMIN: (slug) => [
-    { 
-        label: 'Overview', 
-        href: `/admin/store/${slug}`, 
-        index: true 
-    },
-    { 
-        label: 'Hours', 
-        href: `/admin/store/${slug}/hours` 
-    },
-    { 
-        label: 'Services', 
-        href: `/admin/store/${slug}/services` 
-    },
-    { 
-        label: 'Staff', 
-        href: `/admin/store/${slug}/staff` 
-    },
+export const navByRole: Record<Role, (storeId: string) => NavItem[]> = {
+  ADMIN: () => [
   ],
-  STAFF: (slug) => [
+  STAFF: (storeId) => [
     { 
       label: 'Inicio',
       icon: 'home',
@@ -49,7 +32,7 @@ export const navByRole: Record<Role, (slug: string) => NavItem[]> = {
       href: `/stores` 
     },
   ],
-  USER: (slug) => [
+  USER: (storeId) => [
       { 
         label: 'Inicio', 
         href: `/dashboard`,
@@ -67,7 +50,7 @@ export const navByRole: Record<Role, (slug: string) => NavItem[]> = {
         href: `/booking` 
       },
   ],
-  SUPERADMIN: (slug) => [
+  SUPERADMIN: (storeId) => [
     { 
         label: 'Global', 
         href: `/superadmin/dashboard`,

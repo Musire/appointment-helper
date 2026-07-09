@@ -1,8 +1,10 @@
 'use client';
-import { SearchList } from "@/components/UI";
-import { sendInvite } from "@/domains/store/actions/store.actions";
+
 import { useRouter } from "next/navigation";
-import CandidateCard from "../../../features/admin/components/CandidateCard";
+import { SearchList } from "@/components/UI";
+import { CandidateCard } from "@/features/admin-invite-staff/components";
+import { sendInvite } from "@/domains/store/actions/store.actions";
+import { useStore } from "@/context";
 
 export type Staff = { 
     id: string; 
@@ -11,21 +13,17 @@ export type Staff = {
 }
 
 type Props = {
-    data: Staff[];
-    store: {
-        id: string;
-        name: string;
-    }
+    data: Staff[]
 }
 
-export default function StaffSearch ({ data, store }: Props) {
+export default function StaffSearch ({ data }: Props) {
     const router = useRouter()
+    const { storeId } = useStore()
 
     const handleInvite = async (targetId: string) => {
-        const { success, error } = await sendInvite({
+        const { success } = await sendInvite({
             targetId,
-            storeId: store.id,
-            storeName: store.name
+            storeId
         })
 
         if (success) {
