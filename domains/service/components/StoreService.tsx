@@ -10,7 +10,7 @@ export default async function ServicePage ({ params }: Props) {
     const services = await getServices(storeId)
 
     return (
-      <div className="flex flex-col space-y-6 relative  flex-1">
+      <div className="relative stacked flex-1">
           <ServiceContainer services={services} />
       </div>
     );

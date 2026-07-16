@@ -8,7 +8,7 @@ export default function ServiceCreation () {
         <div className="absolute bottom-6 right-6 flex flex-col-reverse ">
             <Link 
                 href="services/new" 
-                className="size-12 bg-surface-1 centered rounded-full"
+                className="size-12 bg-surface-1 hover:bg-darken-5/surface-1 active:bg-lighten-1/surface-1 centered rounded-full"
             >
                 <Plus />
             </Link>
