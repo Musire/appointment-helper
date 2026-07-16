@@ -18,40 +18,33 @@ export default function StoreActionTray({
 }: AdminHeaderProps) {
   const pathname = usePathname();
 
-
-
   const actions = [
     {
       key: "create",
-      label: "creation",
       href: `${resourceBasePath}/new`,
-      icon: <Plus size={20} />,
+      icon: <Plus size={30} strokeWidth={1} />,
     },
     {
       key: "edit",
-      label: "edit",
       mode: "edit" as const,
-      icon: <Pencil size={20} />,
+      icon: <Pencil size={30} strokeWidth={1} />,
     },
     {
       key: "delete",
-      label: "delete",
       mode: "delete" as const,
-      icon: <Trash2 size={20} />,
+      icon: <Trash2 size={30} strokeWidth={1}/>,
     },
   ];
 
   return (
     <div className="spaced">
-      <h2 className="text-2xl">Stores</h2>
-      {/* Actions */}
-      <span className="flex space-x-2 justify-end items-center">
+      <span className="flex space-x-2 justify-end items-center ml-auto">
         {actions.map(action => {
           const isActive =
             action.mode && mode === action.mode;
 
           const baseClass =
-            "hover:cursor-pointer capitalize shrink sm:w-20 xs:max-sm:p-3 sm:normal-space border-2 centered rounded-full border-whitesmoke/60 text-sm";
+            "hover:cursor-pointer capitalize shrink size-14 xs:max-sm:p-3 sm:normal-space centered rounded-full hover:cursor-pointer hover:bg-surface-1 active:bg-surface-2  ";
 
           if (action.href) {
             return (
@@ -60,10 +53,7 @@ export default function StoreActionTray({
                 href={action.href}
                 className={baseClass}
               >
-                <p className="xs:hidden sm:block">
-                  {action.label}
-                </p>
-                <span className="sm:hidden">
+                <span className="">
                   {action.icon}
                 </span>
               </Link>
@@ -76,7 +66,7 @@ export default function StoreActionTray({
               type="button"
               className={`${baseClass} ${
                 isActive
-                  ? "bg-whitesmoke text-deeper"
+                  ? "bg-whitesmoke text-deeper hover:opacity-80 hover:bg-whitesmoke "
                   : ""
               }`}
               onClick={() =>
@@ -84,10 +74,7 @@ export default function StoreActionTray({
                 onModeChange(action.mode)
               }
             >
-              <p className="xs:hidden sm:block">
-                {action.label}
-              </p>
-              <span className="sm:hidden">
+              <span className="">
                 {action.icon}
               </span>
             </button>

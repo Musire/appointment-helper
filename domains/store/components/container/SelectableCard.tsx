@@ -7,6 +7,7 @@ type CardContent = {
   mode: ContainerMode;
   isSelected: boolean;
   onSelect: (id: string) => void;
+  onNavigate?: () => void;
   children?: React.ReactNode;
 };
 
@@ -15,12 +16,13 @@ export default function SelectableCard({
   mode,
   isSelected,
   onSelect,
+  onNavigate,
   children,
 }: CardContent) {
   const ringColor: Record<ContainerMode, string> = {
     view: "ring-transparent",
     edit: "ring-sky-300",
-    delete: "ring-error-dark",
+    delete: "ring-error",
   };
 
   const color =
@@ -30,10 +32,19 @@ export default function SelectableCard({
       ? ringColor[mode]
       : "ring-whitesmoke/30";
 
+  const handleClick = () => {
+    if (mode === 'view' && onNavigate) {
+      onNavigate()
+      return
+    }
+
+    onSelect(id)
+  }
+
   return (
     <li
-      onClick={() => onSelect(id)}
-      className={`w-full rounded-xl relative ring-2  ${color}`}
+      onClick={handleClick}
+      className={`w-full h-fit rounded-xl relative ring-2  ${color}`}
     >
       {children}
 

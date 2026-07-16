@@ -52,21 +52,29 @@ model Store {
   appointments Appointment[]
   invites      Invite[]
   services     Service[]
-  categories   ServiceCategory[]
   createdBy    User              @relation(fields: [createdById], references: [id])
   config       StoreConfig?
   staff        StoreStaff[]
 }
 
 model StoreConfig {
-  id        String   @id @default(uuid())
-  storeId   String   @unique
-  hours     Json
-  buffers   Json
-  policies  Json
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  store     Store    @relation(fields: [storeId], references: [id])
+  id        String      @id @default(uuid())
+  storeId   String      @unique
+  // This is your array of objects relation
+  hours     StoreHour[] 
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  store     Store       @relation(fields: [storeId], references: [id])
+}
+
+model StoreHour {
+  id            String      @id @default(uuid()) // Can use your 'row-001' strings
+  storeConfigId String
+  label         String      // "lun - vier"
+  isActive      Boolean     // true
+  start         String      // "09:00 AM"
+  end           String      // "05:00 PM"
+  storeConfig   StoreConfig @relation(fields: [storeConfigId], references: [id], onDelete: Cascade)
 }
 
 model StoreStaff {
@@ -106,30 +114,19 @@ model StaffAvailability {
 }
 
 model Service {
-  id          String               @id @default(uuid())
+  id          String      @id @default(uuid())
   storeId     String
-  categoryId  String?
   name        String
-  durationMin Int
-  priceCents  Int
-  type        ServiceType
-  createdAt   DateTime             @default(now())
+  price       Int
+  createdAt   DateTime    @default(now())
+  
   bookings    AppointmentService[]
-  category    ServiceCategory?     @relation(fields: [categoryId], references: [id])
-  store       Store                @relation(fields: [storeId], references: [id])
+  store       Store       @relation(fields: [storeId], references: [id])
 
   @@index([storeId])
 }
 
-model ServiceCategory {
-  id       String    @id @default(uuid())
-  storeId  String
-  name     String
-  services Service[]
-  store    Store     @relation(fields: [storeId], references: [id])
 
-  @@unique([storeId, name])
-}
 
 model Appointment {
   id            String               @id @default(uuid())
@@ -241,11 +238,6 @@ enum StaffStatus {
   INVITED
   ACTIVE
   SUSPENDED
-}
-
-enum ServiceType {
-  SINGLE
-  COMBO
 }
 
 enum AppointmentStatus {

@@ -16,14 +16,14 @@ export default function ComponentName ({ modalOpen, setModal, handleDeletion }: 
             <button
               onClick={() => setModal(false)}
               type="button" 
-              className="capitalize ring-2 ring-transparent active:bg-whitesmoke w-24  active:text-deep normal-space hover:ring-whitesmoke/30 rounded-full"
+              className="capitalize ring-2 ring-transparent active:bg-whitesmoke w-24  active:text-deep normal-space hover:cursor-pointer hover:ring-whitesmoke/30 rounded-full"
             >
             cancel
             </button>
             <button
               onClick={handleDeletion} 
               type="button" 
-              className="capitalize text-error-dark normal-space hover:bg-error-dark w-24 hover:text-darker rounded-full hover:cursor-pointer"
+              className="capitalize text-error normal-space hover:bg-error w-24 hover:text-darker rounded-full hover:cursor-pointer"
             >
             delete
             </button>

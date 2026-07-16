@@ -1,16 +1,23 @@
-import { CategoryWithServicesType } from "@/lib/utils/groupArrays";
+import { ServiceCard } from "@/features/admin-store-services/components";
 import ServiceCreation from "./ServiceCreation";
-import { CategoryAccordians } from "@/features/admin-store-services/components";
 
-type Props = {
-    categories: CategoryWithServicesType[]
+export interface service {
+    id: string;
+    name: string;
+    price: number;
 }
 
-export default function ServiceContainer ({  categories }: Props) {
+type Props = {
+    services: service[]
+}
+
+export default function ServiceContainer ({ services }: Props) {
     return (
         <div className="">
             <ServiceCreation />
-            <CategoryAccordians items={categories} />
+            {services.map(service => {
+                return <ServiceCard key={service.id} service={service} />
+            })}
         </div>
     );
 }

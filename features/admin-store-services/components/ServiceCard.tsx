@@ -1,11 +1,11 @@
 'use client'; 
 
-import { ServiceType } from "@/lib/utils/groupArrays";
+import { service } from "@/domains/service/components/ServiceContainer";
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 type ServiceCardProps = {
-  service: ServiceType
+  service: service
   onEdit?: () => void
   onDelete?: () => void
 }
@@ -16,7 +16,7 @@ export default function ServiceCard({
   onDelete,
 }: ServiceCardProps) {
   const [open, setOpen] = useState(false)
-  const { name, durationMin, priceCents} = service
+  const { name, price } = service
 
   return (
     <div className="relative rounded-xl border bg-darkest border-whitesmoke/20 w-48  p-4 shadow-sm">
@@ -29,10 +29,9 @@ export default function ServiceCard({
 
           <div className="mt-1 flex items-center space-x-4 text-sm text-muted-foreground">
             <span className="font-medium text-whitesmoke/60">
-              ${priceCents}
+              ${price}
             </span>
             <span className="text-whitesmoke/60">|</span>
-            <span>{durationMin} mins</span>
           </div>
         </div>
 

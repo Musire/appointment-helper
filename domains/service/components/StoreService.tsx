@@ -1,5 +1,3 @@
-import { groupServicesByCategory } from "@/lib/utils/groupArrays";
-
 import { getServices } from "@/domains/service/queries/getServices";
 import ServiceContainer from "./ServiceContainer";
 
@@ -9,13 +7,11 @@ type Props = {
 
 export default async function ServicePage ({ params }: Props) {
     const { storeId } = await params
-    const { categories, services } = await getServices(storeId)
-    
-    const categoriesWithServices = groupServicesByCategory(categories, services)
+    const services = await getServices(storeId)
 
     return (
       <div className="flex flex-col space-y-6 relative  flex-1">
-          <ServiceContainer categories={categoriesWithServices} />
+          <ServiceContainer services={services} />
       </div>
     );
 }

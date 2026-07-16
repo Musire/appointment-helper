@@ -1,6 +1,5 @@
 'use client';
-import { ControlledInput, Form, Input } from "@/components/UI";
-import { DropdownButton } from "@/components/UI/buttons";
+import { Form, Input } from "@/components/UI";
 import { useStore } from "@/context";
 import { createService } from "@/domains/store/actions/service.actions";
 import { ServiceCreationSchema, ServiceCreationType } from "@/validation/ServiceCreation.schema";
@@ -14,7 +13,7 @@ type ServiceCreationProps = {
 
 export default function ServiceCreationForm ({ data, isUpdate }: ServiceCreationProps) {
     const [formError, setError] = useState<string | null>(null)
-    const { storeId, categories } = useStore()
+    const { storeId } = useStore()
     const router = useRouter()
 
 
@@ -36,39 +35,9 @@ export default function ServiceCreationForm ({ data, isUpdate }: ServiceCreation
             schema={ServiceCreationSchema}
             onSubmit={handleSubmit}
             >
-            <ControlledInput
-                label="service category"
-                name={'categoryId'}
-                children={(field) => (
-                    <DropdownButton 
-                        options={categories.map(c => c.name)}
-                        value={
-                            categories.find(c => c.id === field.value)?.name ?? undefined
-                        }
-                        onChange={(selectedName) => {
-                            const category = categories.find(c => c.name === selectedName)
-                            if (category) {
-                                field.onChange(category.id)
-                            }
-                        }}
-                    />
-                )}
-            />
-            <Input label="service name" name="name" />
             <Input type="hidden" name="storeId" />
-            <Input type="number" label="duration" name="durationMin" />
-            <Input type="number" label="price" name="priceCents" />
-            <ControlledInput 
-                label="service type"
-                name="type"
-                children={(field) => (
-                    <DropdownButton
-                        options={['SINGLE', 'COMBO']} 
-                        {...{field}}
-                    />
-                )}
-            />
-
+            <Input label="service name" name="name" />
+            <Input type="number" label="price" name="price" />
         </Form>
         {formError && <p className="mt-6 text-error-dark">{formError}</p>}
         </>

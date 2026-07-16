@@ -1,18 +1,14 @@
 import { AuthProvider } from "@/context";
 import { getCurrentUser } from "@/domains/identity/auth/session";
-import { Header, Navbar } from "@/features/tinker";
+import { Header } from "@/features/tinker";
 import { redirect } from "next/navigation";
 
 type Props = {
     children: React.ReactNode
-    params: Promise<{
-        storeId: string
-    }>
 }
 
-export default async function DashboardLayout ({ children, params }: Props) {
+export default async function DashboardLayout ({ children }: Props) {
 
-    const { storeId } = await params
     const user = await getCurrentUser()
 
     if (!user || !user.role ) {
@@ -23,7 +19,6 @@ export default async function DashboardLayout ({ children, params }: Props) {
         <AuthProvider fetchedRole={user.role}>
             <main className="bg-background text-main w-screen h-dvh flex-col flex overflow-x-hidden px-6 lg:px-60 relative">
                 <Header avatarUrl={user.avatarUrl} />
-                <Navbar storeId={storeId} role={user.role} />
                 <div className=" w-full flex flex-1 overflow-x-hidden scrollbar-none  pb-20" >
                     {children}
                 </div>

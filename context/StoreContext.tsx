@@ -1,23 +1,10 @@
 // components/store/StoreProvider.tsx
 "use client"
 
-import { $Enums } from "@/generated/prisma";
 import { createContext, useContext } from "react";
 
 type StoreProviderData = {
     storeId: string,
-    categories: {
-      id: string;
-      name: string;
-    }[],
-    services: {
-      type: $Enums.ServiceType;
-      name: string;
-      id: string;
-      categoryId: string | null;
-      durationMin: number;
-      priceCents: number;
-    }[]
   }
 
 type StoreProviderProps = {

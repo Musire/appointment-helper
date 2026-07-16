@@ -27,7 +27,7 @@ export default function ContinueButton ({ mode, hasSelection, onDelete, selected
     }
 
     if (mode === 'edit') {
-        const uri = `${base}/edit/` + selected[0]
+        const uri = `${base}/${selected[0]}/edit`
         return (
             <Link
                 href={uri}

@@ -154,11 +154,17 @@ exports.Prisma.StoreScalarFieldEnum = {
 exports.Prisma.StoreConfigScalarFieldEnum = {
   id: 'id',
   storeId: 'storeId',
-  hours: 'hours',
-  buffers: 'buffers',
-  policies: 'policies',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.StoreHourScalarFieldEnum = {
+  id: 'id',
+  storeConfigId: 'storeConfigId',
+  label: 'label',
+  isActive: 'isActive',
+  start: 'start',
+  end: 'end'
 };
 
 exports.Prisma.StoreStaffScalarFieldEnum = {
@@ -187,18 +193,9 @@ exports.Prisma.StaffAvailabilityScalarFieldEnum = {
 exports.Prisma.ServiceScalarFieldEnum = {
   id: 'id',
   storeId: 'storeId',
-  categoryId: 'categoryId',
   name: 'name',
-  durationMin: 'durationMin',
-  priceCents: 'priceCents',
-  type: 'type',
+  price: 'price',
   createdAt: 'createdAt'
-};
-
-exports.Prisma.ServiceCategoryScalarFieldEnum = {
-  id: 'id',
-  storeId: 'storeId',
-  name: 'name'
 };
 
 exports.Prisma.AppointmentScalarFieldEnum = {
@@ -304,11 +301,6 @@ exports.DayOfWeek = exports.$Enums.DayOfWeek = {
   SUNDAY: 'SUNDAY'
 };
 
-exports.ServiceType = exports.$Enums.ServiceType = {
-  SINGLE: 'SINGLE',
-  COMBO: 'COMBO'
-};
-
 exports.AppointmentStatus = exports.$Enums.AppointmentStatus = {
   PENDING: 'PENDING',
   CHECKIN: 'CHECKIN',
@@ -338,11 +330,11 @@ exports.Prisma.ModelName = {
   UserRole: 'UserRole',
   Store: 'Store',
   StoreConfig: 'StoreConfig',
+  StoreHour: 'StoreHour',
   StoreStaff: 'StoreStaff',
   StaffProfile: 'StaffProfile',
   StaffAvailability: 'StaffAvailability',
   Service: 'Service',
-  ServiceCategory: 'ServiceCategory',
   Appointment: 'Appointment',
   AppointmentService: 'AppointmentService',
   Notification: 'Notification',

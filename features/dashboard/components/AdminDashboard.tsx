@@ -22,7 +22,7 @@ export default async function AdminDashboard () {
   })
 
   return (
-    <main className="py-6 flex-1">
+    <main className="py-6 flex-1 flex">
         <AdminControl items={stores} />
     </main>
   );
