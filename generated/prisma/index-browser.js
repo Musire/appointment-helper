@@ -143,8 +143,6 @@ exports.Prisma.UserRoleScalarFieldEnum = {
 exports.Prisma.StoreScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  description: 'description',
-  timezone: 'timezone',
   address: 'address',
   status: 'status',
   createdAt: 'createdAt',

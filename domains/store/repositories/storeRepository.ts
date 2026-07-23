@@ -1,3 +1,4 @@
+import { StoreStatus } from "@/generated/prisma"
 import { prisma } from "@/lib/prisma"
 import { StoreHoursInput } from "../schemas/store.schema"
 
@@ -89,5 +90,42 @@ export const  storeRepository = {
         });
 
         return config?.hours ?? [];
+    },
+    async countServices(storeId: string): Promise<number> {
+        const cleanStoreId = storeId.trim();
+        return prisma.service.count({
+            where: { storeId: cleanStoreId }
+        });
+    },
+    async countStoreDays(storeId: string): Promise<number> {
+        return prisma.storeHour.count({
+            where: {
+                isActive: true,
+                storeConfig: {
+                    store: {
+                        id: storeId
+                    }
+                }
+            }
+        });
+    },
+    async findStoreWithStatus(storeId: string) {
+        return prisma.store.findUnique({
+            where: { id: storeId },
+            select: { name: true, address: true, status: true }
+        });
+    },
+    async countStaff(storeId: string) {
+        return 0
+    },
+    async countInvites(storeId: string) {
+        return 0
+    },
+    async updateStoreStatus(storeId: string, status: StoreStatus) {
+        return prisma.store.update({
+            where: { id: storeId },
+            data: { status },
+            select: { name: true, address: true, status: true }
+        });
     }
 }

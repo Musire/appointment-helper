@@ -1,3 +1,12 @@
+-- CreateSchema
+CREATE SCHEMA IF NOT EXISTS "public";
+
+-- CreateEnum
+CREATE TYPE "DayOfWeek" AS ENUM ('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY');
+
+-- CreateEnum
+CREATE TYPE "InviteStatus" AS ENUM ('PENDING', 'ACCEPTED', 'REJECTED', 'REVOKED');
+
 -- CreateEnum
 CREATE TYPE "RoleName" AS ENUM ('SUPERADMIN', 'ADMIN', 'STAFF', 'USER');
 
@@ -11,10 +20,7 @@ CREATE TYPE "StoreStatus" AS ENUM ('DRAFT', 'ACTIVE', 'SUSPENDED');
 CREATE TYPE "StaffStatus" AS ENUM ('INVITED', 'ACTIVE', 'SUSPENDED');
 
 -- CreateEnum
-CREATE TYPE "ServiceType" AS ENUM ('SINGLE', 'COMBO');
-
--- CreateEnum
-CREATE TYPE "AppointmentStatus" AS ENUM ('PENDING', 'CONFIRMED', 'CANCELLED', 'COMPLETED', 'NOSHOW');
+CREATE TYPE "AppointmentStatus" AS ENUM ('PENDING', 'CHECKIN', 'INPROGRESS', 'COMPLETED', 'CANCELLED', 'NOSHOW');
 
 -- CreateEnum
 CREATE TYPE "NotificationType" AS ENUM ('APPOINTMENT_CREATED', 'APPOINTMENT_UPDATED', 'APPOINTMENT_CANCELLED', 'STORE_INVITATION');
@@ -23,6 +29,9 @@ CREATE TYPE "NotificationType" AS ENUM ('APPOINTMENT_CREATED', 'APPOINTMENT_UPDA
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "full_name" TEXT,
+    "phone" TEXT,
+    "avatarUrl" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -49,10 +58,11 @@ CREATE TABLE "UserRole" (
 CREATE TABLE "Store" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "description" TEXT,
     "timezone" TEXT NOT NULL,
+    "address" TEXT,
     "status" "StoreStatus" NOT NULL DEFAULT 'DRAFT',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdById" TEXT NOT NULL,
 
     CONSTRAINT "Store_pkey" PRIMARY KEY ("id")
 );
@@ -61,13 +71,22 @@ CREATE TABLE "Store" (
 CREATE TABLE "StoreConfig" (
     "id" TEXT NOT NULL,
     "storeId" TEXT NOT NULL,
-    "hours" JSONB NOT NULL,
-    "buffers" JSONB NOT NULL,
-    "policies" JSONB NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "StoreConfig_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "StoreHour" (
+    "id" TEXT NOT NULL,
+    "storeConfigId" TEXT NOT NULL,
+    "label" TEXT NOT NULL,
+    "isActive" BOOLEAN NOT NULL,
+    "start" TEXT NOT NULL,
+    "end" TEXT NOT NULL,
+
+    CONSTRAINT "StoreHour_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -94,8 +113,8 @@ CREATE TABLE "StaffProfile" (
 -- CreateTable
 CREATE TABLE "StaffAvailability" (
     "id" TEXT NOT NULL,
-    "staffId" TEXT NOT NULL,
-    "dayOfWeek" INTEGER NOT NULL,
+    "storeStaffId" TEXT NOT NULL,
+    "dayOfWeek" "DayOfWeek" NOT NULL,
     "startTime" TIMESTAMP(3) NOT NULL,
     "endTime" TIMESTAMP(3) NOT NULL,
 
@@ -106,23 +125,11 @@ CREATE TABLE "StaffAvailability" (
 CREATE TABLE "Service" (
     "id" TEXT NOT NULL,
     "storeId" TEXT NOT NULL,
-    "categoryId" TEXT,
     "name" TEXT NOT NULL,
-    "durationMin" INTEGER NOT NULL,
-    "priceCents" INTEGER NOT NULL,
-    "type" "ServiceType" NOT NULL,
+    "price" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Service_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "ServiceCategory" (
-    "id" TEXT NOT NULL,
-    "storeId" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-
-    CONSTRAINT "ServiceCategory_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -130,7 +137,7 @@ CREATE TABLE "Appointment" (
     "id" TEXT NOT NULL,
     "storeId" TEXT NOT NULL,
     "staffId" TEXT NOT NULL,
-    "userId" TEXT,
+    "userId" TEXT NOT NULL,
     "startTime" TIMESTAMP(3) NOT NULL,
     "endTime" TIMESTAMP(3) NOT NULL,
     "status" "AppointmentStatus" NOT NULL,
@@ -164,10 +171,10 @@ CREATE TABLE "Notification" (
 CREATE TABLE "Invite" (
     "id" TEXT NOT NULL,
     "storeId" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "role" "StoreRole" NOT NULL,
-    "token" TEXT NOT NULL,
-    "expiresAt" TIMESTAMP(3) NOT NULL,
+    "invitedBy" TEXT NOT NULL,
+    "status" "InviteStatus" NOT NULL DEFAULT 'PENDING',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Invite_pkey" PRIMARY KEY ("id")
@@ -195,6 +202,9 @@ CREATE UNIQUE INDEX "Role_name_key" ON "Role"("name");
 CREATE UNIQUE INDEX "UserRole_userId_roleId_key" ON "UserRole"("userId", "roleId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Store_name_key" ON "Store"("name");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "StoreConfig_storeId_key" ON "StoreConfig"("storeId");
 
 -- CreateIndex
@@ -204,13 +214,10 @@ CREATE UNIQUE INDEX "StoreStaff_storeId_userId_key" ON "StoreStaff"("storeId", "
 CREATE UNIQUE INDEX "StaffProfile_userId_key" ON "StaffProfile"("userId");
 
 -- CreateIndex
-CREATE INDEX "StaffAvailability_staffId_dayOfWeek_idx" ON "StaffAvailability"("staffId", "dayOfWeek");
+CREATE INDEX "StaffAvailability_storeStaffId_dayOfWeek_idx" ON "StaffAvailability"("storeStaffId", "dayOfWeek");
 
 -- CreateIndex
-CREATE INDEX "Service_storeId_idx" ON "Service"("storeId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "ServiceCategory_storeId_name_key" ON "ServiceCategory"("storeId", "name");
+CREATE UNIQUE INDEX "Service_storeId_name_key" ON "Service"("storeId", "name");
 
 -- CreateIndex
 CREATE INDEX "Appointment_storeId_startTime_idx" ON "Appointment"("storeId", "startTime");
@@ -225,22 +232,34 @@ CREATE UNIQUE INDEX "AppointmentService_appointmentId_serviceId_key" ON "Appoint
 CREATE INDEX "Notification_userId_read_idx" ON "Notification"("userId", "read");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Invite_token_key" ON "Invite"("token");
+CREATE INDEX "Invite_userId_idx" ON "Invite"("userId");
 
 -- CreateIndex
 CREATE INDEX "Invite_storeId_idx" ON "Invite"("storeId");
 
 -- CreateIndex
-CREATE INDEX "AuditLog_actorId_idx" ON "AuditLog"("actorId");
+CREATE UNIQUE INDEX "Invite_storeId_userId_key" ON "Invite"("storeId", "userId");
 
--- AddForeignKey
-ALTER TABLE "UserRole" ADD CONSTRAINT "UserRole_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateIndex
+CREATE INDEX "AuditLog_actorId_idx" ON "AuditLog"("actorId");
 
 -- AddForeignKey
 ALTER TABLE "UserRole" ADD CONSTRAINT "UserRole_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "UserRole" ADD CONSTRAINT "UserRole_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Store" ADD CONSTRAINT "Store_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "StoreConfig" ADD CONSTRAINT "StoreConfig_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "Store"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "StoreHour" ADD CONSTRAINT "StoreHour_storeConfigId_fkey" FOREIGN KEY ("storeConfigId") REFERENCES "StoreConfig"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "StoreStaff" ADD CONSTRAINT "StoreStaff_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "StoreStaff" ADD CONSTRAINT "StoreStaff_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "Store"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -249,25 +268,19 @@ ALTER TABLE "StoreStaff" ADD CONSTRAINT "StoreStaff_storeId_fkey" FOREIGN KEY ("
 ALTER TABLE "StaffProfile" ADD CONSTRAINT "StaffProfile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "StaffAvailability" ADD CONSTRAINT "StaffAvailability_staffId_fkey" FOREIGN KEY ("staffId") REFERENCES "StaffProfile"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "StaffAvailability" ADD CONSTRAINT "StaffAvailability_storeStaffId_fkey" FOREIGN KEY ("storeStaffId") REFERENCES "StoreStaff"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Service" ADD CONSTRAINT "Service_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "Store"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Service" ADD CONSTRAINT "Service_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "ServiceCategory"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ServiceCategory" ADD CONSTRAINT "ServiceCategory_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "Store"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Appointment" ADD CONSTRAINT "Appointment_staffId_fkey" FOREIGN KEY ("staffId") REFERENCES "StoreStaff"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Appointment" ADD CONSTRAINT "Appointment_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "Store"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Appointment" ADD CONSTRAINT "Appointment_staffId_fkey" FOREIGN KEY ("staffId") REFERENCES "StaffProfile"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Appointment" ADD CONSTRAINT "Appointment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Appointment" ADD CONSTRAINT "Appointment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AppointmentService" ADD CONSTRAINT "AppointmentService_appointmentId_fkey" FOREIGN KEY ("appointmentId") REFERENCES "Appointment"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -280,3 +293,7 @@ ALTER TABLE "Notification" ADD CONSTRAINT "Notification_userId_fkey" FOREIGN KEY
 
 -- AddForeignKey
 ALTER TABLE "Invite" ADD CONSTRAINT "Invite_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "Store"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Invite" ADD CONSTRAINT "Invite_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+

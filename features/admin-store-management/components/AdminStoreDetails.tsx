@@ -1,4 +1,5 @@
 import { getStoreHours } from "@/domains/store/queries/getStoreHours";
+import { getStoreStatus } from "@/domains/store/queries/getStoreStatus";
 import DashboardHeader from "./DashboardHeader";
 import StatusCard from "./StatusCard";
 import StoreHours from "./StoreHours";
@@ -9,26 +10,27 @@ type Props = {
 
 export default async function AdminStoreDetails ({ storeId }: Props) {
     const { data: storeHours } = await getStoreHours(storeId)
-    if (!storeHours) return null;
+    const { data: res } = await getStoreStatus(storeId)
+    if (!storeHours || !res) return null;
 
     const storeBase = `/stores/${storeId}`;
     
     return (
-        <main className="py-6 flex-1 stacked">
-            <DashboardHeader />
-            <ul className="spaced">
+        <main className="stacked space-y-4 w-[calc(100%-5rem)] overflow-hidden ">
+            <DashboardHeader StoreInfo={res.storeInfo} />
+            <ul className="spaced space-x-4 overflow-x-scroll scrollbar-none pr-4 h-24 ">
                 <StatusCard
-                    value={1}
+                    value={res.metrics.services }
                     label="Services"
                     href={`${storeBase}/services`}
                 />
                 <StatusCard 
-                    value={2}
+                    value={res.metrics.staff }
                     label="Staff"
                     href={`${storeBase}/staff`}
                 />
                 <StatusCard 
-                    value={3}
+                    value={res.metrics.invites }
                     label="Invites"
                     href={`${storeBase}/staff`}
                 />

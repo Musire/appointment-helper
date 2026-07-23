@@ -15,7 +15,7 @@ export default async function StoreDetailsLayout ({
 
     return (
         <div className="flex-1 flex ">
-            <div className="flex-1  flex">
+            <div className="flex-1 overflow-x-clip flex">
                 <StoreProvider data={data}>
                     {children}
                 </StoreProvider>

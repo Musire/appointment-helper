@@ -6,9 +6,6 @@ import { StoreCreationSchema, StoreCreationType } from "@/validation/StoreCreati
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
-function isValidTimeZone(tz: string): boolean {
-    return Intl.supportedValuesOf('timeZone').includes(tz);
-}
 
 type StoreCreationFormType = {
     data?: StoreCreationType;
@@ -31,15 +28,12 @@ export default function StoreCreationForm ({ data, isUpdate }: StoreCreationForm
             throw new Error(error ?? "Submission failed")
         }
 
-        router.push('/admin/dashboard')
+        router.push('/dashboard')
     }
 
-    const passingData = data 
-        ? data 
-        : {
+    const passingData = data ?? {
             name: '',
-            description: '',
-            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+            address: '',
         }
         
     return (
@@ -54,12 +48,8 @@ export default function StoreCreationForm ({ data, isUpdate }: StoreCreationForm
                     name="name"
                 />
                 <Input 
-                    label="description"
-                    name="description"
-                />
-                <Input 
-                    name="timezone"
-                    type="hidden"
+                    label="address"
+                    name="address"
                 />
             </Form>
             {error && <p className="text-error-dark my-6 w-full">{error}</p>}

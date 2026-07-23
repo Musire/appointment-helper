@@ -7,45 +7,60 @@ import { StoreCreationSchema, StoreCreationType } from "@/validation/StoreCreati
 import { revalidatePath } from "next/cache";
 
 
-export async function createStore (formData: StoreCreationType)  {
+export async function createStore (formData: StoreCreationType) {
+  return safeAction(async () => {
+    // 1. Authenticate and authorize
+    const { access, user } = await requireRole(['ADMIN'])
+    if (!access) {
+      throw new Error('Unauthorized to perform action')
+    }
+    if (!user) {
+      throw new Error('User not logged in')
+    }
 
-    return safeAction(async ()  => {
-        const { access, user } = await requireRole(['ADMIN'])  
-        
-        if (!access) {
-            throw new Error('Unauthorized to perform action')
-        }
-        
-        if (!user) {
-            throw new Error('User not logged in')
-        }
+    // 2. Validate input data
+    const parsed = StoreCreationSchema.safeParse(formData)
+    if (!parsed.success) {
+      throw new Error(parsed.error.issues[0].message);
+    }
+    const { name, address } = parsed.data
 
-        const parsed = StoreCreationSchema.safeParse(formData)
+    // 3. Define default store hours data
+    const defaultHours = [
+      { label: "Lun - Vier", isActive: false, start: "09:00 AM", end: "05:00 PM" },
+      { label: "Sábado", isActive: false, start: "09:00 AM", end: "02:00 PM" },
+      { label: "Domingo", isActive: false, start: "09:00 AM", end: "02:00 PM" }
+    ]
 
-        if (!parsed.success) {
-            throw new Error(parsed.error.issues[0].message);
-        }
-
-        const { name, description, timezone } = parsed.data
-
-        await prisma.store.create({
-            data: {
-                name,
-                description,
-                timezone,
-                createdById: user.id
+    // 4. Create Store, Config, and Hours in one nested transaction
+    await prisma.store.create({
+      data: {
+        name,
+        address,
+        createdById: user.id,
+        // Nesting the StoreConfig creation
+        config: {
+          create: {
+            // Nesting multiple StoreHour creations inside the Config
+            hours: {
+              createMany: {
+                data: defaultHours
+              }
             }
-        })
-        
-        revalidatePath('/admin/dashboard')
-
+          }
+        }
+      }
     })
-    
+
+    // 5. Revalidate cache
+    revalidatePath('/dashboard')
+  })
 }
+
 
 export async function updateStore (formData: StoreCreationType) {
     return safeAction(async() => {
-        const { id, name, description } = formData;
+        const { id, name, address } = formData;
 
         if (!id) {
             throw new Error('No store id found')
@@ -68,7 +83,7 @@ export async function updateStore (formData: StoreCreationType) {
             },
             data: {
                 name,
-                description
+                address
             }
         })
 

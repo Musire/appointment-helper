@@ -1,5 +1,6 @@
 'use client'; 
 
+import { Body } from "@/components/UI";
 import { service } from "@/domains/service/components/ServiceContainer";
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -19,21 +20,10 @@ export default function ServiceCard({
   const { name, price } = service
 
   return (
-    <div className="relative rounded-xl border bg-darkest border-whitesmoke/20 w-48  p-4 shadow-sm">
-      {/* Header */}
+    <li className="relative rounded-lg border h-fit bg-surface-1 border-border w-full p-4 ">
       <div className="flex items-start justify-between gap-4">
-        <div>
-          <h3 className="text-sm font-semibold text-whitesmoke/87 capitalize">
-            {name}
-          </h3>
-
-          <div className="mt-1 flex items-center space-x-4 text-sm text-muted-foreground">
-            <span className="font-medium text-whitesmoke/60">
-              ${price}
-            </span>
-            <span className="text-whitesmoke/60">|</span>
-          </div>
-        </div>
+        <Body className="capitalize">{name}</Body>
+        <Body className="">{price}</Body>
 
         {/* Kebab */}
         <button
@@ -72,6 +62,6 @@ export default function ServiceCard({
           </button>
         </div>
       )}
-    </div>
+    </li>
   )
 }

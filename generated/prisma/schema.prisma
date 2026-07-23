@@ -43,9 +43,7 @@ model UserRole {
 model Store {
   id           String        @id @default(uuid())
   name         String        @unique
-  description  String?
-  timezone     String
-  address      String?
+  address      String
   status       StoreStatus   @default(DRAFT)
   createdAt    DateTime      @default(now())
   createdById  String
@@ -123,7 +121,7 @@ model Service {
   bookings AppointmentService[]
   store    Store                @relation(fields: [storeId], references: [id])
 
-  @@index([storeId])
+  @@unique([storeId, name])
 }
 
 model Appointment {

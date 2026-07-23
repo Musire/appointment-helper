@@ -1,10 +1,10 @@
 'use client';
 import { Form, Input } from "@/components/UI";
 import { useStore } from "@/context";
-import { createService } from "@/domains/store/actions/service.actions";
+import { upsertService } from "@/domains/store/actions/service.actions";
 import { ServiceCreationSchema, ServiceCreationType } from "@/validation/ServiceCreation.schema";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 type ServiceCreationProps = {
     data: ServiceCreationType;
@@ -15,19 +15,36 @@ export default function ServiceCreationForm ({ data, isUpdate }: ServiceCreation
     const [formError, setError] = useState<string | null>(null)
     const { storeId } = useStore()
     const router = useRouter()
+    const [isPending, startTransition] = useTransition();
 
 
-    const handleSubmit = async (formData: ServiceCreationType) => {
-        const payload = {...formData, storeId}
-        
-        const { success, error} = await createService(payload)
-        if (!success) {
-            setError(error)
-            throw new Error('Error upon submission')
-        }
+   const handleSubmit = (formData: ServiceCreationType) => {
+        startTransition(async () => {
+            try {
+                setError(null);
 
-        router.back()
-    }    
+                const injected = { ...formData, storeId };
+
+                console.log(injected);
+
+                const res = await upsertService(injected);
+                
+                if (!res.success) {
+                    setError(res.error)
+                    return
+                }
+
+                router.back()
+            } catch (err) {
+                setError(
+                    err instanceof Error
+                        ? err.message
+                        : "Something went wrong."
+                );
+            }
+        });
+    };
+    
     return (
         <>
         <Form
@@ -35,7 +52,6 @@ export default function ServiceCreationForm ({ data, isUpdate }: ServiceCreation
             schema={ServiceCreationSchema}
             onSubmit={handleSubmit}
             >
-            <Input type="hidden" name="storeId" />
             <Input label="service name" name="name" />
             <Input type="number" label="price" name="price" />
         </Form>

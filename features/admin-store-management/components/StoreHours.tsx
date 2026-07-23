@@ -25,6 +25,7 @@ export default function StoreHours({
 }: Props) {
   const { storeId } = useStore()
   const [hoursList, setHoursList] = useState(initialHours)
+  const [errors, setErrors] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
 
   const handleRowChange = (id: string, key: "isActive" | "start" | "end", value: any) => {
@@ -45,12 +46,15 @@ export default function StoreHours({
       if (res?.success && res?.data?.hours) {
         setHoursList(res.data.hours)
       }
+      if (res?.error) {
+        setErrors(res.error)
+      }
     })
   }
 
   return (
-    <div className="mt-10">
-      <Table className="stacked divide-none border-none">
+    <div className="">
+      <Table className="stacked divide-none border-none pr-1 pb-1">
         <TableHeader className="">
           <TableRow className="grid grid-cols-[15%_25%_30%_30%] text-lg font-semibold border-b-border content-center">
             <TableHead></TableHead>
@@ -92,6 +96,7 @@ export default function StoreHours({
           )}
         </button>
       </div>)}
+      <p className="">{errors}</p>
     </div>
   )
 }

@@ -18,7 +18,7 @@ export default function StatusCard({
 }: StatusCardProps) {
   return (
     <li className={cn('status-card-base', className)}>
-        <Link href={href} className="centered-col bg-surface-1 normal-space h-28 w-40 p-4 relative group opacity-80 hover:opacity-90 border border-border/50 rounded-md">
+        <Link href={href} className="centered-col bg-surface-1 normal-space h-28 w-32 p-4 relative group opacity-80 hover:opacity-90 border border-border/50 rounded-md">
             <Body className="text-3xl justify-self-center self-center text-main">
                 {value}
             </Body>

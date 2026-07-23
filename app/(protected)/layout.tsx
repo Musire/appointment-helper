@@ -17,12 +17,12 @@ export default async function DashboardLayout ({ children }: Props) {
 
     return (
         <AuthProvider fetchedRole={user.role}>
-            <main className="bg-background text-main w-screen h-dvh flex-col flex overflow-x-hidden px-6 lg:px-60 relative">
+            <div className="bg-background text-main w-dvw h-dvh flex-col flex overflow-auto px-6 lg:px-60 relative">
                 <Header avatarUrl={user.avatarUrl} />
-                <div className=" w-full flex flex-1 overflow-x-hidden scrollbar-none  pb-20" >
+                <div className="flex flex-1 overflow-x-hidden scrollbar-none pb-20 " >
                     {children}
                 </div>
-            </main>
+            </div>
         </AuthProvider>
     );
 }

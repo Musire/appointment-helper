@@ -5900,8 +5900,6 @@ export namespace Prisma {
   export type StoreMinAggregateOutputType = {
     id: string | null
     name: string | null
-    description: string | null
-    timezone: string | null
     address: string | null
     status: $Enums.StoreStatus | null
     createdAt: Date | null
@@ -5911,8 +5909,6 @@ export namespace Prisma {
   export type StoreMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    description: string | null
-    timezone: string | null
     address: string | null
     status: $Enums.StoreStatus | null
     createdAt: Date | null
@@ -5922,8 +5918,6 @@ export namespace Prisma {
   export type StoreCountAggregateOutputType = {
     id: number
     name: number
-    description: number
-    timezone: number
     address: number
     status: number
     createdAt: number
@@ -5935,8 +5929,6 @@ export namespace Prisma {
   export type StoreMinAggregateInputType = {
     id?: true
     name?: true
-    description?: true
-    timezone?: true
     address?: true
     status?: true
     createdAt?: true
@@ -5946,8 +5938,6 @@ export namespace Prisma {
   export type StoreMaxAggregateInputType = {
     id?: true
     name?: true
-    description?: true
-    timezone?: true
     address?: true
     status?: true
     createdAt?: true
@@ -5957,8 +5947,6 @@ export namespace Prisma {
   export type StoreCountAggregateInputType = {
     id?: true
     name?: true
-    description?: true
-    timezone?: true
     address?: true
     status?: true
     createdAt?: true
@@ -6041,9 +6029,7 @@ export namespace Prisma {
   export type StoreGroupByOutputType = {
     id: string
     name: string
-    description: string | null
-    timezone: string
-    address: string | null
+    address: string
     status: $Enums.StoreStatus
     createdAt: Date
     createdById: string
@@ -6069,8 +6055,6 @@ export namespace Prisma {
   export type StoreSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    description?: boolean
-    timezone?: boolean
     address?: boolean
     status?: boolean
     createdAt?: boolean
@@ -6087,8 +6071,6 @@ export namespace Prisma {
   export type StoreSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    description?: boolean
-    timezone?: boolean
     address?: boolean
     status?: boolean
     createdAt?: boolean
@@ -6099,8 +6081,6 @@ export namespace Prisma {
   export type StoreSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    description?: boolean
-    timezone?: boolean
     address?: boolean
     status?: boolean
     createdAt?: boolean
@@ -6111,15 +6091,13 @@ export namespace Prisma {
   export type StoreSelectScalar = {
     id?: boolean
     name?: boolean
-    description?: boolean
-    timezone?: boolean
     address?: boolean
     status?: boolean
     createdAt?: boolean
     createdById?: boolean
   }
 
-  export type StoreOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "timezone" | "address" | "status" | "createdAt" | "createdById", ExtArgs["result"]["store"]>
+  export type StoreOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "status" | "createdAt" | "createdById", ExtArgs["result"]["store"]>
   export type StoreInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     appointments?: boolean | Store$appointmentsArgs<ExtArgs>
     invites?: boolean | Store$invitesArgs<ExtArgs>
@@ -6149,9 +6127,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      description: string | null
-      timezone: string
-      address: string | null
+      address: string
       status: $Enums.StoreStatus
       createdAt: Date
       createdById: string
@@ -6586,8 +6562,6 @@ export namespace Prisma {
   interface StoreFieldRefs {
     readonly id: FieldRef<"Store", 'String'>
     readonly name: FieldRef<"Store", 'String'>
-    readonly description: FieldRef<"Store", 'String'>
-    readonly timezone: FieldRef<"Store", 'String'>
     readonly address: FieldRef<"Store", 'String'>
     readonly status: FieldRef<"Store", 'StoreStatus'>
     readonly createdAt: FieldRef<"Store", 'DateTime'>
@@ -19072,8 +19046,6 @@ export namespace Prisma {
   export const StoreScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    description: 'description',
-    timezone: 'timezone',
     address: 'address',
     status: 'status',
     createdAt: 'createdAt',
@@ -19618,9 +19590,7 @@ export namespace Prisma {
     NOT?: StoreWhereInput | StoreWhereInput[]
     id?: StringFilter<"Store"> | string
     name?: StringFilter<"Store"> | string
-    description?: StringNullableFilter<"Store"> | string | null
-    timezone?: StringFilter<"Store"> | string
-    address?: StringNullableFilter<"Store"> | string | null
+    address?: StringFilter<"Store"> | string
     status?: EnumStoreStatusFilter<"Store"> | $Enums.StoreStatus
     createdAt?: DateTimeFilter<"Store"> | Date | string
     createdById?: StringFilter<"Store"> | string
@@ -19635,9 +19605,7 @@ export namespace Prisma {
   export type StoreOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrderInput | SortOrder
-    timezone?: SortOrder
-    address?: SortOrderInput | SortOrder
+    address?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     createdById?: SortOrder
@@ -19655,9 +19623,7 @@ export namespace Prisma {
     AND?: StoreWhereInput | StoreWhereInput[]
     OR?: StoreWhereInput[]
     NOT?: StoreWhereInput | StoreWhereInput[]
-    description?: StringNullableFilter<"Store"> | string | null
-    timezone?: StringFilter<"Store"> | string
-    address?: StringNullableFilter<"Store"> | string | null
+    address?: StringFilter<"Store"> | string
     status?: EnumStoreStatusFilter<"Store"> | $Enums.StoreStatus
     createdAt?: DateTimeFilter<"Store"> | Date | string
     createdById?: StringFilter<"Store"> | string
@@ -19672,9 +19638,7 @@ export namespace Prisma {
   export type StoreOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrderInput | SortOrder
-    timezone?: SortOrder
-    address?: SortOrderInput | SortOrder
+    address?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     createdById?: SortOrder
@@ -19689,9 +19653,7 @@ export namespace Prisma {
     NOT?: StoreScalarWhereWithAggregatesInput | StoreScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Store"> | string
     name?: StringWithAggregatesFilter<"Store"> | string
-    description?: StringNullableWithAggregatesFilter<"Store"> | string | null
-    timezone?: StringWithAggregatesFilter<"Store"> | string
-    address?: StringNullableWithAggregatesFilter<"Store"> | string | null
+    address?: StringWithAggregatesFilter<"Store"> | string
     status?: EnumStoreStatusWithAggregatesFilter<"Store"> | $Enums.StoreStatus
     createdAt?: DateTimeWithAggregatesFilter<"Store"> | Date | string
     createdById?: StringWithAggregatesFilter<"Store"> | string
@@ -20005,6 +19967,7 @@ export namespace Prisma {
 
   export type ServiceWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    storeId_name?: ServiceStoreIdNameCompoundUniqueInput
     AND?: ServiceWhereInput | ServiceWhereInput[]
     OR?: ServiceWhereInput[]
     NOT?: ServiceWhereInput | ServiceWhereInput[]
@@ -20014,7 +19977,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Service"> | Date | string
     bookings?: AppointmentServiceListRelationFilter
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
-  }, "id">
+  }, "id" | "storeId_name">
 
   export type ServiceOrderByWithAggregationInput = {
     id?: SortOrder
@@ -20527,9 +20490,7 @@ export namespace Prisma {
   export type StoreCreateInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     appointments?: AppointmentCreateNestedManyWithoutStoreInput
@@ -20543,9 +20504,7 @@ export namespace Prisma {
   export type StoreUncheckedCreateInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     createdById: string
@@ -20559,9 +20518,7 @@ export namespace Prisma {
   export type StoreUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUpdateManyWithoutStoreNestedInput
@@ -20575,9 +20532,7 @@ export namespace Prisma {
   export type StoreUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: StringFieldUpdateOperationsInput | string
@@ -20591,9 +20546,7 @@ export namespace Prisma {
   export type StoreCreateManyInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     createdById: string
@@ -20602,9 +20555,7 @@ export namespace Prisma {
   export type StoreUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20612,9 +20563,7 @@ export namespace Prisma {
   export type StoreUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: StringFieldUpdateOperationsInput | string
@@ -21547,8 +21496,6 @@ export namespace Prisma {
   export type StoreCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrder
-    timezone?: SortOrder
     address?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -21558,8 +21505,6 @@ export namespace Prisma {
   export type StoreMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrder
-    timezone?: SortOrder
     address?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -21569,8 +21514,6 @@ export namespace Prisma {
   export type StoreMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrder
-    timezone?: SortOrder
     address?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -21827,6 +21770,11 @@ export namespace Prisma {
 
   export type AppointmentServiceOrderByRelationAggregateInput = {
     _count?: SortOrder
+  }
+
+  export type ServiceStoreIdNameCompoundUniqueInput = {
+    storeId: string
+    name: string
   }
 
   export type ServiceCountOrderByAggregateInput = {
@@ -23588,9 +23536,7 @@ export namespace Prisma {
   export type StoreCreateWithoutCreatedByInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     appointments?: AppointmentCreateNestedManyWithoutStoreInput
@@ -23603,9 +23549,7 @@ export namespace Prisma {
   export type StoreUncheckedCreateWithoutCreatedByInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutStoreInput
@@ -23803,9 +23747,7 @@ export namespace Prisma {
     NOT?: StoreScalarWhereInput | StoreScalarWhereInput[]
     id?: StringFilter<"Store"> | string
     name?: StringFilter<"Store"> | string
-    description?: StringNullableFilter<"Store"> | string | null
-    timezone?: StringFilter<"Store"> | string
-    address?: StringNullableFilter<"Store"> | string | null
+    address?: StringFilter<"Store"> | string
     status?: EnumStoreStatusFilter<"Store"> | $Enums.StoreStatus
     createdAt?: DateTimeFilter<"Store"> | Date | string
     createdById?: StringFilter<"Store"> | string
@@ -24351,9 +24293,7 @@ export namespace Prisma {
   export type StoreCreateWithoutConfigInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     appointments?: AppointmentCreateNestedManyWithoutStoreInput
@@ -24366,9 +24306,7 @@ export namespace Prisma {
   export type StoreUncheckedCreateWithoutConfigInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     createdById: string
@@ -24425,9 +24363,7 @@ export namespace Prisma {
   export type StoreUpdateWithoutConfigInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUpdateManyWithoutStoreNestedInput
@@ -24440,9 +24376,7 @@ export namespace Prisma {
   export type StoreUncheckedUpdateWithoutConfigInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: StringFieldUpdateOperationsInput | string
@@ -24590,9 +24524,7 @@ export namespace Prisma {
   export type StoreCreateWithoutStaffInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     appointments?: AppointmentCreateNestedManyWithoutStoreInput
@@ -24605,9 +24537,7 @@ export namespace Prisma {
   export type StoreUncheckedCreateWithoutStaffInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     createdById: string
@@ -24720,9 +24650,7 @@ export namespace Prisma {
   export type StoreUpdateWithoutStaffInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUpdateManyWithoutStoreNestedInput
@@ -24735,9 +24663,7 @@ export namespace Prisma {
   export type StoreUncheckedUpdateWithoutStaffInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: StringFieldUpdateOperationsInput | string
@@ -24898,9 +24824,7 @@ export namespace Prisma {
   export type StoreCreateWithoutServicesInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     appointments?: AppointmentCreateNestedManyWithoutStoreInput
@@ -24913,9 +24837,7 @@ export namespace Prisma {
   export type StoreUncheckedCreateWithoutServicesInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     createdById: string
@@ -24969,9 +24891,7 @@ export namespace Prisma {
   export type StoreUpdateWithoutServicesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUpdateManyWithoutStoreNestedInput
@@ -24984,9 +24904,7 @@ export namespace Prisma {
   export type StoreUncheckedUpdateWithoutServicesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: StringFieldUpdateOperationsInput | string
@@ -25022,9 +24940,7 @@ export namespace Prisma {
   export type StoreCreateWithoutAppointmentsInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     invites?: InviteCreateNestedManyWithoutStoreInput
@@ -25037,9 +24953,7 @@ export namespace Prisma {
   export type StoreUncheckedCreateWithoutAppointmentsInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     createdById: string
@@ -25152,9 +25066,7 @@ export namespace Prisma {
   export type StoreUpdateWithoutAppointmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invites?: InviteUpdateManyWithoutStoreNestedInput
@@ -25167,9 +25079,7 @@ export namespace Prisma {
   export type StoreUncheckedUpdateWithoutAppointmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: StringFieldUpdateOperationsInput | string
@@ -25423,9 +25333,7 @@ export namespace Prisma {
   export type StoreCreateWithoutInvitesInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     appointments?: AppointmentCreateNestedManyWithoutStoreInput
@@ -25438,9 +25346,7 @@ export namespace Prisma {
   export type StoreUncheckedCreateWithoutInvitesInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
     createdById: string
@@ -25504,9 +25410,7 @@ export namespace Prisma {
   export type StoreUpdateWithoutInvitesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUpdateManyWithoutStoreNestedInput
@@ -25519,9 +25423,7 @@ export namespace Prisma {
   export type StoreUncheckedUpdateWithoutInvitesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: StringFieldUpdateOperationsInput | string
@@ -25600,9 +25502,7 @@ export namespace Prisma {
   export type StoreCreateManyCreatedByInput = {
     id?: string
     name: string
-    description?: string | null
-    timezone: string
-    address?: string | null
+    address: string
     status?: $Enums.StoreStatus
     createdAt?: Date | string
   }
@@ -25705,9 +25605,7 @@ export namespace Prisma {
   export type StoreUpdateWithoutCreatedByInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUpdateManyWithoutStoreNestedInput
@@ -25720,9 +25618,7 @@ export namespace Prisma {
   export type StoreUncheckedUpdateWithoutCreatedByInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appointments?: AppointmentUncheckedUpdateManyWithoutStoreNestedInput
@@ -25735,9 +25631,7 @@ export namespace Prisma {
   export type StoreUncheckedUpdateManyWithoutCreatedByInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    timezone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
     status?: EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

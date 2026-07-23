@@ -49,10 +49,10 @@ export default function TimeSelect({ value, onChange }: TimeSelectProps) {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild className="w-full h-full ">
         <button
           type="button"
-          className={`cursor-pointer justify-start gap-2 font-normal text-left rounded-md px-3 py-2  transition-all duration-200 outline-none flex space-x-2 border-none
+          className={` w-full h-full cursor-pointer justify-start space-x-2 font-normal text-left rounded-md px-3 py-2  transition-all duration-200 outline-none flex items-center border-none
             ${open ? "ring ring-alternate/50 " : ""}
           `}
         >
@@ -60,7 +60,7 @@ export default function TimeSelect({ value, onChange }: TimeSelectProps) {
           <ChevronDown className="shrink-0" />
         </button>
       </PopoverTrigger>
-      <PopoverContent id={uniqueId} className="w-32 p-3 bg-background border rounded-lg mt-4 border-alternate/50 " align="start">
+      <PopoverContent id={uniqueId} className="w-full p-3 bg-background border rounded-lg mt-4 border-alternate/50 " align="start">
         <div className="flex  spaced">
           {/* Hour Controls */}
           <div className="flex flex-col justify-center select-none items-center  h-24" >

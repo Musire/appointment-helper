@@ -21,8 +21,8 @@ export default function DataTableRow({ rowData, onRowChange }: UserRowProps) {
   const { isActive, label, start, end } = rowData
 
   return (
-    <TableRow className={`grid grid-cols-[15%_25%_30%_30%] ${!isActive ? " opacity-60 transition-all" : ""}`}>
-      <TableCell className="w-20">
+    <TableRow className={`grid grid-cols-[15%_25%_30%_30%] h-12 ${!isActive ? " opacity-60 transition-all" : ""}`}>
+      <TableCell className="w-full ">
         <AvailabilityToggle 
           isAvailable={isActive} 
           onToggle={(checked) => onRowChange("isActive", checked)} 
@@ -39,13 +39,13 @@ export default function DataTableRow({ rowData, onRowChange }: UserRowProps) {
         </TableCell>
       ) : (
         <>
-          <TableCell className="centered">
+          <TableCell className="flex items-center p-0 ">
             <TimeSelect 
               value={start} 
               onChange={(newTime) => onRowChange("start", newTime)} 
             />
           </TableCell>
-          <TableCell className="centered">
+          <TableCell className="flex items-center p-0">
             <TimeSelect 
               value={end} 
               onChange={(newTime) => onRowChange("end", newTime)} 
