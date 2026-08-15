@@ -55,7 +55,7 @@ export default function AdminControl ({ items }: { items: any }) {
                 onNavigate={(id:string) => router.push(`/stores/${id}`)}
                 renderItem={(i) => (
                     <article 
-                        className="w-full rounded-xl h-fit stacked relative p-6 bg-surface-1 hover:cursor-pointer border-adjust border opacity-80 hover:opacity-90 active:opacity-100">
+                        className="w-full rounded-xl h-fit stacked relative p-6 bg-surface-1 hover:cursor-pointer border-adjust border opacity-80 hover:opacity-90 active:opacity-100 cursor-pointer">
                             <div className="">
                                 <p className="text-2xl capitalize">{i.name}</p>
                                 <span className="flex items-center space-x-2 text-else ">

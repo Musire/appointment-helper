@@ -14,7 +14,7 @@ export type StoreType = {
 
 export default async function AdminDashboard () {
   const user = await getCurrentUser()
-  const stores: StoreType[] = await prisma.store.findMany({
+  const stores = await prisma.store.findMany({
     where: {
       createdById: user?.id,
       status: { not: 'SUSPENDED'}
