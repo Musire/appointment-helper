@@ -4,7 +4,7 @@ import { Drawer, Theme } from "@/components/UI";
 import { Button } from "@/components/ui/button";
 import { logout } from "@/domains/identity/actions/auth.actions";
 import { useDrawer } from "@/hooks";
-import { User } from "lucide-react";
+import { LogOut, ShieldPlus, User } from "lucide-react";
 import Link from "next/link";
 
 
@@ -42,11 +42,21 @@ export default function AvatarButton({ avatarUrl }: Props) {
         withOverlay 
         onClose={closeDrawer} 
       >
-        <div className="fixed inset-y-0 right-0 w-80 surface-1 shadow-2xl p-6 stacked space-y-4">
+        <div className="fixed inset-y-0 right-0 w-80 surface-1 shadow-2xl p-6 stacked  ">
            {/* Drawer content goes here */}
            <Theme />
-           <Link href={`profile`} onClick={closeDrawer}>View Profile</Link>
-           <Button type="button" className="w-24" onClick={logout}>logout</Button>
+           <Link 
+              href={`profile`} 
+              onClick={closeDrawer} 
+              className="flex items-center space-x-2"
+            >
+              <ShieldPlus />
+              <span className="">View Profile</span>
+           </Link>
+           <Button type="button" className="w-24 self-end mt-auto" onClick={logout}>
+              <LogOut />  
+              <span className="">logout</span>
+          </Button>
         </div>
       </Drawer>
     </div>
