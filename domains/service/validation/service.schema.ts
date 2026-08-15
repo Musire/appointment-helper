@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const serviceSchema = z.object({
+    id: z.string().optional(),
     storeId: z.string().min(1, "storeid is required"),
     name: z.string().min(1, "name is required"),
     price: z

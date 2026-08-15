@@ -11,7 +11,7 @@ export default async function ServicePage ({ params }: Props) {
 
     return (
       <div className="relative stacked flex-1">
-          <ServiceContainer services={services} />
+          <ServiceContainer services={services} storeId={storeId} />
       </div>
     );
 }

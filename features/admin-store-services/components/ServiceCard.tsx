@@ -1,6 +1,6 @@
 'use client'; 
 
-import { Body } from "@/components/UI";
+import { Body, DeleteModal } from "@/components/UI";
 import { service } from "@/domains/service/components/ServiceContainer";
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -9,15 +9,26 @@ type ServiceCardProps = {
   service: service
   onEdit?: () => void
   onDelete?: () => void
+  modalOpen: boolean,
+  onClose: () => void,
+  onDeletion: () => void
 }
 
 export default function ServiceCard({
   service,
   onEdit,
   onDelete,
+  modalOpen,
+  onClose,
+  onDeletion
 }: ServiceCardProps) {
   const [open, setOpen] = useState(false)
   const { name, price } = service
+
+  const handleDeletion = () => {
+    onClose();
+    onDeletion();
+  }
 
   return (
     <li className="relative rounded-lg border h-fit bg-surface-1 border-border w-full p-4 ">
@@ -62,6 +73,11 @@ export default function ServiceCard({
           </button>
         </div>
       )}
+      <DeleteModal 
+          modalOpen={modalOpen} 
+          onClose={onClose} 
+          handleDeletion={handleDeletion} 
+      />
     </li>
   )
 }
