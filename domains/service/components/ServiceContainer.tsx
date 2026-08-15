@@ -1,13 +1,13 @@
 'use client';
 
 import { Body } from "@/components/UI";
+import { useToast } from "@/context/ToastContext";
 import { ServiceCard } from "@/features/admin-store-services/components";
 import { deleteService } from "@/features/mutate-service/actions/service-mutation.actions";
 import { useDrawer } from "@/hooks";
-import { useState, useTransition } from "react";
-import ServiceCreation from "./ServiceCreation";
-import { Router } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import ServiceCreation from "./ServiceCreation";
 
 export interface service {
     id: string;
@@ -21,11 +21,10 @@ type Props = {
 }
 
 export default function ServiceContainer ({ services, storeId }: Props) {
-    
     const [isDeleting, startDeleteTransition] = useTransition();
 
     const { isMounted, openDrawer, closeDrawer } = useDrawer()
-    const [error, setError] = useState<string | null>(null);
+    const {createError, createSuccess} = useToast()
 
 
     const handleDelete = (serviceId: string, storeId: string) => {
@@ -34,11 +33,14 @@ export default function ServiceContainer ({ services, storeId }: Props) {
                 const res = await deleteService(serviceId, storeId)
 
                 if (res.error) {
-                    setError(res.error)
+                    createError(res.error)
+                    return
                 }
 
+                createSuccess('deleted service')
+
             } catch (error) {
-                setError('Network error! Please check your connection.')
+                createError('Network error! Please check your connection.')
             }
         })
     }

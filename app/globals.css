@@ -221,6 +221,9 @@
   --animate-slideIn: slideLeft 300ms ease-in-out forwards;
   --animate-slideOut: slideRight 300ms ease-in-out forwards;
 
+  --animate-fade-in-out: fade-in-out 3s forwards;
+  --animate-progress-shrink: shrink 3s linear forwards;
+
   @keyframes slideLeft {
     from {
       transform: translateX(100%); /* start completely offscreen right */
@@ -267,6 +270,37 @@
     }
     to {
       transform: translateX(42vw);
+    }
+  }
+  
+  @keyframes fade-in-out {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    10% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    90% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    100% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes progress-shrink {
+    0% { 
+      width: '100%'; 
+    }
+    100% { 
+      width: '0%'; 
     }
   }
 
