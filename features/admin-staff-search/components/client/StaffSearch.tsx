@@ -1,10 +1,10 @@
 'use client';
 
-import { useRouter } from "next/navigation";
 import { SearchList } from "@/components/UI";
-import { CandidateCard } from "@/features/admin-invite-staff/components";
-import { sendInvite } from "@/domains/store/actions/store.actions";
 import { useStore } from "@/context";
+import { sendInvite } from "@/domains/store/actions/store.actions";
+import { CandidateCard } from "@/features/admin-invite-staff/components";
+import { useRouter } from "next/navigation";
 
 export type Staff = { 
     id: string; 
@@ -32,19 +32,21 @@ export default function StaffSearch ({ data }: Props) {
     }
 
     return (
-        <SearchList
-            data={data}
-            filterFn={(item, query) =>
-                item.fullName?.toLowerCase().includes(query.toLowerCase()) ?? false
-            }
-            getId={item => item.id}
-            renderItem={({ item, id}) => (
-                <CandidateCard
-                    key={id}
-                    data={item}
-                    onInvite={() => handleInvite(id)}
-                />
-            )}
-        />
+        <div className=" flex-1 flex overflow-y-hidden">
+            <SearchList
+                data={data}
+                filterFn={(item, query) =>
+                    item.fullName?.toLowerCase().includes(query.toLowerCase()) ?? false
+                }
+                getId={item => item.id}
+                renderItem={({ item, id}) => (
+                    <CandidateCard
+                        key={id}
+                        data={item}
+                        onInvite={() => handleInvite(id)}
+                    />
+                )}
+            />
+        </div>
     );
 }

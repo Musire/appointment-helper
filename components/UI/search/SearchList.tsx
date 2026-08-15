@@ -31,10 +31,10 @@ export default function SearchList<T, K extends string>({
   }, [data, debouncedQuery, filterFn])
 
   return (
-    <div >
+    <div className="flex-1 space-y-4 flex flex-col overflow-y-hidden ">
       <SearchBar query={query} setQuery={setQuery} />
 
-      <ul className="py-6">
+      <ul className=" overflow-y-scroll scrollbar-none">
         {results.map(item => {
           const id = getId(item)
 

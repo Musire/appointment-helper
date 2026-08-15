@@ -88,7 +88,7 @@ export const TabsContent = ({ value, className, children }: TabsContentProps) =>
 
   if (activeTab !== value) return null;
 
-  return <div className={twMerge('w-full h-full ', className)}>{children}</div>;
+  return <div className={twMerge('w-full h-full flex', className)}>{children}</div>;
 };
 
 
