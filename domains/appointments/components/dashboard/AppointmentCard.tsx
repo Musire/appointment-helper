@@ -1,5 +1,5 @@
-import { BodySm } from "@/components/UI";
-import { StatusPill } from "@/components/UI/pills";
+import { BodySm } from "@/components/ui";
+import { StatusPill } from "@/components/ui/pills";
 import dayjs, { formatAppTimeSplit } from "@/lib/dayjs";
 import { getServices } from "@/lib/utils/stringMutate";
 import Link from "next/link";

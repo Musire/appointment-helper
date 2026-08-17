@@ -1,7 +1,7 @@
 'use client';
 
-import { Switch } from "@/components/UI";
-import { DropdownButton } from "@/components/UI/buttons";
+import { Switch } from "@/components/ui";
+import { DropdownButton } from "@/components/ui/buttons";
 import { labelToMins, minsToLabel } from "@/lib/utils/time";
 import { BusinessDay } from "../model/types";
 

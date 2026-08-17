@@ -1,4 +1,4 @@
-import { RoleRenderer } from "@/components/UI/auth/RoleRenderer";
+import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
 import { NewService } from "@/domains/service/components";
 
 

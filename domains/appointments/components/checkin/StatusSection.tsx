@@ -1,5 +1,5 @@
-import { Body, Caption, H3 } from "@/components/UI";
-import { AlertTriangle, Check, Clock, Copy, OctagonAlert, X } from "lucide-react";
+import { Body, Caption, H3 } from "@/components/ui";
+import { AlertTriangle, Check, Copy, OctagonAlert, X } from "lucide-react";
 
 export type AppointmentStatus = 
   | 'pending' 

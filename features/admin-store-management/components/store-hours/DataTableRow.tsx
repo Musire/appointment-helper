@@ -1,6 +1,6 @@
 "use client"
 
-import { TableCell, TableRow } from "@/components/UI/table"
+import { TableCell, TableRow } from "@/components/ui/table"
 import AvailabilityToggle from "./AvailabilityToggle"
 import TimeSelect from "./TimeSelect"
 

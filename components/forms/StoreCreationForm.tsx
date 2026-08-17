@@ -1,6 +1,6 @@
 'use client';
 
-import { Form, Input } from "@/components/UI";
+import { Form, Input } from "@/components/ui";
 import { createStore, updateStore } from "@/domains/store/actions/admin.actions";
 import { StoreCreationSchema, StoreCreationType } from "@/validation/StoreCreation.schema";
 import { useRouter } from 'next/navigation';

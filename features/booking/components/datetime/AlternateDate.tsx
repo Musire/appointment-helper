@@ -5,7 +5,7 @@ import {
     Popover,
     PopoverContent,
     PopoverTrigger
-} from "@/components/UI";
+} from "@/components/ui";
 import dayjs, { Dayjs } from "dayjs";
 import { Calendar as Icon } from "lucide-react";
 

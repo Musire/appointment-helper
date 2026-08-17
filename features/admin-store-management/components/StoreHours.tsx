@@ -1,6 +1,6 @@
 "use client"
 
-import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/UI/table"
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useStore } from "@/context"
 import { LoaderCircle } from "lucide-react"
 import { useMemo, useState, useTransition } from "react"

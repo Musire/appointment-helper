@@ -1,5 +1,5 @@
 import { StoreCreationForm } from "@/components/forms";
-import { BackButton } from "@/components/UI/buttons";
+import { BackButton } from "@/components/ui/buttons";
 
 export default function AdminNewStore () {
 

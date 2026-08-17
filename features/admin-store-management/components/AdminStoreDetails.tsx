@@ -5,7 +5,7 @@ import StatusCard from "./StatusCard";
 import StoreHours from "./StoreHours";
 
 type Props = {
-  storeId: string
+  storeId: string;
 }
 
 export default async function AdminStoreDetails ({ storeId }: Props) {
@@ -17,7 +17,7 @@ export default async function AdminStoreDetails ({ storeId }: Props) {
     
     return (
         <main className="stacked space-y-4 w-[calc(100%-5rem)] overflow-hidden ">
-            <DashboardHeader StoreInfo={res.storeInfo} />
+            <DashboardHeader StoreInfo={res.storeInfo} storeId={storeId} />
             <ul className="spaced space-x-4 overflow-x-scroll scrollbar-none pr-4 h-24 ">
                 <StatusCard
                     value={res.metrics.services }

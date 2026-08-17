@@ -1,4 +1,4 @@
-import { Caption, H3 } from "@/components/UI";
+import { Caption, H3 } from "@/components/ui";
 import { MockAppointmentCard } from "@/features/dashboard/components/EnduserDashboard";
 import Link from "next/link";
 

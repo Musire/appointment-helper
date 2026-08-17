@@ -1,4 +1,4 @@
-import { getNav, MobileNav, PanelNav, Role } from "@/components/UI";
+import { getNav, MobileNav, PanelNav, Role } from "@/components/ui";
 
 type Props = {
     storeId: string;

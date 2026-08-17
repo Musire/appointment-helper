@@ -1,5 +1,5 @@
-import { Body, BottomDrawer, Caption, DrawerContent, DrawerTrigger, H3 } from "@/components/UI";
-import { StatusPill } from "@/components/UI/pills";
+import { Body, BottomDrawer, Caption, DrawerContent, DrawerTrigger, H3 } from "@/components/ui";
+import { StatusPill } from "@/components/ui/pills";
 import dayjs, { formatAppTimeSplit } from "@/lib/dayjs";
 import { getServices } from "@/lib/utils/stringMutate";
 import { Clock, EllipsisVertical, Scissors, Store } from "lucide-react";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Drawer, Theme } from "@/components/UI";
+import { Drawer, Theme } from "@/components/ui";
 import { Button } from "@/components/ui/button";
 import { logout } from "@/domains/identity/actions/auth.actions";
 import { useDrawer } from "@/hooks";

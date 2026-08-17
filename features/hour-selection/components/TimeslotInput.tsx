@@ -1,6 +1,6 @@
 'use client';
-import { ControlledInput, FormCheckbox } from "@/components/UI";
-import { DropdownButton } from "@/components/UI/buttons";
+import { ControlledInput, FormCheckbox } from "@/components/ui";
+import { DropdownButton } from "@/components/ui/buttons";
 import { X } from "lucide-react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 

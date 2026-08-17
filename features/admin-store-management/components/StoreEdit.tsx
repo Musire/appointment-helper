@@ -1,5 +1,21 @@
-export default function StoreEdit () {
+import { StoreCreationForm } from "@/components/forms";
+
+type Props = {
+  params: Promise<{
+    storeId: string
+  }>
+}
+
+export default async function StoreEdit ({ params }: Props) {
+    const { storeId } = await params
+
     return (
-        <div className="">hi</div>
+        <StoreCreationForm
+            isUpdate
+            data={{
+                name: '',
+                address: ''
+            }}
+        />
     );
 }

@@ -1,5 +1,5 @@
 'use client';
-import { Modal } from "@/components/UI/modal";
+import { Modal } from "@/components/ui/modal";
 
 interface DeleteModal {
     modalOpen: boolean,

@@ -1,7 +1,7 @@
 'use client';
 
 import { InviteAdminForm } from "@/components/forms";
-import { Modal } from "@/components/UI/modal";
+import { Modal } from "@/components/ui/modal";
 import { useState } from "react";
 
 export default function Main () {

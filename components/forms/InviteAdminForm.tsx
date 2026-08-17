@@ -1,4 +1,4 @@
-import { Form, Input } from "@/components/UI";
+import { Form, Input } from "@/components/ui";
 import { inviteAdmin } from "@/domains/identity/actions/auth.actions";
 import { InviteAdminSchema, InviteAdminType } from "@/validation/InviteAdmin.schema";
 

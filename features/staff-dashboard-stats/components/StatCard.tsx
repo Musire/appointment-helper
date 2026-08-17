@@ -1,4 +1,4 @@
-import { Body, Caption } from "@/components/UI";
+import { Body, Caption } from "@/components/ui";
 import { CheckCircle, Hourglass, LucideProps, MapPinCheck } from "lucide-react";
 import { ComponentType } from "react";
 

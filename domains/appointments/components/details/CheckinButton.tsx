@@ -1,10 +1,10 @@
 'use client'
 
-import { useTransition } from "react";
-import { useRouter } from "next/navigation";
-import { CheckCheck, ChevronRight, Loader2 } from "lucide-react";
-import { Caption } from "@/components/UI";
+import { Caption } from "@/components/ui";
 import { Button } from "@/components/ui/button";
+import { CheckCheck, ChevronRight, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import { checkInAppointment } from "../../actions/appointment-action";
 
 type Props = {

@@ -1,4 +1,4 @@
-import { Body, BodySm } from "@/components/UI";
+import { Body, BodySm } from "@/components/ui";
 import { AppointmentCard } from "@/domains/appointments/components/dashboard";
 import { appointmentMocks, filterAppointmentToday, getAppointmentMetrics } from "@/domains/appointments/queries/getAppointmentDetails";
 import { QrButton } from "@/features/qr-code/components";

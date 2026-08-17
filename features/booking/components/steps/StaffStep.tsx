@@ -1,11 +1,11 @@
 'use client';
 
-import { SelectableList } from "@/components/UI";
+import { SelectableList } from "@/components/ui";
 
 import { useSelect } from "@/hooks";
 import { useRouter } from "next/navigation";
 import { StaffCard } from "../cards";
-import { ContinueButton, Header } from "../page";
+import { ContinueButton } from "../page";
 import { StaffUser } from "../search";
 
 type StaffStepProps = {

@@ -1,4 +1,4 @@
-import { Body, BodySm, H3 } from "@/components/UI";
+import { Body, BodySm, H3 } from "@/components/ui";
 import { StoreStatus } from "@/generated/prisma";
 import { MapPin, Pencil, Store } from "lucide-react";
 import Link from "next/link";
@@ -11,11 +11,12 @@ interface StoreInfoType {
 } 
 
 type Props = {
-  StoreInfo: StoreInfoType
+  StoreInfo: StoreInfoType;
+  storeId: string
 }
 
-export default function DashboardHeader ({ StoreInfo } : Props) {
-
+export default async function DashboardHeader ({ StoreInfo, storeId } : Props) {
+    
     const colorIndicator = StoreInfo.status === 'ACTIVE' 
         ? 'bg-success'
         : 'bg-error'
@@ -40,7 +41,7 @@ export default function DashboardHeader ({ StoreInfo } : Props) {
                     <BodySm className="text-main col-start-2">{StoreInfo.status}</BodySm>
                 </li>
             </ul>
-            <Link href="" className="absolute rounded-md border-border border right-0 top-4 flex items-center space-x-2 py-3 px-4 hover:bg-surface-2 active:bg-surface-1 ml-auto">
+            <Link href={`/stores/${storeId}/edit`} className="absolute rounded-md border-border border right-0 top-4 flex items-center space-x-2 py-3 px-4 hover:bg-surface-2 active:bg-surface-1 ml-auto">
                 <Pencil size={20} strokeWidth={1} />
                 <Body>Edit Store</Body>
             </Link>

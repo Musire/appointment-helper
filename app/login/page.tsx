@@ -1,7 +1,7 @@
 "use client"
 
-import { Input, Theme } from "@/components/UI"
-import ActionForm from "@/components/UI/forms/ActionForm"
+import { Input, Theme } from "@/components/ui"
+import ActionForm from "@/components/ui/forms/ActionForm"
 import { useRouter } from "next/navigation"
 import z from "zod"
 import { login } from "../../domains/identity/actions/auth.actions"

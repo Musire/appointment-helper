@@ -1,5 +1,5 @@
 import { StoreCreationForm } from "@/components/forms";
-import { BackButton } from "@/components/UI/buttons";
+import { BackButton } from "@/components/ui/buttons";
 import { prisma } from "@/lib/prisma";
 import { StoreCreationType } from "@/validation/StoreCreation.schema";
 

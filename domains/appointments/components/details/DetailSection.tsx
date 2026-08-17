@@ -1,4 +1,4 @@
-import { H3 } from "@/components/UI";
+import { H3 } from "@/components/ui";
 import React from "react";
 
 export function SectionHeader () {

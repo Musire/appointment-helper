@@ -127,5 +127,37 @@ export const  storeRepository = {
             data: { status },
             select: { name: true, address: true, status: true }
         });
+    },
+    async findStore(storeId: string) {
+        return await prisma.store.findUnique({
+            where: {
+                id: storeId
+            }
+        })
+    },
+    async createStore({ name, address, id, defaultHours}: { name: string; address: string; id: string; defaultHours: {
+        label: string;
+        isActive: boolean;
+        start: string;
+        end: string;
+    }[]}) {
+        return await prisma.store.create({
+            data: {
+                name,
+                address,
+                createdById: id,
+                // Nesting the StoreConfig creation
+                config: {
+                create: {
+                    // Nesting multiple StoreHour creations inside the Config
+                    hours: {
+                    createMany: {
+                        data: defaultHours
+                    }
+                    }
+                }
+                }
+            }
+        })
     }
 }

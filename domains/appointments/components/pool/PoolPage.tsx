@@ -1,6 +1,6 @@
 'use client';
 
-import { DatePickerButton } from "@/components/UI/date-picker";
+import { DatePickerButton } from "@/components/ui/date-picker";
 import dayjs from "@/lib/dayjs";
 import { useMemo, useState } from "react";
 import { AppointmentDetails } from "../../queries/getAppointmentDetails";

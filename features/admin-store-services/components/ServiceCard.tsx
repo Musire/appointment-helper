@@ -1,6 +1,6 @@
 'use client'; 
 
-import { Body, DeleteModal } from "@/components/UI";
+import { Body, DeleteModal } from "@/components/ui";
 import { service } from "@/domains/service/components/ServiceContainer";
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";

@@ -1,5 +1,5 @@
-import { Body, BodySm } from "@/components/UI";
-import { StatusPill } from "@/components/UI/pills";
+import { Body, BodySm } from "@/components/ui";
+import { StatusPill } from "@/components/ui/pills";
 import Link from "next/link";
 import { formatAppTimeSplit, toAppTime } from "../../helper/dayjs";
 import { AppointmentDetails } from "../../queries/getAppointmentDetails";

@@ -1,11 +1,17 @@
-import { RoleRenderer } from "@/components/UI/auth/RoleRenderer";
+import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
 import { StoreEdit } from "@/features/admin-store-management/components";
 
-export default function StoreEditPage () {
+type Props = {
+  params: Promise<{
+    storeId: string
+  }>
+}
+
+export default function StoreEditPage ({ params }: Props) {
     return (
         <RoleRenderer 
             roles={{
-                'ADMIN': <StoreEdit/>   
+                'ADMIN': <StoreEdit params={params}/>   
             }}
         />
     );

@@ -1,5 +1,5 @@
 'use client';
-import { Form, Input } from "@/components/UI";
+import { Form, Input } from "@/components/ui";
 import { useStore } from "@/context";
 import { upsertService } from "@/domains/store/actions/service.actions";
 import { ServiceCreationSchema, ServiceCreationType } from "@/validation/ServiceCreation.schema";

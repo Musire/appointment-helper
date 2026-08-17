@@ -1,6 +1,6 @@
 'use client';
 
-import { SearchList } from "@/components/UI";
+import { SearchList } from "@/components/ui";
 import { useStore } from "@/context";
 import { sendInvite } from "@/domains/store/actions/store.actions";
 import { CandidateCard } from "@/features/admin-invite-staff/components";

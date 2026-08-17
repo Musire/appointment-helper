@@ -1,4 +1,4 @@
-import { Body } from "@/components/UI";
+import { Body } from "@/components/ui";
 import { ListItem, ProfileHeader, SegmentCard } from "@/domains/user-profile";
 
 export default async function StaffDashboard () {
