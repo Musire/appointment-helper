@@ -1,6 +1,6 @@
 'use client';
 import AvailabilitySteps from "@/components/forms/steps/AvailabilitySteps";
-import { MultiForm } from "@/components/UI";
+import { MultiForm } from "@/components/ui";
 import { AvailabilitySchema, AvailabilityType } from "@/validation/Availability.schema";
 import { useRouter } from "next/navigation";
 

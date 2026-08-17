@@ -1,6 +1,6 @@
 'use client';
 
-import { Form, Input } from "@/components/UI";
+import { Form, Input } from "@/components/ui";
 import { supabase } from "@/lib/supabase/client";
 import { AdminWelcomeSchema, AdminWelcomeType } from "@/validation/AdminWelcome.schema";
 import { useRouter } from 'next/navigation';

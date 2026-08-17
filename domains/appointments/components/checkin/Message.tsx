@@ -1,8 +1,8 @@
-import { Body, Caption } from "@/components/UI";
+import { Body, Caption } from "@/components/ui";
+import dayjs from "@/domains/appointments/helper/dayjs";
 import { Dayjs } from "dayjs";
 import { Info } from "lucide-react";
 import { AppointmentStatus } from "./StatusSection";
-import dayjs from "@/domains/appointments/helper/dayjs"
 
 type Props = {
     status: AppointmentStatus;

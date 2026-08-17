@@ -1,7 +1,7 @@
 'use client';
 
-import { SelectableList } from "@/components/UI";
-import { ContinueButton, Header, StoreCard } from "@/features/booking";
+import { SelectableList } from "@/components/ui";
+import { ContinueButton, StoreCard } from "@/features/booking";
 import { Store } from "@/generated/prisma";
 import { useSelect } from "@/hooks";
 import { useRouter } from "next/navigation";

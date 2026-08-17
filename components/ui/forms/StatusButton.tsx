@@ -1,4 +1,4 @@
-// components/UI/StatusButton.tsx
+// components/ui/StatusButton.tsx
 import { cn } from "@/lib/utils";
 import { Button } from "../buttons";
 

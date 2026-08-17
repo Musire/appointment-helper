@@ -1,16 +1,16 @@
 'use client';
 
-import { BodySm, DeleteModal } from "@/components/UI";
+import { BodySm, DeleteModal } from "@/components/ui";
 import { deleteStores } from "@/domains/store/actions/admin.actions";
 import useSelectable from "@/hooks/useSelectable";
 import { createExcerpt } from "@/lib/utils/stringMutate";
+import { MapPin } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
     ContinueButton,
     SelectableDisplay,
     StoreActionTray
 } from ".";
-import { MapPin } from "lucide-react";
 
 export default function AdminControl ({ items }: { items: any }) {
     const { 

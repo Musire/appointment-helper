@@ -1,6 +1,6 @@
+import { OrchestratorEnv, StepRegistry } from "..ui/orchestrator/Orchestrator";
 import { TestContextType } from "@/app/user/components/TestOrchestrator";
 import { PanelOne, PanelTwo, Review } from "@/domains";
-import { OrchestratorEnv, StepRegistry } from "../UI/orchestrator/Orchestrator";
 
 export const testRegistry: StepRegistry<'panelOne' | 'panelTwo' | 'review', OrchestratorEnv<TestContextType>> = {
   panelOne: {

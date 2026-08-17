@@ -1,11 +1,11 @@
 'use client';
 
-import { SelectableList } from "@/components/UI";
+import { SelectableList } from "@/components/ui";
 import { Service } from "@/generated/prisma";
 import { useSelect } from "@/hooks";
 import { useRouter } from "next/navigation";
 import { ServiceCard } from "../cards";
-import { ContinueButton, Header } from "../page";
+import { ContinueButton } from "../page";
 
 type ServiceStepProps = {
     services: Service[]

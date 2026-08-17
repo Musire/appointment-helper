@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "dev:clear": "cls && next dev",
+    "dev:clear": "clear && npm run dev",
     "clean": "rd /s /q .next && npm run dev:clear",
     "nuke": "rd /s /q .next node_modules && del /f /q package-lock.json && npm install",
     "lint": "eslint",

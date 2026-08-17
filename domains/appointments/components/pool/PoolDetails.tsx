@@ -1,4 +1,4 @@
-import { Body, Caption, H3 } from "@/components/UI";
+import { Body, Caption, H3 } from "@/components/ui";
 import { Button } from "@/components/ui/button";
 import { Clock, Scissors, User } from "lucide-react";
 

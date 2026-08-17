@@ -1,4 +1,4 @@
-import { Body, BodySm } from "@/components/UI";
+import { Body, BodySm } from "@/components/ui";
 import { ChevronRight, ScanQrCode } from "lucide-react";
 import Link from "next/link";
 

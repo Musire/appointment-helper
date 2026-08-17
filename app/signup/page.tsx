@@ -1,8 +1,8 @@
 "use client"
 
-import { ControlledInput, H2, Input, Theme } from "@/components/UI"
-import { DropdownButton } from "@/components/UI/buttons"
-import ActionForm from "@/components/UI/forms/ActionForm"
+import { ControlledInput, H2, Input, Theme } from "@/components/ui"
+import { DropdownButton } from "@/components/ui/buttons"
+import ActionForm from "@/components/ui/forms/ActionForm"
 import z from "zod"
 import { signup } from "../../domains/identity/actions/auth.actions"
 

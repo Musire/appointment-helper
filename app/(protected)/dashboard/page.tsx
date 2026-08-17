@@ -1,4 +1,4 @@
-import { RoleRenderer } from "@/components/UI/auth/RoleRenderer";
+import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
 import { AdminDashboard, EnduserDashboard, StaffDashboard } from "@/features/dashboard/components";
 
 export default async function DashboardPage() {

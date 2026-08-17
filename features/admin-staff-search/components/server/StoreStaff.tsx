@@ -1,8 +1,8 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/UI/tabs/Tab";
-import { getAvailableStaff } from "../../queries/getAvailableStaff";
-import { StaffSearch } from "../client";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs/Tab";
 import { StaffInvite } from "@/features/admin-invite-staff/components";
 import { getInviteStatus } from "@/features/admin-invite-staff/queries/getInviteStatus";
+import { getAvailableStaff } from "../../queries/getAvailableStaff";
+import { StaffSearch } from "../client";
 
 
 export default async function StoreStaff ({ storeId }: { storeId: string }) {

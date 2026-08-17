@@ -1,4 +1,4 @@
-import { Caption } from "@/components/UI";
+import { Caption } from "@/components/ui";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
 import { getProfile } from "../queries/profile";

@@ -1,6 +1,6 @@
 'use client';
 
-import { Body } from "@/components/UI";
+import { Body } from "@/components/ui";
 import { useToast } from "@/context/ToastContext";
 import { ServiceCard } from "@/features/admin-store-services/components";
 import { deleteService } from "@/features/mutate-service/actions/service-mutation.actions";

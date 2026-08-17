@@ -1,4 +1,4 @@
-import { RoleRenderer } from "@/components/UI/auth/RoleRenderer";
+import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
 import AdminServiceEdit from "@/features/mutate-service/components/AdminEditService";
 
 type Props = {

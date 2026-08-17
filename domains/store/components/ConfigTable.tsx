@@ -7,7 +7,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/UI/table";
+} from "@/components/ui/table";
 import { StoreConfig } from "@/generated/prisma";
 import { sortByWeekday, Weekday } from "@/lib/utils/stringMutate";
 

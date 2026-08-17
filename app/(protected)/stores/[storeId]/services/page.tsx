@@ -1,4 +1,4 @@
-import { RoleRenderer } from "@/components/UI/auth/RoleRenderer";
+import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
 import ServicePage from "@/domains/service/components/StoreService";
 
 type Props = {

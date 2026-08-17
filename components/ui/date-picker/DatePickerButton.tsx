@@ -6,12 +6,12 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/UI/calendar";
+import { Calendar } from "@/components/ui/calendar";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/UI/popover";
+} from "@/components/ui/popover";
 
 dayjs.extend(isToday);
 

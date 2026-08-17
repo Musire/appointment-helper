@@ -1,4 +1,4 @@
-import { Caption } from "@/components/UI";
+import { Caption } from "@/components/ui";
 import { Button } from "@/components/ui/button";
 import { CalendarX, ChevronRight } from "lucide-react";
 

@@ -1,5 +1,4 @@
-import { ControlledInput } from "../UI";
-import { DropdownButton } from "../UI/buttons";
+import { ControlledInput, DropdownButton } from "@/components/ui";
 
 export type StoreSelect = { 
     name: string; 

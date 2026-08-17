@@ -1,6 +1,6 @@
 "use client"
 
-import { Switch } from "@/components/UI/switch"
+import { Switch } from "@/components/ui/switch"
 
 interface Props {
   isAvailable: boolean

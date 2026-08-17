@@ -1,6 +1,6 @@
 'use client';
 
-import { FileUploader, StatusButton } from "@/components/UI";
+import { FileUploader, StatusButton } from "@/components/ui";
 import { UploadState } from "@/domains/image-validation/actions/image-uploading.actions";
 import { useActionState } from "react";
 import { editUser } from "../actions/user.actions";

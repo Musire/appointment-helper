@@ -1,4 +1,4 @@
-import { Body, BodySm, H3 } from "@/components/UI";
+import { Body, BodySm, H3 } from "@/components/ui";
 import { StoreStatus } from "@/generated/prisma";
 import { MapPin, Pencil, Store } from "lucide-react";
 import Link from "next/link";

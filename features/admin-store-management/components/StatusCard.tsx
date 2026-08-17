@@ -1,4 +1,4 @@
-import { Body } from '@/components/UI';
+import { Body } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';

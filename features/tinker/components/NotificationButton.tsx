@@ -1,6 +1,6 @@
 "use client";
 
-import { Drawer } from "@/components/UI";
+import { Drawer } from "@/components/ui";
 import { useDrawer } from "@/hooks";
 import { Bell } from "lucide-react";
 
