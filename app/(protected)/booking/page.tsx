@@ -1,8 +1,7 @@
 import { getStores } from "@/domains/store/queries/stores";
 import { StoreStep } from "@/features/booking";
-import { SearchParamsType } from "@/lib/types";
 
-export default async function BookingPage ({ searchParams }: SearchParamsType) {
+export default async function BookingPage () {
 
     const { data } = await getStores()
     if (!data) return null;

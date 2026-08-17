@@ -2,35 +2,29 @@
 import { useCallback, useEffect, useState } from "react";
 
 export default function useThemeState() {
-  const [isDark, setIsDark] = useState(false);
-
-  // 1. Load theme on mount
-  useEffect(() => {
+  // 1. Initialize state lazily from localStorage to avoid an effect during mount
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window === "undefined") return false;
     const stored = localStorage.getItem("theme");
+    return stored === "dark";
+  });
 
-    if (stored === "dark") {
-      document.documentElement.classList.add("dark");
-      setIsDark(true);
-    } else {
-      document.documentElement.classList.remove("dark");
-      setIsDark(false);
-    }
-  }, []);
-
-  // 2. Toggle theme
-  const toggleTheme = useCallback(() => {
+  // 2. Synchronize the DOM class whenever `isDark` changes
+  useEffect(() => {
     const root = document.documentElement;
-    const next = !isDark;
-
-    if (next) {
+    if (isDark) {
       root.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     } else {
       root.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
-
-    localStorage.setItem("theme", next ? "dark" : "light");
-    setIsDark(next);
   }, [isDark]);
+
+  // 3. Toggle theme function
+  const toggleTheme = useCallback(() => {
+    setIsDark((prev) => !prev);
+  }, []);
 
   return { isDark, toggleTheme };
 }

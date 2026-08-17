@@ -130,8 +130,9 @@ export async function deleteStores (target: string[]) {
 export const upsertStore = createSafeAction(
   {},
   async (payload) => {
-    const {id} = await getCurrentUser()
+    const user = await getCurrentUser()
+    if (!user || !user.id) return;
 
-    await upsertStoreService({...payload, id})
+    await upsertStoreService({...payload, id: user.id})
   }
 )

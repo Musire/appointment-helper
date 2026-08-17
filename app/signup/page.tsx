@@ -41,7 +41,7 @@ export default function SignupPage() {
           <ControlledInput
             name="role"
             label="role"
-            children={(field) => (
+            render={(field) => (
               <DropdownButton 
                 options={['USER', 'STAFF']}
                 value={field.value}

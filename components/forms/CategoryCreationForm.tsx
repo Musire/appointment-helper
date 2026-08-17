@@ -1,7 +1,6 @@
 'use client';
 import { Form, Input } from "@/components/ui";
 import { useStore } from "@/context";
-import { createCategory } from "@/domains/store/actions/category.actions";
 import { CategoryCreationSchema, CategoryCreationType } from "@/validation/Category.schema";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -16,15 +15,7 @@ export default function CategoryCreationForm ({ data, isUpdate }: CreationCatego
     const { storeId } = useStore()
     const router = useRouter()
     const handleSubmit = async (formData: CategoryCreationType) => {
-        const payload = {...formData, storeId }
-        
-        const { success, error} = await createCategory(payload)
-        if (!success) {
-            setError(error)
-            throw new Error('Error upon submission')
-        }
-
-        router.back()
+        console.log('function removed')
     }    
     return (
         <>

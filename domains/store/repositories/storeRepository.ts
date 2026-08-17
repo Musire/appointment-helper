@@ -11,7 +11,7 @@ export const  storeRepository = {
             select: {
                 id: true,
                 name: true,
-                description: true,
+                address: true,
             }
         })
 

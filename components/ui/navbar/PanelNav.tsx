@@ -10,9 +10,9 @@ interface PanelNavProps {
 }
 
 export default function PanelNav({ items }: PanelNavProps) {
-  if (!items.length) return null;
-
   const pathname = usePathname();
+  
+  if (!items.length) return null;
 
   return (
     <nav className="flex border-b border-border xs:w-full md:w-[85dvw] lg:w-[70dvw] overflow-x-hidden my-6">

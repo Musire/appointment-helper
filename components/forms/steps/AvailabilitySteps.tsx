@@ -5,6 +5,7 @@ import {
   AvailabilityWeekdays,
   AvailabilityWeekend
 } from "@/components/partials";
+import { StoreSelect } from "@/components/partials/AvailabilityStoreSelection";
 import { FieldPath, FieldValues } from "react-hook-form";
 
 export type Step<Ctx, T extends FieldValues> = {
@@ -17,7 +18,7 @@ const AvailabilitySteps = [
   {
     id: "store_selection",
     fields: ["storeId"],
-    render: ({ stores }: { stores: any[]}) => <AvailabilityStoreSelection stores={stores} />,
+    render: ({ stores }: { stores: StoreSelect[] | undefined}) => <AvailabilityStoreSelection stores={stores} />,
   },
   {
     id: "weekdays",

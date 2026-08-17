@@ -1,9 +1,10 @@
 import { BodySm } from "@/components/ui";
 import { StatusPill } from "@/components/ui/pills";
-import dayjs, { formatAppTimeSplit } from "@/lib/dayjs";
+import { formatAppTimeSplit } from "@/lib/dayjs";
 import { getServices } from "@/lib/utils/stringMutate";
 import Link from "next/link";
 import { AppointmentDetails, AppointmentStatus } from "../../queries/getAppointmentDetails";
+import dayjs from "dayjs";
 
 type Props = {
     appointment: AppointmentDetails

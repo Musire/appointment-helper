@@ -15,7 +15,7 @@ export default function AvailabilityStoreSelection ({ stores }: StoreSelectionPr
         <ControlledInput
             label="select store"
             name={'storeId'}
-            children={(field) => (
+            render={(field) => (
                 <DropdownButton  
                     options={stores?.map(c => c.name) ?? []}
                     value={

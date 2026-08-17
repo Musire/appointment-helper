@@ -26,17 +26,17 @@ export const formatAppTimeSplit = (value: Dayjs) => {
 
 export function parseTo24H(timeString: string): string {
   const [timePart, modifier] = timeString.split(" ");
-  let [hours, minutes] = timePart.split(":");
+  const [hoursStr, minutes] = timePart.split(":") ?? ["0", "0"];
+  let hours = hoursStr;
 
-  if (modifier?.toLowerCase() === "pm" && hours !== "12") {
+  const isPM = modifier?.toLowerCase() === "pm";
+  const isAM = modifier?.toLowerCase() === "am";
+
+  if (isPM && hours !== "12") {
     hours = String(Number(hours) + 12);
-  } else if (modifier?.toLowerCase() === "am" && hours === "12") {
+  } else if (isAM && hours === "12") {
     hours = "00";
   }
 
-  return `${hours.padStart(2, "0")}:${minutes}`;
+  return `${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}`;
 }
-
-export default dayjs;
-
-

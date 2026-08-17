@@ -1,4 +1,4 @@
-import { ProfileCreation } from "@/features/staff/components";
+import ProfileCreation from "./ProfileCreation";
 
 export default async function StaffStatus () {
   

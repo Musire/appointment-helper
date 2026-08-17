@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { logout } from "@/domains/identity/actions/auth.actions";
 import { useDrawer } from "@/hooks";
 import { LogOut, ShieldPlus, User } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 
@@ -28,7 +29,7 @@ export default function AvatarButton({ avatarUrl }: Props) {
           ? <div className="text-deep centered">
               <User />
             </div>
-          : <img 
+          : <Image 
               src={avatarUrl} 
               alt="User Profile" 
               className="w-full h-full object-cover"

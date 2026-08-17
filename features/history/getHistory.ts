@@ -1,7 +1,7 @@
-import { AppointmentStatus, ServiceType } from "@/generated/prisma";
+import { AppointmentStatus } from "@/generated/prisma";
 
 // Helper to cycle through all status values
-const statuses: AppointmentStatus[] = ["PENDING", "CONFIRMED", "CANCELLED", "COMPLETED", "NOSHOW"];
+const statuses: AppointmentStatus[] = ["PENDING", "PENDING", "CANCELLED", "COMPLETED", "NOSHOW"];
 
 export const AppointmentHistory = {
   "2024-11-15": [
@@ -25,7 +25,6 @@ export const AppointmentHistory = {
             name: "Classic Haircut",
             priceCents: 3500,
             durationMin: 30,
-            type: ServiceType.SINGLE,
           },
         },
       ],
@@ -46,7 +45,6 @@ export const AppointmentHistory = {
           id: `as-102-${i}`,
           appointmentId: `apt-102-${i}`,
           serviceId: "srv-2",
-          service: { id: "srv-2", name: "Beard Trim", priceCents: 2000, durationMin: 15, type: ServiceType.SINGLE },
         },
       ],
     })),
@@ -66,7 +64,7 @@ export const AppointmentHistory = {
         id: `as-200-${i}`,
         appointmentId: `apt-200-${i}`,
         serviceId: "srv-3",
-        service: { id: "srv-3", name: "Skin Fade", priceCents: 4000, durationMin: 45, type: ServiceType.SINGLE },
+        service: { id: "srv-3", name: "Skin Fade", priceCents: 4000, durationMin: 45},
       },
     ],
   })),
@@ -85,7 +83,7 @@ export const AppointmentHistory = {
         id: `as-300-${i}`,
         appointmentId: `apt-300-${i}`,
         serviceId: "srv-4",
-        service: { id: "srv-4", name: "Buzz Cut", priceCents: 2500, durationMin: 20, type: ServiceType.SINGLE },
+        service: { id: "srv-4", name: "Buzz Cut", price: 2500 },
       },
     ],
   })),
@@ -104,8 +102,9 @@ export const AppointmentHistory = {
         id: `as-400-${i}`,
         appointmentId: `apt-400-${i}`,
         serviceId: "srv-5",
-        service: { id: "srv-5", name: "Combo Pack", priceCents: 6500, durationMin: 60, type: ServiceType.COMBO },
-      },
+        service: { id: "srv-5", name: "Combo Pack", price: 6500,
+        },
+      }
     ],
   })),
 };

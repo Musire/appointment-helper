@@ -1,4 +1,4 @@
-import { EditProfile } from "@/domains/user-profile";
+import { EditProfile } from "../user-profile";
 
 export default function EditUserProfile () {
 

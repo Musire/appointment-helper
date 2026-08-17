@@ -1,7 +1,7 @@
 'use server';
 
+import { safeAction } from "@/domains/identity/auth/safeAction";
 import { prisma } from "@/lib/prisma";
-import { safeAction } from "@/lib/safeAction";
 import { getCurrentUser } from "../../identity/actions/auth.actions";
 
 export async function acceptInvite (inviteId: string, notificationId: string) {

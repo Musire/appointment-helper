@@ -12,14 +12,15 @@ export type InviteNotificationProp = {
 }
 
 export default function InviteNotification ({ notification }: InviteNotificationProp) {
+    const [msg, setMsg] = useState<string | null>(null)
+    const [err, setErr] = useState<string | null>(null)
     const { read, createdAt, payload, id } = notification
+    
     if (!payload) return null;
     
     const { data } = InviteNotificationPayloadSchema.safeParse(payload)
     const { inviteId, inviteStatus } = data ?? { inviteId: "", inviteStatus: ""}
 
-    const [msg, setMsg] = useState<string | null>(null)
-    const [err, setErr] = useState<string | null>(null)
 
     const handleAccept = async (inviteId: string, notificationId: string) => {
         const { success, error } = await acceptInvite(inviteId, notificationId)

@@ -22,7 +22,6 @@ type Input = {
 }
 
 
-
 export function timeAgo(date: string | Date) {
   const now = dayjs()
   const then = dayjs(date)
@@ -125,7 +124,8 @@ export function minsToLabel(minutes: number) {
 
 export function labelToMins(label: string) {
   const [time, period] = label.split(' ')
-  let [hours, minutes] = time.split(':').map(Number)
+  const [initialHours, minutes] = time.split(':').map(Number) ?? [0, 0]
+  let hours = initialHours
 
   if (period === 'PM' && hours !== 12) hours += 12
   if (period === 'AM' && hours === 12) hours = 0

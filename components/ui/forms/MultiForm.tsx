@@ -57,7 +57,7 @@ export default function MultiForm<
           }, 1000)
 
           return () => clearTimeout(timeoutId);
-    }, [isSubmitSuccessful, reset, controls.resetStepper]);
+    }, [isSubmitSuccessful, reset, controls]);
    
     return (
       <FormProvider {...methods}>

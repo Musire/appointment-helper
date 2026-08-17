@@ -1,8 +1,8 @@
 import { Caption } from "@/components/ui";
-import { AvatarImage } from "@/domains/user-profile";
-import { getProfile } from "@/domains/user-profile/queries/profile";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
+import { getProfile } from "../../user-profile/queries/profile";
+import { AvatarImage } from "../../user-profile";
 
 export default async function ProfileHeader() {
     const profile = await getProfile()

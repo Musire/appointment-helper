@@ -27,40 +27,16 @@ export async function editStoreConfig (storeId: string) {
         await prisma.storeConfig.upsert({
             where: { storeId },
             update: {
-                hours: payload.hours,
-                buffers: payload.buffers,
-                policies: payload.policies
             },
             create: {
                 storeId,
-                hours: payload.hours,
-                buffers: payload.buffers,
-                policies: payload.policies
             }
         })
 
     })
 }
 
-export async function createServiceCategory ({ storeId, name }: { storeId: string, name: string}) {
-    return safeAction(async() => {
-        await prisma.serviceCategory.upsert({
-            where: { 
-                storeId_name: {
-                    storeId,
-                    name
-                }
-             },
-            update: {
-                name
-            },
-            create: {
-                storeId,
-                name
-            }
-        })
-    })
-}
+
 
 export async function sendInvite({ targetId, storeId }: { targetId: string; storeId: string; }) {
   return safeAction(async () => {

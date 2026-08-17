@@ -8,10 +8,6 @@ export type FetchState<T> =
   | { status: 'success'; data: T; error: null }
   | { status: 'error'; data: null; error: string }
 
-/**
- * Custom fetch options
- * We DO NOT extend RequestInit to avoid leaking BodyInit
- */
 type FetchOptions = {
   method?: RequestInit['method']
   headers?: HeadersInit
@@ -24,43 +20,53 @@ type FetchOptions = {
 export default function useFetch<T>(
   url: string | null,
   options?: FetchOptions
-) {
+): FetchState<T> {
   const [state, setState] = useState<FetchState<T>>({
     status: 'idle',
     data: null,
     error: null,
   })
 
-  // 🔑 Ensures refetch when body changes (e.g. selectedId)
+  // Extract stable primitive values and stringified keys to prevent infinite loops
+  const method = options?.method
+  const credentials = options?.credentials
+  const cache = options?.cache
+  const mode = options?.mode
+  const headersKey = JSON.stringify(options?.headers ?? null)
   const bodyKey = JSON.stringify(options?.body ?? null)
 
+  // Store options in stable references or variables inside effect
+  const bodyValue = options?.body
+  const headersValue = options?.headers
+
   useEffect(() => {
-    if (!url) {
-      setState({ status: 'idle', data: null, error: null })
-      return
-    }
+    if (!url) return
 
     const controller = new AbortController()
+    let isMounted = true
 
-    setState({ status: 'loading', data: null, error: null })
+    // 🔑 Defer the loading update to prevent synchronous cascading renders during effect execution
+    queueMicrotask(() => {
+      if (isMounted) {
+        setState({ status: 'loading', data: null, error: null })
+      }
+    })
 
     const isJsonBody =
-      options?.body !== undefined &&
-      typeof options.body === 'object' &&
-      !(options.body instanceof FormData)
+      bodyValue !== undefined &&
+      typeof bodyValue === 'object' &&
+      !(bodyValue instanceof FormData)
 
     fetch(url, {
-      method: options?.method ?? (options?.body ? 'POST' : 'GET'),
-      body: isJsonBody
-        ? JSON.stringify(options?.body)
-        : (options?.body as BodyInit | undefined),
+      method: method ?? (bodyValue ? 'POST' : 'GET'),
+      body: isJsonBody ? JSON.stringify(bodyValue) : (bodyValue as BodyInit | undefined),
       headers: {
         ...(isJsonBody ? { 'Content-Type': 'application/json' } : {}),
-        ...options?.headers,
+        ...headersValue,
       },
-      credentials: options?.credentials,
-      cache: options?.cache,
-      mode: options?.mode,
+      credentials: credentials,
+      cache: cache,
+      mode: mode,
       signal: controller.signal,
     })
       .then(async (res) => {
@@ -71,19 +77,25 @@ export default function useFetch<T>(
         return res.json()
       })
       .then((data: T) => {
-        setState({ status: 'success', data, error: null })
+        if (isMounted) {
+          setState({ status: 'success', data, error: null })
+        }
       })
       .catch((err) => {
-        if (err.name === 'AbortError') return
+        if (err.name === 'AbortError' || !isMounted) return
+
         setState({
           status: 'error',
           data: null,
-          error: err.message ?? 'Unknown error',
+          error: err instanceof Error ? err.message : 'Unknown error',
         })
       })
 
-    return () => controller.abort()
-  }, [url, bodyKey])
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
+  }, [url, bodyKey, headersKey, method, credentials, cache, mode, bodyValue, headersValue])
 
   return state
 }

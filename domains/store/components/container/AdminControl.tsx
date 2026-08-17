@@ -78,7 +78,7 @@ export default function AdminControl ({ items }: { items: any }) {
             />
             <DeleteModal 
                 modalOpen={modalOpen}
-                setModal={setModal}
+                onClose={() => setModal(false)}
                 handleDeletion={handleDeletion} 
             />
         </div>

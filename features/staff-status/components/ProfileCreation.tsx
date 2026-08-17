@@ -1,8 +1,8 @@
 'use client';
 
-import { StaffStatusBadge } from "@/features/dashboard";
-import { ProgressBar, RequirementBadge } from "@/features/dashboard/components/admin/overview";
+import { ProgressBar, RequirementBadge } from "@/features/admin-status/components";
 import { extractPercentage } from "@/lib/utils/numberMutate";
+import { StaffStatusBadge } from ".";
 
 type Props = {
     requirements: {

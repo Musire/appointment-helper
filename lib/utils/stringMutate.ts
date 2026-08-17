@@ -1,4 +1,3 @@
-import { ServiceType } from "@/generated/prisma";
 
 export function slugify(value: string) {
   return value

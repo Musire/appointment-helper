@@ -2,12 +2,15 @@
 
 import { SelectableList } from "@/components/ui";
 import { ContinueButton, StoreCard } from "@/features/booking";
-import { Store } from "@/generated/prisma";
 import { useSelect } from "@/hooks";
 import { useRouter } from "next/navigation";
 
 type StoreStepProps = {
-    stores: Store[]
+    stores: {
+        id: string;
+        name: string;
+        address: string;
+    }[]
 }
 
 export default function StoreStep ({ stores }: StoreStepProps ) {

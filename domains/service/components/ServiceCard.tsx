@@ -1,10 +1,10 @@
-import { ServiceType } from "@/lib/utils/groupArrays";
 import { formatCurrency } from "@/lib/utils/stringMutate";
-import { Clock4, SquareScissors, Tag } from "lucide-react";
+import { Clock4, Tag } from "lucide-react";
+import { serviceSchemaType } from "../validation/service.schema";
 
 
 type Props = {
-    data: ServiceType
+    data: serviceSchemaType
 }
 
 export default function ServiceCard ({ data }: Props) {
@@ -13,16 +13,13 @@ export default function ServiceCard ({ data }: Props) {
             <h2 className="border-b-2 pb-2 border-adjust">{data.name}</h2>
             <span className="flex space-x-4 items-center mt-2 ml-4">
                 <Tag strokeWidth={1} />
-                <p className="">{formatCurrency(data.priceCents)}</p>
+                <p className="">{formatCurrency(data.price)}</p>
             </span>
             <span className="flex space-x-4 items-center ml-4">
                 <Clock4 strokeWidth={1} />
-                <p className="">{`${data.durationMin} mins`}</p>
+                <p className="">{`60 mins`}</p>
             </span>
-            <span className="flex space-x-4 items-center ml-4">
-                <SquareScissors strokeWidth={1} />
-                <p className="">{data.type}</p>
-            </span>
+
         </article>
     );
 }

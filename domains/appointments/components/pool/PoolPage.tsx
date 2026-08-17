@@ -1,11 +1,11 @@
 'use client';
 
 import { DatePickerButton } from "@/components/ui/date-picker";
-import dayjs from "@/lib/dayjs";
 import { useMemo, useState } from "react";
 import { AppointmentDetails } from "../../queries/getAppointmentDetails";
 import PoolDisplay from "./PoolDisplay";
 import PoolFilter from "./PoolFilter";
+import dayjs from "dayjs";
 
 export type OptionType = 'all' |
     'checkedin' |

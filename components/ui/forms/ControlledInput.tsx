@@ -8,13 +8,13 @@ import { Caption, LabelTag } from "../typography";
 type ControlledInputProps = {
   name: string;
   label?: string;
-  children: (field: ControllerRenderProps<any, string>) => React.ReactElement;
+  render: (field: ControllerRenderProps<any, string>) => React.ReactElement;
 };
 
 export default function ControlledInput({
   label,
   name,
-  children,
+  render,
 }: ControlledInputProps) {
   const {
     control,
@@ -31,7 +31,7 @@ export default function ControlledInput({
       <Controller
         name={name}
         control={control}
-        render={({ field }) => children(field)}
+        render={({ field }) => render(field)}
       />
 
       <Caption className={`text-sm relative text-console.error();

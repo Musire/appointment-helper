@@ -25,7 +25,7 @@ export default function SuccessDisplay () {
                     Booking successfully submitted
                 </p>
                 <p className="text-xs text-whitesmoke/60">
-                    You'll be redirected shortly 
+                    {`You'll be redirected shortly `}
                 </p>
 
             </article>

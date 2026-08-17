@@ -11,7 +11,7 @@ export default function ServiceSlot ({ service }: ServiceSlotProps) {
             <Icon size={30} strokeWidth={1} />
             <span className="">
                 <p className="capitalize">{service.name}</p>
-                <p className="">{`$${service.priceCents} | ${service.durationMin} mins`}</p>
+                <p className="">{`$${service.price} | 60 mins`}</p>
             </span>
         </li>
     );

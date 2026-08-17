@@ -28,7 +28,7 @@ export default function NotificationButton() {
       >
         <div className="fixed inset-y-0 right-0 w-80 surface-1 shadow-2xl p-6 stacked space-y-4">
            {/* Drawer content goes here */}
-           hi it's the side panel notificaiton section
+           {`hi it's the side panel notificaiton section`}
         </div>
       </Drawer>
     </div>

@@ -30,7 +30,11 @@ export default function useDrawer(duration: number = 300) {
   };
 
   const toggleDrawer = () => {
-    isMounted ? closeDrawer() : openDrawer();
+    if (isMounted) {
+      closeDrawer();
+    } else {
+      openDrawer();
+    }
   };
 
   useEffect(() => {

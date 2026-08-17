@@ -13,9 +13,9 @@ interface PanelNavProps {
 
 export default function MobileNav({ items }: PanelNavProps) {
 
+  const pathname = usePathname();
   if (!items.length) return null;
 
-  const pathname = usePathname();
 
   const styles = {
     standard: "  px-3 py-2 transition-colors flex centered-col space-y-1",

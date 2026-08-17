@@ -1,8 +1,8 @@
 'use client';
 
 import { AlternateDate, SlotSelector, WeeklySelector } from "@/features/booking/components";
-import dayjs, { parseTo24H } from "@/lib/dayjs";
-import { Dayjs } from "dayjs";
+import { parseTo24H } from "@/lib/dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { getDatetime } from "../../actions/booking.action";

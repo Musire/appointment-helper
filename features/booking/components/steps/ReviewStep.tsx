@@ -61,7 +61,7 @@ export default function ReviewStep ({ store, staff, services, date, time }: Revi
                     </ul>
                     <span className="spaced pt-6 border-t-2 mt-auto border-disabled">
                         <p className="text-2xl">Total</p>
-                        <p className="text-2xl font-semibold">{formatCurrency(services.priceCents)}</p>
+                        <p className="text-2xl font-semibold">{formatCurrency(services.price)}</p>
                     </span>
 
                     {error && (

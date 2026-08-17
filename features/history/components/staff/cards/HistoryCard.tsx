@@ -11,16 +11,18 @@ const statusStyles: Record<AppointmentStatus, string> = {
   COMPLETED: "text-success bg-success/20",
   NOSHOW: "text-error bg-error/10",
   CANCELLED: "text-disabled bg-disabled/10",
-  CONFIRMED: "text-main bg-main/10",
   PENDING: "text-else bg-else/10",
+  CHECKIN: "text-else bg-else/10",
+  INPROGRESS: "text-else bg-else/10",
 };
 
 const borderStyles: Record<AppointmentStatus, string> = {
   COMPLETED: "border-l-success",
   NOSHOW: "border-l-error",
   CANCELLED: "border-l-disabled",
-  CONFIRMED: "border-l-main",
   PENDING: "border-l-else",
+  CHECKIN: "border-l-else",
+  INPROGRESS: "border-l-else",
 };
 
 export default function HistoryCard({ data }: Props) {

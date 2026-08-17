@@ -1,5 +1,5 @@
+import { ListItem, ProfileHeader, SegmentCard } from "../user-profile";
 
-import { ListItem, ProfileHeader, SegmentCard } from "@/domains/user-profile/components";
 
 export default function UserProfile() {
   return (

@@ -1,4 +1,4 @@
-import { AppointmentStatus, ServiceType } from "@/generated/prisma";
+import { AppointmentStatus } from "@/generated/prisma";
 
 // This represents a single Service object
 export type ServiceMock = {
@@ -6,7 +6,6 @@ export type ServiceMock = {
   name: string;
   priceCents: number;
   durationMin: number;
-  type: ServiceType;
 };
 
 // This represents the join table (AppointmentService)

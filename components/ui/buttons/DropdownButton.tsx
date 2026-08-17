@@ -38,7 +38,7 @@ export default function DropdownButton<T extends string>({
       // If you strictly need Dispatch<SetStateAction<string>>, 'multiple' should likely be false
     } else {
       if (onChange) {
-        onChange(option as any); 
+        onChange(option as string); 
       } else {
         setInternalState(option);
       }

@@ -11,7 +11,7 @@ export default function StoreSlot ({ store }: StoreSlotProps) {
             <Icon size={30} strokeWidth={1} />
             <span className="">
                 <p className="capitalize">{store.name}</p>
-                <p className="">{store.description}</p>
+                <p className="">{store.address}</p>
             </span>
             
         </li>

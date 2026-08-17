@@ -7,8 +7,9 @@ const defaultHours = [
 ]
 
 export async function upsertStoreService (data: { storeId: string, name: string, address: string, id: string}) {
+    const found  = await storeRepository.findStore(data.storeId)
 
-    if (!storeRepository.findStore(storeId)) {
+    if (!found) {
         storeRepository.createStore({
             defaultHours, 
             name: data.name, 
@@ -17,5 +18,4 @@ export async function upsertStoreService (data: { storeId: string, name: string,
         return;
     }
 
-    storeRepository.updateStore(data)
 }

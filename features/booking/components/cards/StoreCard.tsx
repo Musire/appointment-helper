@@ -1,9 +1,12 @@
-import { Store } from "@/generated/prisma";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
 
 type StoreSlotProps = {
-    store: Store
+    store: {
+        id: string;
+        name: string;
+        address: string;
+    }
 }
 
 export default function StoreCard ({ store }: StoreSlotProps) {
@@ -19,7 +22,7 @@ export default function StoreCard ({ store }: StoreSlotProps) {
                 <p className="text-main capitalize text-sm">{store.name}</p>
                 <span className="flex items-center space-x-2 text-else">
                     <MapPin size={15} strokeWidth={1.5} />
-                    <p className=" text-xs">{store.description}</p>
+                    <p className=" text-xs">{store.address}</p>
                 </span>
             </div>
         </li>

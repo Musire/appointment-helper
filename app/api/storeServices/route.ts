@@ -1,4 +1,4 @@
-import { getServices } from "@/features/booking/services/storeService.services";
+import { getStoreServices } from "@/domains/store/queries/storeService";
 import { NextResponse } from "next/server";
 
 type POST_Request = {
@@ -10,7 +10,7 @@ export async function POST(request: Request) {
         const body = await (request.json()) as POST_Request
         const { storeId } = body
         
-        const { data, error } = await getServices(storeId)
+        const { data, error } = await getStoreServices(storeId)
 
         if (error) {
             return NextResponse.json({ data: null, error: error}, { status: 400 })

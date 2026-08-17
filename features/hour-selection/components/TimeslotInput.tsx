@@ -50,7 +50,7 @@ export default function TimeslotInput ({ trigger }: TimeslotInputProps) {
                             <p className="mt-2">from</p>
                             <ControlledInput 
                                 name={`${trigger}.slots.${index}.from`}
-                                children={(field) => (
+                                render={(field) => (
                                     <DropdownButton 
                                         buttonStyle="w-32"
                                         options={['1']}
@@ -62,7 +62,7 @@ export default function TimeslotInput ({ trigger }: TimeslotInputProps) {
                             <p className="mt-2">to</p>
                             <ControlledInput 
                                 name={`${trigger}.slots.${index}.to`}
-                                children={(field) => (
+                                render={(field) => (
                                     <DropdownButton
                                         buttonStyle="w-32"
                                         options={['4']}

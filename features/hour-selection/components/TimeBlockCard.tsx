@@ -42,7 +42,7 @@ export default function TimeBlockCard({
           <p className="capitalize text-whitesmoke/87">start</p>
           <DropdownButton
             value={fromMins(block.start)}
-            onChange={(v: string | string[]) => updateTime('start', toMins(v))}
+            onChange={(v: string | string[]) => updateTime('start', toMins(typeof v === 'string' ? v : v[0]))}
             Icon={Clock} 
             options={['10:00 AM']} 
             buttonStyle='rounded-none'
@@ -53,7 +53,7 @@ export default function TimeBlockCard({
           <p className="capitalize text-whitesmoke/87">end</p>
           <DropdownButton
             value={fromMins(block.end)}
-            onChange={(v: string | string[]) => updateTime('end', toMins(v))}
+            onChange={(v: string | string[]) => updateTime('end', toMins(typeof v === 'string' ? v : v[0]))}
             Icon={Clock} 
             options={['05:00 PM']} 
             buttonStyle='rounded-none'

@@ -17,7 +17,7 @@ export default function SidePanel ({ onClose, isMounted, animation }: Props) {
                 className={clsx(
                     "absolute right-0 top-0 z-30 bg-deep xs:w-5/6 desktop:w-120 h-dvh p-6 border-l border-disabled", animating
                 )}>
-                hi it's me mario
+                {`hi it's me mario`}
             </aside>
         </div>
     );

@@ -2,7 +2,8 @@ import { getStores } from "@/domains/store/queries/stores";
 import { StoreCard } from "@/features/booking";
 
 export default async function StorePanel () {
-    const stores = await getStores()
+    const { data:stores } = await getStores()
+    if (!stores) return null;
 
     return (
         <div className="py-6 flex-1 flex-col flex">

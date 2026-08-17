@@ -1,6 +1,7 @@
 "use client"
 
 import { UploadCloud, X } from "lucide-react"
+import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 import { Accept, useDropzone } from "react-dropzone"
 
@@ -23,7 +24,7 @@ export default function FileUploader({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  const onDrop = useCallback((acceptedFiles: File[], fileRejections: any[]) => {
+  const onDrop = useCallback((acceptedFiles: File[], fileRejections: unknown[]) => {
     if (fileRejections.length > 0) {
       setError("Invalid file");
       return;
@@ -96,7 +97,7 @@ export default function FileUploader({
         ) : (
           <div className="relative w-full flex flex-col items-center gap-3">
             {previewUrl && (
-              <img
+              <Image
                 src={previewUrl}
                 alt="preview"
                 className="max-h-48 rounded-lg object-contain shadow-sm"

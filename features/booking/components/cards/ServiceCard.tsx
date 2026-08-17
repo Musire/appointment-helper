@@ -17,8 +17,8 @@ export default function ServiceCard ({ service }: ServiceSlotProps) {
                 Excepteur sint occaecat cupidatat non proident, sunt in culpa 
             </p>
             <span className="spaced justify-self-end mt-auto">
-                <p className="text-xl font-bold">{formatCurrency(service.priceCents)}</p>
-                <p className="normal-space border-adjust border-2 rounded-full">{`${service.durationMin} mins`}</p>
+                <p className="text-xl font-bold">{formatCurrency(service.price)}</p>
+                <p className="normal-space border-adjust border-2 rounded-full">{`$60 mins`}</p>
             </span>
             
         </li>

@@ -9,12 +9,13 @@ export function fromMins(minutes: number) {
 
 export function labelToMinutes(label: string) {
   const [time, period] = label.split(' ')
-  let [hours, minutes] = time.split(':').map(Number)
+  const [hours, minutes] = time.split(':').map(Number) ?? [0,0]
+  let adjustedHours = hours
 
-  if (period === 'PM' && hours !== 12) hours += 12
-  if (period === 'AM' && hours === 12) hours = 0
+  if (period === 'PM' && adjustedHours !== 12) adjustedHours += 12
+  if (period === 'AM' && adjustedHours === 12) adjustedHours = 0
 
-  return hours * 60 + minutes
+  return adjustedHours * 60 + minutes
 }
 
 export function getOverlapError(dayOverlapErrors?: Record<string, boolean>) {

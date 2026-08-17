@@ -1,7 +1,7 @@
 'use server';
 
 import { getCurrentUser } from "@/domains/identity/actions/auth.actions";
-import { UploadState } from "@/domains/image-validation/actions/image-uploading.actions";
+import { UploadState } from "@/features/image-validation/actions/image-uploading.actions";
 import { prisma } from "@/lib/prisma";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 

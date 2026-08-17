@@ -38,7 +38,7 @@ export default function Form<S extends z.ZodObject<any>> ({ initialValues, onSub
 
     useEffect(() => {
       if(error) setError("root.server", { type: "server", message: error })
-    }, [error])
+    }, [error, setError])
 
     useEffect(() => {
       if (!isSubmitSuccessful) return;

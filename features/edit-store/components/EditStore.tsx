@@ -14,7 +14,7 @@ export default async function EditStore ({ params }: { params :{ slug: string} }
     select: {
       id: true,
       name: true,
-      description: true
+      address: true
     }
   })
 
@@ -23,8 +23,8 @@ export default async function EditStore ({ params }: { params :{ slug: string} }
   const data: StoreCreationType = {
     id: store.id,
     name: store.name,
-    description: store.description,
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+    address: store.address,
+    // timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
   }
 
   return (

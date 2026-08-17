@@ -15,8 +15,8 @@ export default function unauthorized () {
                 height={300} 
             />
             <article className="centered-col space-y-2">
-                <h2 className="text-4xl">Can't let you in willy nilly</h2>
-                <h3 className="text-lg">Why don't we take a step back, ok?</h3>
+                <h2 className="text-4xl">{`Can't let you in willy nilly`}</h2>
+                <h3 className="text-lg">{`Why don't we take a step back, ok?`}</h3>
                 <Link 
                     href="/dashboard" 
                     className="bg-darker hover:bg-whitesmoke/87 hover:text-deep normal-space flex items-center justify-evenly hover:space-y-8 transition-all duration-300 w-40"
