@@ -2,12 +2,13 @@
   "name": "appointment-helper",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "dev:clear": "cls && next dev",
-    "clean": "rd /s /q .next && npm run dev:clear",
-    "nuke": "rd /s /q .next node_modules && del /f /q package-lock.json && npm install",
+    "dev:clear": "clear && npm run dev",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "validate": "npm run lint && npm run typecheck",
@@ -49,7 +50,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.19",
-    "@types/node": "^20.19.27",
+    "@types/node": "^24.0.0",
     "@types/pg": "^8.16.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -64,3 +65,4 @@
     "typescript": "^5"
   }
 }
+

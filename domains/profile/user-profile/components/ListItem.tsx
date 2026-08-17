@@ -1,5 +1,5 @@
-import { Bell, ChevronRight, HelpCircle, LogOut, Mail, Phone, Shield, Smartphone } from "lucide-react";
-import { CustomInstagram } from "@/domains/staff-dashboard";
+import { CustomInstagram } from "@/components/ui/icons";
+import { Bell, ChevronRight, HelpCircle, LogOut, Mail, Shield, Smartphone } from "lucide-react";
 
 const iconMap: any = {
   mail: Mail,

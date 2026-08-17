@@ -135,6 +135,7 @@ model Appointment {
   startTime     DateTime
   endTime       DateTime
   status        AppointmentStatus
+  checkedInAt   DateTime?
   createdAt     DateTime             @default(now())
 
   staff         StoreStaff           @relation("StaffAppointments", fields: [staffId], references: [id])

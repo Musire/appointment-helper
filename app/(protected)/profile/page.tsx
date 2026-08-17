@@ -1,5 +1,9 @@
 import { Body } from "@/components/ui";
+<<<<<<< HEAD
 import { ListItem, ProfileHeader, SegmentCard } from "@/domains/user-profile";
+=======
+import { ListItem, ProfileHeader, SegmentCard } from "@/domains/profile/user-profile";
+>>>>>>> 6d7ea3df03aeb68535fe3487b1123429179ad02f
 
 export default async function StaffDashboard () {
 

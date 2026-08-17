@@ -1,5 +1,5 @@
-import { BusinessHoursForm } from "@/domains/hour-selection";
-import { TimeBlock } from "@/domains/hour-selection/model/types";
+import { BusinessHoursForm } from "@/features/hour-selection";
+import { TimeBlock } from "@/features/hour-selection/types";
 
 
 export default function AvailabilityPage () {

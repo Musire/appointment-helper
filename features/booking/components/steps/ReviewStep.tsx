@@ -5,7 +5,7 @@ import { Service, Store, User } from "@/generated/prisma";
 import { formatCurrency } from "@/lib/utils/stringMutate";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import SuccessDisplay from "../../../../components/UI/forms/SuccessDisplay";
+import SuccessDisplay from "../../../../components/ui/forms/SuccessDisplay";
 import { createBookingAction } from "../../actions/booking.action";
 import { DatetimeCard } from "../cards";
 import { SubmitButton } from "../page";

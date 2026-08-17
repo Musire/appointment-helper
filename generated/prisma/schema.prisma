@@ -130,10 +130,11 @@ model Appointment {
   staffId String
   userId  String
 
-  startTime DateTime
-  endTime   DateTime
-  status    AppointmentStatus
-  createdAt DateTime          @default(now())
+  startTime   DateTime
+  endTime     DateTime
+  status      AppointmentStatus
+  checkedInAt DateTime?
+  createdAt   DateTime          @default(now())
 
   staff  StoreStaff @relation("StaffAppointments", fields: [staffId], references: [id])
   store  Store      @relation(fields: [storeId], references: [id])

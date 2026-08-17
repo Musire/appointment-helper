@@ -2,8 +2,11 @@
 
 import { Switch } from "@/components/ui";
 import { DropdownButton } from "@/components/ui/buttons";
+<<<<<<< HEAD
+=======
+import { BusinessDay } from "@/features/dashboard/types";
+>>>>>>> 6d7ea3df03aeb68535fe3487b1123429179ad02f
 import { labelToMins, minsToLabel } from "@/lib/utils/time";
-import { BusinessDay } from "../model/types";
 
 type Props = BusinessDay & {
     onStartChange: (value: number) => void;

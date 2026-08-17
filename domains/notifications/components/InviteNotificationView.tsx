@@ -1,5 +1,5 @@
+import { Status } from "@/features/staff-status/components";
 import { Check, X } from "lucide-react";
-import Status from "./Status";
 
 export type InviteNotificationViewProps = {
     external: {

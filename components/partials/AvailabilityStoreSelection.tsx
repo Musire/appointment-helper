@@ -1,5 +1,4 @@
-import { ControlledInput } from "../UI";
-import { DropdownButton } from "../UI/buttons";
+import { ControlledInput, DropdownButton } from "@/components/ui";
 
 export type StoreSelect = { 
     name: string; 
@@ -20,7 +19,7 @@ export default function AvailabilityStoreSelection ({ stores }: StoreSelectionPr
                 <DropdownButton  
                     options={stores?.map(c => c.name) ?? []}
                     value={
-                        stores?.find(c => c.id === field.value)?.name ?? null
+                        stores?.find(c => c.id === field.value)?.name ?? undefined
                     }
                     onChange={(selectedName) => {
                         const category = stores?.find(c => c.name === selectedName)
