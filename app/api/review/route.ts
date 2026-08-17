@@ -1,6 +1,5 @@
-import { generateReviewState } from "@/domains/booking/services/review.services";
-import { ReviewSchema } from "@/domains/booking/validation/review.validation";
-import { quickParse } from "@/lib/utils/parseSchema";
+import { generateReviewState } from "@/features/booking/services";
+import { ReviewSchema } from "@/features/booking/validation";
 import { NextResponse } from "next/server";
 import z from "zod";
 
@@ -16,7 +15,7 @@ export async function POST(request: Request) {
     try {
         const body = await (request.json()) as POST_Request
 
-        const parsed = quickParse(ReviewSchema, body)
+        const parsed = ReviewSchema.safeParse(body)
 
         if (!parsed.success) {
             return NextResponse.json(

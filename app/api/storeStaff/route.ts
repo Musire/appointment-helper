@@ -1,6 +1,5 @@
-import { retrieveStaffStore } from "@/domains/booking/services/storeStaff.services";
-import { StoreStaffSchema } from "@/domains/booking/validation/storeStaff.validation";
-import { quickParse } from "@/lib/utils/parseSchema";
+import { retrieveStaffStore } from "@/features/booking/services";
+import { StoreStaffSchema } from "@/features/booking/validation";
 import { NextResponse } from "next/server";
 import z from "zod";
 
@@ -11,7 +10,7 @@ type POST_Request = {
 export async function POST(request: Request) {
     try {
         const body = await(request.json()) as POST_Request
-        const parsed = quickParse(StoreStaffSchema, body)
+        const parsed = StoreStaffSchema.safeParse(body)
         
         if (!parsed.success) {
             return NextResponse.json(

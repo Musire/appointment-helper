@@ -1,4 +1,4 @@
-import { getStores } from "@/domains/booking/services/store.services";
+import { getStores } from "@/features/booking/services/store.services";
 import { NextResponse } from "next/server";
 
 export async function GET() {

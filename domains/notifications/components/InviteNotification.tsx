@@ -1,7 +1,6 @@
 'use client';
 import { acceptInvite, rejectInvite } from "@/domains/store/actions/invite.actions";
 import { Notification } from "@/generated/prisma";
-import { parseSchemaSync } from "@/lib/utils/parseSchema";
 import { timeAgo } from "@/lib/utils/time";
 import { InviteNotificationPayloadSchema } from "@/validation/NotificationPayload.schema";
 import { Check, X } from "lucide-react";
@@ -16,7 +15,8 @@ export default function InviteNotification ({ notification }: InviteNotification
     const { read, createdAt, payload, id } = notification
     if (!payload) return null;
     
-    const { inviteId, inviteStatus } = parseSchemaSync(InviteNotificationPayloadSchema, payload)
+    const { data } = InviteNotificationPayloadSchema.safeParse(payload)
+    const { inviteId, inviteStatus } = data ?? { inviteId: "", inviteStatus: ""}
 
     const [msg, setMsg] = useState<string | null>(null)
     const [err, setErr] = useState<string | null>(null)

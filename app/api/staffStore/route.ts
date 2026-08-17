@@ -18,10 +18,10 @@ export async function POST(request: Request) {
     },
   });
 
-  const flattened = stores.map(({ store: { id, name, description } }) => ({
+  const flattened = stores.map(({ store: { id, name, address } }) => ({
     id,
     name,
-    description,
+    address,
   }));
 
   return NextResponse.json(flattened)

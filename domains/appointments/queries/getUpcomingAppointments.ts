@@ -3,7 +3,6 @@ import {
   AppointmentService,
   AppointmentStatus,
   Service,
-  ServiceType,
   User,
 } from '@/generated/prisma';
 
@@ -14,7 +13,6 @@ export type AppointmentWithRelations = Appointment & {
   })[];
 };
 
-
 export const mockAppointments: AppointmentWithRelations[] = [
   {
     id: 'apt-1',
@@ -23,8 +21,9 @@ export const mockAppointments: AppointmentWithRelations[] = [
     userId: 'user-1',
     startTime: new Date('2026-06-01T09:00:00'),
     endTime: new Date('2026-06-01T10:00:00'),
-    status: AppointmentStatus.CONFIRMED,
+    status: AppointmentStatus.PENDING,
     createdAt: new Date('2026-05-28T10:00:00'),
+    checkedInAt: null,
 
     client: {
       id: 'user-1',
@@ -43,11 +42,8 @@ export const mockAppointments: AppointmentWithRelations[] = [
         service: {
           id: 'svc-1',
           storeId: 'store-1',
-          categoryId: 'cat-1',
           name: 'Haircut',
-          durationMin: 30,
-          priceCents: 2500,
-          type: ServiceType.SINGLE,
+          price: 2500,
           createdAt: new Date('2026-01-01'),
         },
       },
@@ -58,11 +54,8 @@ export const mockAppointments: AppointmentWithRelations[] = [
         service: {
           id: 'svc-2',
           storeId: 'store-1',
-          categoryId: 'cat-1',
           name: 'Wash',
-          durationMin: 30,
-          priceCents: 1000,
-          type: ServiceType.SINGLE,
+          price: 1000,
           createdAt: new Date('2026-01-01'),
         },
       },
@@ -78,6 +71,7 @@ export const mockAppointments: AppointmentWithRelations[] = [
     endTime: new Date('2026-06-01T11:00:00'),
     status: AppointmentStatus.PENDING,
     createdAt: new Date(),
+    checkedInAt: null,
 
     client: {
       id: 'user-2',
@@ -96,11 +90,8 @@ export const mockAppointments: AppointmentWithRelations[] = [
         service: {
           id: 'svc-3',
           storeId: 'store-1',
-          categoryId: 'cat-1',
           name: 'Haircut',
-          durationMin: 30,
-          priceCents: 2500,
-          type: ServiceType.SINGLE,
+          price: 2500,
           createdAt: new Date(),
         },
       },
@@ -111,11 +102,8 @@ export const mockAppointments: AppointmentWithRelations[] = [
         service: {
           id: 'svc-4',
           storeId: 'store-1',
-          categoryId: 'cat-1',
           name: 'Beard Trim',
-          durationMin: 15,
-          priceCents: 1200,
-          type: ServiceType.SINGLE,
+          price: 1200,
           createdAt: new Date(),
         },
       },
@@ -126,11 +114,8 @@ export const mockAppointments: AppointmentWithRelations[] = [
         service: {
           id: 'svc-5',
           storeId: 'store-1',
-          categoryId: 'cat-1',
           name: 'Wash',
-          durationMin: 15,
-          priceCents: 1000,
-          type: ServiceType.SINGLE,
+          price: 1000,
           createdAt: new Date(),
         },
       },
@@ -144,8 +129,9 @@ export const mockAppointments: AppointmentWithRelations[] = [
     userId: 'user-3',
     startTime: new Date('2026-06-01T11:00:00'),
     endTime: new Date('2026-06-01T12:00:00'),
-    status: AppointmentStatus.CONFIRMED,
+    status: AppointmentStatus.PENDING,
     createdAt: new Date(),
+    checkedInAt: null,
 
     client: {
       id: 'user-3',
@@ -164,11 +150,8 @@ export const mockAppointments: AppointmentWithRelations[] = [
         service: {
           id: 'svc-6',
           storeId: 'store-1',
-          categoryId: 'cat-2',
           name: 'Hair Color',
-          durationMin: 60,
-          priceCents: 5000,
-          type: ServiceType.SINGLE,
+          price: 5000,
           createdAt: new Date(),
         },
       },
@@ -182,8 +165,9 @@ export const mockAppointments: AppointmentWithRelations[] = [
     userId: 'user-4',
     startTime: new Date('2026-06-01T12:00:00'),
     endTime: new Date('2026-06-01T13:00:00'),
-    status: AppointmentStatus.CONFIRMED,
+    status: AppointmentStatus.PENDING,
     createdAt: new Date(),
+    checkedInAt: null,
     client: {
       id: 'user-4',
       email: 'carlos@example.com',
@@ -199,11 +183,8 @@ export const mockAppointments: AppointmentWithRelations[] = [
       service: {
         id: 'svc-7',
         storeId: 'store-1',
-        categoryId: 'cat-3',
         name: 'Styling',
-        durationMin: 60,
-        priceCents: 3500,
-        type: ServiceType.SINGLE,
+        price: 3500,
         createdAt: new Date(),
       },
     }],
@@ -218,6 +199,7 @@ export const mockAppointments: AppointmentWithRelations[] = [
     endTime: new Date('2026-06-01T14:00:00'),
     status: AppointmentStatus.CANCELLED,
     createdAt: new Date(),
+    checkedInAt: null,
     client: {
       id: 'user-5',
       email: 'sofia@example.com',
@@ -233,11 +215,8 @@ export const mockAppointments: AppointmentWithRelations[] = [
       service: {
         id: 'svc-8',
         storeId: 'store-1',
-        categoryId: 'cat-1',
         name: 'Haircut',
-        durationMin: 60,
-        priceCents: 3000,
-        type: ServiceType.SINGLE,
+        price: 3000,
         createdAt: new Date(),
       },
     }],
@@ -250,8 +229,9 @@ export const mockAppointments: AppointmentWithRelations[] = [
     userId: 'user-6',
     startTime: new Date('2026-06-01T14:00:00'),
     endTime: new Date('2026-06-01T15:00:00'),
-    status: AppointmentStatus.CONFIRMED,
+    status: AppointmentStatus.PENDING,
     createdAt: new Date(),
+    checkedInAt: null,
     client: {
       id: 'user-6',
       email: 'miguel@example.com',
@@ -267,11 +247,8 @@ export const mockAppointments: AppointmentWithRelations[] = [
       service: {
         id: 'svc-9',
         storeId: 'store-1',
-        categoryId: 'cat-2',
         name: 'Hair Color',
-        durationMin: 60,
-        priceCents: 5000,
-        type: ServiceType.SINGLE,
+        price: 5000,
         createdAt: new Date(),
       },
     }],
@@ -286,6 +263,7 @@ export const mockAppointments: AppointmentWithRelations[] = [
     endTime: new Date('2026-06-01T16:00:00'),
     status: AppointmentStatus.PENDING,
     createdAt: new Date(),
+    checkedInAt: null,
     client: {
       id: 'user-7',
       email: 'laura@example.com',
@@ -301,11 +279,8 @@ export const mockAppointments: AppointmentWithRelations[] = [
       service: {
         id: 'svc-10',
         storeId: 'store-1',
-        categoryId: 'cat-3',
         name: 'Styling',
-        durationMin: 60,
-        priceCents: 3500,
-        type: ServiceType.SINGLE,
+        price: 3500,
         createdAt: new Date(),
       },
     }],
@@ -318,8 +293,9 @@ export const mockAppointments: AppointmentWithRelations[] = [
     userId: 'user-8',
     startTime: new Date('2026-06-01T16:00:00'),
     endTime: new Date('2026-06-01T17:00:00'),
-    status: AppointmentStatus.CONFIRMED,
+    status: AppointmentStatus.PENDING,
     createdAt: new Date(),
+    checkedInAt: null,
     client: {
       id: 'user-8',
       email: 'pedro@example.com',
@@ -335,11 +311,8 @@ export const mockAppointments: AppointmentWithRelations[] = [
       service: {
         id: 'svc-11',
         storeId: 'store-1',
-        categoryId: 'cat-1',
         name: 'Haircut',
-        durationMin: 60,
-        priceCents: 3000,
-        type: ServiceType.SINGLE,
+        price: 3000,
         createdAt: new Date(),
       },
     }],
@@ -352,12 +325,13 @@ export const mockAppointments: AppointmentWithRelations[] = [
     userId: 'user-9',
     startTime: new Date('2026-06-01T17:00:00'),
     endTime: new Date('2026-06-01T18:00:00'),
-    status: AppointmentStatus.COMPLETED,
+    status: AppointmentStatus.PENDING,
     createdAt: new Date(),
+    checkedInAt: null,
     client: {
       id: 'user-9',
-      email: 'gabriela@example.com',
-      fullName: 'Gabriela Flores',
+      email: 'elena@example.com',
+      fullName: 'Elena Gomez',
       phone: '555-1119',
       avatarUrl: null,
       createdAt: new Date(),
@@ -369,20 +343,10 @@ export const mockAppointments: AppointmentWithRelations[] = [
       service: {
         id: 'svc-12',
         storeId: 'store-1',
-        categoryId: 'cat-3',
-        name: 'Styling',
-        durationMin: 60,
-        priceCents: 3500,
-        type: ServiceType.SINGLE,
+        name: 'Wash',
+        price: 1000,
         createdAt: new Date(),
       },
     }],
   },
 ];
-
-export function getAppointments () {
-    return mockAppointments
-} 
-
-
-
