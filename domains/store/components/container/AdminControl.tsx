@@ -61,11 +61,11 @@ export default function AdminControl ({ items }: { items: any }) {
                                 <span className="flex items-center space-x-2 text-else ">
                                     <MapPin strokeWidth={1} />
                                     <p className="text-sm" >
-                                        {createExcerpt(i.description, 60)}
+                                        {createExcerpt(i.address, 60)}
                                     </p>
                                 </span>
                             </div>
-                            <BodySm className="self-end text-alternate">Created: July 10, 2026</BodySm> 
+                            <BodySm className="self-end text-alternate text-xs">Created: July 10, 2026</BodySm> 
                     </article>
                 )}
             />
