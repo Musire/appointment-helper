@@ -7,10 +7,10 @@ export type NavItem = {
 
 export type Role = 'SUPERADMIN' | 'ADMIN' | 'STAFF' | 'USER'
 
-export const navByRole: Record<Role, (storeId: string) => NavItem[]> = {
-  ADMIN: () => [
+export const navByRole: Record<Role, NavItem[]> = {
+  ADMIN: [
   ],
-  STAFF: (storeId) => [
+  STAFF: [
     { 
       label: 'Inicio',
       icon: 'home',
@@ -32,7 +32,7 @@ export const navByRole: Record<Role, (storeId: string) => NavItem[]> = {
       href: `/stores` 
     },
   ],
-  USER: (storeId) => [
+  USER: [
       { 
         label: 'Inicio', 
         href: `/dashboard`,
@@ -50,7 +50,7 @@ export const navByRole: Record<Role, (storeId: string) => NavItem[]> = {
         href: `/booking` 
       },
   ],
-  SUPERADMIN: (storeId) => [
+  SUPERADMIN: [
     { 
         label: 'Global', 
         href: `/superadmin/dashboard`,
@@ -64,6 +64,6 @@ export const navByRole: Record<Role, (storeId: string) => NavItem[]> = {
   ],
 }
 
-export function getNav(role: Role, slug: string) {
-  return navByRole[role]?.(slug) ?? []
+export function getNav(role: Role) {
+  return navByRole[role] ?? []
 }
