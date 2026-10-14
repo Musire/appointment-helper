@@ -1,6 +1,5 @@
 'use client';
 
-import { editStoreConfig } from "@/domains/store/actions/store.actions";
 import { useRouter } from "next/navigation";
 
 export default function EditButton ({ storeId }: { storeId: string }) {

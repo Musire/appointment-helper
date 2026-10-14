@@ -1,23 +1,25 @@
-// components/ui/StatusButton.tsx
+'use client';
+
 import { cn } from "@/lib/utils";
 import { Button } from "../buttons";
+import { ActionResponse } from "@/domains/identity/types";
 
 export type FormState = { success: boolean, error: string | null }
 
 
-type StatusButtonProps = {
+type StatusButtonProps<T> = {
   isPending: boolean;
-  state: FormState;
+  state: ActionResponse<T>;
   className?: string;
   idleText?: string;
 }
 
-export default function StatusButton({
+export default function StatusButton<T>({
   isPending,
   state,
   className,
   idleText = "Submit"
-}: StatusButtonProps) {
+}: StatusButtonProps<T>) {
   
   // 1. Determine current status
   const isSuccess = state?.success

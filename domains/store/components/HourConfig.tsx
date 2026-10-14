@@ -1,7 +1,7 @@
 import EditButton from "@/domains/availability/components/EditButton";
-import { getStoreConfig } from "@/domains/store/queries/storeConfig";
 import { HoopForm } from "@/features/update-business-hours/components";
 import { notFound } from "next/navigation";
+import { getStoreConfig } from "../store.queries";
 
 type Props = {
   params: Promise<{ storeId: string }>

@@ -1,5 +1,6 @@
 import { createSupabaseServerClientReadOnly } from "@/lib/supabase/server"
 import { prisma } from "../../../lib/prisma"
+import { AuthRepository } from "../auth.repositories"
 
 // 1. Define roles (source of truth)
 export const Roles = ['SUPERADMIN', 'ADMIN', 'STAFF', 'USER'] as const
@@ -103,4 +104,15 @@ export async function getUserById(targetId: string) {
   if (!user) return null
 
   return user.fullName
+}
+
+
+export async function getPrismaUserId () {
+  const user = await getCurrentUser()
+  if (!user) return null
+
+  const found = await AuthRepository.getUserPrismaId(user.id)
+  if (!found) return null
+
+  return found.id
 }

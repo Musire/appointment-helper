@@ -1,6 +1,7 @@
 import { StoreStatus } from "@/generated/prisma"
 import { prisma } from "@/lib/prisma"
-import { StoreHoursInput } from "../schemas/store.schema"
+import { defaultHours } from "./store.types"
+import { StoreCreationType, StoreHoursInput } from "./store.validations"
 
 export const  storeRepository = {
     async findStoresByUserId() {
@@ -135,29 +136,23 @@ export const  storeRepository = {
             }
         })
     },
-    async createStore({ name, address, id, defaultHours}: { name: string; address: string; id: string; defaultHours: {
-        label: string;
-        isActive: boolean;
-        start: string;
-        end: string;
-    }[]}) {
-        return await prisma.store.create({
+    async createStore({data, defaultHours, id}: {data: StoreCreationType, defaultHours: defaultHours, id: string}) { 
+        const store = await prisma.store.create({
             data: {
-                name,
-                address,
+                name: data.name,
+                address: data.address,
                 createdById: id,
-                // Nesting the StoreConfig creation
                 config: {
-                create: {
-                    // Nesting multiple StoreHour creations inside the Config
-                    hours: {
-                    createMany: {
-                        data: defaultHours
+                    create: {
+                        hours: {
+                            createMany: {
+                                data: defaultHours
+                            }
+                        }
                     }
-                    }
-                }
                 }
             }
         })
-    }
+        return store
+    },
 }

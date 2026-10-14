@@ -1,8 +1,8 @@
 import { formatActionError } from "@/lib/utils/formatError";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import z from "zod";
-import { ActionResult, SecureActionConfig } from "../auth.types";
 import { getCurrentUser } from "../auth.actions";
+import { ActionResponse, ActionResult, SecureActionConfig } from "../auth.types";
 
 export async function safeAction<T>(
   handler: () => T | Promise<T>
@@ -22,8 +22,8 @@ export async function safeAction<T>(
 export function createSafeAction<Args extends any[], Output>(
   config: SecureActionConfig,
   handler: (...args: Args) => Promise<Output>
-): (...args: Args) =>  Promise<ActionResult<Awaited<Output>>> {
-  return async (...args: Args): Promise<ActionResult<Awaited<Output>>> => {
+): (...args: Args) =>  Promise<ActionResponse<Awaited<Output>>> {
+  return async (...args: Args): Promise<ActionResponse<Awaited<Output>>> => {
     try {
       const user = await getCurrentUser();
 
@@ -63,8 +63,8 @@ export function createSafeAction<Args extends any[], Output>(
 
 export function createRegAction<Args extends any[], Output>(
   handler: (...args: Args) => Promise<Output>
-): (...args: Args) => Promise<ActionResult<Awaited<Output>>> {
-  return async (...args: Args): Promise<ActionResult<Awaited<Output>>> => {
+): (...args: Args) => Promise<ActionResponse<Awaited<Output>>> {
+  return async (...args: Args): Promise<ActionResponse<Awaited<Output>>> => {
     try {
       const data = await handler(...args);
       return {

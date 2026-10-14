@@ -1,16 +1,15 @@
 'use client';
 
-import { BodySm, DeleteModal } from "@/components/ui";
+import { DeleteModal } from "@/components/ui";
 import { deleteStores } from "@/domains/store/actions/admin.actions";
 import useSelectable from "@/hooks/useSelectable";
-import { createExcerpt } from "@/lib/utils/stringMutate";
-import { MapPin } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
     ContinueButton,
     SelectableDisplay,
     StoreActionTray
 } from ".";
+import AdminStoreCard from "../cards/AdminStoreCard";
 
 export default function AdminControl ({ items }: { items: any }) {
     const { 
@@ -53,21 +52,7 @@ export default function AdminControl ({ items }: { items: any }) {
                 getId={(item: any) => item.id}
                 onSelect={handleSelect}
                 onNavigate={(id:string) => router.push(`/stores/${id}`)}
-                renderItem={(i) => (
-                    <article 
-                        className="w-full rounded-xl h-fit stacked relative p-6 bg-surface-1 hover:cursor-pointer border-adjust border opacity-80 hover:opacity-90 active:opacity-100 cursor-pointer">
-                            <div className="">
-                                <p className="text-2xl capitalize">{i.name}</p>
-                                <span className="flex items-center space-x-2 text-else ">
-                                    <MapPin strokeWidth={1} />
-                                    <p className="text-sm" >
-                                        {createExcerpt(i.address, 60)}
-                                    </p>
-                                </span>
-                            </div>
-                            <BodySm className="self-end text-alternate text-xs">Created: July 10, 2026</BodySm> 
-                    </article>
-                )}
+                renderItem={(i) => <AdminStoreCard data={i} />  }
             />
             <ContinueButton 
                 mode={mode} 

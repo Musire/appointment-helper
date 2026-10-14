@@ -1,81 +1,138 @@
 'use server';
 
 import { getCurrentUser } from "@/domains/auth/auth.actions";
-import { safeAction } from "@/domains/auth/util/safeAction";
+import { requireRole } from "@/domains/auth/util/requireRole";
+import { createSafeAction, safeAction } from "@/domains/auth/util/safeAction";
 import { prisma } from "@/lib/prisma";
+import { StoreCreationSchema, StoreCreationType } from "@/validation/StoreCreation.schema";
 import { revalidatePath } from "next/cache";
+import { upsertStoreService } from "../store.services";
 
-export async function editStoreConfig (storeId: string) {
 
-    return safeAction(async() => {
-
-        const payload = {
-            storeId,
-            "hours": {
-                "mon": { "start": "09:00", "end": "17:00" },
-                "tue": { "start": "09:00", "end": "17:00" },
-                "wed": { "start": "09:00", "end": "17:00" },
-                "thu": { "start": "09:00", "end": "17:00" },
-                "fri": { "start": "09:00", "end": "17:00" },
-                "sat": { "start": "09:00", "end": "17:00" },
-                "sun": { "start": "09:00", "end": "17:00" },
-            },
-            "buffers": { "before": 0, "after": 0 },
-            "policies": { "cancel": "24h notice" }
-        }
-
-        await prisma.storeConfig.upsert({
-            where: { storeId },
-            update: {
-            },
-            create: {
-                storeId,
-            }
-        })
-
-    })
-}
-
-export async function sendInvite({ targetId, storeId }: { targetId: string; storeId: string; }) {
+export async function createStore (formData: StoreCreationType) {
   return safeAction(async () => {
-    const user = await getCurrentUser()
-    if (!user) throw new Error("User not logged in")
+    // 1. Authenticate and authorize
+    const { access, user } = await requireRole(['ADMIN'])
+    if (!access) {
+      throw new Error('Unauthorized to perform action')
+    }
+    if (!user) {
+      throw new Error('User not logged in')
+    }
 
-    return prisma.$transaction(async (tx) => {
-      const existingInvite = await tx.invite.findFirst({
-        where: {
-          userId: targetId,
-          storeId,
-        },
-      })
+    // 2. Validate input data
+    const parsed = StoreCreationSchema.safeParse(formData)
+    if (!parsed.success) {
+      throw new Error(parsed.error.issues[0].message);
+    }
+    const { name, address } = parsed.data
 
-      if (existingInvite) {
-        throw new Error("User already invited to this store")
+    // 3. Define default store hours data
+    const defaultHours = [
+      { label: "Lun - Vier", isActive: false, start: "09:00 AM", end: "05:00 PM" },
+      { label: "Sábado", isActive: false, start: "09:00 AM", end: "02:00 PM" },
+      { label: "Domingo", isActive: false, start: "09:00 AM", end: "02:00 PM" }
+    ]
+
+    // 4. Create Store, Config, and Hours in one nested transaction
+    await prisma.store.create({
+      data: {
+        name,
+        address,
+        createdById: user.id,
+        // Nesting the StoreConfig creation
+        config: {
+          create: {
+            // Nesting multiple StoreHour creations inside the Config
+            hours: {
+              createMany: {
+                data: defaultHours
+              }
+            }
+          }
+        }
       }
-
-      const invite = await tx.invite.create({
-        data: {
-          userId: targetId,
-          storeId,
-          invitedBy: user.id,
-          role: "STAFF",
-        },
-      })
-
-      await tx.notification.create({
-        data: {
-          userId: targetId,
-          type: "STORE_INVITATION",
-          payload: {
-            inviteId: invite.id,
-            inviteStatus: 'PENDING'
-          },
-        },
-      })
-
-      revalidatePath(`/admin/store/${storeId}/staff/invite`)
-      return invite
     })
+
+    // 5. Revalidate cache
+    revalidatePath('/dashboard')
   })
 }
 
+
+export async function updateStore (formData: StoreCreationType) {
+    return safeAction(async() => {
+        const { id, name, address } = formData;
+
+        if (!id) {
+            throw new Error('No store id found')
+        }
+
+        const { access, user } = await requireRole(['ADMIN'])  
+        
+        if (!access) {
+            throw new Error('Unauthorized to perform action')
+        }
+        
+        if (!user) {
+            throw new Error('User not logged in')
+        }
+
+        const result = await prisma.store.updateMany({
+            where: {
+                id,
+                createdById: user.id,
+            },
+            data: {
+                name,
+                address
+            }
+        })
+
+        if (result.count === 0) {
+            throw new Error("Not authorized or not found")
+        }
+    })
+}
+
+export async function deleteStores (target: string[]) {
+    return safeAction(async () => {
+        const { access, user } = await requireRole(['ADMIN'])  
+        
+        if (!access) {
+            throw new Error('Unauthorized to perform action')
+        }
+        
+        if (!user) {
+            throw new Error('User not logged in')
+        }
+
+        const result = await prisma.store.updateMany({
+            where : {
+                createdById: user.id,
+                id: {
+                    in: target
+                }
+            }, 
+            data: { 
+                status: 'SUSPENDED'
+            }
+        })
+
+        if (result.count === 0) {
+            throw new Error("Not authorized or not found")
+        }
+
+        revalidatePath('/admin/dashboard')
+    })
+}
+
+export const upsertStore = createSafeAction(
+  {},
+  async (payload) => {
+    const user = await getCurrentUser()
+    if (!user || !user.id) return;
+
+    await upsertStoreService({...payload, id: user.id})
+  }
+)

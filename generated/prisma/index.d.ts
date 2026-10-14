@@ -2259,20 +2259,20 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     appointments: number
-    storeStaff: number
+    invites: number
     notices: number
     stores: number
+    storeStaff: number
     roles: number
-    invites: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     appointments?: boolean | UserCountOutputTypeCountAppointmentsArgs
-    storeStaff?: boolean | UserCountOutputTypeCountStoreStaffArgs
+    invites?: boolean | UserCountOutputTypeCountInvitesArgs
     notices?: boolean | UserCountOutputTypeCountNoticesArgs
     stores?: boolean | UserCountOutputTypeCountStoresArgs
+    storeStaff?: boolean | UserCountOutputTypeCountStoreStaffArgs
     roles?: boolean | UserCountOutputTypeCountRolesArgs
-    invites?: boolean | UserCountOutputTypeCountInvitesArgs
   }
 
   // Custom InputTypes
@@ -2296,8 +2296,8 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountStoreStaffArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: StoreStaffWhereInput
+  export type UserCountOutputTypeCountInvitesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InviteWhereInput
   }
 
   /**
@@ -2317,15 +2317,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserRoleWhereInput
+  export type UserCountOutputTypeCountStoreStaffArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StoreStaffWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountInvitesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: InviteWhereInput
+  export type UserCountOutputTypeCountRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserRoleWhereInput
   }
 
 
@@ -2454,13 +2454,13 @@ export namespace Prisma {
    */
 
   export type StoreStaffCountOutputType = {
-    availability: number
     appointments: number
+    availability: number
   }
 
   export type StoreStaffCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    availability?: boolean | StoreStaffCountOutputTypeCountAvailabilityArgs
     appointments?: boolean | StoreStaffCountOutputTypeCountAppointmentsArgs
+    availability?: boolean | StoreStaffCountOutputTypeCountAvailabilityArgs
   }
 
   // Custom InputTypes
@@ -2477,15 +2477,15 @@ export namespace Prisma {
   /**
    * StoreStaffCountOutputType without action
    */
-  export type StoreStaffCountOutputTypeCountAvailabilityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: StaffAvailabilityWhereInput
+  export type StoreStaffCountOutputTypeCountAppointmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AppointmentWhereInput
   }
 
   /**
    * StoreStaffCountOutputType without action
    */
-  export type StoreStaffCountOutputTypeCountAppointmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AppointmentWhereInput
+  export type StoreStaffCountOutputTypeCountAvailabilityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StaffAvailabilityWhereInput
   }
 
 
@@ -2568,28 +2568,31 @@ export namespace Prisma {
   export type UserMinAggregateOutputType = {
     id: string | null
     email: string | null
-    fullName: string | null
-    phone: string | null
-    avatarUrl: string | null
     createdAt: Date | null
+    fullName: string | null
+    avatarUrl: string | null
+    phone: string | null
+    authId: string | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
     email: string | null
-    fullName: string | null
-    phone: string | null
-    avatarUrl: string | null
     createdAt: Date | null
+    fullName: string | null
+    avatarUrl: string | null
+    phone: string | null
+    authId: string | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
     email: number
-    fullName: number
-    phone: number
-    avatarUrl: number
     createdAt: number
+    fullName: number
+    avatarUrl: number
+    phone: number
+    authId: number
     _all: number
   }
 
@@ -2597,28 +2600,31 @@ export namespace Prisma {
   export type UserMinAggregateInputType = {
     id?: true
     email?: true
-    fullName?: true
-    phone?: true
-    avatarUrl?: true
     createdAt?: true
+    fullName?: true
+    avatarUrl?: true
+    phone?: true
+    authId?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
     email?: true
-    fullName?: true
-    phone?: true
-    avatarUrl?: true
     createdAt?: true
+    fullName?: true
+    avatarUrl?: true
+    phone?: true
+    authId?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
     email?: true
-    fullName?: true
-    phone?: true
-    avatarUrl?: true
     createdAt?: true
+    fullName?: true
+    avatarUrl?: true
+    phone?: true
+    authId?: true
     _all?: true
   }
 
@@ -2697,10 +2703,11 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: string
     email: string
-    fullName: string | null
-    phone: string | null
-    avatarUrl: string | null
     createdAt: Date
+    fullName: string | null
+    avatarUrl: string | null
+    phone: string | null
+    authId: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -2723,56 +2730,60 @@ export namespace Prisma {
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
-    fullName?: boolean
-    phone?: boolean
-    avatarUrl?: boolean
     createdAt?: boolean
+    fullName?: boolean
+    avatarUrl?: boolean
+    phone?: boolean
+    authId?: boolean
     appointments?: boolean | User$appointmentsArgs<ExtArgs>
-    storeStaff?: boolean | User$storeStaffArgs<ExtArgs>
+    invites?: boolean | User$invitesArgs<ExtArgs>
     notices?: boolean | User$noticesArgs<ExtArgs>
     staff?: boolean | User$staffArgs<ExtArgs>
     stores?: boolean | User$storesArgs<ExtArgs>
+    storeStaff?: boolean | User$storeStaffArgs<ExtArgs>
     roles?: boolean | User$rolesArgs<ExtArgs>
-    invites?: boolean | User$invitesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
-    fullName?: boolean
-    phone?: boolean
-    avatarUrl?: boolean
     createdAt?: boolean
+    fullName?: boolean
+    avatarUrl?: boolean
+    phone?: boolean
+    authId?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
-    fullName?: boolean
-    phone?: boolean
-    avatarUrl?: boolean
     createdAt?: boolean
+    fullName?: boolean
+    avatarUrl?: boolean
+    phone?: boolean
+    authId?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
     email?: boolean
-    fullName?: boolean
-    phone?: boolean
-    avatarUrl?: boolean
     createdAt?: boolean
+    fullName?: boolean
+    avatarUrl?: boolean
+    phone?: boolean
+    authId?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "fullName" | "phone" | "avatarUrl" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "createdAt" | "fullName" | "avatarUrl" | "phone" | "authId", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     appointments?: boolean | User$appointmentsArgs<ExtArgs>
-    storeStaff?: boolean | User$storeStaffArgs<ExtArgs>
+    invites?: boolean | User$invitesArgs<ExtArgs>
     notices?: boolean | User$noticesArgs<ExtArgs>
     staff?: boolean | User$staffArgs<ExtArgs>
     stores?: boolean | User$storesArgs<ExtArgs>
+    storeStaff?: boolean | User$storeStaffArgs<ExtArgs>
     roles?: boolean | User$rolesArgs<ExtArgs>
-    invites?: boolean | User$invitesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2782,20 +2793,21 @@ export namespace Prisma {
     name: "User"
     objects: {
       appointments: Prisma.$AppointmentPayload<ExtArgs>[]
-      storeStaff: Prisma.$StoreStaffPayload<ExtArgs>[]
+      invites: Prisma.$InvitePayload<ExtArgs>[]
       notices: Prisma.$NotificationPayload<ExtArgs>[]
       staff: Prisma.$StaffProfilePayload<ExtArgs> | null
       stores: Prisma.$StorePayload<ExtArgs>[]
+      storeStaff: Prisma.$StoreStaffPayload<ExtArgs>[]
       roles: Prisma.$UserRolePayload<ExtArgs>[]
-      invites: Prisma.$InvitePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string
-      fullName: string | null
-      phone: string | null
-      avatarUrl: string | null
       createdAt: Date
+      fullName: string | null
+      avatarUrl: string | null
+      phone: string | null
+      authId: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -3191,12 +3203,12 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     appointments<T extends User$appointmentsArgs<ExtArgs> = {}>(args?: Subset<T, User$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    storeStaff<T extends User$storeStaffArgs<ExtArgs> = {}>(args?: Subset<T, User$storeStaffArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreStaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    invites<T extends User$invitesArgs<ExtArgs> = {}>(args?: Subset<T, User$invitesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notices<T extends User$noticesArgs<ExtArgs> = {}>(args?: Subset<T, User$noticesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     staff<T extends User$staffArgs<ExtArgs> = {}>(args?: Subset<T, User$staffArgs<ExtArgs>>): Prisma__StaffProfileClient<$Result.GetResult<Prisma.$StaffProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     stores<T extends User$storesArgs<ExtArgs> = {}>(args?: Subset<T, User$storesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    storeStaff<T extends User$storeStaffArgs<ExtArgs> = {}>(args?: Subset<T, User$storeStaffArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreStaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     roles<T extends User$rolesArgs<ExtArgs> = {}>(args?: Subset<T, User$rolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    invites<T extends User$invitesArgs<ExtArgs> = {}>(args?: Subset<T, User$invitesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3228,10 +3240,11 @@ export namespace Prisma {
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
-    readonly fullName: FieldRef<"User", 'String'>
-    readonly phone: FieldRef<"User", 'String'>
-    readonly avatarUrl: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly fullName: FieldRef<"User", 'String'>
+    readonly avatarUrl: FieldRef<"User", 'String'>
+    readonly phone: FieldRef<"User", 'String'>
+    readonly authId: FieldRef<"User", 'String'>
   }
     
 
@@ -3649,27 +3662,27 @@ export namespace Prisma {
   }
 
   /**
-   * User.storeStaff
+   * User.invites
    */
-  export type User$storeStaffArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$invitesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the StoreStaff
+     * Select specific fields to fetch from the Invite
      */
-    select?: StoreStaffSelect<ExtArgs> | null
+    select?: InviteSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the StoreStaff
+     * Omit specific fields from the Invite
      */
-    omit?: StoreStaffOmit<ExtArgs> | null
+    omit?: InviteOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: StoreStaffInclude<ExtArgs> | null
-    where?: StoreStaffWhereInput
-    orderBy?: StoreStaffOrderByWithRelationInput | StoreStaffOrderByWithRelationInput[]
-    cursor?: StoreStaffWhereUniqueInput
+    include?: InviteInclude<ExtArgs> | null
+    where?: InviteWhereInput
+    orderBy?: InviteOrderByWithRelationInput | InviteOrderByWithRelationInput[]
+    cursor?: InviteWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: StoreStaffScalarFieldEnum | StoreStaffScalarFieldEnum[]
+    distinct?: InviteScalarFieldEnum | InviteScalarFieldEnum[]
   }
 
   /**
@@ -3740,6 +3753,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.storeStaff
+   */
+  export type User$storeStaffArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreStaff
+     */
+    select?: StoreStaffSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreStaff
+     */
+    omit?: StoreStaffOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreStaffInclude<ExtArgs> | null
+    where?: StoreStaffWhereInput
+    orderBy?: StoreStaffOrderByWithRelationInput | StoreStaffOrderByWithRelationInput[]
+    cursor?: StoreStaffWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StoreStaffScalarFieldEnum | StoreStaffScalarFieldEnum[]
+  }
+
+  /**
    * User.roles
    */
   export type User$rolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3761,30 +3798,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserRoleScalarFieldEnum | UserRoleScalarFieldEnum[]
-  }
-
-  /**
-   * User.invites
-   */
-  export type User$invitesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invite
-     */
-    select?: InviteSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invite
-     */
-    omit?: InviteOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InviteInclude<ExtArgs> | null
-    where?: InviteWhereInput
-    orderBy?: InviteOrderByWithRelationInput | InviteOrderByWithRelationInput[]
-    cursor?: InviteWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: InviteScalarFieldEnum | InviteScalarFieldEnum[]
   }
 
   /**
@@ -7256,8 +7269,8 @@ export namespace Prisma {
     storeId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    hours?: boolean | StoreConfig$hoursArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    hours?: boolean | StoreConfig$hoursArgs<ExtArgs>
     _count?: boolean | StoreConfigCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["storeConfig"]>
 
@@ -7286,8 +7299,8 @@ export namespace Prisma {
 
   export type StoreConfigOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "createdAt" | "updatedAt", ExtArgs["result"]["storeConfig"]>
   export type StoreConfigInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    hours?: boolean | StoreConfig$hoursArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    hours?: boolean | StoreConfig$hoursArgs<ExtArgs>
     _count?: boolean | StoreConfigCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StoreConfigIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7300,8 +7313,8 @@ export namespace Prisma {
   export type $StoreConfigPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "StoreConfig"
     objects: {
-      hours: Prisma.$StoreHourPayload<ExtArgs>[]
       store: Prisma.$StorePayload<ExtArgs>
+      hours: Prisma.$StoreHourPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7702,8 +7715,8 @@ export namespace Prisma {
    */
   export interface Prisma__StoreConfigClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    hours<T extends StoreConfig$hoursArgs<ExtArgs> = {}>(args?: Subset<T, StoreConfig$hoursArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreHourPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    hours<T extends StoreConfig$hoursArgs<ExtArgs> = {}>(args?: Subset<T, StoreConfig$hoursArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreHourPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9420,10 +9433,10 @@ export namespace Prisma {
     userId?: boolean
     role?: boolean
     status?: boolean
-    availability?: boolean | StoreStaff$availabilityArgs<ExtArgs>
     appointments?: boolean | StoreStaff$appointmentsArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    availability?: boolean | StoreStaff$availabilityArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | StoreStaffCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["storeStaff"]>
 
@@ -9433,8 +9446,8 @@ export namespace Prisma {
     userId?: boolean
     role?: boolean
     status?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["storeStaff"]>
 
   export type StoreStaffSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9443,8 +9456,8 @@ export namespace Prisma {
     userId?: boolean
     role?: boolean
     status?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["storeStaff"]>
 
   export type StoreStaffSelectScalar = {
@@ -9457,28 +9470,28 @@ export namespace Prisma {
 
   export type StoreStaffOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "userId" | "role" | "status", ExtArgs["result"]["storeStaff"]>
   export type StoreStaffInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    availability?: boolean | StoreStaff$availabilityArgs<ExtArgs>
     appointments?: boolean | StoreStaff$appointmentsArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    availability?: boolean | StoreStaff$availabilityArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | StoreStaffCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StoreStaffIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type StoreStaffIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $StoreStaffPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "StoreStaff"
     objects: {
-      availability: Prisma.$StaffAvailabilityPayload<ExtArgs>[]
       appointments: Prisma.$AppointmentPayload<ExtArgs>[]
-      user: Prisma.$UserPayload<ExtArgs>
+      availability: Prisma.$StaffAvailabilityPayload<ExtArgs>[]
       store: Prisma.$StorePayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9880,10 +9893,10 @@ export namespace Prisma {
    */
   export interface Prisma__StoreStaffClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    availability<T extends StoreStaff$availabilityArgs<ExtArgs> = {}>(args?: Subset<T, StoreStaff$availabilityArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffAvailabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appointments<T extends StoreStaff$appointmentsArgs<ExtArgs> = {}>(args?: Subset<T, StoreStaff$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    availability<T extends StoreStaff$availabilityArgs<ExtArgs> = {}>(args?: Subset<T, StoreStaff$availabilityArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffAvailabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10319,30 +10332,6 @@ export namespace Prisma {
   }
 
   /**
-   * StoreStaff.availability
-   */
-  export type StoreStaff$availabilityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the StaffAvailability
-     */
-    select?: StaffAvailabilitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the StaffAvailability
-     */
-    omit?: StaffAvailabilityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StaffAvailabilityInclude<ExtArgs> | null
-    where?: StaffAvailabilityWhereInput
-    orderBy?: StaffAvailabilityOrderByWithRelationInput | StaffAvailabilityOrderByWithRelationInput[]
-    cursor?: StaffAvailabilityWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: StaffAvailabilityScalarFieldEnum | StaffAvailabilityScalarFieldEnum[]
-  }
-
-  /**
    * StoreStaff.appointments
    */
   export type StoreStaff$appointmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10364,6 +10353,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AppointmentScalarFieldEnum | AppointmentScalarFieldEnum[]
+  }
+
+  /**
+   * StoreStaff.availability
+   */
+  export type StoreStaff$availabilityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffAvailability
+     */
+    select?: StaffAvailabilitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffAvailability
+     */
+    omit?: StaffAvailabilityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffAvailabilityInclude<ExtArgs> | null
+    where?: StaffAvailabilityWhereInput
+    orderBy?: StaffAvailabilityOrderByWithRelationInput | StaffAvailabilityOrderByWithRelationInput[]
+    cursor?: StaffAvailabilityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StaffAvailabilityScalarFieldEnum | StaffAvailabilityScalarFieldEnum[]
   }
 
   /**
@@ -11447,52 +11460,52 @@ export namespace Prisma {
 
   export type StaffAvailabilityMinAggregateOutputType = {
     id: string | null
-    storeStaffId: string | null
-    dayOfWeek: $Enums.DayOfWeek | null
     startTime: Date | null
     endTime: Date | null
+    storeStaffId: string | null
+    dayOfWeek: $Enums.DayOfWeek | null
   }
 
   export type StaffAvailabilityMaxAggregateOutputType = {
     id: string | null
-    storeStaffId: string | null
-    dayOfWeek: $Enums.DayOfWeek | null
     startTime: Date | null
     endTime: Date | null
+    storeStaffId: string | null
+    dayOfWeek: $Enums.DayOfWeek | null
   }
 
   export type StaffAvailabilityCountAggregateOutputType = {
     id: number
-    storeStaffId: number
-    dayOfWeek: number
     startTime: number
     endTime: number
+    storeStaffId: number
+    dayOfWeek: number
     _all: number
   }
 
 
   export type StaffAvailabilityMinAggregateInputType = {
     id?: true
-    storeStaffId?: true
-    dayOfWeek?: true
     startTime?: true
     endTime?: true
+    storeStaffId?: true
+    dayOfWeek?: true
   }
 
   export type StaffAvailabilityMaxAggregateInputType = {
     id?: true
-    storeStaffId?: true
-    dayOfWeek?: true
     startTime?: true
     endTime?: true
+    storeStaffId?: true
+    dayOfWeek?: true
   }
 
   export type StaffAvailabilityCountAggregateInputType = {
     id?: true
-    storeStaffId?: true
-    dayOfWeek?: true
     startTime?: true
     endTime?: true
+    storeStaffId?: true
+    dayOfWeek?: true
     _all?: true
   }
 
@@ -11570,10 +11583,10 @@ export namespace Prisma {
 
   export type StaffAvailabilityGroupByOutputType = {
     id: string
-    storeStaffId: string
-    dayOfWeek: $Enums.DayOfWeek
     startTime: Date
     endTime: Date
+    storeStaffId: string
+    dayOfWeek: $Enums.DayOfWeek
     _count: StaffAvailabilityCountAggregateOutputType | null
     _min: StaffAvailabilityMinAggregateOutputType | null
     _max: StaffAvailabilityMaxAggregateOutputType | null
@@ -11595,40 +11608,40 @@ export namespace Prisma {
 
   export type StaffAvailabilitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    storeStaffId?: boolean
-    dayOfWeek?: boolean
     startTime?: boolean
     endTime?: boolean
+    storeStaffId?: boolean
+    dayOfWeek?: boolean
     storeStaff?: boolean | StoreStaffDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["staffAvailability"]>
 
   export type StaffAvailabilitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    storeStaffId?: boolean
-    dayOfWeek?: boolean
     startTime?: boolean
     endTime?: boolean
+    storeStaffId?: boolean
+    dayOfWeek?: boolean
     storeStaff?: boolean | StoreStaffDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["staffAvailability"]>
 
   export type StaffAvailabilitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    storeStaffId?: boolean
-    dayOfWeek?: boolean
     startTime?: boolean
     endTime?: boolean
+    storeStaffId?: boolean
+    dayOfWeek?: boolean
     storeStaff?: boolean | StoreStaffDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["staffAvailability"]>
 
   export type StaffAvailabilitySelectScalar = {
     id?: boolean
-    storeStaffId?: boolean
-    dayOfWeek?: boolean
     startTime?: boolean
     endTime?: boolean
+    storeStaffId?: boolean
+    dayOfWeek?: boolean
   }
 
-  export type StaffAvailabilityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeStaffId" | "dayOfWeek" | "startTime" | "endTime", ExtArgs["result"]["staffAvailability"]>
+  export type StaffAvailabilityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "startTime" | "endTime" | "storeStaffId" | "dayOfWeek", ExtArgs["result"]["staffAvailability"]>
   export type StaffAvailabilityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     storeStaff?: boolean | StoreStaffDefaultArgs<ExtArgs>
   }
@@ -11646,10 +11659,10 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      storeStaffId: string
-      dayOfWeek: $Enums.DayOfWeek
       startTime: Date
       endTime: Date
+      storeStaffId: string
+      dayOfWeek: $Enums.DayOfWeek
     }, ExtArgs["result"]["staffAvailability"]>
     composites: {}
   }
@@ -12075,10 +12088,10 @@ export namespace Prisma {
    */
   interface StaffAvailabilityFieldRefs {
     readonly id: FieldRef<"StaffAvailability", 'String'>
-    readonly storeStaffId: FieldRef<"StaffAvailability", 'String'>
-    readonly dayOfWeek: FieldRef<"StaffAvailability", 'DayOfWeek'>
     readonly startTime: FieldRef<"StaffAvailability", 'DateTime'>
     readonly endTime: FieldRef<"StaffAvailability", 'DateTime'>
+    readonly storeStaffId: FieldRef<"StaffAvailability", 'String'>
+    readonly dayOfWeek: FieldRef<"StaffAvailability", 'DayOfWeek'>
   }
     
 
@@ -12522,24 +12535,24 @@ export namespace Prisma {
     id: string | null
     storeId: string | null
     name: string | null
-    price: number | null
     createdAt: Date | null
+    price: number | null
   }
 
   export type ServiceMaxAggregateOutputType = {
     id: string | null
     storeId: string | null
     name: string | null
-    price: number | null
     createdAt: Date | null
+    price: number | null
   }
 
   export type ServiceCountAggregateOutputType = {
     id: number
     storeId: number
     name: number
-    price: number
     createdAt: number
+    price: number
     _all: number
   }
 
@@ -12556,24 +12569,24 @@ export namespace Prisma {
     id?: true
     storeId?: true
     name?: true
-    price?: true
     createdAt?: true
+    price?: true
   }
 
   export type ServiceMaxAggregateInputType = {
     id?: true
     storeId?: true
     name?: true
-    price?: true
     createdAt?: true
+    price?: true
   }
 
   export type ServiceCountAggregateInputType = {
     id?: true
     storeId?: true
     name?: true
-    price?: true
     createdAt?: true
+    price?: true
     _all?: true
   }
 
@@ -12667,8 +12680,8 @@ export namespace Prisma {
     id: string
     storeId: string
     name: string
-    price: number
     createdAt: Date
+    price: number
     _count: ServiceCountAggregateOutputType | null
     _avg: ServiceAvgAggregateOutputType | null
     _sum: ServiceSumAggregateOutputType | null
@@ -12694,8 +12707,8 @@ export namespace Prisma {
     id?: boolean
     storeId?: boolean
     name?: boolean
-    price?: boolean
     createdAt?: boolean
+    price?: boolean
     bookings?: boolean | Service$bookingsArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
     _count?: boolean | ServiceCountOutputTypeDefaultArgs<ExtArgs>
@@ -12705,8 +12718,8 @@ export namespace Prisma {
     id?: boolean
     storeId?: boolean
     name?: boolean
-    price?: boolean
     createdAt?: boolean
+    price?: boolean
     store?: boolean | StoreDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["service"]>
 
@@ -12714,8 +12727,8 @@ export namespace Prisma {
     id?: boolean
     storeId?: boolean
     name?: boolean
-    price?: boolean
     createdAt?: boolean
+    price?: boolean
     store?: boolean | StoreDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["service"]>
 
@@ -12723,11 +12736,11 @@ export namespace Prisma {
     id?: boolean
     storeId?: boolean
     name?: boolean
-    price?: boolean
     createdAt?: boolean
+    price?: boolean
   }
 
-  export type ServiceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "name" | "price" | "createdAt", ExtArgs["result"]["service"]>
+  export type ServiceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "name" | "createdAt" | "price", ExtArgs["result"]["service"]>
   export type ServiceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bookings?: boolean | Service$bookingsArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
@@ -12750,8 +12763,8 @@ export namespace Prisma {
       id: string
       storeId: string
       name: string
-      price: number
       createdAt: Date
+      price: number
     }, ExtArgs["result"]["service"]>
     composites: {}
   }
@@ -13180,8 +13193,8 @@ export namespace Prisma {
     readonly id: FieldRef<"Service", 'String'>
     readonly storeId: FieldRef<"Service", 'String'>
     readonly name: FieldRef<"Service", 'String'>
-    readonly price: FieldRef<"Service", 'Int'>
     readonly createdAt: FieldRef<"Service", 'DateTime'>
+    readonly price: FieldRef<"Service", 'Int'>
   }
     
 
@@ -13643,8 +13656,8 @@ export namespace Prisma {
     startTime: Date | null
     endTime: Date | null
     status: $Enums.AppointmentStatus | null
-    checkedInAt: Date | null
     createdAt: Date | null
+    checkedInAt: Date | null
   }
 
   export type AppointmentMaxAggregateOutputType = {
@@ -13655,8 +13668,8 @@ export namespace Prisma {
     startTime: Date | null
     endTime: Date | null
     status: $Enums.AppointmentStatus | null
-    checkedInAt: Date | null
     createdAt: Date | null
+    checkedInAt: Date | null
   }
 
   export type AppointmentCountAggregateOutputType = {
@@ -13667,8 +13680,8 @@ export namespace Prisma {
     startTime: number
     endTime: number
     status: number
-    checkedInAt: number
     createdAt: number
+    checkedInAt: number
     _all: number
   }
 
@@ -13681,8 +13694,8 @@ export namespace Prisma {
     startTime?: true
     endTime?: true
     status?: true
-    checkedInAt?: true
     createdAt?: true
+    checkedInAt?: true
   }
 
   export type AppointmentMaxAggregateInputType = {
@@ -13693,8 +13706,8 @@ export namespace Prisma {
     startTime?: true
     endTime?: true
     status?: true
-    checkedInAt?: true
     createdAt?: true
+    checkedInAt?: true
   }
 
   export type AppointmentCountAggregateInputType = {
@@ -13705,8 +13718,8 @@ export namespace Prisma {
     startTime?: true
     endTime?: true
     status?: true
-    checkedInAt?: true
     createdAt?: true
+    checkedInAt?: true
     _all?: true
   }
 
@@ -13790,8 +13803,8 @@ export namespace Prisma {
     startTime: Date
     endTime: Date
     status: $Enums.AppointmentStatus
-    checkedInAt: Date | null
     createdAt: Date
+    checkedInAt: Date | null
     _count: AppointmentCountAggregateOutputType | null
     _min: AppointmentMinAggregateOutputType | null
     _max: AppointmentMaxAggregateOutputType | null
@@ -13819,8 +13832,8 @@ export namespace Prisma {
     startTime?: boolean
     endTime?: boolean
     status?: boolean
-    checkedInAt?: boolean
     createdAt?: boolean
+    checkedInAt?: boolean
     staff?: boolean | StoreStaffDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
@@ -13836,8 +13849,8 @@ export namespace Prisma {
     startTime?: boolean
     endTime?: boolean
     status?: boolean
-    checkedInAt?: boolean
     createdAt?: boolean
+    checkedInAt?: boolean
     staff?: boolean | StoreStaffDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
@@ -13851,8 +13864,8 @@ export namespace Prisma {
     startTime?: boolean
     endTime?: boolean
     status?: boolean
-    checkedInAt?: boolean
     createdAt?: boolean
+    checkedInAt?: boolean
     staff?: boolean | StoreStaffDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
@@ -13866,11 +13879,11 @@ export namespace Prisma {
     startTime?: boolean
     endTime?: boolean
     status?: boolean
-    checkedInAt?: boolean
     createdAt?: boolean
+    checkedInAt?: boolean
   }
 
-  export type AppointmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "staffId" | "userId" | "startTime" | "endTime" | "status" | "checkedInAt" | "createdAt", ExtArgs["result"]["appointment"]>
+  export type AppointmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "staffId" | "userId" | "startTime" | "endTime" | "status" | "createdAt" | "checkedInAt", ExtArgs["result"]["appointment"]>
   export type AppointmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     staff?: boolean | StoreStaffDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
@@ -13905,8 +13918,8 @@ export namespace Prisma {
       startTime: Date
       endTime: Date
       status: $Enums.AppointmentStatus
-      checkedInAt: Date | null
       createdAt: Date
+      checkedInAt: Date | null
     }, ExtArgs["result"]["appointment"]>
     composites: {}
   }
@@ -14341,8 +14354,8 @@ export namespace Prisma {
     readonly startTime: FieldRef<"Appointment", 'DateTime'>
     readonly endTime: FieldRef<"Appointment", 'DateTime'>
     readonly status: FieldRef<"Appointment", 'AppointmentStatus'>
-    readonly checkedInAt: FieldRef<"Appointment", 'DateTime'>
     readonly createdAt: FieldRef<"Appointment", 'DateTime'>
+    readonly checkedInAt: FieldRef<"Appointment", 'DateTime'>
   }
     
 
@@ -16916,31 +16929,31 @@ export namespace Prisma {
   export type InviteMinAggregateOutputType = {
     id: string | null
     storeId: string | null
-    userId: string | null
     role: $Enums.StoreRole | null
+    createdAt: Date | null
     invitedBy: string | null
     status: $Enums.InviteStatus | null
-    createdAt: Date | null
+    userId: string | null
   }
 
   export type InviteMaxAggregateOutputType = {
     id: string | null
     storeId: string | null
-    userId: string | null
     role: $Enums.StoreRole | null
+    createdAt: Date | null
     invitedBy: string | null
     status: $Enums.InviteStatus | null
-    createdAt: Date | null
+    userId: string | null
   }
 
   export type InviteCountAggregateOutputType = {
     id: number
     storeId: number
-    userId: number
     role: number
+    createdAt: number
     invitedBy: number
     status: number
-    createdAt: number
+    userId: number
     _all: number
   }
 
@@ -16948,31 +16961,31 @@ export namespace Prisma {
   export type InviteMinAggregateInputType = {
     id?: true
     storeId?: true
-    userId?: true
     role?: true
+    createdAt?: true
     invitedBy?: true
     status?: true
-    createdAt?: true
+    userId?: true
   }
 
   export type InviteMaxAggregateInputType = {
     id?: true
     storeId?: true
-    userId?: true
     role?: true
+    createdAt?: true
     invitedBy?: true
     status?: true
-    createdAt?: true
+    userId?: true
   }
 
   export type InviteCountAggregateInputType = {
     id?: true
     storeId?: true
-    userId?: true
     role?: true
+    createdAt?: true
     invitedBy?: true
     status?: true
-    createdAt?: true
+    userId?: true
     _all?: true
   }
 
@@ -17051,11 +17064,11 @@ export namespace Prisma {
   export type InviteGroupByOutputType = {
     id: string
     storeId: string
-    userId: string
     role: $Enums.StoreRole
+    createdAt: Date
     invitedBy: string
     status: $Enums.InviteStatus
-    createdAt: Date
+    userId: string
     _count: InviteCountAggregateOutputType | null
     _min: InviteMinAggregateOutputType | null
     _max: InviteMaxAggregateOutputType | null
@@ -17078,11 +17091,11 @@ export namespace Prisma {
   export type InviteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     storeId?: boolean
-    userId?: boolean
     role?: boolean
+    createdAt?: boolean
     invitedBy?: boolean
     status?: boolean
-    createdAt?: boolean
+    userId?: boolean
     store?: boolean | StoreDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["invite"]>
@@ -17090,11 +17103,11 @@ export namespace Prisma {
   export type InviteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     storeId?: boolean
-    userId?: boolean
     role?: boolean
+    createdAt?: boolean
     invitedBy?: boolean
     status?: boolean
-    createdAt?: boolean
+    userId?: boolean
     store?: boolean | StoreDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["invite"]>
@@ -17102,11 +17115,11 @@ export namespace Prisma {
   export type InviteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     storeId?: boolean
-    userId?: boolean
     role?: boolean
+    createdAt?: boolean
     invitedBy?: boolean
     status?: boolean
-    createdAt?: boolean
+    userId?: boolean
     store?: boolean | StoreDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["invite"]>
@@ -17114,14 +17127,14 @@ export namespace Prisma {
   export type InviteSelectScalar = {
     id?: boolean
     storeId?: boolean
-    userId?: boolean
     role?: boolean
+    createdAt?: boolean
     invitedBy?: boolean
     status?: boolean
-    createdAt?: boolean
+    userId?: boolean
   }
 
-  export type InviteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "userId" | "role" | "invitedBy" | "status" | "createdAt", ExtArgs["result"]["invite"]>
+  export type InviteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "role" | "createdAt" | "invitedBy" | "status" | "userId", ExtArgs["result"]["invite"]>
   export type InviteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     store?: boolean | StoreDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -17144,11 +17157,11 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       storeId: string
-      userId: string
       role: $Enums.StoreRole
+      createdAt: Date
       invitedBy: string
       status: $Enums.InviteStatus
-      createdAt: Date
+      userId: string
     }, ExtArgs["result"]["invite"]>
     composites: {}
   }
@@ -17576,11 +17589,11 @@ export namespace Prisma {
   interface InviteFieldRefs {
     readonly id: FieldRef<"Invite", 'String'>
     readonly storeId: FieldRef<"Invite", 'String'>
-    readonly userId: FieldRef<"Invite", 'String'>
     readonly role: FieldRef<"Invite", 'StoreRole'>
+    readonly createdAt: FieldRef<"Invite", 'DateTime'>
     readonly invitedBy: FieldRef<"Invite", 'String'>
     readonly status: FieldRef<"Invite", 'InviteStatus'>
-    readonly createdAt: FieldRef<"Invite", 'DateTime'>
+    readonly userId: FieldRef<"Invite", 'String'>
   }
     
 
@@ -19030,10 +19043,11 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     id: 'id',
     email: 'email',
+    createdAt: 'createdAt',
     fullName: 'fullName',
-    phone: 'phone',
     avatarUrl: 'avatarUrl',
-    createdAt: 'createdAt'
+    phone: 'phone',
+    authId: 'authId'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -19113,10 +19127,10 @@ export namespace Prisma {
 
   export const StaffAvailabilityScalarFieldEnum: {
     id: 'id',
-    storeStaffId: 'storeStaffId',
-    dayOfWeek: 'dayOfWeek',
     startTime: 'startTime',
-    endTime: 'endTime'
+    endTime: 'endTime',
+    storeStaffId: 'storeStaffId',
+    dayOfWeek: 'dayOfWeek'
   };
 
   export type StaffAvailabilityScalarFieldEnum = (typeof StaffAvailabilityScalarFieldEnum)[keyof typeof StaffAvailabilityScalarFieldEnum]
@@ -19126,8 +19140,8 @@ export namespace Prisma {
     id: 'id',
     storeId: 'storeId',
     name: 'name',
-    price: 'price',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    price: 'price'
   };
 
   export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeof ServiceScalarFieldEnum]
@@ -19141,8 +19155,8 @@ export namespace Prisma {
     startTime: 'startTime',
     endTime: 'endTime',
     status: 'status',
-    checkedInAt: 'checkedInAt',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    checkedInAt: 'checkedInAt'
   };
 
   export type AppointmentScalarFieldEnum = (typeof AppointmentScalarFieldEnum)[keyof typeof AppointmentScalarFieldEnum]
@@ -19172,11 +19186,11 @@ export namespace Prisma {
   export const InviteScalarFieldEnum: {
     id: 'id',
     storeId: 'storeId',
-    userId: 'userId',
     role: 'role',
+    createdAt: 'createdAt',
     invitedBy: 'invitedBy',
     status: 'status',
-    createdAt: 'createdAt'
+    userId: 'userId'
   };
 
   export type InviteScalarFieldEnum = (typeof InviteScalarFieldEnum)[keyof typeof InviteScalarFieldEnum]
@@ -19437,33 +19451,35 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
-    fullName?: StringNullableFilter<"User"> | string | null
-    phone?: StringNullableFilter<"User"> | string | null
-    avatarUrl?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
+    fullName?: StringNullableFilter<"User"> | string | null
+    avatarUrl?: StringNullableFilter<"User"> | string | null
+    phone?: StringNullableFilter<"User"> | string | null
+    authId?: UuidNullableFilter<"User"> | string | null
     appointments?: AppointmentListRelationFilter
-    storeStaff?: StoreStaffListRelationFilter
+    invites?: InviteListRelationFilter
     notices?: NotificationListRelationFilter
     staff?: XOR<StaffProfileNullableScalarRelationFilter, StaffProfileWhereInput> | null
     stores?: StoreListRelationFilter
+    storeStaff?: StoreStaffListRelationFilter
     roles?: UserRoleListRelationFilter
-    invites?: InviteListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     email?: SortOrder
-    fullName?: SortOrderInput | SortOrder
-    phone?: SortOrderInput | SortOrder
-    avatarUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    fullName?: SortOrderInput | SortOrder
+    avatarUrl?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
+    authId?: SortOrderInput | SortOrder
     appointments?: AppointmentOrderByRelationAggregateInput
-    storeStaff?: StoreStaffOrderByRelationAggregateInput
+    invites?: InviteOrderByRelationAggregateInput
     notices?: NotificationOrderByRelationAggregateInput
     staff?: StaffProfileOrderByWithRelationInput
     stores?: StoreOrderByRelationAggregateInput
+    storeStaff?: StoreStaffOrderByRelationAggregateInput
     roles?: UserRoleOrderByRelationAggregateInput
-    invites?: InviteOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -19472,26 +19488,28 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    fullName?: StringNullableFilter<"User"> | string | null
-    phone?: StringNullableFilter<"User"> | string | null
-    avatarUrl?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
+    fullName?: StringNullableFilter<"User"> | string | null
+    avatarUrl?: StringNullableFilter<"User"> | string | null
+    phone?: StringNullableFilter<"User"> | string | null
+    authId?: UuidNullableFilter<"User"> | string | null
     appointments?: AppointmentListRelationFilter
-    storeStaff?: StoreStaffListRelationFilter
+    invites?: InviteListRelationFilter
     notices?: NotificationListRelationFilter
     staff?: XOR<StaffProfileNullableScalarRelationFilter, StaffProfileWhereInput> | null
     stores?: StoreListRelationFilter
+    storeStaff?: StoreStaffListRelationFilter
     roles?: UserRoleListRelationFilter
-    invites?: InviteListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
-    fullName?: SortOrderInput | SortOrder
-    phone?: SortOrderInput | SortOrder
-    avatarUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    fullName?: SortOrderInput | SortOrder
+    avatarUrl?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
+    authId?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -19503,10 +19521,11 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
-    fullName?: StringNullableWithAggregatesFilter<"User"> | string | null
-    phone?: StringNullableWithAggregatesFilter<"User"> | string | null
-    avatarUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    fullName?: StringNullableWithAggregatesFilter<"User"> | string | null
+    avatarUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    phone?: StringNullableWithAggregatesFilter<"User"> | string | null
+    authId?: UuidNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type RoleWhereInput = {
@@ -19681,8 +19700,8 @@ export namespace Prisma {
     storeId?: StringFilter<"StoreConfig"> | string
     createdAt?: DateTimeFilter<"StoreConfig"> | Date | string
     updatedAt?: DateTimeFilter<"StoreConfig"> | Date | string
-    hours?: StoreHourListRelationFilter
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    hours?: StoreHourListRelationFilter
   }
 
   export type StoreConfigOrderByWithRelationInput = {
@@ -19690,8 +19709,8 @@ export namespace Prisma {
     storeId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    hours?: StoreHourOrderByRelationAggregateInput
     store?: StoreOrderByWithRelationInput
+    hours?: StoreHourOrderByRelationAggregateInput
   }
 
   export type StoreConfigWhereUniqueInput = Prisma.AtLeast<{
@@ -19702,8 +19721,8 @@ export namespace Prisma {
     NOT?: StoreConfigWhereInput | StoreConfigWhereInput[]
     createdAt?: DateTimeFilter<"StoreConfig"> | Date | string
     updatedAt?: DateTimeFilter<"StoreConfig"> | Date | string
-    hours?: StoreHourListRelationFilter
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    hours?: StoreHourListRelationFilter
   }, "id" | "storeId">
 
   export type StoreConfigOrderByWithAggregationInput = {
@@ -19795,10 +19814,10 @@ export namespace Prisma {
     userId?: StringFilter<"StoreStaff"> | string
     role?: EnumStoreRoleFilter<"StoreStaff"> | $Enums.StoreRole
     status?: EnumStaffStatusFilter<"StoreStaff"> | $Enums.StaffStatus
-    availability?: StaffAvailabilityListRelationFilter
     appointments?: AppointmentListRelationFilter
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    availability?: StaffAvailabilityListRelationFilter
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type StoreStaffOrderByWithRelationInput = {
@@ -19807,10 +19826,10 @@ export namespace Prisma {
     userId?: SortOrder
     role?: SortOrder
     status?: SortOrder
-    availability?: StaffAvailabilityOrderByRelationAggregateInput
     appointments?: AppointmentOrderByRelationAggregateInput
-    user?: UserOrderByWithRelationInput
+    availability?: StaffAvailabilityOrderByRelationAggregateInput
     store?: StoreOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type StoreStaffWhereUniqueInput = Prisma.AtLeast<{
@@ -19823,10 +19842,10 @@ export namespace Prisma {
     userId?: StringFilter<"StoreStaff"> | string
     role?: EnumStoreRoleFilter<"StoreStaff"> | $Enums.StoreRole
     status?: EnumStaffStatusFilter<"StoreStaff"> | $Enums.StaffStatus
-    availability?: StaffAvailabilityListRelationFilter
     appointments?: AppointmentListRelationFilter
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    availability?: StaffAvailabilityListRelationFilter
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "storeId_userId">
 
   export type StoreStaffOrderByWithAggregationInput = {
@@ -19906,19 +19925,19 @@ export namespace Prisma {
     OR?: StaffAvailabilityWhereInput[]
     NOT?: StaffAvailabilityWhereInput | StaffAvailabilityWhereInput[]
     id?: StringFilter<"StaffAvailability"> | string
-    storeStaffId?: StringFilter<"StaffAvailability"> | string
-    dayOfWeek?: EnumDayOfWeekFilter<"StaffAvailability"> | $Enums.DayOfWeek
     startTime?: DateTimeFilter<"StaffAvailability"> | Date | string
     endTime?: DateTimeFilter<"StaffAvailability"> | Date | string
+    storeStaffId?: StringFilter<"StaffAvailability"> | string
+    dayOfWeek?: EnumDayOfWeekFilter<"StaffAvailability"> | $Enums.DayOfWeek
     storeStaff?: XOR<StoreStaffScalarRelationFilter, StoreStaffWhereInput>
   }
 
   export type StaffAvailabilityOrderByWithRelationInput = {
     id?: SortOrder
-    storeStaffId?: SortOrder
-    dayOfWeek?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    storeStaffId?: SortOrder
+    dayOfWeek?: SortOrder
     storeStaff?: StoreStaffOrderByWithRelationInput
   }
 
@@ -19927,19 +19946,19 @@ export namespace Prisma {
     AND?: StaffAvailabilityWhereInput | StaffAvailabilityWhereInput[]
     OR?: StaffAvailabilityWhereInput[]
     NOT?: StaffAvailabilityWhereInput | StaffAvailabilityWhereInput[]
-    storeStaffId?: StringFilter<"StaffAvailability"> | string
-    dayOfWeek?: EnumDayOfWeekFilter<"StaffAvailability"> | $Enums.DayOfWeek
     startTime?: DateTimeFilter<"StaffAvailability"> | Date | string
     endTime?: DateTimeFilter<"StaffAvailability"> | Date | string
+    storeStaffId?: StringFilter<"StaffAvailability"> | string
+    dayOfWeek?: EnumDayOfWeekFilter<"StaffAvailability"> | $Enums.DayOfWeek
     storeStaff?: XOR<StoreStaffScalarRelationFilter, StoreStaffWhereInput>
   }, "id">
 
   export type StaffAvailabilityOrderByWithAggregationInput = {
     id?: SortOrder
-    storeStaffId?: SortOrder
-    dayOfWeek?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    storeStaffId?: SortOrder
+    dayOfWeek?: SortOrder
     _count?: StaffAvailabilityCountOrderByAggregateInput
     _max?: StaffAvailabilityMaxOrderByAggregateInput
     _min?: StaffAvailabilityMinOrderByAggregateInput
@@ -19950,10 +19969,10 @@ export namespace Prisma {
     OR?: StaffAvailabilityScalarWhereWithAggregatesInput[]
     NOT?: StaffAvailabilityScalarWhereWithAggregatesInput | StaffAvailabilityScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"StaffAvailability"> | string
-    storeStaffId?: StringWithAggregatesFilter<"StaffAvailability"> | string
-    dayOfWeek?: EnumDayOfWeekWithAggregatesFilter<"StaffAvailability"> | $Enums.DayOfWeek
     startTime?: DateTimeWithAggregatesFilter<"StaffAvailability"> | Date | string
     endTime?: DateTimeWithAggregatesFilter<"StaffAvailability"> | Date | string
+    storeStaffId?: StringWithAggregatesFilter<"StaffAvailability"> | string
+    dayOfWeek?: EnumDayOfWeekWithAggregatesFilter<"StaffAvailability"> | $Enums.DayOfWeek
   }
 
   export type ServiceWhereInput = {
@@ -19963,8 +19982,8 @@ export namespace Prisma {
     id?: StringFilter<"Service"> | string
     storeId?: StringFilter<"Service"> | string
     name?: StringFilter<"Service"> | string
-    price?: IntFilter<"Service"> | number
     createdAt?: DateTimeFilter<"Service"> | Date | string
+    price?: IntFilter<"Service"> | number
     bookings?: AppointmentServiceListRelationFilter
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
   }
@@ -19973,8 +19992,8 @@ export namespace Prisma {
     id?: SortOrder
     storeId?: SortOrder
     name?: SortOrder
-    price?: SortOrder
     createdAt?: SortOrder
+    price?: SortOrder
     bookings?: AppointmentServiceOrderByRelationAggregateInput
     store?: StoreOrderByWithRelationInput
   }
@@ -19987,8 +20006,8 @@ export namespace Prisma {
     NOT?: ServiceWhereInput | ServiceWhereInput[]
     storeId?: StringFilter<"Service"> | string
     name?: StringFilter<"Service"> | string
-    price?: IntFilter<"Service"> | number
     createdAt?: DateTimeFilter<"Service"> | Date | string
+    price?: IntFilter<"Service"> | number
     bookings?: AppointmentServiceListRelationFilter
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
   }, "id" | "storeId_name">
@@ -19997,8 +20016,8 @@ export namespace Prisma {
     id?: SortOrder
     storeId?: SortOrder
     name?: SortOrder
-    price?: SortOrder
     createdAt?: SortOrder
+    price?: SortOrder
     _count?: ServiceCountOrderByAggregateInput
     _avg?: ServiceAvgOrderByAggregateInput
     _max?: ServiceMaxOrderByAggregateInput
@@ -20013,8 +20032,8 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Service"> | string
     storeId?: StringWithAggregatesFilter<"Service"> | string
     name?: StringWithAggregatesFilter<"Service"> | string
-    price?: IntWithAggregatesFilter<"Service"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Service"> | Date | string
+    price?: IntWithAggregatesFilter<"Service"> | number
   }
 
   export type AppointmentWhereInput = {
@@ -20028,8 +20047,8 @@ export namespace Prisma {
     startTime?: DateTimeFilter<"Appointment"> | Date | string
     endTime?: DateTimeFilter<"Appointment"> | Date | string
     status?: EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
-    checkedInAt?: DateTimeNullableFilter<"Appointment"> | Date | string | null
     createdAt?: DateTimeFilter<"Appointment"> | Date | string
+    checkedInAt?: DateTimeNullableFilter<"Appointment"> | Date | string | null
     staff?: XOR<StoreStaffScalarRelationFilter, StoreStaffWhereInput>
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
     client?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -20044,8 +20063,8 @@ export namespace Prisma {
     startTime?: SortOrder
     endTime?: SortOrder
     status?: SortOrder
-    checkedInAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    checkedInAt?: SortOrderInput | SortOrder
     staff?: StoreStaffOrderByWithRelationInput
     store?: StoreOrderByWithRelationInput
     client?: UserOrderByWithRelationInput
@@ -20063,8 +20082,8 @@ export namespace Prisma {
     startTime?: DateTimeFilter<"Appointment"> | Date | string
     endTime?: DateTimeFilter<"Appointment"> | Date | string
     status?: EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
-    checkedInAt?: DateTimeNullableFilter<"Appointment"> | Date | string | null
     createdAt?: DateTimeFilter<"Appointment"> | Date | string
+    checkedInAt?: DateTimeNullableFilter<"Appointment"> | Date | string | null
     staff?: XOR<StoreStaffScalarRelationFilter, StoreStaffWhereInput>
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
     client?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -20079,8 +20098,8 @@ export namespace Prisma {
     startTime?: SortOrder
     endTime?: SortOrder
     status?: SortOrder
-    checkedInAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    checkedInAt?: SortOrderInput | SortOrder
     _count?: AppointmentCountOrderByAggregateInput
     _max?: AppointmentMaxOrderByAggregateInput
     _min?: AppointmentMinOrderByAggregateInput
@@ -20097,8 +20116,8 @@ export namespace Prisma {
     startTime?: DateTimeWithAggregatesFilter<"Appointment"> | Date | string
     endTime?: DateTimeWithAggregatesFilter<"Appointment"> | Date | string
     status?: EnumAppointmentStatusWithAggregatesFilter<"Appointment"> | $Enums.AppointmentStatus
-    checkedInAt?: DateTimeNullableWithAggregatesFilter<"Appointment"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Appointment"> | Date | string
+    checkedInAt?: DateTimeNullableWithAggregatesFilter<"Appointment"> | Date | string | null
   }
 
   export type AppointmentServiceWhereInput = {
@@ -20216,11 +20235,11 @@ export namespace Prisma {
     NOT?: InviteWhereInput | InviteWhereInput[]
     id?: StringFilter<"Invite"> | string
     storeId?: StringFilter<"Invite"> | string
-    userId?: StringFilter<"Invite"> | string
     role?: EnumStoreRoleFilter<"Invite"> | $Enums.StoreRole
+    createdAt?: DateTimeFilter<"Invite"> | Date | string
     invitedBy?: StringFilter<"Invite"> | string
     status?: EnumInviteStatusFilter<"Invite"> | $Enums.InviteStatus
-    createdAt?: DateTimeFilter<"Invite"> | Date | string
+    userId?: StringFilter<"Invite"> | string
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -20228,11 +20247,11 @@ export namespace Prisma {
   export type InviteOrderByWithRelationInput = {
     id?: SortOrder
     storeId?: SortOrder
-    userId?: SortOrder
     role?: SortOrder
+    createdAt?: SortOrder
     invitedBy?: SortOrder
     status?: SortOrder
-    createdAt?: SortOrder
+    userId?: SortOrder
     store?: StoreOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
   }
@@ -20244,11 +20263,11 @@ export namespace Prisma {
     OR?: InviteWhereInput[]
     NOT?: InviteWhereInput | InviteWhereInput[]
     storeId?: StringFilter<"Invite"> | string
-    userId?: StringFilter<"Invite"> | string
     role?: EnumStoreRoleFilter<"Invite"> | $Enums.StoreRole
+    createdAt?: DateTimeFilter<"Invite"> | Date | string
     invitedBy?: StringFilter<"Invite"> | string
     status?: EnumInviteStatusFilter<"Invite"> | $Enums.InviteStatus
-    createdAt?: DateTimeFilter<"Invite"> | Date | string
+    userId?: StringFilter<"Invite"> | string
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "storeId_userId">
@@ -20256,11 +20275,11 @@ export namespace Prisma {
   export type InviteOrderByWithAggregationInput = {
     id?: SortOrder
     storeId?: SortOrder
-    userId?: SortOrder
     role?: SortOrder
+    createdAt?: SortOrder
     invitedBy?: SortOrder
     status?: SortOrder
-    createdAt?: SortOrder
+    userId?: SortOrder
     _count?: InviteCountOrderByAggregateInput
     _max?: InviteMaxOrderByAggregateInput
     _min?: InviteMinOrderByAggregateInput
@@ -20272,11 +20291,11 @@ export namespace Prisma {
     NOT?: InviteScalarWhereWithAggregatesInput | InviteScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Invite"> | string
     storeId?: StringWithAggregatesFilter<"Invite"> | string
-    userId?: StringWithAggregatesFilter<"Invite"> | string
     role?: EnumStoreRoleWithAggregatesFilter<"Invite"> | $Enums.StoreRole
+    createdAt?: DateTimeWithAggregatesFilter<"Invite"> | Date | string
     invitedBy?: StringWithAggregatesFilter<"Invite"> | string
     status?: EnumInviteStatusWithAggregatesFilter<"Invite"> | $Enums.InviteStatus
-    createdAt?: DateTimeWithAggregatesFilter<"Invite"> | Date | string
+    userId?: StringWithAggregatesFilter<"Invite"> | string
   }
 
   export type AuditLogWhereInput = {
@@ -20339,92 +20358,99 @@ export namespace Prisma {
   export type UserCreateInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
     appointments?: AppointmentCreateNestedManyWithoutClientInput
-    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
+    invites?: InviteCreateNestedManyWithoutUserInput
     notices?: NotificationCreateNestedManyWithoutUserInput
     staff?: StaffProfileCreateNestedOneWithoutUserInput
     stores?: StoreCreateNestedManyWithoutCreatedByInput
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     roles?: UserRoleCreateNestedManyWithoutUserInput
-    invites?: InviteCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
     appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
-    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
+    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
     notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
     staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUpdateManyWithoutClientNestedInput
-    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
+    invites?: InviteUpdateManyWithoutUserNestedInput
     notices?: NotificationUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUpdateOneWithoutUserNestedInput
     stores?: StoreUpdateManyWithoutCreatedByNestedInput
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     roles?: UserRoleUpdateManyWithoutUserNestedInput
-    invites?: InviteUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
-    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
     notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type RoleCreateInput = {
@@ -20592,8 +20618,8 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    hours?: StoreHourCreateNestedManyWithoutStoreConfigInput
     store: StoreCreateNestedOneWithoutConfigInput
+    hours?: StoreHourCreateNestedManyWithoutStoreConfigInput
   }
 
   export type StoreConfigUncheckedCreateInput = {
@@ -20608,8 +20634,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    hours?: StoreHourUpdateManyWithoutStoreConfigNestedInput
     store?: StoreUpdateOneRequiredWithoutConfigNestedInput
+    hours?: StoreHourUpdateManyWithoutStoreConfigNestedInput
   }
 
   export type StoreConfigUncheckedUpdateInput = {
@@ -20706,10 +20732,10 @@ export namespace Prisma {
     id?: string
     role: $Enums.StoreRole
     status: $Enums.StaffStatus
-    availability?: StaffAvailabilityCreateNestedManyWithoutStoreStaffInput
     appointments?: AppointmentCreateNestedManyWithoutStaffInput
-    user: UserCreateNestedOneWithoutStoreStaffInput
+    availability?: StaffAvailabilityCreateNestedManyWithoutStoreStaffInput
     store: StoreCreateNestedOneWithoutStaffInput
+    user: UserCreateNestedOneWithoutStoreStaffInput
   }
 
   export type StoreStaffUncheckedCreateInput = {
@@ -20718,18 +20744,18 @@ export namespace Prisma {
     userId: string
     role: $Enums.StoreRole
     status: $Enums.StaffStatus
-    availability?: StaffAvailabilityUncheckedCreateNestedManyWithoutStoreStaffInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutStaffInput
+    availability?: StaffAvailabilityUncheckedCreateNestedManyWithoutStoreStaffInput
   }
 
   export type StoreStaffUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
     status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
-    availability?: StaffAvailabilityUpdateManyWithoutStoreStaffNestedInput
     appointments?: AppointmentUpdateManyWithoutStaffNestedInput
-    user?: UserUpdateOneRequiredWithoutStoreStaffNestedInput
+    availability?: StaffAvailabilityUpdateManyWithoutStoreStaffNestedInput
     store?: StoreUpdateOneRequiredWithoutStaffNestedInput
+    user?: UserUpdateOneRequiredWithoutStoreStaffNestedInput
   }
 
   export type StoreStaffUncheckedUpdateInput = {
@@ -20738,8 +20764,8 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
     status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
-    availability?: StaffAvailabilityUncheckedUpdateManyWithoutStoreStaffNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutStaffNestedInput
+    availability?: StaffAvailabilityUncheckedUpdateManyWithoutStoreStaffNestedInput
   }
 
   export type StoreStaffCreateManyInput = {
@@ -20814,64 +20840,64 @@ export namespace Prisma {
 
   export type StaffAvailabilityCreateInput = {
     id?: string
-    dayOfWeek: $Enums.DayOfWeek
     startTime: Date | string
     endTime: Date | string
+    dayOfWeek: $Enums.DayOfWeek
     storeStaff: StoreStaffCreateNestedOneWithoutAvailabilityInput
   }
 
   export type StaffAvailabilityUncheckedCreateInput = {
     id?: string
-    storeStaffId: string
-    dayOfWeek: $Enums.DayOfWeek
     startTime: Date | string
     endTime: Date | string
+    storeStaffId: string
+    dayOfWeek: $Enums.DayOfWeek
   }
 
   export type StaffAvailabilityUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
     storeStaff?: StoreStaffUpdateOneRequiredWithoutAvailabilityNestedInput
   }
 
   export type StaffAvailabilityUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    storeStaffId?: StringFieldUpdateOperationsInput | string
-    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    storeStaffId?: StringFieldUpdateOperationsInput | string
+    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
   }
 
   export type StaffAvailabilityCreateManyInput = {
     id?: string
-    storeStaffId: string
-    dayOfWeek: $Enums.DayOfWeek
     startTime: Date | string
     endTime: Date | string
+    storeStaffId: string
+    dayOfWeek: $Enums.DayOfWeek
   }
 
   export type StaffAvailabilityUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
   }
 
   export type StaffAvailabilityUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    storeStaffId?: StringFieldUpdateOperationsInput | string
-    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    storeStaffId?: StringFieldUpdateOperationsInput | string
+    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
   }
 
   export type ServiceCreateInput = {
     id?: string
     name: string
-    price: number
     createdAt?: Date | string
+    price: number
     bookings?: AppointmentServiceCreateNestedManyWithoutServiceInput
     store: StoreCreateNestedOneWithoutServicesInput
   }
@@ -20880,16 +20906,16 @@ export namespace Prisma {
     id?: string
     storeId: string
     name: string
-    price: number
     createdAt?: Date | string
+    price: number
     bookings?: AppointmentServiceUncheckedCreateNestedManyWithoutServiceInput
   }
 
   export type ServiceUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    price?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: IntFieldUpdateOperationsInput | number
     bookings?: AppointmentServiceUpdateManyWithoutServiceNestedInput
     store?: StoreUpdateOneRequiredWithoutServicesNestedInput
   }
@@ -20898,8 +20924,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     storeId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    price?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: IntFieldUpdateOperationsInput | number
     bookings?: AppointmentServiceUncheckedUpdateManyWithoutServiceNestedInput
   }
 
@@ -20907,23 +20933,23 @@ export namespace Prisma {
     id?: string
     storeId: string
     name: string
-    price: number
     createdAt?: Date | string
+    price: number
   }
 
   export type ServiceUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    price?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: IntFieldUpdateOperationsInput | number
   }
 
   export type ServiceUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     storeId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    price?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: IntFieldUpdateOperationsInput | number
   }
 
   export type AppointmentCreateInput = {
@@ -20931,8 +20957,8 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
     staff: StoreStaffCreateNestedOneWithoutAppointmentsInput
     store: StoreCreateNestedOneWithoutAppointmentsInput
     client: UserCreateNestedOneWithoutAppointmentsInput
@@ -20947,8 +20973,8 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
     items?: AppointmentServiceUncheckedCreateNestedManyWithoutAppointmentInput
   }
 
@@ -20957,8 +20983,8 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     staff?: StoreStaffUpdateOneRequiredWithoutAppointmentsNestedInput
     store?: StoreUpdateOneRequiredWithoutAppointmentsNestedInput
     client?: UserUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -20973,8 +20999,8 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     items?: AppointmentServiceUncheckedUpdateManyWithoutAppointmentNestedInput
   }
 
@@ -20986,8 +21012,8 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
   }
 
   export type AppointmentUpdateManyMutationInput = {
@@ -20995,8 +21021,8 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type AppointmentUncheckedUpdateManyInput = {
@@ -21007,8 +21033,8 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type AppointmentServiceCreateInput = {
@@ -21116,9 +21142,9 @@ export namespace Prisma {
   export type InviteCreateInput = {
     id?: string
     role: $Enums.StoreRole
+    createdAt?: Date | string
     invitedBy: string
     status?: $Enums.InviteStatus
-    createdAt?: Date | string
     store: StoreCreateNestedOneWithoutInvitesInput
     user: UserCreateNestedOneWithoutInvitesInput
   }
@@ -21126,19 +21152,19 @@ export namespace Prisma {
   export type InviteUncheckedCreateInput = {
     id?: string
     storeId: string
-    userId: string
     role: $Enums.StoreRole
+    createdAt?: Date | string
     invitedBy: string
     status?: $Enums.InviteStatus
-    createdAt?: Date | string
+    userId: string
   }
 
   export type InviteUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invitedBy?: StringFieldUpdateOperationsInput | string
     status?: EnumInviteStatusFieldUpdateOperationsInput | $Enums.InviteStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     store?: StoreUpdateOneRequiredWithoutInvitesNestedInput
     user?: UserUpdateOneRequiredWithoutInvitesNestedInput
   }
@@ -21146,39 +21172,39 @@ export namespace Prisma {
   export type InviteUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     storeId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invitedBy?: StringFieldUpdateOperationsInput | string
     status?: EnumInviteStatusFieldUpdateOperationsInput | $Enums.InviteStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type InviteCreateManyInput = {
     id?: string
     storeId: string
-    userId: string
     role: $Enums.StoreRole
+    createdAt?: Date | string
     invitedBy: string
     status?: $Enums.InviteStatus
-    createdAt?: Date | string
+    userId: string
   }
 
   export type InviteUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invitedBy?: StringFieldUpdateOperationsInput | string
     status?: EnumInviteStatusFieldUpdateOperationsInput | $Enums.InviteStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type InviteUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     storeId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invitedBy?: StringFieldUpdateOperationsInput | string
     status?: EnumInviteStatusFieldUpdateOperationsInput | $Enums.InviteStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type AuditLogCreateInput = {
@@ -21259,6 +21285,17 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -21274,15 +21311,16 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  export type UuidNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
   }
 
   export type AppointmentListRelationFilter = {
@@ -21291,10 +21329,10 @@ export namespace Prisma {
     none?: AppointmentWhereInput
   }
 
-  export type StoreStaffListRelationFilter = {
-    every?: StoreStaffWhereInput
-    some?: StoreStaffWhereInput
-    none?: StoreStaffWhereInput
+  export type InviteListRelationFilter = {
+    every?: InviteWhereInput
+    some?: InviteWhereInput
+    none?: InviteWhereInput
   }
 
   export type NotificationListRelationFilter = {
@@ -21314,16 +21352,16 @@ export namespace Prisma {
     none?: StoreWhereInput
   }
 
+  export type StoreStaffListRelationFilter = {
+    every?: StoreStaffWhereInput
+    some?: StoreStaffWhereInput
+    none?: StoreStaffWhereInput
+  }
+
   export type UserRoleListRelationFilter = {
     every?: UserRoleWhereInput
     some?: UserRoleWhereInput
     none?: UserRoleWhereInput
-  }
-
-  export type InviteListRelationFilter = {
-    every?: InviteWhereInput
-    some?: InviteWhereInput
-    none?: InviteWhereInput
   }
 
   export type SortOrderInput = {
@@ -21335,7 +21373,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type StoreStaffOrderByRelationAggregateInput = {
+  export type InviteOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -21347,39 +21385,42 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type UserRoleOrderByRelationAggregateInput = {
+  export type StoreStaffOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type InviteOrderByRelationAggregateInput = {
+  export type UserRoleOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
-    fullName?: SortOrder
-    phone?: SortOrder
-    avatarUrl?: SortOrder
     createdAt?: SortOrder
+    fullName?: SortOrder
+    avatarUrl?: SortOrder
+    phone?: SortOrder
+    authId?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
-    fullName?: SortOrder
-    phone?: SortOrder
-    avatarUrl?: SortOrder
     createdAt?: SortOrder
+    fullName?: SortOrder
+    avatarUrl?: SortOrder
+    phone?: SortOrder
+    authId?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
-    fullName?: SortOrder
-    phone?: SortOrder
-    avatarUrl?: SortOrder
     createdAt?: SortOrder
+    fullName?: SortOrder
+    avatarUrl?: SortOrder
+    phone?: SortOrder
+    authId?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -21400,6 +21441,20 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -21418,18 +21473,19 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
+  export type UuidNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type EnumRoleNameFilter<$PrismaModel = never> = {
@@ -21556,15 +21612,15 @@ export namespace Prisma {
     _max?: NestedEnumStoreStatusFilter<$PrismaModel>
   }
 
+  export type StoreScalarRelationFilter = {
+    is?: StoreWhereInput
+    isNot?: StoreWhereInput
+  }
+
   export type StoreHourListRelationFilter = {
     every?: StoreHourWhereInput
     some?: StoreHourWhereInput
     none?: StoreHourWhereInput
-  }
-
-  export type StoreScalarRelationFilter = {
-    is?: StoreWhereInput
-    isNot?: StoreWhereInput
   }
 
   export type StoreHourOrderByRelationAggregateInput = {
@@ -21745,26 +21801,26 @@ export namespace Prisma {
 
   export type StaffAvailabilityCountOrderByAggregateInput = {
     id?: SortOrder
-    storeStaffId?: SortOrder
-    dayOfWeek?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    storeStaffId?: SortOrder
+    dayOfWeek?: SortOrder
   }
 
   export type StaffAvailabilityMaxOrderByAggregateInput = {
     id?: SortOrder
-    storeStaffId?: SortOrder
-    dayOfWeek?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    storeStaffId?: SortOrder
+    dayOfWeek?: SortOrder
   }
 
   export type StaffAvailabilityMinOrderByAggregateInput = {
     id?: SortOrder
-    storeStaffId?: SortOrder
-    dayOfWeek?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    storeStaffId?: SortOrder
+    dayOfWeek?: SortOrder
   }
 
   export type EnumDayOfWeekWithAggregatesFilter<$PrismaModel = never> = {
@@ -21807,8 +21863,8 @@ export namespace Prisma {
     id?: SortOrder
     storeId?: SortOrder
     name?: SortOrder
-    price?: SortOrder
     createdAt?: SortOrder
+    price?: SortOrder
   }
 
   export type ServiceAvgOrderByAggregateInput = {
@@ -21819,16 +21875,16 @@ export namespace Prisma {
     id?: SortOrder
     storeId?: SortOrder
     name?: SortOrder
-    price?: SortOrder
     createdAt?: SortOrder
+    price?: SortOrder
   }
 
   export type ServiceMinOrderByAggregateInput = {
     id?: SortOrder
     storeId?: SortOrder
     name?: SortOrder
-    price?: SortOrder
     createdAt?: SortOrder
+    price?: SortOrder
   }
 
   export type ServiceSumOrderByAggregateInput = {
@@ -21877,8 +21933,8 @@ export namespace Prisma {
     startTime?: SortOrder
     endTime?: SortOrder
     status?: SortOrder
-    checkedInAt?: SortOrder
     createdAt?: SortOrder
+    checkedInAt?: SortOrder
   }
 
   export type AppointmentMaxOrderByAggregateInput = {
@@ -21889,8 +21945,8 @@ export namespace Prisma {
     startTime?: SortOrder
     endTime?: SortOrder
     status?: SortOrder
-    checkedInAt?: SortOrder
     createdAt?: SortOrder
+    checkedInAt?: SortOrder
   }
 
   export type AppointmentMinOrderByAggregateInput = {
@@ -21901,8 +21957,8 @@ export namespace Prisma {
     startTime?: SortOrder
     endTime?: SortOrder
     status?: SortOrder
-    checkedInAt?: SortOrder
     createdAt?: SortOrder
+    checkedInAt?: SortOrder
   }
 
   export type EnumAppointmentStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -22068,31 +22124,31 @@ export namespace Prisma {
   export type InviteCountOrderByAggregateInput = {
     id?: SortOrder
     storeId?: SortOrder
-    userId?: SortOrder
     role?: SortOrder
+    createdAt?: SortOrder
     invitedBy?: SortOrder
     status?: SortOrder
-    createdAt?: SortOrder
+    userId?: SortOrder
   }
 
   export type InviteMaxOrderByAggregateInput = {
     id?: SortOrder
     storeId?: SortOrder
-    userId?: SortOrder
     role?: SortOrder
+    createdAt?: SortOrder
     invitedBy?: SortOrder
     status?: SortOrder
-    createdAt?: SortOrder
+    userId?: SortOrder
   }
 
   export type InviteMinOrderByAggregateInput = {
     id?: SortOrder
     storeId?: SortOrder
-    userId?: SortOrder
     role?: SortOrder
+    createdAt?: SortOrder
     invitedBy?: SortOrder
     status?: SortOrder
-    createdAt?: SortOrder
+    userId?: SortOrder
   }
 
   export type EnumInviteStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -22139,11 +22195,11 @@ export namespace Prisma {
     connect?: AppointmentWhereUniqueInput | AppointmentWhereUniqueInput[]
   }
 
-  export type StoreStaffCreateNestedManyWithoutUserInput = {
-    create?: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput> | StoreStaffCreateWithoutUserInput[] | StoreStaffUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: StoreStaffCreateOrConnectWithoutUserInput | StoreStaffCreateOrConnectWithoutUserInput[]
-    createMany?: StoreStaffCreateManyUserInputEnvelope
-    connect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+  export type InviteCreateNestedManyWithoutUserInput = {
+    create?: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput> | InviteCreateWithoutUserInput[] | InviteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InviteCreateOrConnectWithoutUserInput | InviteCreateOrConnectWithoutUserInput[]
+    createMany?: InviteCreateManyUserInputEnvelope
+    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
   }
 
   export type NotificationCreateNestedManyWithoutUserInput = {
@@ -22166,18 +22222,18 @@ export namespace Prisma {
     connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
   }
 
+  export type StoreStaffCreateNestedManyWithoutUserInput = {
+    create?: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput> | StoreStaffCreateWithoutUserInput[] | StoreStaffUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StoreStaffCreateOrConnectWithoutUserInput | StoreStaffCreateOrConnectWithoutUserInput[]
+    createMany?: StoreStaffCreateManyUserInputEnvelope
+    connect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+  }
+
   export type UserRoleCreateNestedManyWithoutUserInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
     createMany?: UserRoleCreateManyUserInputEnvelope
     connect?: UserRoleWhereUniqueInput | UserRoleWhereUniqueInput[]
-  }
-
-  export type InviteCreateNestedManyWithoutUserInput = {
-    create?: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput> | InviteCreateWithoutUserInput[] | InviteUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: InviteCreateOrConnectWithoutUserInput | InviteCreateOrConnectWithoutUserInput[]
-    createMany?: InviteCreateManyUserInputEnvelope
-    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
   }
 
   export type AppointmentUncheckedCreateNestedManyWithoutClientInput = {
@@ -22187,11 +22243,11 @@ export namespace Prisma {
     connect?: AppointmentWhereUniqueInput | AppointmentWhereUniqueInput[]
   }
 
-  export type StoreStaffUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput> | StoreStaffCreateWithoutUserInput[] | StoreStaffUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: StoreStaffCreateOrConnectWithoutUserInput | StoreStaffCreateOrConnectWithoutUserInput[]
-    createMany?: StoreStaffCreateManyUserInputEnvelope
-    connect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+  export type InviteUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput> | InviteCreateWithoutUserInput[] | InviteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InviteCreateOrConnectWithoutUserInput | InviteCreateOrConnectWithoutUserInput[]
+    createMany?: InviteCreateManyUserInputEnvelope
+    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
   }
 
   export type NotificationUncheckedCreateNestedManyWithoutUserInput = {
@@ -22214,6 +22270,13 @@ export namespace Prisma {
     connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
   }
 
+  export type StoreStaffUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput> | StoreStaffCreateWithoutUserInput[] | StoreStaffUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StoreStaffCreateOrConnectWithoutUserInput | StoreStaffCreateOrConnectWithoutUserInput[]
+    createMany?: StoreStaffCreateManyUserInputEnvelope
+    connect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+  }
+
   export type UserRoleUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -22221,23 +22284,16 @@ export namespace Prisma {
     connect?: UserRoleWhereUniqueInput | UserRoleWhereUniqueInput[]
   }
 
-  export type InviteUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput> | InviteCreateWithoutUserInput[] | InviteUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: InviteCreateOrConnectWithoutUserInput | InviteCreateOrConnectWithoutUserInput[]
-    createMany?: InviteCreateManyUserInputEnvelope
-    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
-  }
-
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type AppointmentUpdateManyWithoutClientNestedInput = {
@@ -22254,18 +22310,18 @@ export namespace Prisma {
     deleteMany?: AppointmentScalarWhereInput | AppointmentScalarWhereInput[]
   }
 
-  export type StoreStaffUpdateManyWithoutUserNestedInput = {
-    create?: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput> | StoreStaffCreateWithoutUserInput[] | StoreStaffUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: StoreStaffCreateOrConnectWithoutUserInput | StoreStaffCreateOrConnectWithoutUserInput[]
-    upsert?: StoreStaffUpsertWithWhereUniqueWithoutUserInput | StoreStaffUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: StoreStaffCreateManyUserInputEnvelope
-    set?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
-    disconnect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
-    delete?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
-    connect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
-    update?: StoreStaffUpdateWithWhereUniqueWithoutUserInput | StoreStaffUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: StoreStaffUpdateManyWithWhereWithoutUserInput | StoreStaffUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
+  export type InviteUpdateManyWithoutUserNestedInput = {
+    create?: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput> | InviteCreateWithoutUserInput[] | InviteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InviteCreateOrConnectWithoutUserInput | InviteCreateOrConnectWithoutUserInput[]
+    upsert?: InviteUpsertWithWhereUniqueWithoutUserInput | InviteUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: InviteCreateManyUserInputEnvelope
+    set?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    disconnect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    delete?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    update?: InviteUpdateWithWhereUniqueWithoutUserInput | InviteUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: InviteUpdateManyWithWhereWithoutUserInput | InviteUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: InviteScalarWhereInput | InviteScalarWhereInput[]
   }
 
   export type NotificationUpdateManyWithoutUserNestedInput = {
@@ -22306,6 +22362,20 @@ export namespace Prisma {
     deleteMany?: StoreScalarWhereInput | StoreScalarWhereInput[]
   }
 
+  export type StoreStaffUpdateManyWithoutUserNestedInput = {
+    create?: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput> | StoreStaffCreateWithoutUserInput[] | StoreStaffUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StoreStaffCreateOrConnectWithoutUserInput | StoreStaffCreateOrConnectWithoutUserInput[]
+    upsert?: StoreStaffUpsertWithWhereUniqueWithoutUserInput | StoreStaffUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: StoreStaffCreateManyUserInputEnvelope
+    set?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    disconnect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    delete?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    connect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    update?: StoreStaffUpdateWithWhereUniqueWithoutUserInput | StoreStaffUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: StoreStaffUpdateManyWithWhereWithoutUserInput | StoreStaffUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
+  }
+
   export type UserRoleUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -22318,20 +22388,6 @@ export namespace Prisma {
     update?: UserRoleUpdateWithWhereUniqueWithoutUserInput | UserRoleUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserRoleUpdateManyWithWhereWithoutUserInput | UserRoleUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserRoleScalarWhereInput | UserRoleScalarWhereInput[]
-  }
-
-  export type InviteUpdateManyWithoutUserNestedInput = {
-    create?: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput> | InviteCreateWithoutUserInput[] | InviteUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: InviteCreateOrConnectWithoutUserInput | InviteCreateOrConnectWithoutUserInput[]
-    upsert?: InviteUpsertWithWhereUniqueWithoutUserInput | InviteUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: InviteCreateManyUserInputEnvelope
-    set?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
-    disconnect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
-    delete?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
-    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
-    update?: InviteUpdateWithWhereUniqueWithoutUserInput | InviteUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: InviteUpdateManyWithWhereWithoutUserInput | InviteUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: InviteScalarWhereInput | InviteScalarWhereInput[]
   }
 
   export type AppointmentUncheckedUpdateManyWithoutClientNestedInput = {
@@ -22348,18 +22404,18 @@ export namespace Prisma {
     deleteMany?: AppointmentScalarWhereInput | AppointmentScalarWhereInput[]
   }
 
-  export type StoreStaffUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput> | StoreStaffCreateWithoutUserInput[] | StoreStaffUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: StoreStaffCreateOrConnectWithoutUserInput | StoreStaffCreateOrConnectWithoutUserInput[]
-    upsert?: StoreStaffUpsertWithWhereUniqueWithoutUserInput | StoreStaffUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: StoreStaffCreateManyUserInputEnvelope
-    set?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
-    disconnect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
-    delete?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
-    connect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
-    update?: StoreStaffUpdateWithWhereUniqueWithoutUserInput | StoreStaffUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: StoreStaffUpdateManyWithWhereWithoutUserInput | StoreStaffUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
+  export type InviteUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput> | InviteCreateWithoutUserInput[] | InviteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InviteCreateOrConnectWithoutUserInput | InviteCreateOrConnectWithoutUserInput[]
+    upsert?: InviteUpsertWithWhereUniqueWithoutUserInput | InviteUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: InviteCreateManyUserInputEnvelope
+    set?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    disconnect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    delete?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    update?: InviteUpdateWithWhereUniqueWithoutUserInput | InviteUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: InviteUpdateManyWithWhereWithoutUserInput | InviteUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: InviteScalarWhereInput | InviteScalarWhereInput[]
   }
 
   export type NotificationUncheckedUpdateManyWithoutUserNestedInput = {
@@ -22400,6 +22456,20 @@ export namespace Prisma {
     deleteMany?: StoreScalarWhereInput | StoreScalarWhereInput[]
   }
 
+  export type StoreStaffUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput> | StoreStaffCreateWithoutUserInput[] | StoreStaffUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StoreStaffCreateOrConnectWithoutUserInput | StoreStaffCreateOrConnectWithoutUserInput[]
+    upsert?: StoreStaffUpsertWithWhereUniqueWithoutUserInput | StoreStaffUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: StoreStaffCreateManyUserInputEnvelope
+    set?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    disconnect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    delete?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    connect?: StoreStaffWhereUniqueInput | StoreStaffWhereUniqueInput[]
+    update?: StoreStaffUpdateWithWhereUniqueWithoutUserInput | StoreStaffUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: StoreStaffUpdateManyWithWhereWithoutUserInput | StoreStaffUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
+  }
+
   export type UserRoleUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -22412,20 +22482,6 @@ export namespace Prisma {
     update?: UserRoleUpdateWithWhereUniqueWithoutUserInput | UserRoleUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserRoleUpdateManyWithWhereWithoutUserInput | UserRoleUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserRoleScalarWhereInput | UserRoleScalarWhereInput[]
-  }
-
-  export type InviteUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput> | InviteCreateWithoutUserInput[] | InviteUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: InviteCreateOrConnectWithoutUserInput | InviteCreateOrConnectWithoutUserInput[]
-    upsert?: InviteUpsertWithWhereUniqueWithoutUserInput | InviteUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: InviteCreateManyUserInputEnvelope
-    set?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
-    disconnect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
-    delete?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
-    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
-    update?: InviteUpdateWithWhereUniqueWithoutUserInput | InviteUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: InviteUpdateManyWithWhereWithoutUserInput | InviteUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: InviteScalarWhereInput | InviteScalarWhereInput[]
   }
 
   export type UserRoleCreateNestedManyWithoutRoleInput = {
@@ -22720,6 +22776,12 @@ export namespace Prisma {
     deleteMany?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
   }
 
+  export type StoreCreateNestedOneWithoutConfigInput = {
+    create?: XOR<StoreCreateWithoutConfigInput, StoreUncheckedCreateWithoutConfigInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutConfigInput
+    connect?: StoreWhereUniqueInput
+  }
+
   export type StoreHourCreateNestedManyWithoutStoreConfigInput = {
     create?: XOR<StoreHourCreateWithoutStoreConfigInput, StoreHourUncheckedCreateWithoutStoreConfigInput> | StoreHourCreateWithoutStoreConfigInput[] | StoreHourUncheckedCreateWithoutStoreConfigInput[]
     connectOrCreate?: StoreHourCreateOrConnectWithoutStoreConfigInput | StoreHourCreateOrConnectWithoutStoreConfigInput[]
@@ -22727,17 +22789,19 @@ export namespace Prisma {
     connect?: StoreHourWhereUniqueInput | StoreHourWhereUniqueInput[]
   }
 
-  export type StoreCreateNestedOneWithoutConfigInput = {
-    create?: XOR<StoreCreateWithoutConfigInput, StoreUncheckedCreateWithoutConfigInput>
-    connectOrCreate?: StoreCreateOrConnectWithoutConfigInput
-    connect?: StoreWhereUniqueInput
-  }
-
   export type StoreHourUncheckedCreateNestedManyWithoutStoreConfigInput = {
     create?: XOR<StoreHourCreateWithoutStoreConfigInput, StoreHourUncheckedCreateWithoutStoreConfigInput> | StoreHourCreateWithoutStoreConfigInput[] | StoreHourUncheckedCreateWithoutStoreConfigInput[]
     connectOrCreate?: StoreHourCreateOrConnectWithoutStoreConfigInput | StoreHourCreateOrConnectWithoutStoreConfigInput[]
     createMany?: StoreHourCreateManyStoreConfigInputEnvelope
     connect?: StoreHourWhereUniqueInput | StoreHourWhereUniqueInput[]
+  }
+
+  export type StoreUpdateOneRequiredWithoutConfigNestedInput = {
+    create?: XOR<StoreCreateWithoutConfigInput, StoreUncheckedCreateWithoutConfigInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutConfigInput
+    upsert?: StoreUpsertWithoutConfigInput
+    connect?: StoreWhereUniqueInput
+    update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutConfigInput, StoreUpdateWithoutConfigInput>, StoreUncheckedUpdateWithoutConfigInput>
   }
 
   export type StoreHourUpdateManyWithoutStoreConfigNestedInput = {
@@ -22752,14 +22816,6 @@ export namespace Prisma {
     update?: StoreHourUpdateWithWhereUniqueWithoutStoreConfigInput | StoreHourUpdateWithWhereUniqueWithoutStoreConfigInput[]
     updateMany?: StoreHourUpdateManyWithWhereWithoutStoreConfigInput | StoreHourUpdateManyWithWhereWithoutStoreConfigInput[]
     deleteMany?: StoreHourScalarWhereInput | StoreHourScalarWhereInput[]
-  }
-
-  export type StoreUpdateOneRequiredWithoutConfigNestedInput = {
-    create?: XOR<StoreCreateWithoutConfigInput, StoreUncheckedCreateWithoutConfigInput>
-    connectOrCreate?: StoreCreateOrConnectWithoutConfigInput
-    upsert?: StoreUpsertWithoutConfigInput
-    connect?: StoreWhereUniqueInput
-    update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutConfigInput, StoreUpdateWithoutConfigInput>, StoreUncheckedUpdateWithoutConfigInput>
   }
 
   export type StoreHourUncheckedUpdateManyWithoutStoreConfigNestedInput = {
@@ -22794,13 +22850,6 @@ export namespace Prisma {
     update?: XOR<XOR<StoreConfigUpdateToOneWithWhereWithoutHoursInput, StoreConfigUpdateWithoutHoursInput>, StoreConfigUncheckedUpdateWithoutHoursInput>
   }
 
-  export type StaffAvailabilityCreateNestedManyWithoutStoreStaffInput = {
-    create?: XOR<StaffAvailabilityCreateWithoutStoreStaffInput, StaffAvailabilityUncheckedCreateWithoutStoreStaffInput> | StaffAvailabilityCreateWithoutStoreStaffInput[] | StaffAvailabilityUncheckedCreateWithoutStoreStaffInput[]
-    connectOrCreate?: StaffAvailabilityCreateOrConnectWithoutStoreStaffInput | StaffAvailabilityCreateOrConnectWithoutStoreStaffInput[]
-    createMany?: StaffAvailabilityCreateManyStoreStaffInputEnvelope
-    connect?: StaffAvailabilityWhereUniqueInput | StaffAvailabilityWhereUniqueInput[]
-  }
-
   export type AppointmentCreateNestedManyWithoutStaffInput = {
     create?: XOR<AppointmentCreateWithoutStaffInput, AppointmentUncheckedCreateWithoutStaffInput> | AppointmentCreateWithoutStaffInput[] | AppointmentUncheckedCreateWithoutStaffInput[]
     connectOrCreate?: AppointmentCreateOrConnectWithoutStaffInput | AppointmentCreateOrConnectWithoutStaffInput[]
@@ -22808,10 +22857,11 @@ export namespace Prisma {
     connect?: AppointmentWhereUniqueInput | AppointmentWhereUniqueInput[]
   }
 
-  export type UserCreateNestedOneWithoutStoreStaffInput = {
-    create?: XOR<UserCreateWithoutStoreStaffInput, UserUncheckedCreateWithoutStoreStaffInput>
-    connectOrCreate?: UserCreateOrConnectWithoutStoreStaffInput
-    connect?: UserWhereUniqueInput
+  export type StaffAvailabilityCreateNestedManyWithoutStoreStaffInput = {
+    create?: XOR<StaffAvailabilityCreateWithoutStoreStaffInput, StaffAvailabilityUncheckedCreateWithoutStoreStaffInput> | StaffAvailabilityCreateWithoutStoreStaffInput[] | StaffAvailabilityUncheckedCreateWithoutStoreStaffInput[]
+    connectOrCreate?: StaffAvailabilityCreateOrConnectWithoutStoreStaffInput | StaffAvailabilityCreateOrConnectWithoutStoreStaffInput[]
+    createMany?: StaffAvailabilityCreateManyStoreStaffInputEnvelope
+    connect?: StaffAvailabilityWhereUniqueInput | StaffAvailabilityWhereUniqueInput[]
   }
 
   export type StoreCreateNestedOneWithoutStaffInput = {
@@ -22820,11 +22870,10 @@ export namespace Prisma {
     connect?: StoreWhereUniqueInput
   }
 
-  export type StaffAvailabilityUncheckedCreateNestedManyWithoutStoreStaffInput = {
-    create?: XOR<StaffAvailabilityCreateWithoutStoreStaffInput, StaffAvailabilityUncheckedCreateWithoutStoreStaffInput> | StaffAvailabilityCreateWithoutStoreStaffInput[] | StaffAvailabilityUncheckedCreateWithoutStoreStaffInput[]
-    connectOrCreate?: StaffAvailabilityCreateOrConnectWithoutStoreStaffInput | StaffAvailabilityCreateOrConnectWithoutStoreStaffInput[]
-    createMany?: StaffAvailabilityCreateManyStoreStaffInputEnvelope
-    connect?: StaffAvailabilityWhereUniqueInput | StaffAvailabilityWhereUniqueInput[]
+  export type UserCreateNestedOneWithoutStoreStaffInput = {
+    create?: XOR<UserCreateWithoutStoreStaffInput, UserUncheckedCreateWithoutStoreStaffInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStoreStaffInput
+    connect?: UserWhereUniqueInput
   }
 
   export type AppointmentUncheckedCreateNestedManyWithoutStaffInput = {
@@ -22834,26 +22883,19 @@ export namespace Prisma {
     connect?: AppointmentWhereUniqueInput | AppointmentWhereUniqueInput[]
   }
 
+  export type StaffAvailabilityUncheckedCreateNestedManyWithoutStoreStaffInput = {
+    create?: XOR<StaffAvailabilityCreateWithoutStoreStaffInput, StaffAvailabilityUncheckedCreateWithoutStoreStaffInput> | StaffAvailabilityCreateWithoutStoreStaffInput[] | StaffAvailabilityUncheckedCreateWithoutStoreStaffInput[]
+    connectOrCreate?: StaffAvailabilityCreateOrConnectWithoutStoreStaffInput | StaffAvailabilityCreateOrConnectWithoutStoreStaffInput[]
+    createMany?: StaffAvailabilityCreateManyStoreStaffInputEnvelope
+    connect?: StaffAvailabilityWhereUniqueInput | StaffAvailabilityWhereUniqueInput[]
+  }
+
   export type EnumStoreRoleFieldUpdateOperationsInput = {
     set?: $Enums.StoreRole
   }
 
   export type EnumStaffStatusFieldUpdateOperationsInput = {
     set?: $Enums.StaffStatus
-  }
-
-  export type StaffAvailabilityUpdateManyWithoutStoreStaffNestedInput = {
-    create?: XOR<StaffAvailabilityCreateWithoutStoreStaffInput, StaffAvailabilityUncheckedCreateWithoutStoreStaffInput> | StaffAvailabilityCreateWithoutStoreStaffInput[] | StaffAvailabilityUncheckedCreateWithoutStoreStaffInput[]
-    connectOrCreate?: StaffAvailabilityCreateOrConnectWithoutStoreStaffInput | StaffAvailabilityCreateOrConnectWithoutStoreStaffInput[]
-    upsert?: StaffAvailabilityUpsertWithWhereUniqueWithoutStoreStaffInput | StaffAvailabilityUpsertWithWhereUniqueWithoutStoreStaffInput[]
-    createMany?: StaffAvailabilityCreateManyStoreStaffInputEnvelope
-    set?: StaffAvailabilityWhereUniqueInput | StaffAvailabilityWhereUniqueInput[]
-    disconnect?: StaffAvailabilityWhereUniqueInput | StaffAvailabilityWhereUniqueInput[]
-    delete?: StaffAvailabilityWhereUniqueInput | StaffAvailabilityWhereUniqueInput[]
-    connect?: StaffAvailabilityWhereUniqueInput | StaffAvailabilityWhereUniqueInput[]
-    update?: StaffAvailabilityUpdateWithWhereUniqueWithoutStoreStaffInput | StaffAvailabilityUpdateWithWhereUniqueWithoutStoreStaffInput[]
-    updateMany?: StaffAvailabilityUpdateManyWithWhereWithoutStoreStaffInput | StaffAvailabilityUpdateManyWithWhereWithoutStoreStaffInput[]
-    deleteMany?: StaffAvailabilityScalarWhereInput | StaffAvailabilityScalarWhereInput[]
   }
 
   export type AppointmentUpdateManyWithoutStaffNestedInput = {
@@ -22870,23 +22912,7 @@ export namespace Prisma {
     deleteMany?: AppointmentScalarWhereInput | AppointmentScalarWhereInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutStoreStaffNestedInput = {
-    create?: XOR<UserCreateWithoutStoreStaffInput, UserUncheckedCreateWithoutStoreStaffInput>
-    connectOrCreate?: UserCreateOrConnectWithoutStoreStaffInput
-    upsert?: UserUpsertWithoutStoreStaffInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStoreStaffInput, UserUpdateWithoutStoreStaffInput>, UserUncheckedUpdateWithoutStoreStaffInput>
-  }
-
-  export type StoreUpdateOneRequiredWithoutStaffNestedInput = {
-    create?: XOR<StoreCreateWithoutStaffInput, StoreUncheckedCreateWithoutStaffInput>
-    connectOrCreate?: StoreCreateOrConnectWithoutStaffInput
-    upsert?: StoreUpsertWithoutStaffInput
-    connect?: StoreWhereUniqueInput
-    update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutStaffInput, StoreUpdateWithoutStaffInput>, StoreUncheckedUpdateWithoutStaffInput>
-  }
-
-  export type StaffAvailabilityUncheckedUpdateManyWithoutStoreStaffNestedInput = {
+  export type StaffAvailabilityUpdateManyWithoutStoreStaffNestedInput = {
     create?: XOR<StaffAvailabilityCreateWithoutStoreStaffInput, StaffAvailabilityUncheckedCreateWithoutStoreStaffInput> | StaffAvailabilityCreateWithoutStoreStaffInput[] | StaffAvailabilityUncheckedCreateWithoutStoreStaffInput[]
     connectOrCreate?: StaffAvailabilityCreateOrConnectWithoutStoreStaffInput | StaffAvailabilityCreateOrConnectWithoutStoreStaffInput[]
     upsert?: StaffAvailabilityUpsertWithWhereUniqueWithoutStoreStaffInput | StaffAvailabilityUpsertWithWhereUniqueWithoutStoreStaffInput[]
@@ -22898,6 +22924,22 @@ export namespace Prisma {
     update?: StaffAvailabilityUpdateWithWhereUniqueWithoutStoreStaffInput | StaffAvailabilityUpdateWithWhereUniqueWithoutStoreStaffInput[]
     updateMany?: StaffAvailabilityUpdateManyWithWhereWithoutStoreStaffInput | StaffAvailabilityUpdateManyWithWhereWithoutStoreStaffInput[]
     deleteMany?: StaffAvailabilityScalarWhereInput | StaffAvailabilityScalarWhereInput[]
+  }
+
+  export type StoreUpdateOneRequiredWithoutStaffNestedInput = {
+    create?: XOR<StoreCreateWithoutStaffInput, StoreUncheckedCreateWithoutStaffInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutStaffInput
+    upsert?: StoreUpsertWithoutStaffInput
+    connect?: StoreWhereUniqueInput
+    update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutStaffInput, StoreUpdateWithoutStaffInput>, StoreUncheckedUpdateWithoutStaffInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutStoreStaffNestedInput = {
+    create?: XOR<UserCreateWithoutStoreStaffInput, UserUncheckedCreateWithoutStoreStaffInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStoreStaffInput
+    upsert?: UserUpsertWithoutStoreStaffInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStoreStaffInput, UserUpdateWithoutStoreStaffInput>, UserUncheckedUpdateWithoutStoreStaffInput>
   }
 
   export type AppointmentUncheckedUpdateManyWithoutStaffNestedInput = {
@@ -22912,6 +22954,20 @@ export namespace Prisma {
     update?: AppointmentUpdateWithWhereUniqueWithoutStaffInput | AppointmentUpdateWithWhereUniqueWithoutStaffInput[]
     updateMany?: AppointmentUpdateManyWithWhereWithoutStaffInput | AppointmentUpdateManyWithWhereWithoutStaffInput[]
     deleteMany?: AppointmentScalarWhereInput | AppointmentScalarWhereInput[]
+  }
+
+  export type StaffAvailabilityUncheckedUpdateManyWithoutStoreStaffNestedInput = {
+    create?: XOR<StaffAvailabilityCreateWithoutStoreStaffInput, StaffAvailabilityUncheckedCreateWithoutStoreStaffInput> | StaffAvailabilityCreateWithoutStoreStaffInput[] | StaffAvailabilityUncheckedCreateWithoutStoreStaffInput[]
+    connectOrCreate?: StaffAvailabilityCreateOrConnectWithoutStoreStaffInput | StaffAvailabilityCreateOrConnectWithoutStoreStaffInput[]
+    upsert?: StaffAvailabilityUpsertWithWhereUniqueWithoutStoreStaffInput | StaffAvailabilityUpsertWithWhereUniqueWithoutStoreStaffInput[]
+    createMany?: StaffAvailabilityCreateManyStoreStaffInputEnvelope
+    set?: StaffAvailabilityWhereUniqueInput | StaffAvailabilityWhereUniqueInput[]
+    disconnect?: StaffAvailabilityWhereUniqueInput | StaffAvailabilityWhereUniqueInput[]
+    delete?: StaffAvailabilityWhereUniqueInput | StaffAvailabilityWhereUniqueInput[]
+    connect?: StaffAvailabilityWhereUniqueInput | StaffAvailabilityWhereUniqueInput[]
+    update?: StaffAvailabilityUpdateWithWhereUniqueWithoutStoreStaffInput | StaffAvailabilityUpdateWithWhereUniqueWithoutStoreStaffInput[]
+    updateMany?: StaffAvailabilityUpdateManyWithWhereWithoutStoreStaffInput | StaffAvailabilityUpdateManyWithWhereWithoutStoreStaffInput[]
+    deleteMany?: StaffAvailabilityScalarWhereInput | StaffAvailabilityScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutStaffInput = {
@@ -23194,6 +23250,17 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -23208,15 +23275,15 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  export type NestedUuidNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -23247,6 +23314,20 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -23275,18 +23356,18 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
+  export type NestedUuidNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumRoleNameFilter<$PrismaModel = never> = {
@@ -23518,8 +23599,8 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
     staff: StoreStaffCreateNestedOneWithoutAppointmentsInput
     store: StoreCreateNestedOneWithoutAppointmentsInput
     items?: AppointmentServiceCreateNestedManyWithoutAppointmentInput
@@ -23532,8 +23613,8 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
     items?: AppointmentServiceUncheckedCreateNestedManyWithoutAppointmentInput
   }
 
@@ -23547,31 +23628,31 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type StoreStaffCreateWithoutUserInput = {
+  export type InviteCreateWithoutUserInput = {
     id?: string
     role: $Enums.StoreRole
-    status: $Enums.StaffStatus
-    availability?: StaffAvailabilityCreateNestedManyWithoutStoreStaffInput
-    appointments?: AppointmentCreateNestedManyWithoutStaffInput
-    store: StoreCreateNestedOneWithoutStaffInput
+    createdAt?: Date | string
+    invitedBy: string
+    status?: $Enums.InviteStatus
+    store: StoreCreateNestedOneWithoutInvitesInput
   }
 
-  export type StoreStaffUncheckedCreateWithoutUserInput = {
+  export type InviteUncheckedCreateWithoutUserInput = {
     id?: string
     storeId: string
     role: $Enums.StoreRole
-    status: $Enums.StaffStatus
-    availability?: StaffAvailabilityUncheckedCreateNestedManyWithoutStoreStaffInput
-    appointments?: AppointmentUncheckedCreateNestedManyWithoutStaffInput
+    createdAt?: Date | string
+    invitedBy: string
+    status?: $Enums.InviteStatus
   }
 
-  export type StoreStaffCreateOrConnectWithoutUserInput = {
-    where: StoreStaffWhereUniqueInput
-    create: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput>
+  export type InviteCreateOrConnectWithoutUserInput = {
+    where: InviteWhereUniqueInput
+    create: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput>
   }
 
-  export type StoreStaffCreateManyUserInputEnvelope = {
-    data: StoreStaffCreateManyUserInput | StoreStaffCreateManyUserInput[]
+  export type InviteCreateManyUserInputEnvelope = {
+    data: InviteCreateManyUserInput | InviteCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -23654,6 +23735,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type StoreStaffCreateWithoutUserInput = {
+    id?: string
+    role: $Enums.StoreRole
+    status: $Enums.StaffStatus
+    appointments?: AppointmentCreateNestedManyWithoutStaffInput
+    availability?: StaffAvailabilityCreateNestedManyWithoutStoreStaffInput
+    store: StoreCreateNestedOneWithoutStaffInput
+  }
+
+  export type StoreStaffUncheckedCreateWithoutUserInput = {
+    id?: string
+    storeId: string
+    role: $Enums.StoreRole
+    status: $Enums.StaffStatus
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutStaffInput
+    availability?: StaffAvailabilityUncheckedCreateNestedManyWithoutStoreStaffInput
+  }
+
+  export type StoreStaffCreateOrConnectWithoutUserInput = {
+    where: StoreStaffWhereUniqueInput
+    create: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput>
+  }
+
+  export type StoreStaffCreateManyUserInputEnvelope = {
+    data: StoreStaffCreateManyUserInput | StoreStaffCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserRoleCreateWithoutUserInput = {
     id?: string
     role: RoleCreateNestedOneWithoutUsersInput
@@ -23671,34 +23780,6 @@ export namespace Prisma {
 
   export type UserRoleCreateManyUserInputEnvelope = {
     data: UserRoleCreateManyUserInput | UserRoleCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type InviteCreateWithoutUserInput = {
-    id?: string
-    role: $Enums.StoreRole
-    invitedBy: string
-    status?: $Enums.InviteStatus
-    createdAt?: Date | string
-    store: StoreCreateNestedOneWithoutInvitesInput
-  }
-
-  export type InviteUncheckedCreateWithoutUserInput = {
-    id?: string
-    storeId: string
-    role: $Enums.StoreRole
-    invitedBy: string
-    status?: $Enums.InviteStatus
-    createdAt?: Date | string
-  }
-
-  export type InviteCreateOrConnectWithoutUserInput = {
-    where: InviteWhereUniqueInput
-    create: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput>
-  }
-
-  export type InviteCreateManyUserInputEnvelope = {
-    data: InviteCreateManyUserInput | InviteCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -23729,35 +23810,37 @@ export namespace Prisma {
     startTime?: DateTimeFilter<"Appointment"> | Date | string
     endTime?: DateTimeFilter<"Appointment"> | Date | string
     status?: EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
-    checkedInAt?: DateTimeNullableFilter<"Appointment"> | Date | string | null
     createdAt?: DateTimeFilter<"Appointment"> | Date | string
+    checkedInAt?: DateTimeNullableFilter<"Appointment"> | Date | string | null
   }
 
-  export type StoreStaffUpsertWithWhereUniqueWithoutUserInput = {
-    where: StoreStaffWhereUniqueInput
-    update: XOR<StoreStaffUpdateWithoutUserInput, StoreStaffUncheckedUpdateWithoutUserInput>
-    create: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput>
+  export type InviteUpsertWithWhereUniqueWithoutUserInput = {
+    where: InviteWhereUniqueInput
+    update: XOR<InviteUpdateWithoutUserInput, InviteUncheckedUpdateWithoutUserInput>
+    create: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput>
   }
 
-  export type StoreStaffUpdateWithWhereUniqueWithoutUserInput = {
-    where: StoreStaffWhereUniqueInput
-    data: XOR<StoreStaffUpdateWithoutUserInput, StoreStaffUncheckedUpdateWithoutUserInput>
+  export type InviteUpdateWithWhereUniqueWithoutUserInput = {
+    where: InviteWhereUniqueInput
+    data: XOR<InviteUpdateWithoutUserInput, InviteUncheckedUpdateWithoutUserInput>
   }
 
-  export type StoreStaffUpdateManyWithWhereWithoutUserInput = {
-    where: StoreStaffScalarWhereInput
-    data: XOR<StoreStaffUpdateManyMutationInput, StoreStaffUncheckedUpdateManyWithoutUserInput>
+  export type InviteUpdateManyWithWhereWithoutUserInput = {
+    where: InviteScalarWhereInput
+    data: XOR<InviteUpdateManyMutationInput, InviteUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type StoreStaffScalarWhereInput = {
-    AND?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
-    OR?: StoreStaffScalarWhereInput[]
-    NOT?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
-    id?: StringFilter<"StoreStaff"> | string
-    storeId?: StringFilter<"StoreStaff"> | string
-    userId?: StringFilter<"StoreStaff"> | string
-    role?: EnumStoreRoleFilter<"StoreStaff"> | $Enums.StoreRole
-    status?: EnumStaffStatusFilter<"StoreStaff"> | $Enums.StaffStatus
+  export type InviteScalarWhereInput = {
+    AND?: InviteScalarWhereInput | InviteScalarWhereInput[]
+    OR?: InviteScalarWhereInput[]
+    NOT?: InviteScalarWhereInput | InviteScalarWhereInput[]
+    id?: StringFilter<"Invite"> | string
+    storeId?: StringFilter<"Invite"> | string
+    role?: EnumStoreRoleFilter<"Invite"> | $Enums.StoreRole
+    createdAt?: DateTimeFilter<"Invite"> | Date | string
+    invitedBy?: StringFilter<"Invite"> | string
+    status?: EnumInviteStatusFilter<"Invite"> | $Enums.InviteStatus
+    userId?: StringFilter<"Invite"> | string
   }
 
   export type NotificationUpsertWithWhereUniqueWithoutUserInput = {
@@ -23839,6 +23922,33 @@ export namespace Prisma {
     createdById?: StringFilter<"Store"> | string
   }
 
+  export type StoreStaffUpsertWithWhereUniqueWithoutUserInput = {
+    where: StoreStaffWhereUniqueInput
+    update: XOR<StoreStaffUpdateWithoutUserInput, StoreStaffUncheckedUpdateWithoutUserInput>
+    create: XOR<StoreStaffCreateWithoutUserInput, StoreStaffUncheckedCreateWithoutUserInput>
+  }
+
+  export type StoreStaffUpdateWithWhereUniqueWithoutUserInput = {
+    where: StoreStaffWhereUniqueInput
+    data: XOR<StoreStaffUpdateWithoutUserInput, StoreStaffUncheckedUpdateWithoutUserInput>
+  }
+
+  export type StoreStaffUpdateManyWithWhereWithoutUserInput = {
+    where: StoreStaffScalarWhereInput
+    data: XOR<StoreStaffUpdateManyMutationInput, StoreStaffUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type StoreStaffScalarWhereInput = {
+    AND?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
+    OR?: StoreStaffScalarWhereInput[]
+    NOT?: StoreStaffScalarWhereInput | StoreStaffScalarWhereInput[]
+    id?: StringFilter<"StoreStaff"> | string
+    storeId?: StringFilter<"StoreStaff"> | string
+    userId?: StringFilter<"StoreStaff"> | string
+    role?: EnumStoreRoleFilter<"StoreStaff"> | $Enums.StoreRole
+    status?: EnumStaffStatusFilter<"StoreStaff"> | $Enums.StaffStatus
+  }
+
   export type UserRoleUpsertWithWhereUniqueWithoutUserInput = {
     where: UserRoleWhereUniqueInput
     update: XOR<UserRoleUpdateWithoutUserInput, UserRoleUncheckedUpdateWithoutUserInput>
@@ -23862,35 +23972,6 @@ export namespace Prisma {
     id?: StringFilter<"UserRole"> | string
     userId?: StringFilter<"UserRole"> | string
     roleId?: StringFilter<"UserRole"> | string
-  }
-
-  export type InviteUpsertWithWhereUniqueWithoutUserInput = {
-    where: InviteWhereUniqueInput
-    update: XOR<InviteUpdateWithoutUserInput, InviteUncheckedUpdateWithoutUserInput>
-    create: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput>
-  }
-
-  export type InviteUpdateWithWhereUniqueWithoutUserInput = {
-    where: InviteWhereUniqueInput
-    data: XOR<InviteUpdateWithoutUserInput, InviteUncheckedUpdateWithoutUserInput>
-  }
-
-  export type InviteUpdateManyWithWhereWithoutUserInput = {
-    where: InviteScalarWhereInput
-    data: XOR<InviteUpdateManyMutationInput, InviteUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type InviteScalarWhereInput = {
-    AND?: InviteScalarWhereInput | InviteScalarWhereInput[]
-    OR?: InviteScalarWhereInput[]
-    NOT?: InviteScalarWhereInput | InviteScalarWhereInput[]
-    id?: StringFilter<"Invite"> | string
-    storeId?: StringFilter<"Invite"> | string
-    userId?: StringFilter<"Invite"> | string
-    role?: EnumStoreRoleFilter<"Invite"> | $Enums.StoreRole
-    invitedBy?: StringFilter<"Invite"> | string
-    status?: EnumInviteStatusFilter<"Invite"> | $Enums.InviteStatus
-    createdAt?: DateTimeFilter<"Invite"> | Date | string
   }
 
   export type UserRoleCreateWithoutRoleInput = {
@@ -23947,31 +24028,33 @@ export namespace Prisma {
   export type UserCreateWithoutRolesInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
     appointments?: AppointmentCreateNestedManyWithoutClientInput
-    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
+    invites?: InviteCreateNestedManyWithoutUserInput
     notices?: NotificationCreateNestedManyWithoutUserInput
     staff?: StaffProfileCreateNestedOneWithoutUserInput
     stores?: StoreCreateNestedManyWithoutCreatedByInput
-    invites?: InviteCreateNestedManyWithoutUserInput
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRolesInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
     appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
-    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
+    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
     notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
     staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
-    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRolesInput = {
@@ -24014,31 +24097,33 @@ export namespace Prisma {
   export type UserUpdateWithoutRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUpdateManyWithoutClientNestedInput
-    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
+    invites?: InviteUpdateManyWithoutUserNestedInput
     notices?: NotificationUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUpdateOneWithoutUserNestedInput
     stores?: StoreUpdateManyWithoutCreatedByNestedInput
-    invites?: InviteUpdateManyWithoutUserNestedInput
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
-    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
     notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
-    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AppointmentCreateWithoutStoreInput = {
@@ -24046,8 +24131,8 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
     staff: StoreStaffCreateNestedOneWithoutAppointmentsInput
     client: UserCreateNestedOneWithoutAppointmentsInput
     items?: AppointmentServiceCreateNestedManyWithoutAppointmentInput
@@ -24060,8 +24145,8 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
     items?: AppointmentServiceUncheckedCreateNestedManyWithoutAppointmentInput
   }
 
@@ -24078,19 +24163,19 @@ export namespace Prisma {
   export type InviteCreateWithoutStoreInput = {
     id?: string
     role: $Enums.StoreRole
+    createdAt?: Date | string
     invitedBy: string
     status?: $Enums.InviteStatus
-    createdAt?: Date | string
     user: UserCreateNestedOneWithoutInvitesInput
   }
 
   export type InviteUncheckedCreateWithoutStoreInput = {
     id?: string
-    userId: string
     role: $Enums.StoreRole
+    createdAt?: Date | string
     invitedBy: string
     status?: $Enums.InviteStatus
-    createdAt?: Date | string
+    userId: string
   }
 
   export type InviteCreateOrConnectWithoutStoreInput = {
@@ -24106,16 +24191,16 @@ export namespace Prisma {
   export type ServiceCreateWithoutStoreInput = {
     id?: string
     name: string
-    price: number
     createdAt?: Date | string
+    price: number
     bookings?: AppointmentServiceCreateNestedManyWithoutServiceInput
   }
 
   export type ServiceUncheckedCreateWithoutStoreInput = {
     id?: string
     name: string
-    price: number
     createdAt?: Date | string
+    price: number
     bookings?: AppointmentServiceUncheckedCreateNestedManyWithoutServiceInput
   }
 
@@ -24132,31 +24217,33 @@ export namespace Prisma {
   export type UserCreateWithoutStoresInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
     appointments?: AppointmentCreateNestedManyWithoutClientInput
-    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
+    invites?: InviteCreateNestedManyWithoutUserInput
     notices?: NotificationCreateNestedManyWithoutUserInput
     staff?: StaffProfileCreateNestedOneWithoutUserInput
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     roles?: UserRoleCreateNestedManyWithoutUserInput
-    invites?: InviteCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStoresInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
     appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
-    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
+    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
     notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
     staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStoresInput = {
@@ -24187,8 +24274,8 @@ export namespace Prisma {
     id?: string
     role: $Enums.StoreRole
     status: $Enums.StaffStatus
-    availability?: StaffAvailabilityCreateNestedManyWithoutStoreStaffInput
     appointments?: AppointmentCreateNestedManyWithoutStaffInput
+    availability?: StaffAvailabilityCreateNestedManyWithoutStoreStaffInput
     user: UserCreateNestedOneWithoutStoreStaffInput
   }
 
@@ -24197,8 +24284,8 @@ export namespace Prisma {
     userId: string
     role: $Enums.StoreRole
     status: $Enums.StaffStatus
-    availability?: StaffAvailabilityUncheckedCreateNestedManyWithoutStoreStaffInput
     appointments?: AppointmentUncheckedCreateNestedManyWithoutStaffInput
+    availability?: StaffAvailabilityUncheckedCreateNestedManyWithoutStoreStaffInput
   }
 
   export type StoreStaffCreateOrConnectWithoutStoreInput = {
@@ -24266,8 +24353,8 @@ export namespace Prisma {
     id?: StringFilter<"Service"> | string
     storeId?: StringFilter<"Service"> | string
     name?: StringFilter<"Service"> | string
-    price?: IntFilter<"Service"> | number
     createdAt?: DateTimeFilter<"Service"> | Date | string
+    price?: IntFilter<"Service"> | number
   }
 
   export type UserUpsertWithoutStoresInput = {
@@ -24284,31 +24371,33 @@ export namespace Prisma {
   export type UserUpdateWithoutStoresInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUpdateManyWithoutClientNestedInput
-    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
+    invites?: InviteUpdateManyWithoutUserNestedInput
     notices?: NotificationUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUpdateOneWithoutUserNestedInput
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     roles?: UserRoleUpdateManyWithoutUserNestedInput
-    invites?: InviteUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStoresInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
-    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
     notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type StoreConfigUpsertWithoutStoreInput = {
@@ -24352,32 +24441,6 @@ export namespace Prisma {
     data: XOR<StoreStaffUpdateManyMutationInput, StoreStaffUncheckedUpdateManyWithoutStoreInput>
   }
 
-  export type StoreHourCreateWithoutStoreConfigInput = {
-    id?: string
-    label: string
-    isActive: boolean
-    start: string
-    end: string
-  }
-
-  export type StoreHourUncheckedCreateWithoutStoreConfigInput = {
-    id?: string
-    label: string
-    isActive: boolean
-    start: string
-    end: string
-  }
-
-  export type StoreHourCreateOrConnectWithoutStoreConfigInput = {
-    where: StoreHourWhereUniqueInput
-    create: XOR<StoreHourCreateWithoutStoreConfigInput, StoreHourUncheckedCreateWithoutStoreConfigInput>
-  }
-
-  export type StoreHourCreateManyStoreConfigInputEnvelope = {
-    data: StoreHourCreateManyStoreConfigInput | StoreHourCreateManyStoreConfigInput[]
-    skipDuplicates?: boolean
-  }
-
   export type StoreCreateWithoutConfigInput = {
     id?: string
     name: string
@@ -24409,32 +24472,30 @@ export namespace Prisma {
     create: XOR<StoreCreateWithoutConfigInput, StoreUncheckedCreateWithoutConfigInput>
   }
 
-  export type StoreHourUpsertWithWhereUniqueWithoutStoreConfigInput = {
+  export type StoreHourCreateWithoutStoreConfigInput = {
+    id?: string
+    label: string
+    isActive: boolean
+    start: string
+    end: string
+  }
+
+  export type StoreHourUncheckedCreateWithoutStoreConfigInput = {
+    id?: string
+    label: string
+    isActive: boolean
+    start: string
+    end: string
+  }
+
+  export type StoreHourCreateOrConnectWithoutStoreConfigInput = {
     where: StoreHourWhereUniqueInput
-    update: XOR<StoreHourUpdateWithoutStoreConfigInput, StoreHourUncheckedUpdateWithoutStoreConfigInput>
     create: XOR<StoreHourCreateWithoutStoreConfigInput, StoreHourUncheckedCreateWithoutStoreConfigInput>
   }
 
-  export type StoreHourUpdateWithWhereUniqueWithoutStoreConfigInput = {
-    where: StoreHourWhereUniqueInput
-    data: XOR<StoreHourUpdateWithoutStoreConfigInput, StoreHourUncheckedUpdateWithoutStoreConfigInput>
-  }
-
-  export type StoreHourUpdateManyWithWhereWithoutStoreConfigInput = {
-    where: StoreHourScalarWhereInput
-    data: XOR<StoreHourUpdateManyMutationInput, StoreHourUncheckedUpdateManyWithoutStoreConfigInput>
-  }
-
-  export type StoreHourScalarWhereInput = {
-    AND?: StoreHourScalarWhereInput | StoreHourScalarWhereInput[]
-    OR?: StoreHourScalarWhereInput[]
-    NOT?: StoreHourScalarWhereInput | StoreHourScalarWhereInput[]
-    id?: StringFilter<"StoreHour"> | string
-    storeConfigId?: StringFilter<"StoreHour"> | string
-    label?: StringFilter<"StoreHour"> | string
-    isActive?: BoolFilter<"StoreHour"> | boolean
-    start?: StringFilter<"StoreHour"> | string
-    end?: StringFilter<"StoreHour"> | string
+  export type StoreHourCreateManyStoreConfigInputEnvelope = {
+    data: StoreHourCreateManyStoreConfigInput | StoreHourCreateManyStoreConfigInput[]
+    skipDuplicates?: boolean
   }
 
   export type StoreUpsertWithoutConfigInput = {
@@ -24472,6 +24533,34 @@ export namespace Prisma {
     invites?: InviteUncheckedUpdateManyWithoutStoreNestedInput
     services?: ServiceUncheckedUpdateManyWithoutStoreNestedInput
     staff?: StoreStaffUncheckedUpdateManyWithoutStoreNestedInput
+  }
+
+  export type StoreHourUpsertWithWhereUniqueWithoutStoreConfigInput = {
+    where: StoreHourWhereUniqueInput
+    update: XOR<StoreHourUpdateWithoutStoreConfigInput, StoreHourUncheckedUpdateWithoutStoreConfigInput>
+    create: XOR<StoreHourCreateWithoutStoreConfigInput, StoreHourUncheckedCreateWithoutStoreConfigInput>
+  }
+
+  export type StoreHourUpdateWithWhereUniqueWithoutStoreConfigInput = {
+    where: StoreHourWhereUniqueInput
+    data: XOR<StoreHourUpdateWithoutStoreConfigInput, StoreHourUncheckedUpdateWithoutStoreConfigInput>
+  }
+
+  export type StoreHourUpdateManyWithWhereWithoutStoreConfigInput = {
+    where: StoreHourScalarWhereInput
+    data: XOR<StoreHourUpdateManyMutationInput, StoreHourUncheckedUpdateManyWithoutStoreConfigInput>
+  }
+
+  export type StoreHourScalarWhereInput = {
+    AND?: StoreHourScalarWhereInput | StoreHourScalarWhereInput[]
+    OR?: StoreHourScalarWhereInput[]
+    NOT?: StoreHourScalarWhereInput | StoreHourScalarWhereInput[]
+    id?: StringFilter<"StoreHour"> | string
+    storeConfigId?: StringFilter<"StoreHour"> | string
+    label?: StringFilter<"StoreHour"> | string
+    isActive?: BoolFilter<"StoreHour"> | boolean
+    start?: StringFilter<"StoreHour"> | string
+    end?: StringFilter<"StoreHour"> | string
   }
 
   export type StoreConfigCreateWithoutHoursInput = {
@@ -24518,37 +24607,13 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type StaffAvailabilityCreateWithoutStoreStaffInput = {
-    id?: string
-    dayOfWeek: $Enums.DayOfWeek
-    startTime: Date | string
-    endTime: Date | string
-  }
-
-  export type StaffAvailabilityUncheckedCreateWithoutStoreStaffInput = {
-    id?: string
-    dayOfWeek: $Enums.DayOfWeek
-    startTime: Date | string
-    endTime: Date | string
-  }
-
-  export type StaffAvailabilityCreateOrConnectWithoutStoreStaffInput = {
-    where: StaffAvailabilityWhereUniqueInput
-    create: XOR<StaffAvailabilityCreateWithoutStoreStaffInput, StaffAvailabilityUncheckedCreateWithoutStoreStaffInput>
-  }
-
-  export type StaffAvailabilityCreateManyStoreStaffInputEnvelope = {
-    data: StaffAvailabilityCreateManyStoreStaffInput | StaffAvailabilityCreateManyStoreStaffInput[]
-    skipDuplicates?: boolean
-  }
-
   export type AppointmentCreateWithoutStaffInput = {
     id?: string
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
     store: StoreCreateNestedOneWithoutAppointmentsInput
     client: UserCreateNestedOneWithoutAppointmentsInput
     items?: AppointmentServiceCreateNestedManyWithoutAppointmentInput
@@ -24561,8 +24626,8 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
     items?: AppointmentServiceUncheckedCreateNestedManyWithoutAppointmentInput
   }
 
@@ -24576,39 +24641,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserCreateWithoutStoreStaffInput = {
-    id: string
-    email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
-    createdAt?: Date | string
-    appointments?: AppointmentCreateNestedManyWithoutClientInput
-    notices?: NotificationCreateNestedManyWithoutUserInput
-    staff?: StaffProfileCreateNestedOneWithoutUserInput
-    stores?: StoreCreateNestedManyWithoutCreatedByInput
-    roles?: UserRoleCreateNestedManyWithoutUserInput
-    invites?: InviteCreateNestedManyWithoutUserInput
+  export type StaffAvailabilityCreateWithoutStoreStaffInput = {
+    id?: string
+    startTime: Date | string
+    endTime: Date | string
+    dayOfWeek: $Enums.DayOfWeek
   }
 
-  export type UserUncheckedCreateWithoutStoreStaffInput = {
-    id: string
-    email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
-    createdAt?: Date | string
-    appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
-    notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
-    staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
-    stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
-    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
+  export type StaffAvailabilityUncheckedCreateWithoutStoreStaffInput = {
+    id?: string
+    startTime: Date | string
+    endTime: Date | string
+    dayOfWeek: $Enums.DayOfWeek
   }
 
-  export type UserCreateOrConnectWithoutStoreStaffInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutStoreStaffInput, UserUncheckedCreateWithoutStoreStaffInput>
+  export type StaffAvailabilityCreateOrConnectWithoutStoreStaffInput = {
+    where: StaffAvailabilityWhereUniqueInput
+    create: XOR<StaffAvailabilityCreateWithoutStoreStaffInput, StaffAvailabilityUncheckedCreateWithoutStoreStaffInput>
+  }
+
+  export type StaffAvailabilityCreateManyStoreStaffInputEnvelope = {
+    data: StaffAvailabilityCreateManyStoreStaffInput | StaffAvailabilityCreateManyStoreStaffInput[]
+    skipDuplicates?: boolean
   }
 
   export type StoreCreateWithoutStaffInput = {
@@ -24642,6 +24696,59 @@ export namespace Prisma {
     create: XOR<StoreCreateWithoutStaffInput, StoreUncheckedCreateWithoutStaffInput>
   }
 
+  export type UserCreateWithoutStoreStaffInput = {
+    id: string
+    email: string
+    createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
+    appointments?: AppointmentCreateNestedManyWithoutClientInput
+    invites?: InviteCreateNestedManyWithoutUserInput
+    notices?: NotificationCreateNestedManyWithoutUserInput
+    staff?: StaffProfileCreateNestedOneWithoutUserInput
+    stores?: StoreCreateNestedManyWithoutCreatedByInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutStoreStaffInput = {
+    id: string
+    email: string
+    createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
+    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
+    notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
+    stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutStoreStaffInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutStoreStaffInput, UserUncheckedCreateWithoutStoreStaffInput>
+  }
+
+  export type AppointmentUpsertWithWhereUniqueWithoutStaffInput = {
+    where: AppointmentWhereUniqueInput
+    update: XOR<AppointmentUpdateWithoutStaffInput, AppointmentUncheckedUpdateWithoutStaffInput>
+    create: XOR<AppointmentCreateWithoutStaffInput, AppointmentUncheckedCreateWithoutStaffInput>
+  }
+
+  export type AppointmentUpdateWithWhereUniqueWithoutStaffInput = {
+    where: AppointmentWhereUniqueInput
+    data: XOR<AppointmentUpdateWithoutStaffInput, AppointmentUncheckedUpdateWithoutStaffInput>
+  }
+
+  export type AppointmentUpdateManyWithWhereWithoutStaffInput = {
+    where: AppointmentScalarWhereInput
+    data: XOR<AppointmentUpdateManyMutationInput, AppointmentUncheckedUpdateManyWithoutStaffInput>
+  }
+
   export type StaffAvailabilityUpsertWithWhereUniqueWithoutStoreStaffInput = {
     where: StaffAvailabilityWhereUniqueInput
     update: XOR<StaffAvailabilityUpdateWithoutStoreStaffInput, StaffAvailabilityUncheckedUpdateWithoutStoreStaffInput>
@@ -24663,67 +24770,10 @@ export namespace Prisma {
     OR?: StaffAvailabilityScalarWhereInput[]
     NOT?: StaffAvailabilityScalarWhereInput | StaffAvailabilityScalarWhereInput[]
     id?: StringFilter<"StaffAvailability"> | string
-    storeStaffId?: StringFilter<"StaffAvailability"> | string
-    dayOfWeek?: EnumDayOfWeekFilter<"StaffAvailability"> | $Enums.DayOfWeek
     startTime?: DateTimeFilter<"StaffAvailability"> | Date | string
     endTime?: DateTimeFilter<"StaffAvailability"> | Date | string
-  }
-
-  export type AppointmentUpsertWithWhereUniqueWithoutStaffInput = {
-    where: AppointmentWhereUniqueInput
-    update: XOR<AppointmentUpdateWithoutStaffInput, AppointmentUncheckedUpdateWithoutStaffInput>
-    create: XOR<AppointmentCreateWithoutStaffInput, AppointmentUncheckedCreateWithoutStaffInput>
-  }
-
-  export type AppointmentUpdateWithWhereUniqueWithoutStaffInput = {
-    where: AppointmentWhereUniqueInput
-    data: XOR<AppointmentUpdateWithoutStaffInput, AppointmentUncheckedUpdateWithoutStaffInput>
-  }
-
-  export type AppointmentUpdateManyWithWhereWithoutStaffInput = {
-    where: AppointmentScalarWhereInput
-    data: XOR<AppointmentUpdateManyMutationInput, AppointmentUncheckedUpdateManyWithoutStaffInput>
-  }
-
-  export type UserUpsertWithoutStoreStaffInput = {
-    update: XOR<UserUpdateWithoutStoreStaffInput, UserUncheckedUpdateWithoutStoreStaffInput>
-    create: XOR<UserCreateWithoutStoreStaffInput, UserUncheckedCreateWithoutStoreStaffInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutStoreStaffInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutStoreStaffInput, UserUncheckedUpdateWithoutStoreStaffInput>
-  }
-
-  export type UserUpdateWithoutStoreStaffInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    appointments?: AppointmentUpdateManyWithoutClientNestedInput
-    notices?: NotificationUpdateManyWithoutUserNestedInput
-    staff?: StaffProfileUpdateOneWithoutUserNestedInput
-    stores?: StoreUpdateManyWithoutCreatedByNestedInput
-    roles?: UserRoleUpdateManyWithoutUserNestedInput
-    invites?: InviteUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutStoreStaffInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
-    notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-    stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
-    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
+    storeStaffId?: StringFilter<"StaffAvailability"> | string
+    dayOfWeek?: EnumDayOfWeekFilter<"StaffAvailability"> | $Enums.DayOfWeek
   }
 
   export type StoreUpsertWithoutStaffInput = {
@@ -24763,34 +24813,79 @@ export namespace Prisma {
     config?: StoreConfigUncheckedUpdateOneWithoutStoreNestedInput
   }
 
+  export type UserUpsertWithoutStoreStaffInput = {
+    update: XOR<UserUpdateWithoutStoreStaffInput, UserUncheckedUpdateWithoutStoreStaffInput>
+    create: XOR<UserCreateWithoutStoreStaffInput, UserUncheckedCreateWithoutStoreStaffInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutStoreStaffInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutStoreStaffInput, UserUncheckedUpdateWithoutStoreStaffInput>
+  }
+
+  export type UserUpdateWithoutStoreStaffInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
+    appointments?: AppointmentUpdateManyWithoutClientNestedInput
+    invites?: InviteUpdateManyWithoutUserNestedInput
+    notices?: NotificationUpdateManyWithoutUserNestedInput
+    staff?: StaffProfileUpdateOneWithoutUserNestedInput
+    stores?: StoreUpdateManyWithoutCreatedByNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutStoreStaffInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
+    appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
+    notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
+    stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutStaffInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
     appointments?: AppointmentCreateNestedManyWithoutClientInput
-    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
+    invites?: InviteCreateNestedManyWithoutUserInput
     notices?: NotificationCreateNestedManyWithoutUserInput
     stores?: StoreCreateNestedManyWithoutCreatedByInput
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     roles?: UserRoleCreateNestedManyWithoutUserInput
-    invites?: InviteCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStaffInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
     appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
-    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
+    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
     notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
     stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStaffInput = {
@@ -24812,31 +24907,33 @@ export namespace Prisma {
   export type UserUpdateWithoutStaffInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUpdateManyWithoutClientNestedInput
-    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
+    invites?: InviteUpdateManyWithoutUserNestedInput
     notices?: NotificationUpdateManyWithoutUserNestedInput
     stores?: StoreUpdateManyWithoutCreatedByNestedInput
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     roles?: UserRoleUpdateManyWithoutUserNestedInput
-    invites?: InviteUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStaffInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
-    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
     notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type StoreStaffCreateWithoutAvailabilityInput = {
@@ -24844,8 +24941,8 @@ export namespace Prisma {
     role: $Enums.StoreRole
     status: $Enums.StaffStatus
     appointments?: AppointmentCreateNestedManyWithoutStaffInput
-    user: UserCreateNestedOneWithoutStoreStaffInput
     store: StoreCreateNestedOneWithoutStaffInput
+    user: UserCreateNestedOneWithoutStoreStaffInput
   }
 
   export type StoreStaffUncheckedCreateWithoutAvailabilityInput = {
@@ -24878,8 +24975,8 @@ export namespace Prisma {
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
     status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
     appointments?: AppointmentUpdateManyWithoutStaffNestedInput
-    user?: UserUpdateOneRequiredWithoutStoreStaffNestedInput
     store?: StoreUpdateOneRequiredWithoutStaffNestedInput
+    user?: UserUpdateOneRequiredWithoutStoreStaffNestedInput
   }
 
   export type StoreStaffUncheckedUpdateWithoutAvailabilityInput = {
@@ -25009,8 +25106,8 @@ export namespace Prisma {
     role: $Enums.StoreRole
     status: $Enums.StaffStatus
     availability?: StaffAvailabilityCreateNestedManyWithoutStoreStaffInput
-    user: UserCreateNestedOneWithoutStoreStaffInput
     store: StoreCreateNestedOneWithoutStaffInput
+    user: UserCreateNestedOneWithoutStoreStaffInput
   }
 
   export type StoreStaffUncheckedCreateWithoutAppointmentsInput = {
@@ -25061,31 +25158,33 @@ export namespace Prisma {
   export type UserCreateWithoutAppointmentsInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
-    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
+    invites?: InviteCreateNestedManyWithoutUserInput
     notices?: NotificationCreateNestedManyWithoutUserInput
     staff?: StaffProfileCreateNestedOneWithoutUserInput
     stores?: StoreCreateNestedManyWithoutCreatedByInput
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     roles?: UserRoleCreateNestedManyWithoutUserInput
-    invites?: InviteCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAppointmentsInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
-    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
+    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
     notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
     staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAppointmentsInput = {
@@ -25129,8 +25228,8 @@ export namespace Prisma {
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
     status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
     availability?: StaffAvailabilityUpdateManyWithoutStoreStaffNestedInput
-    user?: UserUpdateOneRequiredWithoutStoreStaffNestedInput
     store?: StoreUpdateOneRequiredWithoutStaffNestedInput
+    user?: UserUpdateOneRequiredWithoutStoreStaffNestedInput
   }
 
   export type StoreStaffUncheckedUpdateWithoutAppointmentsInput = {
@@ -25193,31 +25292,33 @@ export namespace Prisma {
   export type UserUpdateWithoutAppointmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
+    invites?: InviteUpdateManyWithoutUserNestedInput
     notices?: NotificationUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUpdateOneWithoutUserNestedInput
     stores?: StoreUpdateManyWithoutCreatedByNestedInput
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     roles?: UserRoleUpdateManyWithoutUserNestedInput
-    invites?: InviteUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAppointmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
+    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
     notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AppointmentServiceUpsertWithWhereUniqueWithoutAppointmentInput = {
@@ -25241,8 +25342,8 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
     staff: StoreStaffCreateNestedOneWithoutAppointmentsInput
     store: StoreCreateNestedOneWithoutAppointmentsInput
     client: UserCreateNestedOneWithoutAppointmentsInput
@@ -25256,8 +25357,8 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
   }
 
   export type AppointmentCreateOrConnectWithoutItemsInput = {
@@ -25268,8 +25369,8 @@ export namespace Prisma {
   export type ServiceCreateWithoutBookingsInput = {
     id?: string
     name: string
-    price: number
     createdAt?: Date | string
+    price: number
     store: StoreCreateNestedOneWithoutServicesInput
   }
 
@@ -25277,8 +25378,8 @@ export namespace Prisma {
     id?: string
     storeId: string
     name: string
-    price: number
     createdAt?: Date | string
+    price: number
   }
 
   export type ServiceCreateOrConnectWithoutBookingsInput = {
@@ -25302,8 +25403,8 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     staff?: StoreStaffUpdateOneRequiredWithoutAppointmentsNestedInput
     store?: StoreUpdateOneRequiredWithoutAppointmentsNestedInput
     client?: UserUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -25317,8 +25418,8 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ServiceUpsertWithoutBookingsInput = {
@@ -25335,8 +25436,8 @@ export namespace Prisma {
   export type ServiceUpdateWithoutBookingsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    price?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: IntFieldUpdateOperationsInput | number
     store?: StoreUpdateOneRequiredWithoutServicesNestedInput
   }
 
@@ -25344,38 +25445,40 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     storeId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    price?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserCreateWithoutNoticesInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
     appointments?: AppointmentCreateNestedManyWithoutClientInput
-    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
+    invites?: InviteCreateNestedManyWithoutUserInput
     staff?: StaffProfileCreateNestedOneWithoutUserInput
     stores?: StoreCreateNestedManyWithoutCreatedByInput
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     roles?: UserRoleCreateNestedManyWithoutUserInput
-    invites?: InviteCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNoticesInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
     appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
-    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
+    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
     staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNoticesInput = {
@@ -25397,31 +25500,33 @@ export namespace Prisma {
   export type UserUpdateWithoutNoticesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUpdateManyWithoutClientNestedInput
-    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
+    invites?: InviteUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUpdateOneWithoutUserNestedInput
     stores?: StoreUpdateManyWithoutCreatedByNestedInput
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     roles?: UserRoleUpdateManyWithoutUserNestedInput
-    invites?: InviteUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNoticesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
-    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type StoreCreateWithoutInvitesInput = {
@@ -25458,30 +25563,32 @@ export namespace Prisma {
   export type UserCreateWithoutInvitesInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
     appointments?: AppointmentCreateNestedManyWithoutClientInput
-    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     notices?: NotificationCreateNestedManyWithoutUserInput
     staff?: StaffProfileCreateNestedOneWithoutUserInput
     stores?: StoreCreateNestedManyWithoutCreatedByInput
+    storeStaff?: StoreStaffCreateNestedManyWithoutUserInput
     roles?: UserRoleCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutInvitesInput = {
     id: string
     email: string
-    fullName?: string | null
-    phone?: string | null
-    avatarUrl?: string | null
     createdAt?: Date | string
+    fullName?: string | null
+    avatarUrl?: string | null
+    phone?: string | null
+    authId?: string | null
     appointments?: AppointmentUncheckedCreateNestedManyWithoutClientInput
-    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     notices?: NotificationUncheckedCreateNestedManyWithoutUserInput
     staff?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     stores?: StoreUncheckedCreateNestedManyWithoutCreatedByInput
+    storeStaff?: StoreStaffUncheckedCreateNestedManyWithoutUserInput
     roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -25541,30 +25648,32 @@ export namespace Prisma {
   export type UserUpdateWithoutInvitesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUpdateManyWithoutClientNestedInput
-    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     notices?: NotificationUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUpdateOneWithoutUserNestedInput
     stores?: StoreUpdateManyWithoutCreatedByNestedInput
+    storeStaff?: StoreStaffUpdateManyWithoutUserNestedInput
     roles?: UserRoleUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInvitesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    authId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUncheckedUpdateManyWithoutClientNestedInput
-    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     notices?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     staff?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     stores?: StoreUncheckedUpdateManyWithoutCreatedByNestedInput
+    storeStaff?: StoreStaffUncheckedUpdateManyWithoutUserNestedInput
     roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -25575,15 +25684,17 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
   }
 
-  export type StoreStaffCreateManyUserInput = {
+  export type InviteCreateManyUserInput = {
     id?: string
     storeId: string
     role: $Enums.StoreRole
-    status: $Enums.StaffStatus
+    createdAt?: Date | string
+    invitedBy: string
+    status?: $Enums.InviteStatus
   }
 
   export type NotificationCreateManyUserInput = {
@@ -25602,18 +25713,16 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type UserRoleCreateManyUserInput = {
-    id?: string
-    roleId: string
-  }
-
-  export type InviteCreateManyUserInput = {
+  export type StoreStaffCreateManyUserInput = {
     id?: string
     storeId: string
     role: $Enums.StoreRole
-    invitedBy: string
-    status?: $Enums.InviteStatus
-    createdAt?: Date | string
+    status: $Enums.StaffStatus
+  }
+
+  export type UserRoleCreateManyUserInput = {
+    id?: string
+    roleId: string
   }
 
   export type AppointmentUpdateWithoutClientInput = {
@@ -25621,8 +25730,8 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     staff?: StoreStaffUpdateOneRequiredWithoutAppointmentsNestedInput
     store?: StoreUpdateOneRequiredWithoutAppointmentsNestedInput
     items?: AppointmentServiceUpdateManyWithoutAppointmentNestedInput
@@ -25635,8 +25744,8 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     items?: AppointmentServiceUncheckedUpdateManyWithoutAppointmentNestedInput
   }
 
@@ -25647,33 +25756,35 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type StoreStaffUpdateWithoutUserInput = {
+  export type InviteUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
-    status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
-    availability?: StaffAvailabilityUpdateManyWithoutStoreStaffNestedInput
-    appointments?: AppointmentUpdateManyWithoutStaffNestedInput
-    store?: StoreUpdateOneRequiredWithoutStaffNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invitedBy?: StringFieldUpdateOperationsInput | string
+    status?: EnumInviteStatusFieldUpdateOperationsInput | $Enums.InviteStatus
+    store?: StoreUpdateOneRequiredWithoutInvitesNestedInput
   }
 
-  export type StoreStaffUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    storeId?: StringFieldUpdateOperationsInput | string
-    role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
-    status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
-    availability?: StaffAvailabilityUncheckedUpdateManyWithoutStoreStaffNestedInput
-    appointments?: AppointmentUncheckedUpdateManyWithoutStaffNestedInput
-  }
-
-  export type StoreStaffUncheckedUpdateManyWithoutUserInput = {
+  export type InviteUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     storeId?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
-    status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invitedBy?: StringFieldUpdateOperationsInput | string
+    status?: EnumInviteStatusFieldUpdateOperationsInput | $Enums.InviteStatus
+  }
+
+  export type InviteUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    storeId?: StringFieldUpdateOperationsInput | string
+    role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invitedBy?: StringFieldUpdateOperationsInput | string
+    status?: EnumInviteStatusFieldUpdateOperationsInput | $Enums.InviteStatus
   }
 
   export type NotificationUpdateWithoutUserInput = {
@@ -25734,6 +25845,31 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type StoreStaffUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
+    appointments?: AppointmentUpdateManyWithoutStaffNestedInput
+    availability?: StaffAvailabilityUpdateManyWithoutStoreStaffNestedInput
+    store?: StoreUpdateOneRequiredWithoutStaffNestedInput
+  }
+
+  export type StoreStaffUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    storeId?: StringFieldUpdateOperationsInput | string
+    role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
+    appointments?: AppointmentUncheckedUpdateManyWithoutStaffNestedInput
+    availability?: StaffAvailabilityUncheckedUpdateManyWithoutStoreStaffNestedInput
+  }
+
+  export type StoreStaffUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    storeId?: StringFieldUpdateOperationsInput | string
+    role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
+  }
+
   export type UserRoleUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
@@ -25747,33 +25883,6 @@ export namespace Prisma {
   export type UserRoleUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type InviteUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
-    invitedBy?: StringFieldUpdateOperationsInput | string
-    status?: EnumInviteStatusFieldUpdateOperationsInput | $Enums.InviteStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    store?: StoreUpdateOneRequiredWithoutInvitesNestedInput
-  }
-
-  export type InviteUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    storeId?: StringFieldUpdateOperationsInput | string
-    role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
-    invitedBy?: StringFieldUpdateOperationsInput | string
-    status?: EnumInviteStatusFieldUpdateOperationsInput | $Enums.InviteStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type InviteUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    storeId?: StringFieldUpdateOperationsInput | string
-    role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
-    invitedBy?: StringFieldUpdateOperationsInput | string
-    status?: EnumInviteStatusFieldUpdateOperationsInput | $Enums.InviteStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserRoleCreateManyRoleInput = {
@@ -25803,24 +25912,24 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
   }
 
   export type InviteCreateManyStoreInput = {
     id?: string
-    userId: string
     role: $Enums.StoreRole
+    createdAt?: Date | string
     invitedBy: string
     status?: $Enums.InviteStatus
-    createdAt?: Date | string
+    userId: string
   }
 
   export type ServiceCreateManyStoreInput = {
     id?: string
     name: string
-    price: number
     createdAt?: Date | string
+    price: number
   }
 
   export type StoreStaffCreateManyStoreInput = {
@@ -25835,8 +25944,8 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     staff?: StoreStaffUpdateOneRequiredWithoutAppointmentsNestedInput
     client?: UserUpdateOneRequiredWithoutAppointmentsNestedInput
     items?: AppointmentServiceUpdateManyWithoutAppointmentNestedInput
@@ -25849,8 +25958,8 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     items?: AppointmentServiceUncheckedUpdateManyWithoutAppointmentNestedInput
   }
 
@@ -25861,66 +25970,66 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type InviteUpdateWithoutStoreInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invitedBy?: StringFieldUpdateOperationsInput | string
     status?: EnumInviteStatusFieldUpdateOperationsInput | $Enums.InviteStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutInvitesNestedInput
   }
 
   export type InviteUncheckedUpdateWithoutStoreInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invitedBy?: StringFieldUpdateOperationsInput | string
     status?: EnumInviteStatusFieldUpdateOperationsInput | $Enums.InviteStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type InviteUncheckedUpdateManyWithoutStoreInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invitedBy?: StringFieldUpdateOperationsInput | string
     status?: EnumInviteStatusFieldUpdateOperationsInput | $Enums.InviteStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ServiceUpdateWithoutStoreInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    price?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: IntFieldUpdateOperationsInput | number
     bookings?: AppointmentServiceUpdateManyWithoutServiceNestedInput
   }
 
   export type ServiceUncheckedUpdateWithoutStoreInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    price?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: IntFieldUpdateOperationsInput | number
     bookings?: AppointmentServiceUncheckedUpdateManyWithoutServiceNestedInput
   }
 
   export type ServiceUncheckedUpdateManyWithoutStoreInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    price?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: IntFieldUpdateOperationsInput | number
   }
 
   export type StoreStaffUpdateWithoutStoreInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
     status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
-    availability?: StaffAvailabilityUpdateManyWithoutStoreStaffNestedInput
     appointments?: AppointmentUpdateManyWithoutStaffNestedInput
+    availability?: StaffAvailabilityUpdateManyWithoutStoreStaffNestedInput
     user?: UserUpdateOneRequiredWithoutStoreStaffNestedInput
   }
 
@@ -25929,8 +26038,8 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
     status?: EnumStaffStatusFieldUpdateOperationsInput | $Enums.StaffStatus
-    availability?: StaffAvailabilityUncheckedUpdateManyWithoutStoreStaffNestedInput
     appointments?: AppointmentUncheckedUpdateManyWithoutStaffNestedInput
+    availability?: StaffAvailabilityUncheckedUpdateManyWithoutStoreStaffNestedInput
   }
 
   export type StoreStaffUncheckedUpdateManyWithoutStoreInput = {
@@ -25972,13 +26081,6 @@ export namespace Prisma {
     end?: StringFieldUpdateOperationsInput | string
   }
 
-  export type StaffAvailabilityCreateManyStoreStaffInput = {
-    id?: string
-    dayOfWeek: $Enums.DayOfWeek
-    startTime: Date | string
-    endTime: Date | string
-  }
-
   export type AppointmentCreateManyStaffInput = {
     id?: string
     storeId: string
@@ -25986,29 +26088,15 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status: $Enums.AppointmentStatus
-    checkedInAt?: Date | string | null
     createdAt?: Date | string
+    checkedInAt?: Date | string | null
   }
 
-  export type StaffAvailabilityUpdateWithoutStoreStaffInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type StaffAvailabilityUncheckedUpdateWithoutStoreStaffInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type StaffAvailabilityUncheckedUpdateManyWithoutStoreStaffInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type StaffAvailabilityCreateManyStoreStaffInput = {
+    id?: string
+    startTime: Date | string
+    endTime: Date | string
+    dayOfWeek: $Enums.DayOfWeek
   }
 
   export type AppointmentUpdateWithoutStaffInput = {
@@ -26016,8 +26104,8 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     store?: StoreUpdateOneRequiredWithoutAppointmentsNestedInput
     client?: UserUpdateOneRequiredWithoutAppointmentsNestedInput
     items?: AppointmentServiceUpdateManyWithoutAppointmentNestedInput
@@ -26030,8 +26118,8 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     items?: AppointmentServiceUncheckedUpdateManyWithoutAppointmentNestedInput
   }
 
@@ -26042,8 +26130,29 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkedInAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type StaffAvailabilityUpdateWithoutStoreStaffInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
+  }
+
+  export type StaffAvailabilityUncheckedUpdateWithoutStoreStaffInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
+  }
+
+  export type StaffAvailabilityUncheckedUpdateManyWithoutStoreStaffInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
   }
 
   export type AppointmentServiceCreateManyServiceInput = {

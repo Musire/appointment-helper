@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./main.css";
-
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +14,7 @@ export default function RootLayout({
   return (
     <html className="dark">
       <body
-        className="font-poppins text-main"
+        className="bg-background font-poppins flex flex-1 w-dvw h-dvh overflow-hidden "
       >
         {children}
       </body>

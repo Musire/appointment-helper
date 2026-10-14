@@ -1,79 +1,94 @@
 'use client';
 
+import { FormStatusProvider } from "@/context/FormStatusProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { startTransition, useActionState, useEffect } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { startTransition, useActionState, useEffect, useLayoutEffect, useRef } from "react";
+import { DefaultValues, FieldValues, FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import StatusButton from "./StatusButton";
+import { ActionResponse } from "@/domains/auth/auth.types";
 
 
-export type FormState = { success: boolean, error: string | null }
-
-
-interface FormProps<S extends z.ZodObject<any>> {
+interface FormProps<T, S extends z.ZodObject<FieldValues>> {
     schema: S;
-    initialValues: z.infer<S>;
-    children: React.ReactNode;
-    actionFn: (prevState: FormState, formData: FormData) => FormState | Promise<FormState>;
+    initialValues: DefaultValues<z.infer<S>>; 
+    isMulti?: boolean;
+    children?: React.ReactNode;
+    actionFn: (_:any, formData: FormData) => ActionResponse<T> | Promise<ActionResponse<T>>;
     onSuccess?: () => void;
 }
 
-
-export default function ActionForm<S extends z.ZodObject<any>> ({ 
-    initialValues, 
+export default function ActionForm<T, S extends z.ZodObject<FieldValues>>({ 
     schema,
+    initialValues,
+    isMulti, 
     actionFn,
     onSuccess,
     children 
-}: FormProps<S>) {
-    // 1. server state
-    const [state, action, pending] = useActionState(actionFn, { 
+}: FormProps<T, S>) {
+    
+    const [state, formAction, pending] = useActionState(actionFn, { 
         success: false, 
-        error: null
-    })
+        error: undefined,
+        data: null
+    });
 
-    // 2. RHF setup
     const form = useForm<z.infer<S>>({
-      resolver: zodResolver(schema as any),
-      defaultValues: initialValues as any,
+      resolver: zodResolver(schema) as any, 
+      defaultValues: initialValues,
       mode: "onBlur"
     });
 
+    const handleFormSubmit = async () => {
+      const isValid = await form.trigger();
+      if (!isValid) {
+        console.log('Validation errors:', form.formState.errors);
+        return;
+      }
 
-    // 3. bridge RHF → server action
-    const onSubmit: SubmitHandler<z.infer<S>> = async (values) => {
-        const formData = new FormData();
+      const formValues = form.getValues();
 
-        const data = values as Record<string, any>;
-
-        for (const key in data) {
-            formData.append(key, String(data[key]));
+      // 1. Explicitly build the FormData instance from RHF values
+      const formData = new FormData();
+      Object.entries(formValues).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          formData.append(key, String(value));
         }
+      });
 
-        startTransition(() => {
-            (action as (data: FormData) => void)(formData);
-        });
+      startTransition(async () => {
+        formAction(formData); 
+      });
     };
 
+    const onSuccessRef = useRef(onSuccess);
+
+    // Keep the ref continuously updated safely inside an effect
+    useLayoutEffect(() => {
+      onSuccessRef.current = onSuccess;
+    }, [onSuccess]);
+
     useEffect(() => {
-        if (state.success && onSuccess) {
-            onSuccess();
-        }
-    }, [state.success, onSuccess]);
+      // Check if the submission was successful
+      if (state.success) {
+        onSuccessRef.current?.();
+        form.reset(); 
+      }
+    // ONLY depend on state.success and the stable reset function
+    }, [state.success, form]); 
 
     return (
       <FormProvider {...form}>
+        <FormStatusProvider state={state} pending={pending} >
         <form
-          className="flex flex-col rounded-xl max-w-lg w-full p-6 stacked space-y-2 "
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
+          className="flex flex-col rounded-xl max-w-lg w-full p-6 stacked space-y-2"
+          action={handleFormSubmit}
+          >
           {children}
-          <p className="">{state.error}</p>
-          <StatusButton 
-            isPending={pending}
-            state={state}
-          />
+          {state.error && <p className="text-error text-sm">{state.error}</p>}
+          {!isMulti && <StatusButton isPending={pending} state={state} />}
         </form>
+          </FormStatusProvider>
       </FormProvider>
     );
 }

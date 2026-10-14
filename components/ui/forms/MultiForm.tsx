@@ -5,7 +5,7 @@ import { useMultiForm, useStepper } from "@/hooks";
 import { useEffect } from "react";
 import { FieldValues, FormProvider, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
-import { FormError, MultiActionTray } from ".";
+import { FormError } from ".";
 
 interface FormProps<
     Ctx,
@@ -66,14 +66,7 @@ export default function MultiForm<
           onSubmit={handleSubmit(wrappedSubmit as SubmitHandler<FieldValues>)}
         >
           {currentStep.render(ctx)}
-          <MultiActionTray
-            controls={controls}
-            formState={{
-              isSubmitting,
-              showError,
-              showSuccess
-            }}
-          />
+          
         </form>
         <FormError
           showError={showError}

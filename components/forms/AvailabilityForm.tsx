@@ -1,7 +1,5 @@
 'use client';
-import AvailabilitySteps from "@/components/forms/steps/AvailabilitySteps";
-import { MultiForm } from "@/components/ui";
-import { AvailabilitySchema, AvailabilityType } from "@/validation/Availability.schema";
+import { AvailabilityType } from "@/validation/Availability.schema";
 import { useRouter } from "next/navigation";
 
 export type store = {
@@ -50,12 +48,7 @@ export default function AvailabilityForm ({ stores }: { stores: store[] }) {
     }
 
     return (
-        <MultiForm 
-            schema={AvailabilitySchema}
-            onSubmit={onSubmit}
-            initialValues={data}
-            steps={AvailabilitySteps}
-            ctx={{stores}}
-        />
+        <
+        ></>
     );
 }

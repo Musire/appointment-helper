@@ -4,16 +4,14 @@ import { BackButton } from "@/components/ui/buttons";
 export default function AdminNewStore () {
 
   return (
-    <div className="page-layout">
-        <div className="display-layout items-center space-y-6 pt-6">
-            <span className="spaced w-56">
-              <BackButton />
-              <h1 className="capitalize text-3xl">new store</h1>
-            </span>
-            <div className="flex flex-col items-center">
-              <StoreCreationForm  />
-            </div>
-        </div>
-    </div>
+    <section className="centered-col flex-1 space-y-6 p-6">
+          <div className="spaced w-full px-6">
+            <BackButton />
+            <h1 className="capitalize text-xl">new store</h1>
+          </div>
+          <div className="w-full h-96">
+            <StoreCreationForm  />
+          </div>
+    </section>
   );
 }

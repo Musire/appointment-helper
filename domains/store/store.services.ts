@@ -1,5 +1,55 @@
 import { StoreStatus } from "@/generated/prisma";
-import { storeRepository } from "../repositories/storeRepository";
+import { getPrismaUserId } from "../auth/util/session";
+import { storeRepository } from "./store.repositories";
+import { type defaultHours } from "./store.types";
+import { StoreCreationType } from "./store.validations";
+
+
+
+export async function createStoreService ({data, defaultHours}: {data: StoreCreationType, defaultHours: defaultHours}) {
+    const id = await getPrismaUserId()
+    if (!id) throw new Error('user id not found')
+    return storeRepository.createStore({ data, defaultHours, id })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export async function getStoreHoursService (storeId: string) {
+    const hours = await storeRepository.getStoreHours(storeId);
+
+    // 2. Define UI row order rules
+    const orderMap: Record<string, number> = {
+        'lun - vier': 1,
+        'sabado': 2,
+        'domingo': 3
+    };
+
+    // 3. Transform and return sorted data
+    return [...hours].sort((a, b) => {
+        const weightA = orderMap[a.label] ?? 99;
+        const weightB = orderMap[b.label] ?? 99;
+        return weightA - weightB;
+    });
+}
+
+
+export async function getStoresService () {
+    return storeRepository.findStoresByUserId()
+}
+
+
+
 
 
 export const StoreService = {
@@ -54,3 +104,24 @@ export const StoreService = {
     },
 }
 
+
+
+const defaultHours = [
+    { label: "Lun - Vier", isActive: false, start: "09:00 AM", end: "05:00 PM" },
+    { label: "Sábado", isActive: false, start: "09:00 AM", end: "02:00 PM" },
+    { label: "Domingo", isActive: false, start: "09:00 AM", end: "02:00 PM" }
+]
+
+export async function upsertStoreService (data: { storeId: string, name: string, address: string, id: string}) {
+    const found  = await storeRepository.findStore(data.storeId)
+
+    if (!found) {
+        storeRepository.createStore({
+            defaultHours, 
+            name: data.name, 
+            address: data.address, 
+            id: data.id})
+        return;
+    }
+
+}

@@ -123,10 +123,11 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
+  createdAt: 'createdAt',
   fullName: 'fullName',
-  phone: 'phone',
   avatarUrl: 'avatarUrl',
-  createdAt: 'createdAt'
+  phone: 'phone',
+  authId: 'authId'
 };
 
 exports.Prisma.RoleScalarFieldEnum = {
@@ -182,18 +183,18 @@ exports.Prisma.StaffProfileScalarFieldEnum = {
 
 exports.Prisma.StaffAvailabilityScalarFieldEnum = {
   id: 'id',
-  storeStaffId: 'storeStaffId',
-  dayOfWeek: 'dayOfWeek',
   startTime: 'startTime',
-  endTime: 'endTime'
+  endTime: 'endTime',
+  storeStaffId: 'storeStaffId',
+  dayOfWeek: 'dayOfWeek'
 };
 
 exports.Prisma.ServiceScalarFieldEnum = {
   id: 'id',
   storeId: 'storeId',
   name: 'name',
-  price: 'price',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  price: 'price'
 };
 
 exports.Prisma.AppointmentScalarFieldEnum = {
@@ -204,8 +205,8 @@ exports.Prisma.AppointmentScalarFieldEnum = {
   startTime: 'startTime',
   endTime: 'endTime',
   status: 'status',
-  checkedInAt: 'checkedInAt',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  checkedInAt: 'checkedInAt'
 };
 
 exports.Prisma.AppointmentServiceScalarFieldEnum = {
@@ -226,11 +227,11 @@ exports.Prisma.NotificationScalarFieldEnum = {
 exports.Prisma.InviteScalarFieldEnum = {
   id: 'id',
   storeId: 'storeId',
-  userId: 'userId',
   role: 'role',
+  createdAt: 'createdAt',
   invitedBy: 'invitedBy',
   status: 'status',
-  createdAt: 'createdAt'
+  userId: 'userId'
 };
 
 exports.Prisma.AuditLogScalarFieldEnum = {

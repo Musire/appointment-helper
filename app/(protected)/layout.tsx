@@ -20,9 +20,9 @@ export default async function DashboardLayout ({ children }: Props) {
 
     return (
         <AuthProvider fetchedRole={user.user_metadata.role.toUpperCase()}>
-            <div className="bg-background text-main w-dvw h-dvh flex-col flex overflow-auto px-6 lg:px-60 relative">
+            <div className=" text-main relative flex flex-col flex-1 overflow-hidden ">
                 {!isAdmin && <Navbar role={user.role} />}
-                <div className="flex flex-1 overflow-x-hidden scrollbar-none pb-20 " >
+                <div className=" flex  flex-1 overflow-x-hidden scrollbar-none pb-20 " >
                     {children}
                 </div>
             </div>

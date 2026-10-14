@@ -8,20 +8,20 @@ datasource db {
 }
 
 model User {
-  id           String        @id
-  email        String        @unique
-  fullName     String?       @map("full_name")
-  phone        String?
+  id           String         @id
+  email        String         @unique
+  createdAt    DateTime       @default(now()) @map("created_at")
+  fullName     String?        @map("full_name")
   avatarUrl    String?
-  createdAt    DateTime      @default(now()) @map("created_at")
-
-  appointments Appointment[] @relation("UserAppointments")
-  storeStaff   StoreStaff[]  
+  phone        String?
+  authId       String?        @db.Uuid
+  appointments Appointment[]  @relation("UserAppointments")
+  invites      Invite[]
   notices      Notification[]
   staff        StaffProfile?
   stores       Store[]
+  storeStaff   StoreStaff[]
   roles        UserRole[]
-  invites      Invite[]
 }
 
 model Role {
@@ -41,16 +41,16 @@ model UserRole {
 }
 
 model Store {
-  id           String            @id @default(uuid())
-  name         String            @unique
+  id           String        @id @default(uuid())
+  name         String        @unique
   address      String
-  status       StoreStatus       @default(DRAFT)
-  createdAt    DateTime          @default(now())
+  status       StoreStatus   @default(DRAFT)
+  createdAt    DateTime      @default(now())
   createdById  String
   appointments Appointment[]
   invites      Invite[]
   services     Service[]
-  createdBy    User              @relation(fields: [createdById], references: [id])
+  createdBy    User          @relation(fields: [createdById], references: [id])
   config       StoreConfig?
   staff        StoreStaff[]
 }
@@ -58,20 +58,19 @@ model Store {
 model StoreConfig {
   id        String      @id @default(uuid())
   storeId   String      @unique
-  // This is your array of objects relation
-  hours     StoreHour[] 
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   store     Store       @relation(fields: [storeId], references: [id])
+  hours     StoreHour[]
 }
 
 model StoreHour {
-  id            String      @id @default(uuid()) // Can use your 'row-001' strings
+  id            String      @id @default(uuid())
   storeConfigId String
-  label         String      // "lun - vier"
-  isActive      Boolean     // true
-  start         String      // "09:00 AM"
-  end           String      // "05:00 PM"
+  label         String
+  isActive      Boolean
+  start         String
+  end           String
   storeConfig   StoreConfig @relation(fields: [storeConfigId], references: [id], onDelete: Cascade)
 }
 
@@ -81,68 +80,59 @@ model StoreStaff {
   userId       String
   role         StoreRole
   status       StaffStatus
-
-  availability StaffAvailability[]
   appointments Appointment[]       @relation("StaffAppointments")
-  user         User                @relation(fields: [userId], references: [id])
+  availability StaffAvailability[]
   store        Store               @relation(fields: [storeId], references: [id])
+  user         User                @relation(fields: [userId], references: [id])
 
   @@unique([storeId, userId])
 }
 
 model StaffProfile {
-  id           String              @id @default(uuid())
-  userId       String              @unique
-  bio          String?
-  active       Boolean             @default(true)
-
-  user         User                @relation(fields: [userId], references: [id])
+  id     String  @id @default(uuid())
+  userId String  @unique
+  bio    String?
+  active Boolean @default(true)
+  user   User    @relation(fields: [userId], references: [id])
 }
 
 model StaffAvailability {
-  id           String      @id @default(uuid())
-  storeStaffId String
-  dayOfWeek    DayOfWeek
+  id           String     @id @default(uuid())
   startTime    DateTime
   endTime      DateTime
-
+  storeStaffId String
+  dayOfWeek    DayOfWeek
   storeStaff   StoreStaff @relation(fields: [storeStaffId], references: [id])
 
   @@index([storeStaffId, dayOfWeek])
 }
 
 model Service {
-  id          String      @id @default(uuid())
-  storeId     String
-  name        String
-  price       Int
-  createdAt   DateTime    @default(now())
-  
-  bookings    AppointmentService[]
-  store       Store       @relation(fields: [storeId], references: [id])
+  id        String               @id @default(uuid())
+  storeId   String
+  name      String
+  createdAt DateTime             @default(now())
+  price     Int
+  bookings  AppointmentService[]
+  store     Store                @relation(fields: [storeId], references: [id])
 
   @@unique([storeId, name])
 }
 
-
-
 model Appointment {
-  id            String               @id @default(uuid())
-  storeId       String
-  staffId       String
-  userId        String
-
-  startTime     DateTime
-  endTime       DateTime
-  status        AppointmentStatus
-  checkedInAt   DateTime?
-  createdAt     DateTime             @default(now())
-
-  staff         StoreStaff           @relation("StaffAppointments", fields: [staffId], references: [id])
-  store         Store                @relation(fields: [storeId], references: [id])
-  client        User                @relation("UserAppointments", fields: [userId], references: [id])
-
-  items         AppointmentService[]
+  id          String               @id @default(uuid())
+  storeId     String
+  staffId     String
+  userId      String
+  startTime   DateTime
+  endTime     DateTime
+  status      AppointmentStatus
+  createdAt   DateTime             @default(now())
+  checkedInAt DateTime?
+  staff       StoreStaff           @relation("StaffAppointments", fields: [staffId], references: [id])
+  store       Store                @relation(fields: [storeId], references: [id])
+  client      User                 @relation("UserAppointments", fields: [userId], references: [id])
+  items       AppointmentService[]
 
   @@index([storeId, startTime])
   @@index([staffId, startTime])
@@ -171,16 +161,15 @@ model Notification {
 }
 
 model Invite {
-  id         String     @id @default(uuid())
-  storeId    String
-  userId     String
-  role       StoreRole
-  invitedBy  String
-  status     InviteStatus @default(PENDING)
-  createdAt  DateTime   @default(now())
-
-  store   Store @relation(fields: [storeId], references: [id])
-  user    User  @relation(fields: [userId], references: [id])
+  id        String       @id @default(uuid())
+  storeId   String
+  role      StoreRole
+  createdAt DateTime     @default(now())
+  invitedBy String
+  status    InviteStatus @default(PENDING)
+  userId    String
+  store     Store        @relation(fields: [storeId], references: [id])
+  user      User         @relation(fields: [userId], references: [id])
 
   @@unique([storeId, userId])
   @@index([userId])
@@ -209,10 +198,10 @@ enum DayOfWeek {
 }
 
 enum InviteStatus {
-	PENDING
-	ACCEPTED
-	REJECTED
-	REVOKED
+  PENDING
+  ACCEPTED
+  REJECTED
+  REVOKED
 }
 
 enum RoleName {

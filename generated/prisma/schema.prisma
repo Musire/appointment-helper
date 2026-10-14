@@ -8,20 +8,20 @@ datasource db {
 }
 
 model User {
-  id        String   @id
-  email     String   @unique
-  fullName  String?  @map("full_name")
-  phone     String?
-  avatarUrl String?
-  createdAt DateTime @default(now()) @map("created_at")
-
+  id           String         @id
+  email        String         @unique
+  createdAt    DateTime       @default(now()) @map("created_at")
+  fullName     String?        @map("full_name")
+  avatarUrl    String?
+  phone        String?
+  authId       String?        @db.Uuid
   appointments Appointment[]  @relation("UserAppointments")
-  storeStaff   StoreStaff[]
+  invites      Invite[]
   notices      Notification[]
   staff        StaffProfile?
   stores       Store[]
+  storeStaff   StoreStaff[]
   roles        UserRole[]
-  invites      Invite[]
 }
 
 model Role {
@@ -58,34 +58,32 @@ model Store {
 model StoreConfig {
   id        String      @id @default(uuid())
   storeId   String      @unique
-  // This is your array of objects relation
-  hours     StoreHour[]
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   store     Store       @relation(fields: [storeId], references: [id])
+  hours     StoreHour[]
 }
 
 model StoreHour {
-  id            String      @id @default(uuid()) // Can use your 'row-001' strings
+  id            String      @id @default(uuid())
   storeConfigId String
-  label         String // "lun - vier"
-  isActive      Boolean // true
-  start         String // "09:00 AM"
-  end           String // "05:00 PM"
+  label         String
+  isActive      Boolean
+  start         String
+  end           String
   storeConfig   StoreConfig @relation(fields: [storeConfigId], references: [id], onDelete: Cascade)
 }
 
 model StoreStaff {
-  id      String      @id @default(uuid())
-  storeId String
-  userId  String
-  role    StoreRole
-  status  StaffStatus
-
-  availability StaffAvailability[]
+  id           String              @id @default(uuid())
+  storeId      String
+  userId       String
+  role         StoreRole
+  status       StaffStatus
   appointments Appointment[]       @relation("StaffAppointments")
-  user         User                @relation(fields: [userId], references: [id])
+  availability StaffAvailability[]
   store        Store               @relation(fields: [storeId], references: [id])
+  user         User                @relation(fields: [userId], references: [id])
 
   @@unique([storeId, userId])
 }
@@ -95,52 +93,46 @@ model StaffProfile {
   userId String  @unique
   bio    String?
   active Boolean @default(true)
-
-  user User @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id])
 }
 
 model StaffAvailability {
-  id           String    @id @default(uuid())
-  storeStaffId String
-  dayOfWeek    DayOfWeek
+  id           String     @id @default(uuid())
   startTime    DateTime
   endTime      DateTime
-
-  storeStaff StoreStaff @relation(fields: [storeStaffId], references: [id])
+  storeStaffId String
+  dayOfWeek    DayOfWeek
+  storeStaff   StoreStaff @relation(fields: [storeStaffId], references: [id])
 
   @@index([storeStaffId, dayOfWeek])
 }
 
 model Service {
-  id        String   @id @default(uuid())
+  id        String               @id @default(uuid())
   storeId   String
   name      String
+  createdAt DateTime             @default(now())
   price     Int
-  createdAt DateTime @default(now())
-
-  bookings AppointmentService[]
-  store    Store                @relation(fields: [storeId], references: [id])
+  bookings  AppointmentService[]
+  store     Store                @relation(fields: [storeId], references: [id])
 
   @@unique([storeId, name])
 }
 
 model Appointment {
-  id      String @id @default(uuid())
-  storeId String
-  staffId String
-  userId  String
-
+  id          String               @id @default(uuid())
+  storeId     String
+  staffId     String
+  userId      String
   startTime   DateTime
   endTime     DateTime
   status      AppointmentStatus
+  createdAt   DateTime             @default(now())
   checkedInAt DateTime?
-  createdAt   DateTime          @default(now())
-
-  staff  StoreStaff @relation("StaffAppointments", fields: [staffId], references: [id])
-  store  Store      @relation(fields: [storeId], references: [id])
-  client User       @relation("UserAppointments", fields: [userId], references: [id])
-
-  items AppointmentService[]
+  staff       StoreStaff           @relation("StaffAppointments", fields: [staffId], references: [id])
+  store       Store                @relation(fields: [storeId], references: [id])
+  client      User                 @relation("UserAppointments", fields: [userId], references: [id])
+  items       AppointmentService[]
 
   @@index([storeId, startTime])
   @@index([staffId, startTime])
@@ -171,14 +163,13 @@ model Notification {
 model Invite {
   id        String       @id @default(uuid())
   storeId   String
-  userId    String
   role      StoreRole
+  createdAt DateTime     @default(now())
   invitedBy String
   status    InviteStatus @default(PENDING)
-  createdAt DateTime     @default(now())
-
-  store Store @relation(fields: [storeId], references: [id])
-  user  User  @relation(fields: [userId], references: [id])
+  userId    String
+  store     Store        @relation(fields: [storeId], references: [id])
+  user      User         @relation(fields: [userId], references: [id])
 
   @@unique([storeId, userId])
   @@index([userId])
