@@ -1,12 +1,10 @@
 'use server';
 
+import { requireRole } from "@/domains/auth/util/requireRole";
+import { safeAction } from "@/domains/auth/util/safeAction";
 import { prisma } from "@/lib/prisma";
 import { StoreCreationSchema, StoreCreationType } from "@/validation/StoreCreation.schema";
 import { revalidatePath } from "next/cache";
-import { createSafeAction, safeAction } from "@/domains/auth/util/safeAction";
-import { getCurrentUser } from "@/domains/auth/auth.actions";
-import { requireRole } from "@/domains/auth/util/requireRole";
-import { upsertStoreService } from "../store.services";
 
 
 export async function createStore (formData: StoreCreationType) {
@@ -127,12 +125,4 @@ export async function deleteStores (target: string[]) {
     })
 }
 
-export const upsertStore = createSafeAction(
-  {},
-  async (payload) => {
-    const user = await getCurrentUser()
-    if (!user || !user.id) return;
 
-    await upsertStoreService({...payload, id: user.id})
-  }
-)

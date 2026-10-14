@@ -1,5 +1,5 @@
 import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
-import { StoreEdit } from "@/features/admin-store-management/components";
+import AdminStoreEditDataLayer from "@/domains/store/components/AdminStoreEditDataLayer";
 
 type Props = {
   params: Promise<{
@@ -11,7 +11,7 @@ export default function StoreEditPage ({ params }: Props) {
     return (
         <RoleRenderer 
             roles={{
-                'ADMIN': <StoreEdit params={params}/>   
+                'ADMIN': <AdminStoreEditDataLayer params={params}/>   
             }}
         />
     );

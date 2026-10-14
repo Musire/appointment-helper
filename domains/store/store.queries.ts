@@ -1,8 +1,9 @@
-import { createSafeAction } from "@/domains/auth/util/safeAction";
+import { createSafeAction, validateSchema } from "@/domains/auth/util/safeAction";
 import { getStoreOfferings } from "@/features/booking/services/booking.services";
 import { StoreConfig } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
-import { getStoreHoursService, StoreService } from "./store.services";
+import { getStoreHoursService, storeDetailsService, StoreService } from "./store.services";
+import { StoreDetailsSchema, StoreDetailsType } from "./store.validations";
 
 export type StoreConfigResult =
   | { status: "STORE_NOT_FOUND" }
@@ -30,6 +31,18 @@ export const getStoreStatus = createSafeAction(
 
         return { storeInfo, metrics }
     }
+)
+
+
+export const getStoreDetails = createSafeAction(
+  {
+    allowedRoles: ['ADMIN', 'admin']
+  },
+  async (input: StoreDetailsType) => {
+    const validated = validateSchema(StoreDetailsSchema, input)
+    const res = storeDetailsService(validated)
+    return res
+  }
 )
 
 

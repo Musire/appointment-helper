@@ -1,12 +1,11 @@
 'use server';
 
-import { getCurrentUser } from "@/domains/auth/auth.actions";
 import { requireRole } from "@/domains/auth/util/requireRole";
 import { createSafeAction, safeAction, validateFormData } from "@/domains/auth/util/safeAction";
 import { prisma } from "@/lib/prisma";
-import { StoreCreationType } from "@/validation/StoreCreation.schema";
+import { StoreUpdateSchema } from "@/validation/StoreCreation.schema";
 import { revalidatePath } from "next/cache";
-import { createStoreService, upsertStoreService } from "./store.services";
+import { createStoreService, updateStoreService } from "./store.services";
 import { StoreCreationSchema } from "./store.validations";
 
 
@@ -29,41 +28,17 @@ export const createStore = createSafeAction(
     }
 )
 
-
-export async function updateStore (formData: StoreCreationType) {
-    return safeAction(async() => {
-        const { id, name, address } = formData;
-
-        if (!id) {
-            throw new Error('No store id found')
-        }
-
-        const { access, user } = await requireRole(['ADMIN'])  
-        
-        if (!access) {
-            throw new Error('Unauthorized to perform action')
-        }
-        
-        if (!user) {
-            throw new Error('User not logged in')
-        }
-
-        const result = await prisma.store.updateMany({
-            where: {
-                id,
-                createdById: user.id,
-            },
-            data: {
-                name,
-                address
-            }
-        })
-
-        if (result.count === 0) {
-            throw new Error("Not authorized or not found")
-        }
-    })
-}
+export const updateStore = createSafeAction(
+    {
+        allowedRoles: ['admin']
+    },
+    async (_:any, formData: FormData) => {
+        const validated = validateFormData(StoreUpdateSchema, formData)
+        const res = await updateStoreService(validated)
+        revalidatePath('/dashboard')
+        return res
+    }
+)
 
 export async function deleteStores (target: string[]) {
     return safeAction(async () => {
@@ -96,13 +71,3 @@ export async function deleteStores (target: string[]) {
         revalidatePath('/admin/dashboard')
     })
 }
-
-export const upsertStore = createSafeAction(
-  {},
-  async (payload) => {
-    const user = await getCurrentUser()
-    if (!user || !user.id) return;
-
-    await upsertStoreService({...payload, id: user.id})
-  }
-)

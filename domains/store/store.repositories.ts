@@ -1,7 +1,8 @@
 import { StoreStatus } from "@/generated/prisma"
 import { prisma } from "@/lib/prisma"
+import { StoreUpdateType } from "@/validation/StoreCreation.schema"
 import { defaultHours } from "./store.types"
-import { StoreCreationType, StoreHoursInput } from "./store.validations"
+import { StoreCreationType, StoreDetailsType, StoreHoursInput } from "./store.validations"
 
 export const  storeRepository = {
     async findStoresByUserId() {
@@ -155,4 +156,25 @@ export const  storeRepository = {
         })
         return store
     },
+    async updateStore (data: StoreUpdateType) {
+        const store = await prisma.store.updateMany({
+            where: { id: data.id },
+            data: {
+                name: data.name,
+                address: data.address
+            }
+        })
+        return store
+    },
+    async getStoreDetails (data: StoreDetailsType) {
+        const store = await prisma.store.findFirst({
+            where: { id: data.storeId},
+            select: {
+                id: true,
+                name: true,
+                address: true,
+            }
+        })
+        return store
+    }
 }

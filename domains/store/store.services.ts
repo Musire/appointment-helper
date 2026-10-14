@@ -1,13 +1,12 @@
 import { StoreStatus } from "@/generated/prisma";
+import { StoreUpdateType } from "@/validation/StoreCreation.schema";
 import { getPrismaUserId } from "../auth/util/session";
 import { storeRepository } from "./store.repositories";
 import { type defaultHours } from "./store.types";
-import { StoreCreationType } from "./store.validations";
+import { StoreCreationType, StoreDetailsType } from "./store.validations";
 
 
 // GET SERVICE FUNCTIONS
-
-
 
 export async function getStoreHoursService (storeId: string) {
     const hours = await storeRepository.getStoreHours(storeId);
@@ -31,7 +30,12 @@ export async function getStoresService () {
     return storeRepository.findStoresByUserId()
 }
 
+export async function storeDetailsService (data: StoreDetailsType) {
+    return storeRepository.getStoreDetails(data)
+}
 
+
+// MONOLITH OBJECT - PROXY
 
 export const StoreService = {
     async syncStoreStatus(storeId: string) {
@@ -86,8 +90,6 @@ export const StoreService = {
 }
 
 
-
-
 // CREATE/UPDATE SERVICE FUNCTIONS
 
 
@@ -97,23 +99,10 @@ export async function createStoreService ({data, defaultHours}: {data: StoreCrea
     return storeRepository.createStore({ data, defaultHours, id })
 }
 
-
-const defaultHours = [
-    { label: "Lun - Vier", isActive: false, start: "09:00 AM", end: "05:00 PM" },
-    { label: "Sábado", isActive: false, start: "09:00 AM", end: "02:00 PM" },
-    { label: "Domingo", isActive: false, start: "09:00 AM", end: "02:00 PM" }
-]
-
-export async function upsertStoreService (data: { storeId: string, name: string, address: string, id: string}) {
-    const found  = await storeRepository.findStore(data.storeId)
-
-    if (!found) {
-        storeRepository.createStore({
-            defaultHours, 
-            name: data.name, 
-            address: data.address, 
-            id: data.id})
-        return;
-    }
-
+export async function updateStoreService (data: StoreUpdateType) {
+    return storeRepository.updateStore(data)
 }
+
+
+
+
