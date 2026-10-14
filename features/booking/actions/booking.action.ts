@@ -1,6 +1,6 @@
 "use server";
 
-import { createSafeAction } from "@/domains/identity/auth/safeAction";
+import { createSafeAction } from "@/domains/auth/util/safeAction";
 import { convertToUTC } from "@/lib/utils/time";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";

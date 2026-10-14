@@ -1,8 +1,6 @@
 import { Navbar } from "@/components/ui";
 import { AuthProvider } from "@/context";
-import { ToastProvider } from "@/context/ToastContext";
-import { getCurrentUser } from "@/domains/identity/auth/session";
-import { Header } from "@/features/tinker";
+import { getCurrentUser } from "@/domains/auth/auth.actions";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -17,19 +15,17 @@ export default async function DashboardLayout ({ children }: Props) {
         redirect('/login')
     }
 
-    const isAdmin = (user.role === 'ADMIN')
+
+    const isAdmin = (user.user_metadata.role === 'admin')
 
     return (
-        <ToastProvider>
-            <AuthProvider fetchedRole={user.role}>
-                <div className="bg-background text-main w-dvw h-dvh flex-col flex overflow-auto px-6 lg:px-60 relative">
-                    <Header avatarUrl={user.avatarUrl} />
-                    {!isAdmin && <Navbar role={user.role} />}
-                    <div className="flex flex-1 overflow-x-hidden scrollbar-none pb-20 " >
-                        {children}
-                    </div>
+        <AuthProvider fetchedRole={user.user_metadata.role.toUpperCase()}>
+            <div className="bg-background text-main w-dvw h-dvh flex-col flex overflow-auto px-6 lg:px-60 relative">
+                {!isAdmin && <Navbar role={user.role} />}
+                <div className="flex flex-1 overflow-x-hidden scrollbar-none pb-20 " >
+                    {children}
                 </div>
-            </AuthProvider>
-        </ToastProvider>
-    );
+            </div>
+        </AuthProvider>
+);
 }

@@ -1,6 +1,7 @@
 'use client';
 
-import { logout } from "@/domains/identity/actions/auth.actions";
+import { logout } from "@/domains/auth/auth.actions";
+
 
 export default function LogoutButton () {
   return (

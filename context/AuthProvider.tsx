@@ -1,6 +1,6 @@
 'use client'; 
 
-import { RoleType } from "@/domains/identity/types";
+import { RoleType } from "@/domains/auth/auth.types";
 import { createContext, ReactNode, useContext, useState } from "react";
 
 type ContextNameContextType = {

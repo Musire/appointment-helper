@@ -1,9 +1,9 @@
 'use server';
 
-import { safeAction } from "@/domains/identity/auth/safeAction";
+import { getCurrentUser } from "@/domains/auth/auth.actions";
+import { safeAction } from "@/domains/auth/util/safeAction";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { getCurrentUser } from "../../identity/actions/auth.actions";
 
 export async function editStoreConfig (storeId: string) {
 
@@ -35,8 +35,6 @@ export async function editStoreConfig (storeId: string) {
 
     })
 }
-
-
 
 export async function sendInvite({ targetId, storeId }: { targetId: string; storeId: string; }) {
   return safeAction(async () => {

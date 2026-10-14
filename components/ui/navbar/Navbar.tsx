@@ -1,7 +1,7 @@
 import { getNav, MobileNav, PanelNav, Role } from "@/components/ui";
 
 type Props = {
-    role: Role
+    role: Role | string
 }
 
 export default function Navbar ({ role }: Props) {

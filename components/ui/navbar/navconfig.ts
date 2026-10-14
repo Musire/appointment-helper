@@ -7,7 +7,7 @@ export type NavItem = {
 
 export type Role = 'SUPERADMIN' | 'ADMIN' | 'STAFF' | 'USER'
 
-export const navByRole: Record<Role, NavItem[]> = {
+export const navByRole: Record<Role | string, NavItem[]> = {
   ADMIN: [
   ],
   STAFF: [
@@ -64,6 +64,6 @@ export const navByRole: Record<Role, NavItem[]> = {
   ],
 }
 
-export function getNav(role: Role) {
+export function getNav(role: Role | string) {
   return navByRole[role] ?? []
 }

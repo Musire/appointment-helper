@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { supabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient, createSupabaseServerClientReadOnly } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { safeAction } from "../auth/safeAction";
+import { safeAction } from "./util/safeAction";
 
 export async function logout() {
 

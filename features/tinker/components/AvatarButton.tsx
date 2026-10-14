@@ -2,7 +2,7 @@
 
 import { Drawer, Theme } from "@/components/ui";
 import { Button } from "@/components/ui/button";
-import { logout } from "@/domains/identity/actions/auth.actions";
+import { logout } from "@/domains/auth/auth.actions";
 import { useDrawer } from "@/hooks";
 import { LogOut, ShieldPlus, User } from "lucide-react";
 import Image from "next/image";
@@ -29,7 +29,8 @@ export default function AvatarButton({ avatarUrl }: Props) {
           ? <div className="text-deep centered">
               <User />
             </div>
-          : <Image 
+          : <Image
+              fill
               src={avatarUrl} 
               alt="User Profile" 
               className="w-full h-full object-cover"

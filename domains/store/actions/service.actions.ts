@@ -1,12 +1,12 @@
 'use server'
 
-import { createSafeAction, safeAction } from "@/domains/identity/auth/safeAction"
 import { prisma } from "@/lib/prisma"
 import { assertInputAsync } from "@/lib/utils/parseSchema"
 import { ServiceCreationSchema } from "@/validation/ServiceCreation.schema"
 import { revalidatePath } from "next/cache"
 import { serviceSchema } from "@/domains/service/validation/service.schema"
 import { upsertOfferingService } from "@/domains/service/services/upsertOfferingService"
+import { createSafeAction, safeAction } from "@/domains/auth/util/safeAction"
 
 export async function createService (formData: unknown) {
     return safeAction(async() => {

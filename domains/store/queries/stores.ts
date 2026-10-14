@@ -1,5 +1,4 @@
-import { createSafeAction } from "@/domains/identity/auth/safeAction"
-import { prisma } from "@/lib/prisma"
+import { createSafeAction } from "@/domains/auth/util/safeAction"
 import { getStoresService } from "../services/getStoresService"
 
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from "@/context";
-import { RoleType } from "@/domains/identity/types";
+import { RoleType } from "@/domains/auth/auth.types";
 import { redirect } from "next/navigation";
 
 

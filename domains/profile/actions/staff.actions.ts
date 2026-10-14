@@ -1,10 +1,10 @@
 'use server';
 
-import { safeAction } from "@/domains/identity/auth/safeAction";
+import { getCurrentUser } from "@/domains/auth/auth.actions";
+import { safeAction } from "@/domains/auth/util/safeAction";
 import { prisma } from "@/lib/prisma";
 import { assertInputAsync } from "@/lib/utils/parseSchema";
 import { ProfileCreationSchema, ProfileCreationType } from "@/validation/ProfileCreation.schema";
-import { getCurrentUser } from "../../../domains/identity/actions/auth.actions";
 
 export async function createStaffProfile (formData: ProfileCreationType) {
     return await safeAction( async () => {

@@ -1,6 +1,6 @@
 'use server'
 
-import { createSafeAction } from "@/domains/identity/auth/safeAction";
+import { createSafeAction } from "@/domains/auth/util/safeAction";
 import { deleteSS, editSS } from "../services/editService";
 import { serviceSchema } from "@/domains/service/validation/service.schema";
 import { revalidatePath } from "next/cache";
