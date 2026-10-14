@@ -1,9 +1,9 @@
 'use server';
 
-import { createSafeAction } from "@/domains/identity/auth/safeAction";
-import { storeHoursSchema } from "@/domains/store/schemas/store.schema";
-import { updateStoreHoursService } from "../services/updateStoreHoursService";
+import { createSafeAction } from "@/domains/auth/util/safeAction";
+import { storeHoursSchema } from "@/domains/store/store.validations";
 import { revalidatePath } from "next/cache";
+import { updateStoreHoursService } from "../services/updateStoreHoursService";
 
 export const updateStoreHours = createSafeAction(
     {

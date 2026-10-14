@@ -5,23 +5,7 @@ import { type defaultHours } from "./store.types";
 import { StoreCreationType } from "./store.validations";
 
 
-
-export async function createStoreService ({data, defaultHours}: {data: StoreCreationType, defaultHours: defaultHours}) {
-    const id = await getPrismaUserId()
-    if (!id) throw new Error('user id not found')
-    return storeRepository.createStore({ data, defaultHours, id })
-}
-
-
-
-
-
-
-
-
-
-
-
+// GET SERVICE FUNCTIONS
 
 
 
@@ -43,12 +27,9 @@ export async function getStoreHoursService (storeId: string) {
     });
 }
 
-
 export async function getStoresService () {
     return storeRepository.findStoresByUserId()
 }
-
-
 
 
 
@@ -104,6 +85,17 @@ export const StoreService = {
     },
 }
 
+
+
+
+// CREATE/UPDATE SERVICE FUNCTIONS
+
+
+export async function createStoreService ({data, defaultHours}: {data: StoreCreationType, defaultHours: defaultHours}) {
+    const id = await getPrismaUserId()
+    if (!id) throw new Error('user id not found')
+    return storeRepository.createStore({ data, defaultHours, id })
+}
 
 
 const defaultHours = [

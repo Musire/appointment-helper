@@ -18,9 +18,6 @@ export const getStoreHours = createSafeAction(
 )
 
 
-
-
-
 export const getStoreStatus = createSafeAction(
     {
         allowedRoles: ['admin']
@@ -34,6 +31,10 @@ export const getStoreStatus = createSafeAction(
         return { storeInfo, metrics }
     }
 )
+
+
+
+// INCOMPLETE QUERY FUNCTIONS
 
 
 export async function getStoreConfig(storeId: string): Promise<StoreConfigResult> {
@@ -61,9 +62,6 @@ export async function getStoreConfig(storeId: string): Promise<StoreConfigResult
     };
 }
 
-
-
-
 export async function getStoreService(storeId: string) {
   try {
     return await prisma.service.findMany({
@@ -74,15 +72,6 @@ export async function getStoreService(storeId: string) {
     throw new Error("Failed to fetch store services")
   }
 }
-
-
-export const getStoreServices = createSafeAction(
-  {
-    allowedRoles: ['USER']
-  },
-  getStoreOfferings
-)
-
 
 
 export async function getStoreStaff(storeId: string) {
@@ -113,3 +102,12 @@ export async function getStoreStaff(storeId: string) {
     createdAt: item.user.createdAt,
   }))
 }
+
+
+// MISC - FUNCTIONS 
+export const getStoreServices = createSafeAction(
+  {
+    allowedRoles: ['USER']
+  },
+  getStoreOfferings
+)

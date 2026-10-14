@@ -1,5 +1,4 @@
-import { getStoreHours } from "@/domains/store/queries/getStoreHours";
-import { getStoreStatus } from "@/domains/store/queries/getStoreStatus";
+import { getStoreHours, getStoreStatus } from "@/domains/store/store.queries";
 import DashboardHeader from "./DashboardHeader";
 import StatusCard from "./StatusCard";
 import StoreHours from "./StoreHours";
@@ -16,7 +15,7 @@ export default async function AdminStoreDetails ({ storeId }: Props) {
     const storeBase = `/stores/${storeId}`;
     
     return (
-        <main className="stacked space-y-4 w-[calc(100%-5rem)] overflow-hidden ">
+        <section className="stacked space-y-4 flex-1 p-6 overflow-hidden ">
             <DashboardHeader StoreInfo={res.storeInfo} storeId={storeId} />
             <ul className="spaced space-x-4 overflow-x-scroll scrollbar-none pr-4 h-24 ">
                 <StatusCard
@@ -34,9 +33,8 @@ export default async function AdminStoreDetails ({ storeId }: Props) {
                     label="Invites"
                     href={`${storeBase}/staff`}
                 />
-                 
             </ul>
             <StoreHours initialHours={storeHours} />
-        </main>
+        </section>
     );
 }

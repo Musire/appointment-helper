@@ -1,5 +1,5 @@
-import { storeRepository } from "@/domains/store/repositories/storeRepository";
-import { StoreHoursInput } from "@/domains/store/schemas/store.schema";
+import { storeRepository } from "@/domains/store/store.repositories";
+import { StoreHoursInput } from "@/domains/store/store.validations";
 
 
 export async function updateStoreHoursService (
