@@ -10,8 +10,8 @@ export default async function ServicePage ({ params }: Props) {
     const services = await getServices(storeId)
 
     return (
-      <div className="relative stacked flex-1">
+      <section className="relative p-6 stacked flex-1">
           <ServiceContainer services={services} storeId={storeId} />
-      </div>
+      </section>
     );
 }

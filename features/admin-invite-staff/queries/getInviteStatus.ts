@@ -1,4 +1,4 @@
-import { createSafeAction } from "@/domains/identity/auth/safeAction";
+import { createSafeAction } from "@/domains/auth/util/safeAction";
 import { getInviteService } from "../services/getInviteService";
 
 

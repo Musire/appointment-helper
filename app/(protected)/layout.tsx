@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/ui";
 import { AuthProvider } from "@/context";
+import { ToastProvider } from "@/context/ToastContext";
 import { getCurrentUser } from "@/domains/auth/auth.actions";
 import { redirect } from "next/navigation";
 
@@ -19,13 +20,15 @@ export default async function DashboardLayout ({ children }: Props) {
     const isAdmin = (user.user_metadata.role === 'admin')
 
     return (
-        <AuthProvider fetchedRole={user.user_metadata.role.toUpperCase()}>
-            <div className=" text-main relative flex flex-col flex-1 overflow-hidden ">
-                {!isAdmin && <Navbar role={user.role} />}
-                <div className=" flex  flex-1 overflow-x-hidden scrollbar-none pb-20 " >
-                    {children}
+        <ToastProvider >
+            <AuthProvider fetchedRole={user.user_metadata.role.toUpperCase()}>
+                <div className=" text-main relative flex flex-col flex-1 overflow-hidden ">
+                    {!isAdmin && <Navbar role={user.role} />}
+                    <div className=" flex  flex-1 overflow-x-hidden scrollbar-none pb-20 " >
+                        {children}
+                    </div>
                 </div>
-            </div>
-        </AuthProvider>
+            </AuthProvider>
+        </ToastProvider>
 );
 }

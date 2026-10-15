@@ -1,5 +1,5 @@
 import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
-import { StoreStaff } from "@/features/admin-staff-search/components/server";
+import StoreStaffDataLayer from "@/features/admin-staff-search/components/StoreStaffDataLayer";
 
 type Props = {
   params: Promise<{ storeId: string }>
@@ -10,7 +10,7 @@ export default async function StoreServiceStaffPage ({ params }: Props ) {
     return (
         <RoleRenderer 
             roles={{
-                'ADMIN': <StoreStaff storeId={storeId} />    
+                'ADMIN': <StoreStaffDataLayer storeId={storeId} />    
             }}
         />
     );

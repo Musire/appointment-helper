@@ -1,18 +1,20 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs/Tab";
+import { InviteDataType, StaffDataType } from "@/domains/invite/invite.types";
 import { StaffInvite } from "@/features/admin-invite-staff/components";
-import { getInviteStatus } from "@/features/admin-invite-staff/queries/getInviteStatus";
-import { getAvailableStaff } from "../../queries/getAvailableStaff";
-import { StaffSearch } from "../client";
+import StaffSearch from "./StaffSearch";
 
+type Props = {
+  staffData: StaffDataType[];
+  inviteData: InviteDataType
+}
 
-export default async function StoreStaff ({ storeId }: { storeId: string }) {
-    const { data: staffData } = await getAvailableStaff(storeId)
-    const { data : invitedata } = await getInviteStatus(storeId)
-
-    if (!staffData || !invitedata) return <div className="">some error</div>
+export default async function StoreStaff ({
+    staffData,
+    inviteData
+}: Props) {
     
     return (
-        <main className="py-6 flex-1 flex ">
+        <section className="p-6 flex-1 flex ">
             <Tabs defaultValue='search' className="" >
                 <TabsList className="">
                     <TabsTrigger value={'search'}>
@@ -26,9 +28,9 @@ export default async function StoreStaff ({ storeId }: { storeId: string }) {
                     <StaffSearch data={staffData} />
                 </TabsContent>
                 <TabsContent value="invite">
-                    <StaffInvite data={invitedata} />
+                    <StaffInvite data={inviteData} />
                 </TabsContent>
             </Tabs>
-        </main>
+        </section>
     );
 }
