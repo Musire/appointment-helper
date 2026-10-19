@@ -1,12 +1,12 @@
 
 
-import { toStoreHours } from "@/features/hour-selection/validation";
 import { StoreStatus } from "@/generated/prisma";
 import { unslugify } from "@/lib/utils/stringMutate";
 import { StoreUpdateType } from "@/validation/StoreCreation.schema";
 import { getPrismaUserId } from "../auth/util/session";
 import { storeRepository } from "./store.repositories";
 import { type defaultHours } from "./store.types";
+import { toStoreHours } from "./store.utilities";
 import { invitableStaffType, saveBusinessHoursType, StoreCreationType, StoreDetailsType, storeHoursUpdateType } from "./store.validations";
 
 
