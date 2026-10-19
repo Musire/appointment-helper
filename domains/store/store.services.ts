@@ -1,11 +1,13 @@
+'use server';
+
 import { toStoreHours } from "@/features/hour-selection/validation";
 import { StoreStatus } from "@/generated/prisma";
+import { unslugify } from "@/lib/utils/stringMutate";
 import { StoreUpdateType } from "@/validation/StoreCreation.schema";
 import { getPrismaUserId } from "../auth/util/session";
 import { storeRepository } from "./store.repositories";
 import { type defaultHours } from "./store.types";
-import { invitableStaffType, saveBusinessHoursType, StoreCreationType, StoreDetailsType, StoreHoursInput } from "./store.validations";
-import { unslugify } from "@/lib/utils/stringMutate";
+import { invitableStaffType, saveBusinessHoursType, StoreCreationType, StoreDetailsType, storeHoursUpdateType } from "./store.validations";
 
 
 // GET SERVICE FUNCTIONS
@@ -55,11 +57,8 @@ export async function getInvitableStaffService(data: invitableStaffType) {
     return storeRepository.getInvitableStaff(store.id)
 }
 
-export async function updateStoreHoursService (
-    storeId: string, 
-    hours: StoreHoursInput
-) {
-    return storeRepository.updateStoreHours(storeId, hours)
+export async function updateStoreHoursService (data : storeHoursUpdateType) {
+    return storeRepository.updateStoreHours(data)
 }
 
 

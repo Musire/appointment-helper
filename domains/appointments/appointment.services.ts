@@ -1,9 +1,9 @@
 // src/domain/appointments/services/appointment-service.ts
 import { AppointmentStatus } from "@/generated/prisma";
-import * as repo from "../repositories/appointment-repository";
+import { AppointmentRepository } from "./appointment.repositories";
 
 export async function processAppointmentCheckin(appointmentId: string): Promise<void> {
-  const appointment = await repo.findAppointmentById(appointmentId);
+  const appointment = await AppointmentRepository.findAppointmentById(appointmentId);
   if (!appointment) throw new Error("Appointment not found");
 
   // 1. Guard against statuses that are already checked in
@@ -24,5 +24,5 @@ export async function processAppointmentCheckin(appointmentId: string): Promise<
   }
 
   // 3. Complete mutation if status is valid (e.g., PENDING)
-  await repo.updateAppointmentStatus(appointmentId, AppointmentStatus.CHECKIN);
+  await AppointmentRepository.updateAppointmentStatus(appointmentId, AppointmentStatus.CHECKIN);
 }

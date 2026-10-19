@@ -1,7 +1,7 @@
 import { AppointmentDetails, Controller, Message, StatusSection } from "@/domains/appointments/components/checkin";
 import { AppointmentStatus } from "@/domains/appointments/components/checkin/StatusSection";
-import dayjs from "@/domains/appointments/helper/dayjs";
 import { getAppointmentDetails } from "@/domains/appointments/queries/getAppointmentDetails";
+import dayjs from "@/domains/appointments/utils/dayjs";
 import { ParamsType } from "@/lib/types";
 import { checkPendingTimeWindow } from "@/lib/utils/time";
 import { Dayjs } from "dayjs";

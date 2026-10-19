@@ -1,12 +1,12 @@
 'use server';
 
 import { requireRole } from "@/domains/auth/util/requireRole";
-import { createSafeAction, safeAction, validateFormData } from "@/domains/auth/util/safeAction";
+import { createSafeAction, safeAction, validateFormData, validateSchema } from "@/domains/auth/util/safeAction";
 import { prisma } from "@/lib/prisma";
 import { StoreUpdateSchema } from "@/validation/StoreCreation.schema";
 import { revalidatePath } from "next/cache";
-import { createStoreService, saveBusinessHoursService, updateStoreService } from "./store.services";
-import { saveBusinessHoursSchema, StoreCreationSchema } from "./store.validations";
+import { createStoreService, saveBusinessHoursService, updateStoreHoursService, updateStoreService } from "./store.services";
+import { saveBusinessHoursSchema, StoreCreationSchema, storeHoursUpdateSchema, storeHoursUpdateType } from "./store.validations";
 
 
 export const createStore = createSafeAction(
@@ -82,3 +82,14 @@ export const saveBusinessHours = createSafeAction(
         return res
     }
 ) 
+
+export const updateStoreHours = createSafeAction(
+    {
+        allowedRoles: ['admin', 'ADMIN']
+    }, 
+    async (payload: storeHoursUpdateType) => {
+        const validated = validateSchema(storeHoursUpdateSchema, payload)
+        const res = updateStoreHoursService(validated)
+        return res
+    }
+)

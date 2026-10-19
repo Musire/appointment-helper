@@ -1,9 +1,9 @@
 'use server'
 
 import { createSafeAction } from "@/domains/auth/util/safeAction";
-import { deleteSS, editSS } from "../services/editService";
 import { serviceSchema } from "@/domains/service/validation/service.schema";
 import { revalidatePath } from "next/cache";
+import { deleteOfferingService, editOfferingService } from "./offering.services";
 
 
 export const editService = createSafeAction(
@@ -18,7 +18,7 @@ export const editService = createSafeAction(
             throw new Error(`Validation error: ${errorMessages}`);
         }
 
-        return await editSS(serviceId, validated.data);
+        return await editOfferingService(serviceId, validated.data);
     }
 )
 
@@ -29,7 +29,7 @@ export const deleteService = createSafeAction(
     async (serviceId: string, storeId: string) => {
         if (!serviceId) throw new Error('no valid service id')
         
-        await deleteSS(serviceId)
+        await deleteOfferingService(serviceId)
 
         revalidatePath(`/stores/${storeId}/services`);
     }

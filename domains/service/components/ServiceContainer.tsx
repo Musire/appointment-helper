@@ -3,7 +3,7 @@
 import { Body } from "@/components/ui";
 import { useToast } from "@/context/ToastContext";
 import { ServiceCard } from "@/features/admin-store-services/components";
-import { deleteService } from "@/features/mutate-service/actions/service-mutation.actions";
+import { deleteService } from "@/features/mutate-service/service-mutation.actions";
 import { useDrawer } from "@/hooks";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";

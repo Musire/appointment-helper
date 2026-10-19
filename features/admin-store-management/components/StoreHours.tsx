@@ -2,19 +2,11 @@
 
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useStore } from "@/context"
+import { updateStoreHours } from "@/domains/store/store.actions"
+import { storeHours } from "@/domains/store/store.types"
 import { LoaderCircle } from "lucide-react"
 import { useMemo, useState, useTransition } from "react"
-import { updateStoreHours } from "../actions/storeHours.action"
 import { DataTableRow } from "./store-hours"
-
-
-interface storeHours {
-    id: string;
-    label: string;
-    start: string;
-    end:string;
-    isActive: boolean
-}
 
 type Props = {
   initialHours: storeHours[]
@@ -42,13 +34,17 @@ export default function StoreHours({
 
   const handleSave = () => {
     startTransition(async () => {
-      const res = await updateStoreHours(storeId, hoursList) 
-      if (res?.success && res?.data?.hours) {
-        setHoursList(res.data.hours)
-      }
-      if (res?.error) {
-        setErrors(res.error)
-      }
+      const res = await updateStoreHours({storeId, hoursList}) 
+        
+        if (!res.success && res.error) {
+          setErrors(res.error)
+          return;
+        }
+
+        if (res.data) {
+          setHoursList(res.data.hours)
+        }
+
     })
   }
 

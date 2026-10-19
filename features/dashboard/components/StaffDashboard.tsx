@@ -1,14 +1,13 @@
 import { Body, BodySm } from "@/components/ui";
+import { appointmentMocks, filterAppointmentToday, getAppointmentMetrics } from "@/domains/appointments/appointment.queries";
 import { AppointmentCard } from "@/domains/appointments/components/dashboard";
-import { appointmentMocks, filterAppointmentToday, getAppointmentMetrics } from "@/domains/appointments/queries/getAppointmentDetails";
 import { QrButton } from "@/features/qr-code/components";
 import { StatCard } from "@/features/staff-dashboard-stats/components";
 import Link from "next/link";
 
 export default async function StaffDashboard () {
   
-  const appointments = appointmentMocks
-  const filtered = filterAppointmentToday(appointments)
+  const filtered = filterAppointmentToday(appointmentMocks)
   const { pending, checkedIn, completed } = getAppointmentMetrics(filtered)
 
   return (

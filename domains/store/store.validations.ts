@@ -46,8 +46,15 @@ export const invitableStaffSchema = z.object({
   storeSlug: z.string().min(1, 'store slug is needed')
 })
 
+export const storeHoursUpdateSchema = z.object({
+  storeId: z.uuid().min(1, ''),
+  hoursList: storeHoursSchema
+})
+
+
 export type StoreCreationType = z.infer<typeof StoreCreationSchema>;
 export type StoreHoursInput = z.infer<typeof storeHoursSchema>;
 export type StoreDetailsType = z.infer<typeof StoreDetailsSchema>;
 export type saveBusinessHoursType = z.infer<typeof saveBusinessHoursSchema>;
 export type invitableStaffType = z.infer<typeof invitableStaffSchema>;
+export type storeHoursUpdateType = z.infer<typeof storeHoursUpdateSchema>;

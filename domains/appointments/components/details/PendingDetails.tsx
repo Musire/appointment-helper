@@ -2,11 +2,11 @@ import { Body, BottomDrawer, Caption, DrawerContent, DrawerTrigger, H3 } from "@
 import { StatusPill } from "@/components/ui/pills";
 import { formatAppTimeSplit } from "@/lib/dayjs";
 import { getServices } from "@/lib/utils/stringMutate";
-import { Clock, EllipsisVertical, Scissors, Store } from "lucide-react";
-import { ActionType } from "../../helper/PoolDetailsConfig";
-import { AppointmentDetails as AppointmentDetailsType } from "../../queries/getAppointmentDetails";
-import DetailSection from "./DetailSection";
 import dayjs from "dayjs";
+import { Clock, EllipsisVertical, Scissors, Store } from "lucide-react";
+import { AppointmentDetails as AppointmentDetailsType } from "../../queries/getAppointmentDetails";
+import { ActionType } from "../../utils/PoolDetailsConfig";
+import DetailSection from "./DetailSection";
 
 export type PendingDetailsProps = {
     appointment: AppointmentDetailsType;

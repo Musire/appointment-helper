@@ -1,6 +1,6 @@
 'use client'
-import { APPOINTMENT_STATUS_CONFIG } from "../../helper/PoolDetailsConfig"
 import { AppointmentDetails as AppointmentDetailsType } from "../../queries/getAppointmentDetails"
+import { APPOINTMENT_STATUS_CONFIG } from "../../utils/PoolDetailsConfig"
 
 type Props = {
   appointment: AppointmentDetailsType

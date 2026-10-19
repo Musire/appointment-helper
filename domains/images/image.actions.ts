@@ -1,9 +1,8 @@
 "use server"
 
-export type UploadState = {
-  success: boolean
-  message: string
-}
+import { UploadState } from "./image.types"
+
+
 
 export async function uploadImage(
   prevState: UploadState,

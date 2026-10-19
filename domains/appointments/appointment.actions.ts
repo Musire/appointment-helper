@@ -2,7 +2,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { processAppointmentCheckin } from '../services/appointment-service'
+import { processAppointmentCheckin } from './appointment.services'
 
 export async function checkInAppointment(appointmentId: string) {
   try {

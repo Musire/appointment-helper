@@ -1,7 +1,7 @@
 'use client';
 
 import DailySelector from "@/domains/availability/components/DailySelector";
-import { businessHours } from "@/features/dashboard/businessHours";
+import { businessHours } from "@/domains/store/store.mock-data";
 import { hoursReducer } from "@/features/dashboard/hoursReducer";
 import { updateBusinessHours } from "@/features/hour-selection/hours.actions";
 import { useActionState, useReducer } from "react";

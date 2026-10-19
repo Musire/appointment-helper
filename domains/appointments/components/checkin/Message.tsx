@@ -1,5 +1,5 @@
 import { Body, Caption } from "@/components/ui";
-import dayjs from "@/domains/appointments/helper/dayjs";
+import dayjs from "@/domains/appointments/utils/dayjs";
 import { Dayjs } from "dayjs";
 import { Info } from "lucide-react";
 import { AppointmentStatus } from "./StatusSection";

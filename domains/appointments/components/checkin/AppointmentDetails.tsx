@@ -1,8 +1,8 @@
 import { Body, Caption, H3 } from "@/components/ui";
 import { formatAppointmentDateTime } from "@/lib/utils/time";
 import { CalendarDays, Clock, Scissors, Store } from "lucide-react";
-import { formatAppTimeSplit, toAppTime } from "../../helper/dayjs";
 import type { AppointmentDetails } from "../../queries/getAppointmentDetails";
+import { formatAppTimeSplit, toAppTime } from "../../utils/dayjs";
 
 
 type Props = {

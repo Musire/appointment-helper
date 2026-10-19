@@ -1,4 +1,4 @@
-import { formatAppTimeSplit, toAppTime } from "@/domains/appointments/helper/dayjs";
+import { formatAppTimeSplit, toAppTime } from "@/domains/appointments/utils/dayjs";
 import { createSafeAction } from "@/domains/auth/util/safeAction";
 import { prisma } from "@/lib/prisma";
 import { BookingParams } from "@/lib/utils/navigation";

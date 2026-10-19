@@ -1,4 +1,4 @@
-import { Action, State } from "./types";
+import { Action, State } from "@/domains/store/store.types";
 
 export function hoursReducer(state: State, action: Action): State {
   switch (action.type) {

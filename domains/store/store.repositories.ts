@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma"
 import { unslugify } from "@/lib/utils/stringMutate"
 import { StoreUpdateType } from "@/validation/StoreCreation.schema"
 import { defaultHours } from "./store.types"
-import { saveBusinessHoursType, StoreCreationType, StoreDetailsType, StoreHoursInput } from "./store.validations"
+import { saveBusinessHoursType, StoreCreationType, StoreDetailsType, storeHoursUpdateType } from "./store.validations"
 
 export const  storeRepository = {
     async findStoresByUserId() {
@@ -20,16 +20,16 @@ export const  storeRepository = {
 
         return stores
     },
-    async updateStoreHours(storeId: string, hours: StoreHoursInput) {
+    async updateStoreHours(data: storeHoursUpdateType) {
         const updatedStore = await prisma.store.update({
-            where: { id: storeId },
+            where: { id: data.storeId },
             data: {
                 config: {
                     upsert: {
                         create: {
                             hours: {
                                 createMany: {
-                                    data: hours.map((row) => ({
+                                    data: data.hoursList.map((row) => ({
                                         id: row.id,
                                         label: row.label,
                                         isActive: row.isActive,
@@ -43,7 +43,7 @@ export const  storeRepository = {
                             hours: {
                                 deleteMany: {}, 
                                 createMany: {
-                                    data: hours.map((row) => ({
+                                    data: data.hoursList.map((row) => ({
                                         id: row.id,
                                         label: row.label,
                                         isActive: row.isActive,
