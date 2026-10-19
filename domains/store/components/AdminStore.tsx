@@ -1,5 +1,5 @@
-import { BusinessHoursForm } from "@/features/hour-selection";
-import { TimeBlock } from "@/features/hour-selection/types";
+import { TimeBlock } from "@/domains/offering/offering.types";
+import { BusinessHoursForm } from "@/features/hour-selection/components";
 import { ParamsType } from "@/lib/types";
 
 type Props = ParamsType<{ storeId: string }>;
