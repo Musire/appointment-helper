@@ -7,7 +7,7 @@ import { DropdownButton } from '@/components/ui/buttons';
 import { toMins } from '@/lib/utils/time';
 import { Clock } from 'lucide-react';
 
-import { fromMins } from '../time.utils';
+import { fromMins } from '../../../lib/utils/time.utils';
 import { Day } from '../types';
 
 type Props = {

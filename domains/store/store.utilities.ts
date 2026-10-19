@@ -1,13 +1,6 @@
+import { Consolidated, Day, TimeBlock } from "@/features/hour-selection/types";
 
-import { Consolidated, Day, TimeBlock } from './types';
 
-export type StoreHourInput = {
-  day: Day;
-  label: string;
-  isActive: boolean;
-  start: string;
-  end: string;
-};
 
 export function consolidate(
   blocks: TimeBlock[],
@@ -103,14 +96,17 @@ function minutesToTime(minutes: number): string {
 
 export function toStoreHours(
   blocks: TimeBlock[],
-): StoreHourInput[] {
-  return blocks.flatMap((block) =>
-    block.days.map((day) => ({
-      day,
-      label: 'Business hours',
-      isActive: true,
-      start: minutesToTime(block.start),
-      end: minutesToTime(block.end),
-    })),
-  );
+): any {
+  return blocks.map((block: TimeBlock) => {
+    return {
+        ...block,
+        label: 'Business hours',
+        start: minutesToTime(block.start),
+        end: minutesToTime(block.end)
+    }
+  })
 }
+
+
+
+

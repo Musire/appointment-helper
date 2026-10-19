@@ -1,3 +1,5 @@
+import { StoreConfig } from "@/generated/prisma";
+
 export type defaultHours = {
  label: string;
  isActive: boolean;
@@ -27,3 +29,8 @@ export interface storeHours {
     end:string;
     isActive: boolean
 }
+
+export type StoreConfigResult =
+  | { status: "STORE_NOT_FOUND" }
+  | { status: "CONFIG_MISSING"; storeId: string }
+  | { status: "OK"; storeId: string; config: StoreConfig };

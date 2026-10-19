@@ -9,10 +9,11 @@ export type Day =
 
 export type TimeBlock = {
   id: string
-  start: number   // minutes
-  end: number   // minutes
+  start: number   
+  end: number   
   days: Day[]
 }
+
 
 export type Consolidated = Record<Day, [number, number][]>
 

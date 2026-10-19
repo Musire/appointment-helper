@@ -1,14 +1,11 @@
 import { createSafeAction, validateSchema } from "@/domains/auth/util/safeAction";
 import { StoreConfig } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
-import { getInvitableStaffService, getStoreHoursService, storeDetailsService, StoreService } from "./store.services";
-import { invitableStaffSchema, invitableStaffType, StoreDetailsSchema, StoreDetailsType } from "./store.validations";
 import { getStoreOfferings } from "../booking/booking.services";
+import { getDashboardMetrics, getInvitableStaffService, getStoreHoursService, storeDetailsService, syncStoreStatus } from "./store.services";
+import { invitableStaffSchema, invitableStaffType, StoreDetailsSchema, StoreDetailsType } from "./store.validations";
+import { StoreConfigResult } from "./store.types";
 
-export type StoreConfigResult =
-  | { status: "STORE_NOT_FOUND" }
-  | { status: "CONFIG_MISSING"; storeId: string }
-  | { status: "OK"; storeId: string; config: StoreConfig };
 
 
 export const getStoreHours = createSafeAction(
@@ -25,8 +22,8 @@ export const getStoreStatus = createSafeAction(
     },
     async(storeId: string) => {
         const [storeInfo, metrics] = await Promise.all([
-            StoreService.syncStoreStatus(storeId),
-            StoreService.getDashboardMetrics(storeId),
+            syncStoreStatus(storeId),
+            getDashboardMetrics(storeId),
         ]);
 
         return { storeInfo, metrics }

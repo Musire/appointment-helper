@@ -1,4 +1,4 @@
-import { ValidationError } from "./types"
+import { ValidationError } from "./offering.types"
 
 export function hasValidationError(error?: ValidationError | null) {
   if (!error) return false
