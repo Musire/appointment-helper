@@ -54,8 +54,10 @@ export async function getCurrentUserRole(): Promise<Role> {
   return normalizeRole(rawRole)
 }
 
+
 export async function getCurrentUser() {
-  const supabase = createSupabaseServerClientReadOnly()
+  // 🌟 FIX: Await the updated async client initialization
+  const supabase = await createSupabaseServerClientReadOnly()
 
   const {
     data: { user },
@@ -69,30 +71,35 @@ export async function getCurrentUser() {
 
   if (!user) return null
 
-  const dbUser = await prisma.user.findUnique({
-    where: { id: user.id },
-    include: {
-      roles: {
-        include: {
-          role: true, 
+  try {
+    const dbUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      include: {
+        roles: {
+          include: {
+            role: true, 
+          },
         },
       },
-    },
-  })
+    })
 
-  if (!dbUser) return null
+    if (!dbUser) return null
 
-  const rawRole = dbUser.roles[0]?.role?.name
-  const role = normalizeRole(rawRole)
+    const rawRole = dbUser.roles[0]?.role?.name
+    const role = normalizeRole(rawRole)
 
-  const { roles, ...rest } = dbUser
+    const { roles, ...rest } = dbUser
 
-  return {
-    ...rest,
-    role,
+    return {
+      ...rest,
+      role,
+    }
+  } catch (dbError) {
+    console.error("Database error looking up user metadata:", dbError)
+    return null
   }
-
 }
+
 
 export async function getUserById(targetId: string) {
   const user =  await prisma.user.findUnique({

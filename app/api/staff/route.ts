@@ -1,4 +1,4 @@
-import { getStoreStaff } from "@/features/booking/queries/getStaff";
+import { getStoreStaff } from "@/domains/booking/booking.queries";
 import { NextResponse } from "next/server";
 
 type POST_request = {

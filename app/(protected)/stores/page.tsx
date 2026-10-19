@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/domains/identity/auth/session";
+import { getCurrentUser } from "@/domains/auth/auth.actions";
 import { AdminStore, StaffStores } from "@/domains/store/components";
 import { ParamsType } from "@/lib/types";
 import { redirect } from "next/navigation";

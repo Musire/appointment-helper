@@ -7,3 +7,7 @@ export const ReviewSchema = z.object({
     services: z.uuid(),
 })
 
+export const StoreStaffSchema = z.object({
+    storeId: z.uuid()
+})
+

@@ -1,5 +1,22 @@
 import { z } from "zod";
 
+export const daySchema = z.enum([
+  'sun',
+  'mon',
+  'tue',
+  'wed',
+  'thu',
+  'fri',
+  'sat',
+]);
+
+export const timeBlockSchema = z.object({
+  id: z.string(),
+  start: z.number().int().min(0).max(1439),
+  end: z.number().int().min(1).max(1440),
+  days: z.array(daySchema),
+});
+
 export const storeHoursSchema = z.array(
   z.object({
     id: z.string().min(1, "ID is required"),
@@ -21,6 +38,16 @@ export const StoreDetailsSchema = z.object({
     storeId: z.string().min(1, 'storeId needed')
 })
 
+export const saveBusinessHoursSchema = z.object({
+  blocks: z.array(timeBlockSchema)
+})
+
+export const invitableStaffSchema = z.object({
+  storeSlug: z.string().min(1, 'store slug is needed')
+})
+
 export type StoreCreationType = z.infer<typeof StoreCreationSchema>;
 export type StoreHoursInput = z.infer<typeof storeHoursSchema>;
 export type StoreDetailsType = z.infer<typeof StoreDetailsSchema>;
+export type saveBusinessHoursType = z.infer<typeof saveBusinessHoursSchema>;
+export type invitableStaffType = z.infer<typeof invitableStaffSchema>;

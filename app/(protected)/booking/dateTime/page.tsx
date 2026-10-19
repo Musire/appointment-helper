@@ -1,5 +1,5 @@
+import { getDatetime } from "@/domains/booking/queries/getDatetime";
 import { DateTimeStep } from "@/features/booking";
-import { getDatetime } from "@/features/booking/queries/getDatetime";
 import { SearchParamsType } from "@/lib/types";
 
 export default async function BookingDateTime ({ searchParams }: SearchParamsType) {

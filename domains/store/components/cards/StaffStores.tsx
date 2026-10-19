@@ -1,5 +1,5 @@
-import { StoreCard } from "@/features/booking";
-import { getStores } from "@/features/booking/services/store.services";
+import { getStores } from "@/domains/booking/booking.services";
+import StoreCard from "./StoreCard";
 
 export default async function StorePanel () {
     const { data:stores } = await getStores()

@@ -1,139 +1,80 @@
 'use client';
 
-import { useActionState, useState } from 'react';
+import { ActionForm, Button } from '@/components/ui';
+import { Plus } from 'lucide-react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
 
-import { Button } from '@/components/ui/button';
-import SuccessDisplay from '@/components/ui/forms/SuccessDisplay';
-import { saveBusinessHours } from '@/domains/store/actions/staffStore.action';
-import { Plus } from 'lucide-react';
-import { hasValidationError } from '../error.utils';
-import { getOverlapError } from '../time.utils';
-import { TimeBlock } from '../types';
-import { validate } from '../validation';
+import { saveBusinessHours } from '@/domains/store/store.actions';
+import { saveBusinessHoursSchema } from '@/domains/store/store.validations';
+import type { TimeBlock } from '../types';
 import TimeBlockCard from './TimeBlockCard';
 
 type Props = {
   initialBlocks?: TimeBlock[];
 };
 
+const DEFAULT_BLOCK = (): TimeBlock => ({
+  id: uuid(),
+  start: 540,
+  end: 1020,
+  days: [],
+});
+
 export default function BusinessHoursForm({
   initialBlocks,
 }: Props) {
-  const [blocks, setBlocks] = useState<TimeBlock[]>(
-    initialBlocks?.length
+  const initialValues = {
+    blocks: initialBlocks?.length
       ? initialBlocks
-      : [
-          {
-            id: uuid(),
-            start: 540,
-            end: 1020,
-            days: [],
-          },
-        ]
-  );
+      : [DEFAULT_BLOCK()],
+  };
 
-  const [errors, setErrors] = useState<any>(null);
+  const onSuccess = () => {
+    console.log('Business hours saved successfully');
+  };
 
-  const [state, formAction, pending] = useActionState(
-    saveBusinessHours,
-    { success: false, error: undefined }
+  return (
+    <ActionForm
+      schema={saveBusinessHoursSchema}
+      initialValues={initialValues}
+      actionFn={saveBusinessHours}
+      onSuccess={onSuccess}
+    >
+      <BusinessHoursFields />
+    </ActionForm>
   );
+}
+
+function BusinessHoursFields() {
+  const { control } = useFormContext<{ blocks: TimeBlock[] }>();
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'blocks',
+  });
 
   function addBlock() {
-    setBlocks(prev => [
-      ...prev,
-      {
-        id: uuid(),
-        start: 540,
-        end: 1020,
-        days: [],
-      },
-    ]);
+    append(DEFAULT_BLOCK());
   }
-
-  function updateBlock(updated: TimeBlock) {
-    setBlocks(prev =>
-      prev.map(block =>
-        block.id === updated.id ? updated : block
-      )
-    );
-  }
-
-  function deleteBlock(id: string) {
-    setBlocks(prev =>
-      prev.filter(block => block.id !== id)
-    );
-  }
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    setErrors(null);
-
-    const result = validate(blocks);
-
-    if (!result.isValid) {
-      e.preventDefault();
-      setErrors(result);
-      return;
-    }
-  }
-
-  const hasClientError = hasValidationError(errors);
-  const hasServerError = !!state?.error;
-  const anyError = hasClientError || hasServerError;
 
   return (
     <>
-      {!state.success && (
-        <form
-          action={formAction}
-          onSubmit={handleSubmit}
-          className="flex flex-col space-y-6 py-6"
-        >
-          <Button
-            type="button"
-            onClick={addBlock}
-            className="centered size-10"
-          >
-            <Plus />
-          </Button>
-          <input
-            type="hidden"
-            name="blocks"
-            value={JSON.stringify(blocks)}
-          />
-          {blocks.map(block => (
-            <TimeBlockCard
-              key={block.id}
-              block={block}
-              onChange={updateBlock}
-              onDelete={() => deleteBlock(block.id)}
-              errors={errors?.blockErrors?.[block.id]}
-            />
-          ))}
+      <Button
+        type="button"
+        onClick={addBlock}
+        className="centered size-10"
+      >
+        <Plus />
+      </Button>
 
-          <p className="text-error-dark">
-            {getOverlapError(errors?.dayOverlapErrors)}
-          </p>
-          <Button
-            type="submit"
-            disabled={pending}
-            className={`btn disabled:cursor-disabled self-end ${
-              anyError
-                ? 'bg-red-600/10 text-error-dark border-error-dark hover:bg-red-800/50 hover:text-red-200'
-                : ''
-            }`}
-          >
-            {pending
-              ? 'Saving...'
-              : anyError
-              ? 'Retry'
-              : 'Save'}
-          </Button>
-        </form>
-      )}
-
-      {state.success && <SuccessDisplay />}
+      {fields.map((block, index) => (
+        <TimeBlockCard
+          key={block.id}
+          index={index}
+          onDelete={() => remove(index)}
+        />
+      ))}
     </>
   );
 }

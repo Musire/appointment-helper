@@ -1,4 +1,4 @@
-import { InviteType } from "../types";
+import { InviteType } from "@/domains/invite/invite.types";
 
 
 export default function InvitationCard ({ data }: { data: InviteType }) {

@@ -1,89 +1,168 @@
 'use client';
 
+import { Controller, get, useFormContext } from 'react-hook-form';
+import type { FieldError } from 'react-hook-form';
+
 import { DropdownButton } from '@/components/ui/buttons';
 import { toMins } from '@/lib/utils/time';
 import { Clock } from 'lucide-react';
+
 import { fromMins } from '../time.utils';
-import { Day, TimeBlock } from '../types';
+import { Day } from '../types';
 
 type Props = {
-  block: TimeBlock
-  onChange: (block: TimeBlock) => void
-  onDelete: () => void
-  errors?: string[]
-}
+  index: number;
+  onDelete: () => void;
+};
 
-const DAYS: Day[] = ['sun','mon','tue','wed','thu','fri','sat']
+const DAYS: Day[] = [
+  'sun',
+  'mon',
+  'tue',
+  'wed',
+  'thu',
+  'fri',
+  'sat',
+];
 
 export default function TimeBlockCard({
-  block,
-  onChange,
+  index,
   onDelete,
-  errors,
 }: Props) {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
 
-  function toggleDay(day: Day) {
-    const exists = block.days.includes(day)
-    const updatedDays = exists
-      ? block.days.filter(d => d !== day)
-      : [...block.days, day]
-
-    onChange({ ...block, days: updatedDays })
-  }
-
-  function updateTime(type: 'start' | 'end', value: number) {
-    onChange({ ...block, [type]: value })
-  }
+  const blockErrors = get(
+    errors,
+    `blocks.${index}`,
+  ) as Record<string, FieldError | undefined> | undefined;
 
   return (
-    <div className='flex-col flex space-y-4 bg-darkest border-adjust p-6 relative'>
-      <div className='flex space-x-6'>
-        <span className="flex-col flex space-y-2 w-1/2">
-          <p className="capitalize text-whitesmoke/87">start</p>
-          <DropdownButton
-            value={fromMins(block.start)}
-            onChange={(v: string | string[]) => updateTime('start', toMins(typeof v === 'string' ? v : v[0]))}
-            Icon={Clock} 
-            options={['10:00 AM']} 
-            buttonStyle='rounded-none'
-            drawerStyle='rounded-none'
-          />
-        </span>
-        <span className="flex-col flex space-y-2 w-1/2">
-          <p className="capitalize text-whitesmoke/87">end</p>
-          <DropdownButton
-            value={fromMins(block.end)}
-            onChange={(v: string | string[]) => updateTime('end', toMins(typeof v === 'string' ? v : v[0]))}
-            Icon={Clock} 
-            options={['05:00 PM']} 
-            buttonStyle='rounded-none'
-            drawerStyle='rounded-none'
-          />
-        </span>
-      </div>
-      <div className='flex'>
-        {DAYS.map(day => (
-          <label key={day} className='hover:cursor-pointer capitalize mr-4 flex items-center space-x-1'>
-            <input
-              type="checkbox"
-              checked={block.days.includes(day)}
-              onChange={() => toggleDay(day)}
-              className="hover:cursor-pointer appearance-none size-3.5 bg-black border-2 border-whitesmoke/20 checked:bg-whitesmoke/87 peer "
+    <div className="relative flex flex-col space-y-4 bg-darkest border-adjust p-6">
+      {/* Start and end times */}
+      <div className="flex space-x-6">
+        {(['start', 'end'] as const).map((field) => (
+          <span
+            key={field}
+            className="flex w-1/2 flex-col space-y-2"
+          >
+            <p className="capitalize text-whitesmoke/87">
+              {field}
+            </p>
+
+            <Controller
+              name={`blocks.${index}.${field}`}
+              control={control}
+              render={({ field: rhfField }) => (
+                <DropdownButton
+                  value={fromMins(rhfField.value)}
+                  onChange={(value: string | string[]) => {
+                    const selected =
+                      typeof value === 'string'
+                        ? value
+                        : value[0];
+
+                    if (selected) {
+                      rhfField.onChange(toMins(selected));
+                    }
+                  }}
+                  Icon={Clock}
+                  options={['10:00 AM', '05:00 PM']}
+                  buttonStyle="rounded-none"
+                  drawerStyle="rounded-none"
+                />
+              )}
             />
-            <p className="peer-checked:text-whitesmoke/87 text-whitesmoke/30">{day}</p>
-          </label>
+
+            {blockErrors?.[field]?.message && (
+              <p className="text-sm text-error-dark">
+                {blockErrors[field]?.message}
+              </p>
+            )}
+          </span>
         ))}
       </div>
 
-      {errors && errors.map(err => (
-        <div key={err} className='text-error-dark'>{err}</div>
-      ))}
+      {/* Days of the week */}
+      <Controller
+        name={`blocks.${index}.days`}
+        control={control}
+        render={({ field }) => {
+          const selectedDays = (field.value ?? []) as Day[];
 
-      <button 
+          return (
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
+              {DAYS.map((day) => {
+                const checked = selectedDays.includes(day);
+
+                return (
+                  <label
+                    key={day}
+                    className="mr-1 flex cursor-pointer items-center space-x-1"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => {
+                        field.onChange(
+                          checked
+                            ? selectedDays.filter((d) => d !== day)
+                            : [...selectedDays, day],
+                        );
+                      }}
+                      className="peer size-3.5 cursor-pointer appearance-none border-2 border-whitesmoke/20 bg-black checked:bg-whitesmoke/87"
+                    />
+
+                    <span
+                      className={`capitalize ${
+                        checked
+                          ? 'text-whitesmoke/87'
+                          : 'text-whitesmoke/30'
+                      }`}
+                    >
+                      {day}
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
+          );
+        }}
+      />
+
+      {blockErrors?.days?.message && (
+        <p className="text-sm text-error-dark">
+          {blockErrors.days.message}
+        </p>
+      )}
+
+      {/* Additional block-level errors */}
+      {Object.entries(blockErrors ?? {}).map(([key, error]) => {
+        if (
+          ['start', 'end', 'days', 'id'].includes(key) ||
+          !error?.message
+        ) {
+          return null;
+        }
+
+        return (
+          <p key={key} className="text-sm text-error-dark">
+            {error.message}
+          </p>
+        );
+      })}
+
+      {/* Delete block */}
+      <button
+        type="button"
         onClick={onDelete}
-        className='hover:cursor-pointer rounded-full hover:text-error-dark absolute top-2 right-2 border-2 border-whitesmoke/37 size-6 text-xs hover:border-error-dark'>
+        aria-label="Delete time block"
+        className="absolute right-2 top-2 size-6 rounded-full border-2 border-whitesmoke/37 text-xs hover:cursor-pointer hover:border-error-dark hover:text-error-dark"
+      >
         X
       </button>
     </div>
-  )
+  );
 }

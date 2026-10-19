@@ -1,9 +1,11 @@
+import { toStoreHours } from "@/features/hour-selection/validation";
 import { StoreStatus } from "@/generated/prisma";
 import { StoreUpdateType } from "@/validation/StoreCreation.schema";
 import { getPrismaUserId } from "../auth/util/session";
 import { storeRepository } from "./store.repositories";
 import { type defaultHours } from "./store.types";
-import { StoreCreationType, StoreDetailsType } from "./store.validations";
+import { invitableStaffType, saveBusinessHoursType, StoreCreationType, StoreDetailsType, StoreHoursInput } from "./store.validations";
+import { unslugify } from "@/lib/utils/stringMutate";
 
 
 // GET SERVICE FUNCTIONS
@@ -33,6 +35,33 @@ export async function getStoresService () {
 export async function storeDetailsService (data: StoreDetailsType) {
     return storeRepository.getStoreDetails(data)
 }
+
+
+export async function saveBusinessHoursService (data: saveBusinessHoursType) {
+    const hours = toStoreHours(data.blocks)
+    
+    storeRepository.saveBusinessHours(data)
+}
+
+
+// STORE-STAFF FUNCTIONS
+
+export async function getInvitableStaffService(data: invitableStaffType) {
+    const storeName = unslugify(data.storeSlug)
+    
+    const store = await storeRepository.getStoreByName(storeName)
+    if (!store) throw new Error('No store found')
+    
+    return storeRepository.getInvitableStaff(store.id)
+}
+
+export async function updateStoreHoursService (
+    storeId: string, 
+    hours: StoreHoursInput
+) {
+    return storeRepository.updateStoreHours(storeId, hours)
+}
+
 
 
 // MONOLITH OBJECT - PROXY

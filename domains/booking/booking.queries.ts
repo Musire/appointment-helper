@@ -1,6 +1,21 @@
-import { formatAppTimeSplit, toAppTime } from "@/lib/dayjs";
-import { prisma } from "../../../lib/prisma";
-import { BookingParams } from "../../../lib/utils/navigation";
+import { formatAppTimeSplit, toAppTime } from "@/domains/appointments/helper/dayjs";
+import { createSafeAction } from "@/domains/auth/util/safeAction";
+import { prisma } from "@/lib/prisma";
+import { BookingParams } from "@/lib/utils/navigation";
+import { getDatetimeService } from "./services/dateTime.services";
+import { getStoreStaffService } from "./services/staff.services";
+
+export const getStoreStaff = createSafeAction(
+    {
+        allowedRoles: ['USER']
+    },
+    getStoreStaffService
+)
+
+export const getDatetime = createSafeAction(
+    {},
+    getDatetimeService
+)
 
 export async function getBookingReviewData(data: BookingParams) {
   const { store, staff, service, dateTime } = data;

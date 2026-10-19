@@ -18,8 +18,8 @@ type Props = {
 export default async function DashboardHeader ({ StoreInfo, storeId } : Props) {
     
     const colorIndicator = StoreInfo.status === 'ACTIVE' 
-        ? 'bg-success/10'
-        : 'bg-error'
+        ? 'bg-success/10 text-success'
+        : 'bg-error/20 text-error'
 
     return (
         <div className="stacked relative ">
@@ -35,9 +35,9 @@ export default async function DashboardHeader ({ StoreInfo, storeId } : Props) {
                     <Pencil size={20} strokeWidth={1} />
                 </Link>
                 <div className="">
-                    <div className={`rounded-full flex items-center space-x-2 text-success normal-space ${colorIndicator}`}>
+                    <div className={`rounded-full flex items-center space-x-2  normal-space ${colorIndicator}`}>
                         <CircleCheck className="size-5" />
-                        <span className="text-success capitalize text-sm">{StoreInfo.status}</span>
+                        <span className=" capitalize text-sm">{StoreInfo.status}</span>
                     </div>
                 </div>
             </div>

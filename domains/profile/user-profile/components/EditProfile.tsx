@@ -1,9 +1,9 @@
 'use client';
 
 import { FileUploader, StatusButton } from "@/components/ui";
+import { UploadState } from "@/features/image-validation/image-uploading.actions";
 import { useActionState } from "react";
 import { editUser } from "../actions/user.actions";
-import { UploadState } from "@/features/image-validation/actions/image-uploading.actions";
 
 type ProfileFormState = UploadState & {
     error: string | null;

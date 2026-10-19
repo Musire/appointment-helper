@@ -1,5 +1,5 @@
 import { createSafeAction } from "@/domains/auth/util/safeAction";
-import { getInviteService } from "@/features/admin-invite-staff/services/getInviteService";
+import { getInviteService } from "./invite.services";
 
 
 export const getInviteStatus = createSafeAction(

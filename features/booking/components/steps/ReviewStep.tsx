@@ -6,7 +6,7 @@ import { formatCurrency } from "@/lib/utils/stringMutate";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import SuccessDisplay from "../../../../components/ui/forms/SuccessDisplay";
-import { createBookingAction } from "../../actions/booking.action";
+import { createBookingAction } from "../../../../domains/booking/booking.actions";
 import { DatetimeCard } from "../cards";
 import { SubmitButton } from "../page";
 import ServiceSlot from "../slots/ServiceSlot";

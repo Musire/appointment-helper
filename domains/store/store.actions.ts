@@ -5,8 +5,8 @@ import { createSafeAction, safeAction, validateFormData } from "@/domains/auth/u
 import { prisma } from "@/lib/prisma";
 import { StoreUpdateSchema } from "@/validation/StoreCreation.schema";
 import { revalidatePath } from "next/cache";
-import { createStoreService, updateStoreService } from "./store.services";
-import { StoreCreationSchema } from "./store.validations";
+import { createStoreService, saveBusinessHoursService, updateStoreService } from "./store.services";
+import { saveBusinessHoursSchema, StoreCreationSchema } from "./store.validations";
 
 
 export const createStore = createSafeAction(
@@ -71,3 +71,14 @@ export async function deleteStores (target: string[]) {
         revalidatePath('/admin/dashboard')
     })
 }
+
+export const saveBusinessHours = createSafeAction(
+    {
+        allowedRoles: ['ADMIN', 'admin']
+    },
+    async (_:any, formData: FormData) => {
+        const validated = validateFormData(saveBusinessHoursSchema, formData)
+        const res = saveBusinessHoursService(validated)
+        return res
+    }
+) 

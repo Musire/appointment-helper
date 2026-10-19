@@ -5,7 +5,7 @@ import { parseTo24H } from "@/lib/dayjs";
 import dayjs, { Dayjs } from "dayjs";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { getDatetime } from "../../actions/booking.action";
+import { getDatetime } from "../../../../domains/booking/booking.actions";
 import { ContinueButton } from "../page";
 
 type timeslot = {

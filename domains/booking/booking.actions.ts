@@ -4,7 +4,7 @@ import { createSafeAction } from "@/domains/auth/util/safeAction";
 import { convertToUTC } from "@/lib/utils/time";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { getDatetimeService } from "../services/dateTime.services";
+import { getDatetimeService } from "./services/dateTime.services";
 
 dayjs.extend(utc);
 

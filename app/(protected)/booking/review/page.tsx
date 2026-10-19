@@ -1,5 +1,5 @@
+import { getBookingReviewData } from "@/domains/booking/queries/getBookingReviewData";
 import { ReviewStep } from "@/features/booking";
-import { getBookingReviewData } from "@/features/booking/queries/getBookingReviewData";
 import { SearchParamsType } from "@/lib/types";
 
 export default async function BookingService ({ searchParams }: SearchParamsType) {
