@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/domains/identity/auth/session";
+import { getCurrentUser } from "@/domains/auth/util/session";
 import { EnduserHistory, StaffHistory } from "@/features/history/components";
 import { redirect } from "next/navigation";
 

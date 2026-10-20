@@ -1,5 +1,5 @@
+import { appointmentMocks } from "@/domains/appointments/appointment.queries";
 import { PoolPage } from "@/domains/appointments/components/pool";
-import { appointmentMocks } from "@/domains/appointments/queries/getAppointmentDetails";
 
 export default function StaffPool () {
     const appointments = appointmentMocks

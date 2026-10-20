@@ -4,12 +4,12 @@ import { formatAppTimeSplit } from "@/lib/dayjs";
 import { getServices } from "@/lib/utils/stringMutate";
 import dayjs from "dayjs";
 import { Clock, EllipsisVertical, Scissors, Store } from "lucide-react";
-import { AppointmentDetails as AppointmentDetailsType } from "../../queries/getAppointmentDetails";
+import { AppointmentDetails } from "../../appointment.types";
 import { ActionType } from "../../utils/PoolDetailsConfig";
 import DetailSection from "./DetailSection";
 
 export type PendingDetailsProps = {
-    appointment: AppointmentDetailsType;
+    appointment: AppointmentDetails;
     actions: ActionType[]
 }
 

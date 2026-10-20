@@ -1,6 +1,6 @@
 
 import { StaffDetails } from "@/domains/appointments/components/details";
-import { getCurrentUser } from "@/domains/identity/auth/session";
+import { getCurrentUser } from "@/domains/auth/util/session";
 import { ParamsType } from "@/lib/types";
 import { redirect } from "next/navigation";
 

@@ -1,4 +1,4 @@
-import { TimeslotInput } from "@/features/hour-selection";
+import { TimeslotInput } from "@/features/hour-selection/components";
 
 
 export default function AvailabilityWeekend () {

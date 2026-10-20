@@ -3,8 +3,8 @@ import { StatusPill } from "@/components/ui/pills";
 import { formatAppTimeSplit } from "@/lib/dayjs";
 import { getServices } from "@/lib/utils/stringMutate";
 import Link from "next/link";
-import { AppointmentDetails, AppointmentStatus } from "../../queries/getAppointmentDetails";
 import dayjs from "dayjs";
+import { AppointmentDetails, AppointmentStatus } from "../../appointment.types";
 
 type Props = {
     appointment: AppointmentDetails

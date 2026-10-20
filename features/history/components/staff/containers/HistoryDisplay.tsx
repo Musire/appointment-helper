@@ -1,4 +1,4 @@
-import { AppointmentHistoryItem } from "@/domains/appointments/queries/getHistoryItems";
+import { AppointmentHistoryItem } from "@/domains/appointments/appointment.types";
 import { HistoryCard } from "../cards";
 
 type props = {

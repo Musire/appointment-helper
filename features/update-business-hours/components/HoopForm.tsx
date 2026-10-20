@@ -28,10 +28,10 @@ export default function HoopForm () {
                         day={d.day}
                         start={d.start}
                         end={d.end}
-                        onStartChange={(value) =>
+                        onStartChange={(value: number) =>
                             dispatch({ type: "update_start", id: d.id, value })
                         }
-                        onEndChange={(value) =>
+                        onEndChange={(value: number) =>
                             dispatch({ type: "update_end", id: d.id, value })
                         }
                         onToggle={() =>

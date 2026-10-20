@@ -1,7 +1,7 @@
 'use client'
-import { DropdownButton } from "@/components/buttons";
-import { ControlledInput } from "@/components/forms";
 import { useFormContext, useWatch } from "react-hook-form";
+import ControlledInput from "./ControlledInput";
+import { DropdownButton } from "../../buttons";
 
 type Props = {
   areaRoles: {

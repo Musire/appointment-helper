@@ -5,4 +5,3 @@ export { default as ControlledInput } from './inputs/ControlledInput';
 export { default as FormCheckbox } from './inputs/FormCheckbox';
 export { default as Input } from './inputs/Input';
 export { default as StatusButton } from './StatusButton';
-

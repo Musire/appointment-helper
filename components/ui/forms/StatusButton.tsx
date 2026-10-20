@@ -1,8 +1,8 @@
 'use client';
 
+import { ActionResponse } from "@/domains/auth/auth.types";
 import { cn } from "@/lib/utils";
 import { Button } from "../buttons";
-import { ActionResponse } from "@/domains/identity/types";
 
 export type FormState = { success: boolean, error: string | null }
 
@@ -27,7 +27,7 @@ export default function StatusButton<T>({
 
   return (
     <Button
-      type="submit"
+      type="button"
       disabled={isPending || isSuccess}
       className={cn(
         // Base styles

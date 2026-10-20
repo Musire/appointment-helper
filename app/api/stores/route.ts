@@ -1,9 +1,9 @@
-import { getStores } from "@/domains/booking/services/store.services";
+import { getActiveStores } from "@/domains/store/store.queries";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const { error, data } = await getStores()
+    const { error, data } = await getActiveStores()
 
     if (error) {
         return NextResponse.json({ data: null, error: error}, { status: 400 })

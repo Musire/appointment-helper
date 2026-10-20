@@ -1,9 +1,10 @@
 'use client';
 
 import { SelectableList } from "@/components/ui";
-import { ContinueButton, StoreCard } from "@/features/booking";
 import { useSelect } from "@/hooks";
 import { useRouter } from "next/navigation";
+import { StoreCard } from "../cards";
+import { ContinueButton } from "../page";
 
 type StoreStepProps = {
     stores: {

@@ -1,9 +1,9 @@
 'use client'
-import { AppointmentDetails as AppointmentDetailsType } from "../../queries/getAppointmentDetails"
+import { AppointmentDetails } from "../../appointment.types"
 import { APPOINTMENT_STATUS_CONFIG } from "../../utils/PoolDetailsConfig"
 
 type Props = {
-  appointment: AppointmentDetailsType
+  appointment: AppointmentDetails
 }
 
 export default function StaffAppointmentDetails({

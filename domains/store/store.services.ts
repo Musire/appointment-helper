@@ -38,6 +38,10 @@ export async function storeDetailsService (data: StoreDetailsType) {
     return storeRepository.getStoreDetails(data)
 }
 
+export async function getActiveStoresService () {
+    return storeRepository.getActiveStores()
+}
+
 
 export async function saveBusinessHoursService (data: saveBusinessHoursType) {
     const hours = toStoreHours(data.blocks)

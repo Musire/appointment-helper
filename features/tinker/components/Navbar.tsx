@@ -7,7 +7,7 @@ type Props = {
 
 export default function Navbar ({ storeId, role }: Props) {
 
-    const tabs = getNav(role, storeId)
+    const tabs = getNav(role)
 
     return (
         <div className="md:w-full h-20  centered  xs:fixed xs:bottom-0 xs:left-6 md:static xs:w-[calc(100%-3rem)] " >

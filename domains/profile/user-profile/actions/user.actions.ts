@@ -1,12 +1,12 @@
 'use server';
 
-import { getCurrentUser } from "@/domains/identity/actions/auth.actions";
-import { UploadState } from "@/features/image-validation/image-uploading.actions";
+import { getCurrentUser } from "@/domains/auth/util/session";
+import { UploadState } from "@/domains/images/image.types";
 import { prisma } from "@/lib/prisma";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function editUser(
-  prevState: UploadState,
+  _: any,
   formData: FormData
 ): Promise<UploadState> {
     const supabase = createSupabaseServerClient()

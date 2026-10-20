@@ -1,9 +1,9 @@
-import { getStores } from "@/domains/store/queries/stores";
-import { StoreStep } from "@/features/booking";
+import { getActiveStores } from "@/domains/store/store.queries";
+import { StoreStep } from "@/features/booking/components";
 
 export default async function BookingPage () {
 
-    const { data } = await getStores()
+    const { data } = await getActiveStores()
     if (!data) return null;
 
     return (

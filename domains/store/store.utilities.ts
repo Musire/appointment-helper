@@ -1,4 +1,4 @@
-import { Consolidated, Day, TimeBlock } from "@/features/hour-selection/types";
+import { Consolidated, Day, TimeBlock } from "../offering/offering.types";
 
 
 

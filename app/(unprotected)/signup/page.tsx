@@ -3,8 +3,8 @@
 import { ControlledInput, H2, Input, Theme } from "@/components/ui"
 import { DropdownButton } from "@/components/ui/buttons"
 import ActionForm from "@/components/ui/forms/ActionForm"
+import { signup } from "@/domains/auth/auth.actions"
 import z from "zod"
-import { signup } from "../../domains/identity/actions/auth.actions"
 
 export default function SignupPage() {
 

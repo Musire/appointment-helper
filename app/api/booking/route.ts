@@ -1,4 +1,4 @@
-import { createBooking } from "@/domains/booking/services/booking.services";
+import { createBooking } from "@/domains/booking/booking.services";
 import { NextResponse } from "next/server";
 
 type POST_input = {

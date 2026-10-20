@@ -29,7 +29,7 @@ export default function ServiceCreationForm ({ data, isUpdate }: ServiceCreation
 
                 const res = await upsertService(injected);
                 
-                if (!res.success) {
+                if (!res.success && res.error) {
                     setError(res.error)
                     return
                 }

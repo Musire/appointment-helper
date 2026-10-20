@@ -1,5 +1,5 @@
-import { generateReviewState } from "@/domains/booking/services";
-import { ReviewSchema } from "@/domains/booking/validation";
+import { generateReviewState } from "@/domains/booking/booking.services";
+import { ReviewSchema } from "@/domains/booking/booking.validations";
 import { NextResponse } from "next/server";
 import z from "zod";
 

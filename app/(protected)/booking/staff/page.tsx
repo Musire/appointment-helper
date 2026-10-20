@@ -1,5 +1,5 @@
 import { getStoreStaff } from "@/domains/booking/booking.queries";
-import { StaffStep } from "@/features/booking";
+import { StaffStep } from "@/features/booking/components";
 import { SearchParamsType } from "@/lib/types";
 
 export default async function BookingStaff ({ searchParams }: SearchParamsType) {

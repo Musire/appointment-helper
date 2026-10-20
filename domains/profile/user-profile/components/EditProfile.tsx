@@ -1,38 +1,33 @@
 'use client';
 
 import { FileUploader, StatusButton } from "@/components/ui";
-import { UploadState } from "@/features/image-validation/image-uploading.actions";
-import { useActionState } from "react";
+import { ActionResponse } from "@/domains/auth/auth.types";
+import { useState, useTransition } from "react";
 import { editUser } from "../actions/user.actions";
 
-type ProfileFormState = UploadState & {
-    error: string | null;
-}
-
 export default function EditProfile () {
-    const initialState: ProfileFormState = {
-        success: false,
-        message: '',
-        error: null
-    }
+    const [isPending, startTransition] = useTransition();
+    
+    const [formState, setFormState] = useState<ActionResponse<{ user: any }>>({ 
+        success: false, 
+        data: undefined, 
+        error: undefined 
+    });
 
-    // Wrap the action to ensure the returned state matches ProfileFormState
-    const handleAction = async (prevState: ProfileFormState, formData: FormData): Promise<ProfileFormState> => {
-        const result = await editUser(prevState, formData);
-        return {
-            ...result,
-            error: null 
-        };
+    const handleSubmit = (formData: FormData) => {
+
+        startTransition(async () => {
+            const result = await editUser(formState, formData);
+            setFormState(result as ActionResponse<{ user: any }>);
+        });
     };
 
-    const [formState, formAction, isPending] = useActionState(handleAction, initialState);
-
     return (
-        <form action={formAction} className="">
+        <form action={ e => handleSubmit(e)} className="" >
             <FileUploader />
             <StatusButton state={formState} isPending={isPending} />
-            {!formState?.success && formState?.message && (
-                <p className="">{formState.message}</p>
+            {!formState.success && formState.error && (
+                <p className="">{formState.error}</p>
             )}
         </form>
     );

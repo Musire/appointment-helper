@@ -1,5 +1,5 @@
 import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
-import AdminServiceEdit from "@/features/mutate-service/components/AdminEditService";
+import AdminServiceEdit from "@/features/mutate-offerings/components/AdminEditService";
 
 type Props = {
   params: Promise<{ storeId: string, serviceId: string }>

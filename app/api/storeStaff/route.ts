@@ -1,5 +1,5 @@
-import { retrieveStaffStore } from "@/domains/booking/services";
-import { StoreStaffSchema } from "@/domains/booking/validation";
+import { retrieveStaffStore } from "@/domains/booking/booking.services";
+import { StoreStaffSchema } from "@/domains/booking/booking.validations";
 import { NextResponse } from "next/server";
 import z from "zod";
 

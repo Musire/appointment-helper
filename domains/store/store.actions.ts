@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { StoreUpdateSchema } from "@/validation/StoreCreation.schema";
 import { revalidatePath } from "next/cache";
 import { createStoreService, saveBusinessHoursService, updateStoreHoursService, updateStoreService } from "./store.services";
-import { saveBusinessHoursSchema, StoreCreationSchema, storeHoursUpdateSchema, storeHoursUpdateType } from "./store.validations";
+import { saveBusinessHoursSchema, StoreConfigEditType, StoreCreationSchema, storeHoursUpdateSchema, storeHoursUpdateType } from "./store.validations";
 
 
 export const createStore = createSafeAction(
@@ -83,8 +83,6 @@ export const saveBusinessHours = createSafeAction(
     }
 ) 
 
-
-
 export const updateStoreHours = createSafeAction(
     {
         allowedRoles: ['admin', 'ADMIN']
@@ -93,5 +91,14 @@ export const updateStoreHours = createSafeAction(
         const validated = validateSchema(storeHoursUpdateSchema, payload)
         const res = updateStoreHoursService(validated)
         return res
+    }
+)
+
+export const editStoreConfig = createSafeAction(
+    {
+        allowedRoles: ['ADMIN', 'admin']
+    },
+    async (data: StoreConfigEditType) => {
+        console.log(data)
     }
 )

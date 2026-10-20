@@ -1,4 +1,4 @@
-import { getStoreServices } from "@/domains/store/queries/storeService";
+import { getStoreServices } from "@/domains/store/store.queries";
 import { NextResponse } from "next/server";
 
 type POST_Request = {

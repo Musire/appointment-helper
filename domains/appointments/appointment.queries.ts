@@ -755,6 +755,7 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
 
     client: {
       id: 'user-1',
+      authId: 'user-auth-1',
       email: 'maria@example.com',
       fullName: 'Maria Garcia',
       phone: '555-1111',
@@ -805,6 +806,7 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
 
     client: {
       id: 'user-2',
+      authId: 'user-auth-2',
       email: 'juan@example.com',
       fullName: 'Juan Martinez',
       phone: '555-1112',
@@ -867,6 +869,7 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
 
     client: {
       id: 'user-3',
+      authId: 'user-auth-3',
       email: 'ana@example.com',
       fullName: 'Ana Lopez',
       phone: '555-1113',
@@ -905,6 +908,7 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
 
     client: {
       id: 'user-4',
+      authId: 'user-auth-4',
       email: 'carlos@example.com',
       fullName: 'Carlos Ruiz',
       phone: '555-1114',
@@ -943,6 +947,7 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
 
     client: {
       id: 'user-5',
+      authId: 'user-auth-5',
       email: 'sofia@example.com',
       fullName: 'Sofia Hernandez',
       phone: '555-1115',
@@ -981,6 +986,7 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
 
     client: {
       id: 'user-6',
+      authId: 'user-auth-6',
       email: 'miguel@example.com',
       fullName: 'Miguel Torres',
       phone: '555-1116',
@@ -1019,6 +1025,7 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
 
     client: {
       id: 'user-7',
+      authId: 'user-auth-7',
       email: 'laura@example.com',
       fullName: 'Laura Mendoza',
       phone: '555-1117',
@@ -1057,6 +1064,7 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
 
     client: {
       id: 'user-8',
+      authId: 'user-auth-8',
       email: 'pedro@example.com',
       fullName: 'Pedro Sanchez',
       phone: '555-1118',
@@ -1095,6 +1103,7 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
 
     client: {
       id: 'user-9',
+      authId: 'user-auth-9',
       email: 'elena@example.com',
       fullName: 'Elena Gomez',
       phone: '555-1119',

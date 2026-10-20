@@ -37,10 +37,10 @@ export default function DateTimeStep ({
         startTransition(async () => {
             setSelectedDate(newDate);
 
-            const response = await getDatetime(storeId, barberId, newDate.toDate());
+            const res = await getDatetime(storeId, barberId, newDate.toDate());
             
-            if (response.success && response.data) {
-                setTimeslots(response.data);
+            if (res.success && res.data) {
+                setTimeslots(res.data);
             }
         });
     }

@@ -1,5 +1,5 @@
-import { getAppointmentDetails } from "@/domains/appointments/queries/getAppointmentDetails";
 import { ParamsType } from "@/lib/types";
+import { getAppointmentDetails } from "../../appointment.queries";
 import StaffAppointmentDetails from "./StaffAppointmentDetails";
 
 // FIX: Use ParamsType directly as the Props type instead of nesting it

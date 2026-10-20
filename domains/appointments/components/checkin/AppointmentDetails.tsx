@@ -1,12 +1,12 @@
 import { Body, Caption, H3 } from "@/components/ui";
 import { formatAppointmentDateTime } from "@/lib/utils/time";
 import { CalendarDays, Clock, Scissors, Store } from "lucide-react";
-import type { AppointmentDetails } from "../../queries/getAppointmentDetails";
+import { AppointmentDetails as AppointmentDetailsType } from "../../appointment.types";
 import { formatAppTimeSplit, toAppTime } from "../../utils/dayjs";
 
 
 type Props = {
-    appointment: AppointmentDetails
+    appointment: AppointmentDetailsType
 }
 
 export default function AppointmentDetails ({

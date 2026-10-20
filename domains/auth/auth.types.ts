@@ -4,6 +4,7 @@ export type SecureActionConfig = {
   allowedRoles?: string[];
 };
 
+export type FormState = { success: boolean, error: string | null }
 
 // Define the unified result type
 export type ActionResult<T> = 

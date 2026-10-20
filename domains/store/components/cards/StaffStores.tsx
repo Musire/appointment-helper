@@ -1,8 +1,8 @@
-import { getStores } from "@/domains/booking/booking.services";
+import { getActiveStores } from "../../store.queries";
 import StoreCard from "./StoreCard";
 
 export default async function StorePanel () {
-    const { data:stores } = await getStores()
+    const { data:stores } = await getActiveStores()
     if (!stores) return null;
 
     return (

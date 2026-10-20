@@ -1,4 +1,4 @@
-import { getAppointmentHistory } from "@/domains/appointments/queries/getHistoryItems";
+import { getAppointmentHistory } from "@/domains/appointments/appointment.queries";
 import BookingHistory from "./staff/BookingHistory";
 
 export default function StaffHistory () {

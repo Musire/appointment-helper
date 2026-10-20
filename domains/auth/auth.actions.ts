@@ -4,7 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { supabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient, createSupabaseServerClientReadOnly } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { safeAction } from "./util/safeAction";
+import { LoginSchema, SignupSchema } from "./auth.validations";
+import { createSafeAction, safeAction, validateFormData } from "./util/safeAction";
 
 export async function logout() {
 
@@ -15,37 +16,23 @@ export async function logout() {
   redirect("/login")
 }
 
+export const login = createSafeAction(
+  {
+    allowedRoles: ['ADMIN', 'admin']
+  },
+  async (_: any, formData: FormData) => {
+    const validated = validateFormData(LoginSchema, formData)
+    const supabase = createSupabaseServerClient()
+    const { error } = await supabase.auth.signInWithPassword({
+      email: validated.email,
+      password: validated.password,
+    })
 
+    if (error) throw new Error(`DB couldn't validate login`);
 
-
-export type FormState = { success: boolean, error: string | null }
-
-
-export async function login(
-  _: FormState, 
-  formData: FormData
-) {
-  const email = formData.get('email') as string
-  const password = formData.get('password') as string
-
-  if (!email || !password) {
-    return { success: false, error: 'missing credentials'}
+    return { msg: 'successful login'}
   }
-
-  const supabase = createSupabaseServerClient()
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  })
-
-  if (error) {
-    return { success: false, error: error.message}
-  }
-
-  return { success: true, error: null}
-
-}
-
+)
 
 export async function inviteAdmin(email: string) {
   
@@ -95,36 +82,29 @@ export async function hasStaffProfile() {
     })
 }
 
-export async function signup(
-  _: FormState, 
-  formData: FormData
-) {
-  const email = formData.get('email') as string
-  const password = formData.get('password') as string
-  const fullName = formData.get('fullName') as string
-  const role = formData.get('role') as string
+export const signup = createSafeAction(
+  {
+    allowedRoles: ['ADMIN', 'admin']
+  },
+  async (_: any, formData: FormData) => {
+    const validated = validateFormData(SignupSchema, formData)
 
-  if (!email || !password || !role) {
-    return { success: false, error: 'missing credentials'}
-  }
-
-  const supabase = createSupabaseServerClient()
-  const { error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: `${location.origin}/auth/callback`,
-      data: {
-        role,
-        full_name: fullName
+    const supabase = createSupabaseServerClient()
+    const { error } = await supabase.auth.signUp({
+      email: validated.email,
+      password: validated.password,
+      options: {
+        emailRedirectTo: `${location.origin}/auth/callback`,
+        data: {
+          role: validated.role,
+          full_name: validated.fullName
+        },
       },
-    },
-  })
+    })
 
-  if (error) {
-    return { success: false, error: error.message}
+    if (error) throw new Error(`DB couldn't validate login`);
+
+    return { msg: 'successful signup'}
+
   }
-
-  return { success: true, error: null}
-
-}
+)

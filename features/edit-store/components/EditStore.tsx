@@ -1,31 +1,17 @@
-import { StoreCreationForm } from "@/components/forms";
+import StoreUpdateForm from "@/components/forms/StoreUpdateForm";
 import { BackButton } from "@/components/ui/buttons";
-import { prisma } from "@/lib/prisma";
-import { StoreCreationType } from "@/validation/StoreCreation.schema";
+import { getStoreDetails } from "@/domains/store/store.queries";
 
-export default async function EditStore ({ params }: { params :{ slug: string} }) {
+type Props = {
+  params: Promise<{ slug: string }>
+}
+
+export default async function EditStore ({ params }: Props) {
 
   const { slug } = await params
-  
-  const store = await prisma.store.findFirst({
-    where : {
-      id: slug
-    },
-    select: {
-      id: true,
-      name: true,
-      address: true
-    }
-  })
+  const { data: store } = await getStoreDetails({ storeId: slug })
 
   if (!store) return null
-
-  const data: StoreCreationType = {
-    id: store.id,
-    name: store.name,
-    address: store.address,
-    // timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
-  }
 
   return (
     <div className="page-layout">
@@ -35,7 +21,7 @@ export default async function EditStore ({ params }: { params :{ slug: string} }
               <h1 className="">edit page</h1>
             </span>
             <div className="flex-col flex items-center mt-10 space-y-6 ">
-              <StoreCreationForm isUpdate data={data} />
+              <StoreUpdateForm data={store} />
             </div>
         </div>
     </div>

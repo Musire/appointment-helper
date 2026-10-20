@@ -261,6 +261,14 @@ export const  storeRepository = {
             if (!bio) return {bio: null, ...user}
             return {bio, ...user}
         })
+    }, 
+    async getActiveStores () {
+        const stores = await prisma.store.findMany({
+            where: {
+                status: 'ACTIVE'
+            }
+        })
+        return stores
     }
 
 }

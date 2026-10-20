@@ -51,6 +51,10 @@ export const storeHoursUpdateSchema = z.object({
   hoursList: storeHoursSchema
 })
 
+export const StoreConfigEditSchema = z.object({
+  storeId: z.uuid().min(1, 'id required')
+})
+
 
 export type StoreCreationType = z.infer<typeof StoreCreationSchema>;
 export type StoreHoursInput = z.infer<typeof storeHoursSchema>;
@@ -58,3 +62,4 @@ export type StoreDetailsType = z.infer<typeof StoreDetailsSchema>;
 export type saveBusinessHoursType = z.infer<typeof saveBusinessHoursSchema>;
 export type invitableStaffType = z.infer<typeof invitableStaffSchema>;
 export type storeHoursUpdateType = z.infer<typeof storeHoursUpdateSchema>;
+export type StoreConfigEditType = z.infer<typeof StoreConfigEditSchema>;

@@ -2,8 +2,7 @@ import { formatAppTimeSplit, toAppTime } from "@/domains/appointments/utils/dayj
 import { createSafeAction } from "@/domains/auth/util/safeAction";
 import { prisma } from "@/lib/prisma";
 import { BookingParams } from "@/lib/utils/navigation";
-import { getDatetimeService } from "./services/dateTime.services";
-import { getStoreStaffService } from "./services/staff.services";
+import { getDatetimeService, getStoreStaffService } from "./booking.services";
 
 export const getStoreStaff = createSafeAction(
     {

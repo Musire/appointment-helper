@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/domains/identity/actions/auth.actions";
+import { getCurrentUser } from "@/domains/auth/util/session";
 import { prisma } from "@/lib/prisma";
 
 

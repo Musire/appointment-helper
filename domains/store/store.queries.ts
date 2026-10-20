@@ -1,10 +1,9 @@
 import { createSafeAction, validateSchema } from "@/domains/auth/util/safeAction";
-import { StoreConfig } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { getStoreOfferings } from "../booking/booking.services";
-import { getDashboardMetrics, getInvitableStaffService, getStoreHoursService, storeDetailsService, syncStoreStatus } from "./store.services";
-import { invitableStaffSchema, invitableStaffType, StoreDetailsSchema, StoreDetailsType } from "./store.validations";
+import { getActiveStoresService, getDashboardMetrics, getInvitableStaffService, getStoreHoursService, storeDetailsService, syncStoreStatus } from "./store.services";
 import { StoreConfigResult } from "./store.types";
+import { invitableStaffSchema, invitableStaffType, StoreDetailsSchema, StoreDetailsType } from "./store.validations";
 
 
 
@@ -40,6 +39,13 @@ export const getStoreDetails = createSafeAction(
     const res = storeDetailsService(validated)
     return res
   }
+)
+
+export const getActiveStores = createSafeAction(
+  {
+    allowedRoles: ['ADMIN', 'admin']
+  }, 
+  getActiveStoresService
 )
 
 // STORE-STAFF FUNCTIONS

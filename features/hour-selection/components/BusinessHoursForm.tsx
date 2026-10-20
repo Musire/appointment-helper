@@ -5,9 +5,9 @@ import { Plus } from 'lucide-react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
 
+import { TimeBlock } from '@/domains/offering/offering.types';
 import { saveBusinessHours } from '@/domains/store/store.actions';
 import { saveBusinessHoursSchema } from '@/domains/store/store.validations';
-import type { TimeBlock } from '../types';
 import TimeBlockCard from './TimeBlockCard';
 
 type Props = {

@@ -1,4 +1,4 @@
-import { AppointmentHistoryItem } from "@/domains/appointments/queries/getHistoryItems";
+import { AppointmentHistoryItem } from "@/domains/appointments/appointment.types";
 import { AppointmentStatus } from "@/generated/prisma";
 import clsx from "clsx";
 import Link from "next/link";

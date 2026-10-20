@@ -23,11 +23,11 @@ export default function LoginPage() {
       <h2 className="text-3xl text-main">Login Form</h2>
       <div className="surface-1 rounded-xl">
         <ActionForm 
-        initialValues={{ email: "", password: ""}}
-        actionFn={login}
-        schema={schema}
-        onSuccess={onSuccess}
-      >
+          initialValues={{ email: "", password: ""}}
+          actionFn={login}
+          schema={schema}
+          onSuccess={onSuccess}
+        >
         <Input
           label="email" 
           name="email"

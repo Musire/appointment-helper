@@ -3,7 +3,7 @@
 import { requireRole } from "@/domains/auth/util/requireRole";
 import { safeAction } from "@/domains/auth/util/safeAction";
 import { prisma } from "@/lib/prisma";
-import { StoreCreationSchema, StoreCreationType } from "@/validation/StoreCreation.schema";
+import { StoreCreationSchema, StoreCreationType, StoreUpdateType } from "@/validation/StoreCreation.schema";
 import { revalidatePath } from "next/cache";
 
 
@@ -57,8 +57,7 @@ export async function createStore (formData: StoreCreationType) {
   })
 }
 
-
-export async function updateStore (formData: StoreCreationType) {
+export async function updateStore (formData: StoreUpdateType) {
     return safeAction(async() => {
         const { id, name, address } = formData;
 

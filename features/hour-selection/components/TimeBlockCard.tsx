@@ -1,14 +1,14 @@
 'use client';
 
-import { Controller, get, useFormContext } from 'react-hook-form';
 import type { FieldError } from 'react-hook-form';
+import { Controller, get, useFormContext } from 'react-hook-form';
 
 import { DropdownButton } from '@/components/ui/buttons';
 import { toMins } from '@/lib/utils/time';
 import { Clock } from 'lucide-react';
 
+import { Day } from '@/domains/offering/offering.types';
 import { fromMins } from '../../../lib/utils/time.utils';
-import { Day } from '../types';
 
 type Props = {
   index: number;

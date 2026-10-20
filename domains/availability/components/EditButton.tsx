@@ -1,12 +1,13 @@
 'use client';
 
+import { editStoreConfig } from "@/domains/store/store.actions";
 import { useRouter } from "next/navigation";
 
 export default function EditButton ({ storeId }: { storeId: string }) {
     const router = useRouter()
     
     const updateConfig = async () => {
-        const { success, error } = await editStoreConfig(storeId)
+        const { success, error } = await editStoreConfig({ storeId })
 
         if (!success) {
             console.error(error)

@@ -2,10 +2,10 @@
 
 import { DatePickerButton } from "@/components/ui/date-picker";
 import { useMemo, useState } from "react";
-import { AppointmentDetails } from "../../queries/getAppointmentDetails";
 import PoolDisplay from "./PoolDisplay";
 import PoolFilter from "./PoolFilter";
 import dayjs from "dayjs";
+import { AppointmentDetails } from "../../appointment.types";
 
 export type OptionType = 'all' |
     'checkedin' |

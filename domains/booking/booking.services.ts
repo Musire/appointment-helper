@@ -1,8 +1,8 @@
-import dayjs from "dayjs"
-import utc from "dayjs/plugin/utc"
-import { StaffDatetimeRepository, StoreServiceRepository } from "./booking.repositories";
-import { convertUTC } from "@/lib/utils/time";
 import { prisma } from "@/lib/prisma";
+import { convertUTC } from "@/lib/utils/time";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { StaffDatetimeRepository, StoreServiceRepository } from "./booking.repositories";
 import { inputType, ReviewInput } from "./booking.types";
 dayjs.extend(utc)
 
@@ -147,23 +147,6 @@ export async function getStoreStaffService (storeId: string) {
     return data.map(item => item.user)
 }
 
-// STORE SERVICE FUNCTIONS
-
-
-export async function getStores () {
-    try {
-        const found = await prisma.store.findMany()
-
-        return {
-            success: true,
-            error: null,
-            data: found
-        }
-    } catch (error) {
-        console.error(error)
-        throw error
-    }
-}
 
 // STORE-STAFF FUNCTIONS
 

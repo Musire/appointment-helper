@@ -1,4 +1,4 @@
-import { DropdownButton } from "@/components/buttons";
+import { DropdownButton } from "../../buttons";
 import ControlledInput from "./ControlledInput";
 
 type Props<T> = {

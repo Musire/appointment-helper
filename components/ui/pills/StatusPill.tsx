@@ -1,4 +1,4 @@
-import { AppointmentStatus } from "@/domains/appointments/queries/getAppointmentDetails";
+import { AppointmentStatus } from "@/domains/appointments/appointment.types";
 import { Caption } from "../typography";
 
 type VariantObject = {

@@ -1,5 +1,5 @@
-import { getStoreServices } from "@/domains/store/queries/storeService";
-import { ServicesStep } from "@/features/booking";
+import { getStoreServices } from "@/domains/store/store.queries";
+import { ServicesStep } from "@/features/booking/components";
 import { SearchParamsType } from "@/lib/types";
 
 export default async function BookingService ({ searchParams }: SearchParamsType) {
