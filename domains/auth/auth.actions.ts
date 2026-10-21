@@ -5,7 +5,7 @@ import { supabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient, createSupabaseServerClientReadOnly } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { LoginSchema, SignupSchema } from "./auth.validations";
-import { createSafeAction, safeAction, validateFormData } from "./util/safeAction";
+import { createRegAction, safeAction, validateFormData } from "./util/safeAction";
 
 export async function logout() {
 
@@ -16,11 +16,9 @@ export async function logout() {
   redirect("/login")
 }
 
-export const login = createSafeAction(
-  {
-    allowedRoles: ['ADMIN', 'admin']
-  },
+export const login = createRegAction(
   async (_: any, formData: FormData) => {
+    console.log('triggered')
     const validated = validateFormData(LoginSchema, formData)
     const supabase = createSupabaseServerClient()
     const { error } = await supabase.auth.signInWithPassword({
@@ -82,10 +80,7 @@ export async function hasStaffProfile() {
     })
 }
 
-export const signup = createSafeAction(
-  {
-    allowedRoles: ['ADMIN', 'admin']
-  },
+export const signup = createRegAction(
   async (_: any, formData: FormData) => {
     const validated = validateFormData(SignupSchema, formData)
 

@@ -1,12 +1,12 @@
 'use client';
 
 import { FormStatusProvider } from "@/context/FormStatusProvider";
+import { ActionResponse } from "@/domains/auth/auth.types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { startTransition, useActionState, useEffect, useLayoutEffect, useRef } from "react";
 import { DefaultValues, FieldValues, FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import StatusButton from "./StatusButton";
-import { ActionResponse } from "@/domains/auth/auth.types";
 
 
 interface FormProps<T, S extends z.ZodObject<FieldValues>> {
@@ -40,6 +40,7 @@ export default function ActionForm<T, S extends z.ZodObject<FieldValues>>({
     });
 
     const handleFormSubmit = async () => {
+      console.log('trigger front end')
       const isValid = await form.trigger();
       if (!isValid) {
         console.log('Validation errors:', form.formState.errors);

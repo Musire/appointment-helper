@@ -27,7 +27,7 @@ export default function StatusButton<T>({
 
   return (
     <Button
-      type="button"
+      type="submit"
       disabled={isPending || isSuccess}
       className={cn(
         // Base styles
