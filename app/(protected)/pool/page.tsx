@@ -1,18 +1,12 @@
-import { getCurrentUser } from "@/domains/auth/auth.actions";
-import { StaffPool } from "@/domains/pool";
-import { redirect } from "next/navigation";
+import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
+import StaffPool from "@/domains/pool/components/StaffPoolDataLayer";
 
 export default async function PoolPage() {
-  const user = await getCurrentUser()
-
-  if (!user) {
-    redirect("/login");
-  }
-
-  if (user.role !== "STAFF") {
-    redirect("/dashboard");
-  }
-
-  return <StaffPool />;
-  
+  return (
+    <RoleRenderer 
+      roles={{
+        STAFF: <StaffPool />
+      }}
+    />
+  )
 }

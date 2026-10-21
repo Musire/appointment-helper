@@ -1,6 +1,6 @@
 'use client';
 
-import { FilterChip } from ".";
+import FilterChip from "./FilterChip";
 import { OptionType } from "./PoolPage";
 
 type Props = {

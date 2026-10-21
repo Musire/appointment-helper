@@ -1,10 +1,10 @@
 import { appointmentMocks } from "@/domains/appointments/appointment.queries";
-import { PoolPage } from "@/domains/appointments/components/pool";
+import PoolPage from "./PoolPage";
 
-export default function StaffPool () {
+export default function StaffPoolDataLayer () {
     const appointments = appointmentMocks
     return (
-        <div className="flex-1 flex  overflow-y-hidden">
+        <div className="flex-1 flex p-6  overflow-y-hidden">
             <PoolPage appointments={appointments} />
         </div>
     );

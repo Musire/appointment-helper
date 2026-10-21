@@ -1,4 +1,4 @@
-import { AppointmentDetails } from "../../appointment.types";
+import { AppointmentDetails } from "../../appointments/appointment.types";
 import PoolCard from "./PoolCard";
 
 type Props = {
