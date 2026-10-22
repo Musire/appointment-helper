@@ -11,7 +11,7 @@ export default async function StaffDashboard () {
   const { pending, checkedIn, completed } = getAppointmentMetrics(filtered)
 
   return (
-    <div className=" relative stacked py-6 flex-1 overflow-hidden">
+    <div className=" relative stacked p-6 flex-1 overflow-hidden">
       <ul className="grid grid-cols-3 h-40 shrink-0 gap-x-4 w-full">
         <StatCard variant='pendiente' value={pending} />
         <StatCard variant='checkin' value={checkedIn} />
