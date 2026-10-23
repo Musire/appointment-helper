@@ -1,14 +1,14 @@
 'use server';
 
-import { getCurrentUser } from "@/domains/auth/auth.actions";
 import { safeAction } from "@/domains/auth/util/safeAction";
+import { getCurrentUserFull } from "@/domains/auth/util/session";
 import { prisma } from "@/lib/prisma";
 
 
 export async function getNotifications() {
 
     return safeAction(async () => {
-        const user = await getCurrentUser()
+        const user = await getCurrentUserFull()
         if (!user) throw new Error("Not authenticated");
         
         const notifications = await prisma.notification.findMany({

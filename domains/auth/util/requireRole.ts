@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma"
-import { getCurrentUser } from "../auth.actions"
+import { getCurrentUserFull } from "./session"
 
 export type RoleName =
   | "USER"
@@ -14,7 +14,7 @@ export const hasAccess = (roles: { role : { name: string } }[], allowed: string[
 }
 
 export async function requireRole(allowed: RoleName[]) {
-  const user = await getCurrentUser()
+  const user = await getCurrentUserFull()
 
   const roles = await prisma.userRole.findMany({
     where: { userId: user?.id },

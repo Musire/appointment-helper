@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/domains/auth/auth.actions";
+import { getCurrentUserFull } from "@/domains/auth/util/session";
 import { AdminControl } from "@/domains/store/components";
 import { prisma } from "@/lib/prisma";
 
@@ -13,7 +13,7 @@ export type StoreType = {
 }
 
 export default async function AdminDashboard () {
-  const user = await getCurrentUser()
+  const user = await getCurrentUserFull()
   const stores = await prisma.store.findMany({
     where: {
       createdById: user?.id,

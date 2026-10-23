@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/ui";
 import { AuthProvider } from "@/context";
 import { ToastProvider } from "@/context/ToastContext";
-import { getCurrentUser } from "@/domains/auth/auth.actions";
+import { getCurrentUserFull } from "@/domains/auth/util/session";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 
 export default async function DashboardLayout ({ children }: Props) {
 
-    const user = await getCurrentUser()
+    const user = await getCurrentUserFull()
 
     if (!user || !user.role ) {
         redirect('/login')

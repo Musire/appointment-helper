@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/domains/auth/auth.actions";
+import { getCurrentUserFull } from "@/domains/auth/util/session";
 import { AdminStore, StaffStores } from "@/domains/store/components";
 import { ParamsType } from "@/lib/types";
 import { redirect } from "next/navigation";
@@ -7,7 +7,7 @@ type Props = ParamsType<{ storeId: string }>;
 
 
 export default async function StoresPage({ params }: Props) {
-  const user = await getCurrentUser()
+  const user = await getCurrentUserFull()
 
   if (!user) {
     redirect("/login")
