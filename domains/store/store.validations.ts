@@ -1,4 +1,5 @@
 import { z } from "zod";
+export const MAX_SECONDS_24HRS = 86400
 
 export const daySchema = z.enum([
   'sun',
@@ -12,10 +13,14 @@ export const daySchema = z.enum([
 
 export const timeBlockSchema = z.object({
   id: z.string(),
-  start: z.number().int().min(0).max(1439),
-  end: z.number().int().min(1).max(1440),
+  start: z.number().int().min(1).max(MAX_SECONDS_24HRS),
+  end: z.number().int().min(1).max(MAX_SECONDS_24HRS),
   days: z.array(daySchema),
 });
+
+export const saveBusinessHoursSchema = z.object({
+  blocks: z.array(timeBlockSchema)
+})
 
 export const storeHoursSchema = z.array(
   z.object({
@@ -38,9 +43,7 @@ export const StoreDetailsSchema = z.object({
     storeId: z.string().min(1, 'storeId needed')
 })
 
-export const saveBusinessHoursSchema = z.object({
-  blocks: z.array(timeBlockSchema)
-})
+
 
 export const invitableStaffSchema = z.object({
   storeSlug: z.string().min(1, 'store slug is needed')

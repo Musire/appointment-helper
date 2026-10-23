@@ -2,10 +2,11 @@
 
 import { prisma } from "@/lib/prisma";
 import { supabaseAdminClient } from "@/lib/supabase/admin";
-import { createSupabaseServerClient, createSupabaseServerClientReadOnly } from "@/lib/supabase/server";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { LoginSchema, SignupSchema } from "./auth.validations";
 import { createRegAction, safeAction, validateFormData } from "./util/safeAction";
+import { getCurrentUser } from "./util/session";
 
 export async function logout() {
 
@@ -15,22 +16,6 @@ export async function logout() {
   // Clear session and send user somewhere safe
   redirect("/login")
 }
-
-export const login = createRegAction(
-  async (_: any, formData: FormData) => {
-    console.log('triggered')
-    const validated = validateFormData(LoginSchema, formData)
-    const supabase = createSupabaseServerClient()
-    const { error } = await supabase.auth.signInWithPassword({
-      email: validated.email,
-      password: validated.password,
-    })
-
-    if (error) throw new Error(`DB couldn't validate login`);
-
-    return { msg: 'successful login'}
-  }
-)
 
 export async function inviteAdmin(email: string) {
   
@@ -50,21 +35,6 @@ export async function inviteAdmin(email: string) {
 
 }
 
-export async function getCurrentUser() {
-  const supabase = createSupabaseServerClientReadOnly()
-  
-  const { data: { user }, error } = await supabase.auth.getUser()
-  
-  if (error) {
-    if (error.name === 'AuthSessionMissingError') {
-      return null
-    }
-    throw new Error(error.message)
-  }
-  
-  return user
-}
-
 export async function hasStaffProfile() {
     return safeAction( async () => {
       const user = await getCurrentUser()
@@ -79,6 +49,21 @@ export async function hasStaffProfile() {
       return Boolean(exists)
     })
 }
+
+export const login = createRegAction(
+  async (_: any, formData: FormData) => {
+    const validated = validateFormData(LoginSchema, formData)
+    const supabase = createSupabaseServerClient()
+    const { error } = await supabase.auth.signInWithPassword({
+      email: validated.email,
+      password: validated.password,
+    })
+
+    if (error) throw new Error(`DB couldn't validate login`);
+
+    return { msg: 'successful login'}
+  }
+)
 
 export const signup = createRegAction(
   async (_: any, formData: FormData) => {

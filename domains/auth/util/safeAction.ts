@@ -1,8 +1,8 @@
 import { formatActionError } from "@/lib/utils/formatError";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import z from "zod";
-import { getCurrentUser } from "../auth.actions";
 import { ActionResponse, ActionResult, SecureActionConfig } from "../auth.types";
+import { getCurrentUserFull } from "./session";
 
 export async function safeAction<T>(
   handler: () => T | Promise<T>
@@ -25,7 +25,7 @@ export function createSafeAction<Args extends any[], Output>(
 ): (...args: Args) =>  Promise<ActionResponse<Awaited<Output>>> {
   return async (...args: Args): Promise<ActionResponse<Awaited<Output>>> => {
     try {
-      const user = await getCurrentUser();
+      const user = await getCurrentUserFull();
 
       if (!user || !user.user_metadata.role) {
         return {

@@ -100,6 +100,20 @@ export async function getCurrentUser() {
   }
 }
 
+export async function getCurrentUserFull() {
+  const supabase = createSupabaseServerClientReadOnly()
+  
+  const { data: { user }, error } = await supabase.auth.getUser()
+  
+  if (error) {
+    if (error.name === 'AuthSessionMissingError') {
+      return null
+    }
+    throw new Error(error.message)
+  }
+  
+  return user
+}
 
 export async function getUserById(targetId: string) {
   const user =  await prisma.user.findUnique({
