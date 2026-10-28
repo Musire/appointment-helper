@@ -6,5 +6,10 @@ export const InviteCreationSchema = z.object({
     storeId: z.string().min(1, 'store id required')
 })
 
+export const InviteMutateSchema = z.object({
+    id: z.string().min(1, 'invite id needed')
+})
+
 
 export type InviteCreationType = z.infer< typeof InviteCreationSchema>
+export type InviteMutateType = z.infer< typeof InviteMutateSchema>

@@ -49,6 +49,12 @@ export async function saveBusinessHoursService (data: saveBusinessHoursType) {
     storeRepository.saveBusinessHours(data)
 }
 
+export async function getStaffStoreService () {
+    const id = await getPrismaUserId()
+    if (!id) throw new Error('No db user')
+    return storeRepository.getStaffStores(id)
+}
+
 
 // STORE-STAFF FUNCTIONS
 

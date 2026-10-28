@@ -68,13 +68,15 @@ function BusinessHoursFields() {
         <Plus />
       </Button>
 
-      {fields.map((block, index) => (
-        <TimeBlockCard
-          key={block.id}
-          index={index}
-          onDelete={() => remove(index)}
-        />
-      ))}
+      <div className="stacked space-y-2 overflow-y-scroll scrollbar-adjust">
+        {fields.map((block, index) => (
+          <TimeBlockCard
+            key={block.id}
+            index={index}
+            onDelete={() => remove(index)}
+          />
+        ))}
+      </div>
     </>
   );
 }

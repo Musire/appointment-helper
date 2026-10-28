@@ -1,5 +1,5 @@
+import { prisma } from "@/lib/prisma"
 import { createSupabaseServerClientReadOnly } from "@/lib/supabase/server"
-import { prisma } from "../../../lib/prisma"
 import { AuthRepository } from "../auth.repositories"
 
 // 1. Define roles (source of truth)

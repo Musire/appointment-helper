@@ -1,25 +1,18 @@
-import { getCurrentUserFull } from "@/domains/auth/util/session";
-import { AdminStore, StaffStores } from "@/domains/store/components";
-import { ParamsType } from "@/lib/types";
-import { redirect } from "next/navigation";
+import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
+import { AdminStore } from "@/domains/store/components";
+import StaffStoreDataLayer from "@/features/staff-store/components/StaffStoreDataLayer";
 
-type Props = ParamsType<{ storeId: string }>;
-
+type Props = {
+  params: Promise<{ storeId: string }>
+}
 
 export default async function StoresPage({ params }: Props) {
-  const user = await getCurrentUserFull()
-
-  if (!user) {
-    redirect("/login")
-  }
-
-  switch (user.role) {
-    case "STAFF":
-      return <StaffStores />
-    case "ADMIN":
-      return <AdminStore params={params} />
-
-    default:
-      return redirect("/dashboard")
-  }
+  return (
+    <RoleRenderer 
+      roles={{
+        STAFF: <StaffStoreDataLayer />,
+        ADMIN: <AdminStore />
+      }}
+    />
+  )
 }

@@ -1,14 +1,8 @@
 import { TimeBlock } from "@/domains/offering/offering.types";
 import { BusinessHoursForm } from "@/features/hour-selection/components";
-import { ParamsType } from "@/lib/types";
 
-type Props = ParamsType<{ storeId: string }>;
 
-export default async function AdminStore ({
-    params
-}: Props) {
-    const { storeId } = await params
-    console.log(storeId)
+export default async function AdminStore () {
 
     const test: TimeBlock[] = [
         {

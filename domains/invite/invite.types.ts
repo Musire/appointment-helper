@@ -1,6 +1,4 @@
-import { InviteStatus } from "@/generated/prisma";
-
-import { $Enums } from "@/generated/prisma";
+import { $Enums, InviteStatus } from "@/generated/prisma";
 
 
 export type InviteType = {
@@ -28,3 +26,4 @@ export type InviteDataType = {
         avatarUrl: string | null;
     };
 }[] | null | undefined
+

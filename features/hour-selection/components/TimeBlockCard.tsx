@@ -1,14 +1,13 @@
+
 'use client';
 
 import type { FieldError } from 'react-hook-form';
 import { Controller, get, useFormContext } from 'react-hook-form';
 
-import { DropdownButton } from '@/components/ui/buttons';
-import { toMins } from '@/lib/utils/time';
-import { Clock } from 'lucide-react';
-
 import { Day } from '@/domains/offering/offering.types';
+import { toMins } from '@/lib/utils/time';
 import { fromMins } from '../../../lib/utils/time.utils';
+import TimePicker from '@/components/ui/timepicker/TimePicker';
 
 type Props = {
   index: number;
@@ -56,22 +55,22 @@ export default function TimeBlockCard({
               name={`blocks.${index}.${field}`}
               control={control}
               render={({ field: rhfField }) => (
-                <DropdownButton
-                  value={fromMins(rhfField.value)}
-                  onChange={(value: string | string[]) => {
-                    const selected =
-                      typeof value === 'string'
-                        ? value
-                        : value[0];
-
-                    if (selected) {
-                      rhfField.onChange(toMins(selected));
-                    }
+                <TimePicker
+                  value={
+                    rhfField.value != null
+                      ? fromMins(rhfField.value)
+                      : ''
+                  }
+                  onChange={(value: string) => {
+                    rhfField.onChange(
+                      value ? toMins(value) : undefined,
+                    );
                   }}
-                  Icon={Clock}
-                  options={['10:00 AM', '05:00 PM']}
+                  interval={15}
+                  startTime="12:00 AM"
+                  endTime="11:59 PM"
                   buttonStyle="rounded-none"
-                  drawerStyle="rounded-none"
+                  dropdownStyle="rounded-none"
                 />
               )}
             />

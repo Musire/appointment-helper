@@ -269,6 +269,25 @@ export const  storeRepository = {
             }
         })
         return stores
+    },
+    async getStaffStores (staffId: string ) {
+        return prisma.storeStaff.findMany({
+            where: {
+                userId: staffId,
+                status: "ACTIVE",
+                store: {
+                    status: "ACTIVE",
+                },
+            },
+            select: {
+                store: {
+                    select: {
+                        id: true,
+                        name: true,
+                    },
+                },
+            },
+        });
     }
 
 }

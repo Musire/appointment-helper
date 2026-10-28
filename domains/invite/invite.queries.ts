@@ -1,5 +1,7 @@
+'use server'
+
 import { createSafeAction } from "@/domains/auth/util/safeAction";
-import { getInviteService } from "./invite.services";
+import { getInviteService, getStaffInviteService } from "./invite.services";
 
 
 export const getInviteStatus = createSafeAction(
@@ -8,3 +10,11 @@ export const getInviteStatus = createSafeAction(
     },
     getInviteService
 )
+
+export const getStaffInvites = createSafeAction(
+    {
+        allowedRoles: ['staff', 'STAFF']
+    },
+    getStaffInviteService
+)
+
