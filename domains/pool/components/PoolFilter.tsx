@@ -1,33 +1,28 @@
+
 'use client';
 
-import FilterChip from "./FilterChip";
-import { OptionType } from "./PoolPage";
+import { DropdownButton } from '@/components/ui';
+import { OptionType } from '../usePoolFilters';
 
 type Props = {
     options: OptionType[];
-    selected: string[];
-    onSelect: (value: string) => void;
-}
+    selected: OptionType[];
+    onSelect: (value: OptionType) => void;
+};
 
-export default function PoolFilter ({
+export default function PoolFilter({
     options,
     selected,
-    onSelect
+    onSelect,
 }: Props) {
-    
-    
     return (
-        <ul className="flex items-center space-x-2 h-20 w-full overflow-x-auto scrollbar-none">
-            {options.map((o, index) => {
-                return (
-                    <FilterChip 
-                        key={`${o}-${index}`}
-                        value={o}
-                        isActive={selected.includes(o)}
-                        onSelect={() => onSelect(o)}
-                    />
-                )
-            })}
-        </ul>
+        <DropdownButton<OptionType>
+            options={options}
+            selectedValues={selected}
+            onChange={onSelect}
+            multiple
+            buttonStyle="w-48"
+            drawerStyle="w-48"
+        />
     );
 }

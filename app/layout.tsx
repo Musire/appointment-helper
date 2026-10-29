@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className="dark">
+    <html className="dark" lang="en" data-scroll-behavior="smooth">
       <body
         className="bg-background font-poppins flex flex-1 w-dvw h-dvh overflow-hidden "
       >

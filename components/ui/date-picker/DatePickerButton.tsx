@@ -12,12 +12,13 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
+import { OptionType } from "@/domains/pool/usePoolFilters";
 
 dayjs.extend(isToday);
 
 type Props = {
     selectedDate: string;
-    onChange: (date: string) => void;
+    onChange: (value: OptionType) => void;
 };
 
 export default function DatePickerButton({

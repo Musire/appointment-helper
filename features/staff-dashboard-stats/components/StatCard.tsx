@@ -39,11 +39,11 @@ export default function StatCard ({
     const { label, style, Icon } = StatCardConfig[variant]
 
     return (
-        <li className="bg-surface-1 w-full rounded-md h-full shrink-0 centered-col space-y-2 ">
+        <li className=" w-full rounded-md h-full shrink-0 centered-col space-y-2 ">
           <Body className="text-fluid-4xl">{value}</Body>
           <Body className={`flex items-center space-x-2 ${style}`}>
-            <Icon strokeWidth={1} />
-            <Caption className="text-fluid-lg">{label}</Caption>
+            <Icon strokeWidth={1} className="size-5" />
+            <Caption className="text-xs">{label}</Caption>
           </Body>
         </li>
     );
