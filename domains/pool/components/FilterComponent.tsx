@@ -3,12 +3,12 @@ import { OptionType } from "../usePoolFilters";
 import PoolFilter from "./PoolFilter";
 
 type Props = {
-  selectedDate: string;
-  handleDateSelect: (value: OptionType) => void;
-  options: OptionType[];
-  selected: OptionType[];
-  handleSelect: (value: OptionType) => void;
-}
+    selectedDate: string;
+    handleDateSelect: (value: string) => void;
+    options: OptionType[];
+    selected: OptionType[];
+    handleSelect: (value: OptionType) => void;
+};
 
 export default function FilterComponent ({
     selectedDate,

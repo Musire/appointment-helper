@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import * as React from "react";
 import { createPortal } from "react-dom";
@@ -9,14 +11,31 @@ type ContentProps = {
   title?: string;
 };
 
-export default function DrawerContent({ children, title = "Actions", className }: ContentProps) {
+function useIsMounted() {
+  return React.useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
+}
+
+export default function DrawerContent({
+  children,
+  title = "Actions",
+  className,
+}: ContentProps) {
   const { isOpen, onClose } = useDrawerContext();
-  const [mounted, setMounted] = React.useState(false);
+  const mounted = useIsMounted();
 
   React.useEffect(() => {
-    setMounted(true);
-    const handleEscape = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    if (isOpen) window.addEventListener("keydown", handleEscape);
+    if (!isOpen) return;
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
     return () => window.removeEventListener("keydown", handleEscape);
   }, [isOpen, onClose]);
 
@@ -29,7 +48,9 @@ export default function DrawerContent({ children, title = "Actions", className }
         onClick={onClose}
         className={cn(
           "fixed inset-0 z-50 bg-black/50 transition-opacity duration-300",
-          isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+          isOpen
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
         )}
       />
 
@@ -46,8 +67,10 @@ export default function DrawerContent({ children, title = "Actions", className }
             <div className="h-1.5 w-12 rounded-full bg-zinc-700" />
           </div>
 
-          <div className={`px-6 pb-8 ${className}`}>
-            <h2 className="mb-6 text-lg font-semibold text-white">{title}</h2>
+          <div className={cn("px-6 pb-8", className)}>
+            <h2 className="mb-6 text-lg font-semibold text-white">
+              {title}
+            </h2>
             {children}
           </div>
         </div>
