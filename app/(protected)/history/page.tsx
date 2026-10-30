@@ -1,21 +1,14 @@
-import { getCurrentUser } from "@/domains/auth/util/session";
-import { EnduserHistory, StaffHistory } from "@/features/history/components";
-import { redirect } from "next/navigation";
+import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
+import StaffHistoryDataLayer from "@/domains/history/components/StaffHistoryDataLayer";
+import { EnduserHistory } from "@/features/history/components";
 
 export default async function HistoryPage() {
-  const user = await getCurrentUser()
-
-  if (!user) {
-    redirect("/login")
-  }
-
-  switch (user.role) {
-    case "STAFF":
-      return <StaffHistory />
-    case "USER":
-      return <EnduserHistory />
-
-    default:
-      return redirect("/dashboard")
-  }
+  return (
+    <RoleRenderer
+      roles={{
+        STAFF: <StaffHistoryDataLayer />,
+        USER: <EnduserHistory />
+      }}
+    />
+  )
 }
