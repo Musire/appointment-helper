@@ -9,6 +9,13 @@ export const daySchema = z.enum([
   'thu',
   'fri',
   'sat',
+  'Do',
+  'Lu',
+  'Ma',
+  'Mi',
+  'Ju',
+  'Vi',
+  'Sa'
 ]);
 
 export const timeBlockSchema = z.object({

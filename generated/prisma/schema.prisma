@@ -98,8 +98,8 @@ model StaffProfile {
 
 model StaffAvailability {
   id           String     @id @default(uuid())
-  startTime    DateTime
-  endTime      DateTime
+  startTime    Int
+  endTime      Int
   storeStaffId String
   dayOfWeek    DayOfWeek
   storeStaff   StoreStaff @relation(fields: [storeStaffId], references: [id])

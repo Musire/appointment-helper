@@ -6,6 +6,13 @@ export type Day =
   | 'thu'
   | 'fri'
   | 'sat'
+  | 'Do'
+  | 'Lu'
+  | 'Ma'
+  | 'Mi'
+  | 'Ju'
+  | 'Vi'
+  | 'Sa'
 
 export type TimeBlock = {
   id: string

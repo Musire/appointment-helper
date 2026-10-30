@@ -247,7 +247,7 @@ export class PrismaClient<
    * Read more in our [docs](https://pris.ly/d/client).
    */
 
-  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
+  constructor(optionsArg ?: Prisma.PrismaClientConstructorArgs<ClientOptions>);
   $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
 
   /**
@@ -320,7 +320,7 @@ export class PrismaClient<
    * 
    * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
 
@@ -527,8 +527,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.5.0
-   * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
+   * Prisma Client JS version: 7.10.1
+   * Query Engine version: d1b3f377ca835d73fd50954a5e22128b9ebdd6b8
    */
   export type PrismaVersion = {
     client: string
@@ -663,6 +663,19 @@ export namespace Prisma {
   };
 
   /**
+   * Resolved type of the argument passed to the `PrismaClient` constructor.
+   *
+   * When called without a narrower options type (the common case), this resolves
+   * to `PrismaClientOptions` directly, which produces a clear TypeScript error
+   * message (`not assignable to parameter of type 'PrismaClientOptions'`) when
+   * the argument is missing or incomplete. When the user supplies a narrower
+   * options type (e.g. via a literal), it falls back to `Subset` to keep
+   * filtering out unknown properties.
+   */
+  export type PrismaClientConstructorArgs<Options extends PrismaClientOptions> =
+    [PrismaClientOptions] extends [Options] ? PrismaClientOptions : Subset<Options, PrismaClientOptions>;
+
+  /**
    * SelectSubset
    * @desc From `T` pick properties that exist in `U`. Simple version of Intersection.
    * Additionally, it validates, if both select and include are present. If the case, it errors.
@@ -694,7 +707,7 @@ export namespace Prisma {
   type XOR<T, U> =
     T extends object ?
     U extends object ?
-      (Without<T, U> & U) | (Without<U, T> & T)
+      ((Without<T, U> & U) | (Without<U, T> & T)) & object
     : U : T
 
 
@@ -2123,11 +2136,26 @@ export namespace Prisma {
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
     /**
-     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     * A driver adapter that PrismaClient uses to connect to your database, such as the ones provided by `@prisma/adapter-pg`, `@prisma/adapter-libsql`, `@prisma/adapter-planetscale`, etc.
+     * 
+     * A driver adapter is **required** unless you connect to your database through Prisma Accelerate (in which case use `accelerateUrl` instead).
+     * 
+     * Learn more: https://pris.ly/d/driver-adapters
+     * 
+     * @example
+     * ```ts
+     * import { PrismaPg } from '@prisma/adapter-pg'
+     * import { PrismaClient } from './generated/prisma/client'
+     * 
+     * const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+     * const prisma = new PrismaClient({ adapter })
+     * ```
      */
     adapter?: runtime.SqlDriverAdapterFactory
     /**
-     * Prisma Accelerate URL allowing the client to connect through Accelerate instead of a direct database.
+     * The Prisma Accelerate connection URL. Use this option to connect to your database through Prisma Accelerate instead of using a driver adapter to connect directly.
+     * 
+     * Learn more: https://pris.ly/d/accelerate
      */
     accelerateUrl?: string
     /**
@@ -11454,22 +11482,34 @@ export namespace Prisma {
 
   export type AggregateStaffAvailability = {
     _count: StaffAvailabilityCountAggregateOutputType | null
+    _avg: StaffAvailabilityAvgAggregateOutputType | null
+    _sum: StaffAvailabilitySumAggregateOutputType | null
     _min: StaffAvailabilityMinAggregateOutputType | null
     _max: StaffAvailabilityMaxAggregateOutputType | null
   }
 
+  export type StaffAvailabilityAvgAggregateOutputType = {
+    startTime: number | null
+    endTime: number | null
+  }
+
+  export type StaffAvailabilitySumAggregateOutputType = {
+    startTime: number | null
+    endTime: number | null
+  }
+
   export type StaffAvailabilityMinAggregateOutputType = {
     id: string | null
-    startTime: Date | null
-    endTime: Date | null
+    startTime: number | null
+    endTime: number | null
     storeStaffId: string | null
     dayOfWeek: $Enums.DayOfWeek | null
   }
 
   export type StaffAvailabilityMaxAggregateOutputType = {
     id: string | null
-    startTime: Date | null
-    endTime: Date | null
+    startTime: number | null
+    endTime: number | null
     storeStaffId: string | null
     dayOfWeek: $Enums.DayOfWeek | null
   }
@@ -11483,6 +11523,16 @@ export namespace Prisma {
     _all: number
   }
 
+
+  export type StaffAvailabilityAvgAggregateInputType = {
+    startTime?: true
+    endTime?: true
+  }
+
+  export type StaffAvailabilitySumAggregateInputType = {
+    startTime?: true
+    endTime?: true
+  }
 
   export type StaffAvailabilityMinAggregateInputType = {
     id?: true
@@ -11547,6 +11597,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: StaffAvailabilityAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: StaffAvailabilitySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: StaffAvailabilityMinAggregateInputType
@@ -11577,17 +11639,21 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: StaffAvailabilityCountAggregateInputType | true
+    _avg?: StaffAvailabilityAvgAggregateInputType
+    _sum?: StaffAvailabilitySumAggregateInputType
     _min?: StaffAvailabilityMinAggregateInputType
     _max?: StaffAvailabilityMaxAggregateInputType
   }
 
   export type StaffAvailabilityGroupByOutputType = {
     id: string
-    startTime: Date
-    endTime: Date
+    startTime: number
+    endTime: number
     storeStaffId: string
     dayOfWeek: $Enums.DayOfWeek
     _count: StaffAvailabilityCountAggregateOutputType | null
+    _avg: StaffAvailabilityAvgAggregateOutputType | null
+    _sum: StaffAvailabilitySumAggregateOutputType | null
     _min: StaffAvailabilityMinAggregateOutputType | null
     _max: StaffAvailabilityMaxAggregateOutputType | null
   }
@@ -11659,8 +11725,8 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      startTime: Date
-      endTime: Date
+      startTime: number
+      endTime: number
       storeStaffId: string
       dayOfWeek: $Enums.DayOfWeek
     }, ExtArgs["result"]["staffAvailability"]>
@@ -12088,8 +12154,8 @@ export namespace Prisma {
    */
   interface StaffAvailabilityFieldRefs {
     readonly id: FieldRef<"StaffAvailability", 'String'>
-    readonly startTime: FieldRef<"StaffAvailability", 'DateTime'>
-    readonly endTime: FieldRef<"StaffAvailability", 'DateTime'>
+    readonly startTime: FieldRef<"StaffAvailability", 'Int'>
+    readonly endTime: FieldRef<"StaffAvailability", 'Int'>
     readonly storeStaffId: FieldRef<"StaffAvailability", 'String'>
     readonly dayOfWeek: FieldRef<"StaffAvailability", 'DayOfWeek'>
   }
@@ -19345,20 +19411,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DayOfWeek'
-   */
-  export type EnumDayOfWeekFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DayOfWeek'>
-    
-
-
-  /**
-   * Reference to a field of type 'DayOfWeek[]'
-   */
-  export type ListEnumDayOfWeekFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DayOfWeek[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -19369,6 +19421,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DayOfWeek'
+   */
+  export type EnumDayOfWeekFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DayOfWeek'>
+    
+
+
+  /**
+   * Reference to a field of type 'DayOfWeek[]'
+   */
+  export type ListEnumDayOfWeekFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DayOfWeek[]'>
     
 
 
@@ -19925,8 +19991,8 @@ export namespace Prisma {
     OR?: StaffAvailabilityWhereInput[]
     NOT?: StaffAvailabilityWhereInput | StaffAvailabilityWhereInput[]
     id?: StringFilter<"StaffAvailability"> | string
-    startTime?: DateTimeFilter<"StaffAvailability"> | Date | string
-    endTime?: DateTimeFilter<"StaffAvailability"> | Date | string
+    startTime?: IntFilter<"StaffAvailability"> | number
+    endTime?: IntFilter<"StaffAvailability"> | number
     storeStaffId?: StringFilter<"StaffAvailability"> | string
     dayOfWeek?: EnumDayOfWeekFilter<"StaffAvailability"> | $Enums.DayOfWeek
     storeStaff?: XOR<StoreStaffScalarRelationFilter, StoreStaffWhereInput>
@@ -19946,8 +20012,8 @@ export namespace Prisma {
     AND?: StaffAvailabilityWhereInput | StaffAvailabilityWhereInput[]
     OR?: StaffAvailabilityWhereInput[]
     NOT?: StaffAvailabilityWhereInput | StaffAvailabilityWhereInput[]
-    startTime?: DateTimeFilter<"StaffAvailability"> | Date | string
-    endTime?: DateTimeFilter<"StaffAvailability"> | Date | string
+    startTime?: IntFilter<"StaffAvailability"> | number
+    endTime?: IntFilter<"StaffAvailability"> | number
     storeStaffId?: StringFilter<"StaffAvailability"> | string
     dayOfWeek?: EnumDayOfWeekFilter<"StaffAvailability"> | $Enums.DayOfWeek
     storeStaff?: XOR<StoreStaffScalarRelationFilter, StoreStaffWhereInput>
@@ -19960,8 +20026,10 @@ export namespace Prisma {
     storeStaffId?: SortOrder
     dayOfWeek?: SortOrder
     _count?: StaffAvailabilityCountOrderByAggregateInput
+    _avg?: StaffAvailabilityAvgOrderByAggregateInput
     _max?: StaffAvailabilityMaxOrderByAggregateInput
     _min?: StaffAvailabilityMinOrderByAggregateInput
+    _sum?: StaffAvailabilitySumOrderByAggregateInput
   }
 
   export type StaffAvailabilityScalarWhereWithAggregatesInput = {
@@ -19969,8 +20037,8 @@ export namespace Prisma {
     OR?: StaffAvailabilityScalarWhereWithAggregatesInput[]
     NOT?: StaffAvailabilityScalarWhereWithAggregatesInput | StaffAvailabilityScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"StaffAvailability"> | string
-    startTime?: DateTimeWithAggregatesFilter<"StaffAvailability"> | Date | string
-    endTime?: DateTimeWithAggregatesFilter<"StaffAvailability"> | Date | string
+    startTime?: IntWithAggregatesFilter<"StaffAvailability"> | number
+    endTime?: IntWithAggregatesFilter<"StaffAvailability"> | number
     storeStaffId?: StringWithAggregatesFilter<"StaffAvailability"> | string
     dayOfWeek?: EnumDayOfWeekWithAggregatesFilter<"StaffAvailability"> | $Enums.DayOfWeek
   }
@@ -20840,55 +20908,55 @@ export namespace Prisma {
 
   export type StaffAvailabilityCreateInput = {
     id?: string
-    startTime: Date | string
-    endTime: Date | string
+    startTime: number
+    endTime: number
     dayOfWeek: $Enums.DayOfWeek
     storeStaff: StoreStaffCreateNestedOneWithoutAvailabilityInput
   }
 
   export type StaffAvailabilityUncheckedCreateInput = {
     id?: string
-    startTime: Date | string
-    endTime: Date | string
+    startTime: number
+    endTime: number
     storeStaffId: string
     dayOfWeek: $Enums.DayOfWeek
   }
 
   export type StaffAvailabilityUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
     storeStaff?: StoreStaffUpdateOneRequiredWithoutAvailabilityNestedInput
   }
 
   export type StaffAvailabilityUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     storeStaffId?: StringFieldUpdateOperationsInput | string
     dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
   }
 
   export type StaffAvailabilityCreateManyInput = {
     id?: string
-    startTime: Date | string
-    endTime: Date | string
+    startTime: number
+    endTime: number
     storeStaffId: string
     dayOfWeek: $Enums.DayOfWeek
   }
 
   export type StaffAvailabilityUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
   }
 
   export type StaffAvailabilityUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     storeStaffId?: StringFieldUpdateOperationsInput | string
     dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
   }
@@ -21787,6 +21855,17 @@ export namespace Prisma {
     active?: SortOrder
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type EnumDayOfWeekFilter<$PrismaModel = never> = {
     equals?: $Enums.DayOfWeek | EnumDayOfWeekFieldRefInput<$PrismaModel>
     in?: $Enums.DayOfWeek[] | ListEnumDayOfWeekFieldRefInput<$PrismaModel>
@@ -21807,6 +21886,11 @@ export namespace Prisma {
     dayOfWeek?: SortOrder
   }
 
+  export type StaffAvailabilityAvgOrderByAggregateInput = {
+    startTime?: SortOrder
+    endTime?: SortOrder
+  }
+
   export type StaffAvailabilityMaxOrderByAggregateInput = {
     id?: SortOrder
     startTime?: SortOrder
@@ -21823,6 +21907,27 @@ export namespace Prisma {
     dayOfWeek?: SortOrder
   }
 
+  export type StaffAvailabilitySumOrderByAggregateInput = {
+    startTime?: SortOrder
+    endTime?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type EnumDayOfWeekWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.DayOfWeek | EnumDayOfWeekFieldRefInput<$PrismaModel>
     in?: $Enums.DayOfWeek[] | ListEnumDayOfWeekFieldRefInput<$PrismaModel>
@@ -21831,17 +21936,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumDayOfWeekFilter<$PrismaModel>
     _max?: NestedEnumDayOfWeekFilter<$PrismaModel>
-  }
-
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type AppointmentServiceListRelationFilter = {
@@ -21889,22 +21983,6 @@ export namespace Prisma {
 
   export type ServiceSumOrderByAggregateInput = {
     price?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumAppointmentStatusFilter<$PrismaModel = never> = {
@@ -22990,6 +23068,14 @@ export namespace Prisma {
     connect?: StoreStaffWhereUniqueInput
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type EnumDayOfWeekFieldUpdateOperationsInput = {
     set?: $Enums.DayOfWeek
   }
@@ -23020,14 +23106,6 @@ export namespace Prisma {
     connectOrCreate?: AppointmentServiceCreateOrConnectWithoutServiceInput | AppointmentServiceCreateOrConnectWithoutServiceInput[]
     createMany?: AppointmentServiceCreateManyServiceInputEnvelope
     connect?: AppointmentServiceWhereUniqueInput | AppointmentServiceWhereUniqueInput[]
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type AppointmentServiceUpdateManyWithoutServiceNestedInput = {
@@ -23458,16 +23536,6 @@ export namespace Prisma {
     not?: NestedEnumDayOfWeekFilter<$PrismaModel> | $Enums.DayOfWeek
   }
 
-  export type NestedEnumDayOfWeekWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.DayOfWeek | EnumDayOfWeekFieldRefInput<$PrismaModel>
-    in?: $Enums.DayOfWeek[] | ListEnumDayOfWeekFieldRefInput<$PrismaModel>
-    notIn?: $Enums.DayOfWeek[] | ListEnumDayOfWeekFieldRefInput<$PrismaModel>
-    not?: NestedEnumDayOfWeekWithAggregatesFilter<$PrismaModel> | $Enums.DayOfWeek
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumDayOfWeekFilter<$PrismaModel>
-    _max?: NestedEnumDayOfWeekFilter<$PrismaModel>
-  }
-
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -23493,6 +23561,16 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedEnumDayOfWeekWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DayOfWeek | EnumDayOfWeekFieldRefInput<$PrismaModel>
+    in?: $Enums.DayOfWeek[] | ListEnumDayOfWeekFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DayOfWeek[] | ListEnumDayOfWeekFieldRefInput<$PrismaModel>
+    not?: NestedEnumDayOfWeekWithAggregatesFilter<$PrismaModel> | $Enums.DayOfWeek
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDayOfWeekFilter<$PrismaModel>
+    _max?: NestedEnumDayOfWeekFilter<$PrismaModel>
   }
 
   export type NestedEnumAppointmentStatusFilter<$PrismaModel = never> = {
@@ -24643,15 +24721,15 @@ export namespace Prisma {
 
   export type StaffAvailabilityCreateWithoutStoreStaffInput = {
     id?: string
-    startTime: Date | string
-    endTime: Date | string
+    startTime: number
+    endTime: number
     dayOfWeek: $Enums.DayOfWeek
   }
 
   export type StaffAvailabilityUncheckedCreateWithoutStoreStaffInput = {
     id?: string
-    startTime: Date | string
-    endTime: Date | string
+    startTime: number
+    endTime: number
     dayOfWeek: $Enums.DayOfWeek
   }
 
@@ -24770,8 +24848,8 @@ export namespace Prisma {
     OR?: StaffAvailabilityScalarWhereInput[]
     NOT?: StaffAvailabilityScalarWhereInput | StaffAvailabilityScalarWhereInput[]
     id?: StringFilter<"StaffAvailability"> | string
-    startTime?: DateTimeFilter<"StaffAvailability"> | Date | string
-    endTime?: DateTimeFilter<"StaffAvailability"> | Date | string
+    startTime?: IntFilter<"StaffAvailability"> | number
+    endTime?: IntFilter<"StaffAvailability"> | number
     storeStaffId?: StringFilter<"StaffAvailability"> | string
     dayOfWeek?: EnumDayOfWeekFilter<"StaffAvailability"> | $Enums.DayOfWeek
   }
@@ -26094,8 +26172,8 @@ export namespace Prisma {
 
   export type StaffAvailabilityCreateManyStoreStaffInput = {
     id?: string
-    startTime: Date | string
-    endTime: Date | string
+    startTime: number
+    endTime: number
     dayOfWeek: $Enums.DayOfWeek
   }
 
@@ -26136,22 +26214,22 @@ export namespace Prisma {
 
   export type StaffAvailabilityUpdateWithoutStoreStaffInput = {
     id?: StringFieldUpdateOperationsInput | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
   }
 
   export type StaffAvailabilityUncheckedUpdateWithoutStoreStaffInput = {
     id?: StringFieldUpdateOperationsInput | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
   }
 
   export type StaffAvailabilityUncheckedUpdateManyWithoutStoreStaffInput = {
     id?: StringFieldUpdateOperationsInput | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     dayOfWeek?: EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek
   }
 

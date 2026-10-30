@@ -1,5 +1,5 @@
 import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
-import StoreAvailabilityDataLayer from "@/features/staff-store/components/StoreAvailabilityDataLayer";
+import StoreAvailabilityDataLayer from "@/domains/availability/components/StoreAvailabilityDataLayer";
 import { convertParamToString } from "@/lib/manipulateParam";
 
 type Props = {

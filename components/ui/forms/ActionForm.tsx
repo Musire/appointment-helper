@@ -51,10 +51,16 @@ export default function ActionForm<T, S extends z.ZodObject<FieldValues>>({
 
       // 1. Explicitly build the FormData instance from RHF values
       const formData = new FormData();
+
       Object.entries(formValues).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          formData.append(key, String(value));
-        }
+        if (value === undefined || value === null) return;
+
+        formData.append(
+          key,
+          typeof value === "object"
+            ? JSON.stringify(value)
+            : String(value)
+        );
       });
 
       startTransition(async () => {

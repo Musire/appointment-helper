@@ -1,6 +1,6 @@
 import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
 import { AdminStore } from "@/domains/store/components";
-import StaffStoreDataLayer from "@/features/staff-store/components/StaffStoreDataLayer";
+import StaffStoreDataLayer from "@/domains/availability/components/StaffStoreDataLayer";
 
 type Props = {
   params: Promise<{ storeId: string }>

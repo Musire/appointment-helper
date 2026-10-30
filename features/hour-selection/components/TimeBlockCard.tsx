@@ -4,25 +4,25 @@
 import type { FieldError } from 'react-hook-form';
 import { Controller, get, useFormContext } from 'react-hook-form';
 
+import TimePicker from '@/components/ui/timepicker/TimePicker';
 import { Day } from '@/domains/offering/offering.types';
 import { toMins } from '@/lib/utils/time';
 import { fromMins } from '../../../lib/utils/time.utils';
-import TimePicker from '@/components/ui/timepicker/TimePicker';
 
 type Props = {
   index: number;
   onDelete: () => void;
 };
 
-const DAYS: Day[] = [
-  'sun',
-  'mon',
-  'tue',
-  'wed',
-  'thu',
-  'fri',
-  'sat',
-];
+const DAYS = [
+  { value: 'sun', label: 'Do' },
+  { value: 'mon', label: 'Lu' },
+  { value: 'tue', label: 'Ma' },
+  { value: 'wed', label: 'Mi' },
+  { value: 'thu', label: 'Ju' },
+  { value: 'fri', label: 'Vi' },
+  { value: 'sat', label: 'Sa' },
+] as const;
 
 export default function TimeBlockCard({
   index,
@@ -42,9 +42,9 @@ export default function TimeBlockCard({
     <div className="relative flex flex-col space-y-4 bg-darkest border-adjust p-6">
       {/* Start and end times */}
       <div className="flex space-x-6">
-        {(['start', 'end'] as const).map((field) => (
+        {(['start', 'end'] as const).map((field, fieldIndex) => (
           <span
-            key={field}
+            key={`${field}-${fieldIndex}`}
             className="flex w-1/2 flex-col space-y-2"
           >
             <p className="capitalize text-whitesmoke/87">
@@ -94,11 +94,11 @@ export default function TimeBlockCard({
           return (
             <div className="flex flex-wrap gap-x-4 gap-y-2">
               {DAYS.map((day) => {
-                const checked = selectedDays.includes(day);
+                const checked = selectedDays.includes(day.value);
 
                 return (
                   <label
-                    key={day}
+                    key={day.value}
                     className="mr-1 flex cursor-pointer items-center space-x-1"
                   >
                     <input
@@ -107,8 +107,10 @@ export default function TimeBlockCard({
                       onChange={() => {
                         field.onChange(
                           checked
-                            ? selectedDays.filter((d) => d !== day)
-                            : [...selectedDays, day],
+                            ? selectedDays.filter(
+                                (d) => d !== day.value,
+                              )
+                            : [...selectedDays, day.value],
                         );
                       }}
                       className="peer size-3.5 cursor-pointer appearance-none border-2 border-whitesmoke/20 bg-black checked:bg-whitesmoke/87"
@@ -121,7 +123,7 @@ export default function TimeBlockCard({
                           : 'text-whitesmoke/30'
                       }`}
                     >
-                      {day}
+                      {day.label}
                     </span>
                   </label>
                 );
