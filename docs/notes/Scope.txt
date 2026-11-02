@@ -5,7 +5,6 @@ REQUIREMENTS
     view open blocks
 
 
-
 Nice to Have
     distance alert - reminder
     cancellation - discount offer (advantage dental)

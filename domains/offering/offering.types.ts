@@ -5,28 +5,20 @@ export type Day =
   | 'wed'
   | 'thu'
   | 'fri'
-  | 'sat'
-  | 'Do'
-  | 'Lu'
-  | 'Ma'
-  | 'Mi'
-  | 'Ju'
-  | 'Vi'
-  | 'Sa'
+  | 'sat';
 
 export type TimeBlock = {
-  id: string
-  start: number   
-  end: number   
-  days: Day[]
-}
+  id: string;
+  start: number;
+  end: number;
+  days: Day[];
+};
 
-
-export type Consolidated = Record<Day, [number, number][]>
+export type Consolidated = Record<Day, [number, number][]>;
 
 export type ValidationError = {
-  blockErrors: Record<string, string[]>
-  dayOverlapErrors: Partial<Record<Day, boolean>>
-}
+  blockErrors: Record<string, string[]>;
+  dayOverlapErrors: Partial<Record<Day, boolean>>;
+};
 
-export type ServerError = string | ValidationError
+export type ServerError = string | ValidationError;

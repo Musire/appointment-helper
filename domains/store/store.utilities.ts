@@ -1,10 +1,6 @@
-import { Consolidated, Day, TimeBlock } from "../offering/offering.types";
+import { Consolidated, Day, TimeBlock } from '../offering/offering.types';
 
-
-
-export function consolidate(
-  blocks: TimeBlock[],
-): Consolidated {
+export function consolidate(blocks: TimeBlock[]): Consolidated {
   const result: Consolidated = {
     sun: [],
     mon: [],
@@ -42,7 +38,6 @@ export function validate(blocks: TimeBlock[]) {
   const blockErrors: Record<string, string[]> = {};
   const dayOverlapErrors: Partial<Record<Day, boolean>> = {};
 
-  // Block-level validation
   for (const block of blocks) {
     const errors: string[] = [];
 
@@ -65,14 +60,11 @@ export function validate(blocks: TimeBlock[]) {
     }
   }
 
-  // Check overlap only if there are no block-level errors
   if (Object.keys(blockErrors).length === 0) {
     const consolidated = consolidate(blocks);
 
     for (const day of Object.keys(consolidated) as Day[]) {
-      const ranges = consolidated[day];
-
-      if (hasOverlap(ranges)) {
+      if (hasOverlap(consolidated[day])) {
         dayOverlapErrors[day] = true;
       }
     }
@@ -94,19 +86,11 @@ function minutesToTime(minutes: number): string {
   return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
 }
 
-export function toStoreHours(
-  blocks: TimeBlock[],
-): any {
-  return blocks.map((block: TimeBlock) => {
-    return {
-        ...block,
-        label: 'Business hours',
-        start: minutesToTime(block.start),
-        end: minutesToTime(block.end)
-    }
-  })
+export function toStoreHours(blocks: TimeBlock[]) {
+  return blocks.map((block) => ({
+    ...block,
+    label: 'Business hours',
+    start: minutesToTime(block.start),
+    end: minutesToTime(block.end),
+  }));
 }
-
-
-
-

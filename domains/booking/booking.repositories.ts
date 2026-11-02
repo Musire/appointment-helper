@@ -8,19 +8,20 @@ const getUTCDayName = (date: Date) => {
     return days[date.getDay()];
 };
 
-// FIXED: Uses local hours instead of UTC hours to keep time slots accurate
-function generateHourlySlots(startTime: Date, endTime: Date): string[] {
-  // Use getUTCHours to read the raw database hours without timezone shifting
-  const startHour = startTime.getUTCHours();
-  const endHour = endTime.getUTCHours();
-  
+function generateHourlySlots(
+  startTime: number,
+  endTime: number,
+): string[] {
   const slots: string[] = [];
+
+  const startHour = Math.ceil(startTime / 60);
+  const endHour = Math.floor(endTime / 60);
 
   for (let hour = startHour; hour <= endHour; hour++) {
     const ampm = hour >= 12 ? 'PM' : 'AM';
     const displayHour = hour % 12 === 0 ? 12 : hour % 12;
     const formattedHour = String(displayHour).padStart(2, '0');
-    
+
     slots.push(`${formattedHour}:00 ${ampm}`);
   }
 
