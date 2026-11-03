@@ -1,11 +1,15 @@
+import { Profile } from "../profile.types";
 import { ListItem, ProfileHeader, SegmentCard } from "../user-profile";
 
+type Props = {
+  profile: Profile
+}
 
-export default function UserProfile() {
+export default function UserProfile({ profile }: Props ) {
   return (
     <div className="h-[50dvh] py-6">
       <div className="max-w-md mx-auto space-y-6">
-        <ProfileHeader />
+        <ProfileHeader profile={profile}  />
 
         <SegmentCard title="Contact Information">
           <ListItem

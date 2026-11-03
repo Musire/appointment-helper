@@ -19,7 +19,6 @@ interface InputBlock {
 }
 
 const dayMap: Record<Day, number> = {
-  Do: 0, Lu: 1, Ma: 2, Mi: 3, Ju: 4, Vi: 5, Sa: 6,
   sun: 0, mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6,
 };
 

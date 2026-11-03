@@ -1,7 +1,12 @@
 import { Body } from "@/components/ui";
+import { Profile } from "../profile.types";
 import { ListItem, ProfileHeader, SegmentCard } from "../user-profile";
 
-export default async function StaffProfile () {
+type Props = {
+  profile: Profile
+}
+
+export default async function StaffProfile ({ profile }: Props) {
 
   const testData = {
     name: 'mark johnson',
@@ -12,7 +17,7 @@ export default async function StaffProfile () {
   return (
     <div className="h-[77dvh] overflow-y-scroll scrollbar-none grid grid-cols-1 md:grid-cols-2 py-6 divide-y-2 divide-disabled gap-6 ">
       <div className="md:row-span-2 h-full">
-        <ProfileHeader />
+        <ProfileHeader profile={profile} />
       </div>
       <SegmentCard title="Contact Information">
         <ListItem 
