@@ -15,13 +15,12 @@ export default async function DashboardLayout ({ children }: Props) {
         redirect('/login')
     }
 
-    const isAdmin = (user.user_metadata.role === 'admin')
     const role = user.user_metadata.role.toUpperCase()
 
     return (
         <ToastProvider >
             <div className=" text-main relative flex flex-col flex-1 overflow-hidden ">
-                {!isAdmin && <Navbar role={role} />}
+                <Navbar role={role} />
                 <div className=" flex  flex-1 overflow-x-hidden scrollbar-none pb-20 " >
                     {children}
                 </div>

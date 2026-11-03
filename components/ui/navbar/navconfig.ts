@@ -9,6 +9,11 @@ export type Role = 'SUPERADMIN' | 'ADMIN' | 'STAFF' | 'USER'
 
 export const navByRole: Record<Role | string, NavItem[]> = {
   ADMIN: [
+    {
+      label: 'Perfil',
+      icon: 'profile',
+      href: 'profile'
+    }
   ],
   STAFF: [
     { 
@@ -54,6 +59,11 @@ export const navByRole: Record<Role | string, NavItem[]> = {
         icon: 'booking',
         href: `/booking` 
       },
+      {
+        label: 'Perfil',
+        icon: 'profile',
+        href: 'profile'
+      }
   ],
   SUPERADMIN: [
     { 
