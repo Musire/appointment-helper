@@ -31,6 +31,11 @@ export const navByRole: Record<Role | string, NavItem[]> = {
       icon: 'store',
       href: `/stores` 
     },
+    {
+      label: 'Perfil',
+      icon: 'profile',
+      href: 'profile'
+    }
   ],
   USER: [
       { 

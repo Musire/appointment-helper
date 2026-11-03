@@ -1,0 +1,47 @@
+import { Body } from "@/components/ui";
+import { Profile } from "@/domains/profile/profile.types";
+import { ListItem, ProfileHeader, SegmentCard } from "@/domains/profile/user-profile";
+
+type Props = {
+  profile: Profile
+}
+
+export default async function StaffProfile ({ profile }: Props) {
+
+  const testData = {
+    name: 'mark johnson',
+    job: 'expert barber',
+    bio: "Over 10 years of experience in classic cuts, fades, and beard grooming. Passionate about creationg the perfect look for every client."
+  }
+
+  return (
+    <section 
+        className="
+            flex-1 p-6 grid grid-cols-1 md:grid-cols-2
+            overflow-y-scroll scrollbar-none  divide-disabled gap-6 ">
+      <div className="md:row-span-2 h-full">
+        <ProfileHeader profile={profile} />
+      </div>
+      <SegmentCard title="Contact Information">
+        <ListItem 
+          icon="mail"
+          label="Email"
+          value="neoteric.languageservices@gmail.com"
+        />
+        <ListItem 
+          icon="phone"
+          label="Phone"
+          value="+52 (614) 123 4567"
+        />
+        <ListItem 
+          icon="instagram"
+          label="Instagram"
+          value="@markthebarber"
+        />
+      </SegmentCard>
+      <SegmentCard title="Biography" >
+        <Body>{testData.bio}</Body>
+      </SegmentCard>
+    </section>
+  );
+}
