@@ -3,7 +3,6 @@ import { TimeBlockCard } from "@/features/hour-selection/components";
 import { DEFAULT_BLOCK } from "@/features/hour-selection/components/BusinessHoursForm";
 import { Plus } from "lucide-react";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { Button } from "../../buttons";
 
 export function BusinessHoursFields() {
   const { control } = useFormContext<{ blocks: TimeBlock[] }>();
@@ -19,15 +18,7 @@ export function BusinessHoursFields() {
 
   return (
     <>
-      <Button
-        type="button"
-        onClick={addBlock}
-        className="centered size-10"
-      >
-        <Plus />
-      </Button>
-
-      <div className="stacked space-y-2 pr-4 overflow-y-auto scrollbar-adjust">
+      <div className="stacked w-full space-y-2 overflow-y-auto scrollbar-adjust">
         {fields.map((block, index) => (
           <TimeBlockCard
             key={block.id}
@@ -36,6 +27,14 @@ export function BusinessHoursFields() {
           />
         ))}
       </div>
+      <button
+        type="button"
+        onClick={addBlock}
+        className="centered w-full border-border border space-x-2 normal-space rounded-md cursor-pointer hover:bg-surface-1"
+      >
+        <Plus />
+        <span className="">Agregar otro bloque</span>
+      </button>
     </>
   );
 }

@@ -19,6 +19,7 @@ export const timeBlockSchema = z.object({
 });
 
 export const saveBusinessHoursSchema = z.object({
+  storeId: z.uuid().min(1, 'store id missing'),
   blocks: z.array(timeBlockSchema)
 })
 

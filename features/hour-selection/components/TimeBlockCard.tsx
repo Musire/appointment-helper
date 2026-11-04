@@ -1,4 +1,3 @@
-
 'use client';
 
 import type { FieldError } from 'react-hook-form';
@@ -39,7 +38,8 @@ export default function TimeBlockCard({
   ) as Record<string, FieldError | undefined> | undefined;
 
   return (
-    <div className="relative flex flex-col space-y-4 bg-darkest border-adjust p-6">
+    <div className="relative w-full flex flex-col space-y-4 bg-surface-1 border-adjust p-6">
+
       {/* Start and end times */}
       <div className="flex space-x-6">
         {(['start', 'end'] as const).map((field, fieldIndex) => (
@@ -84,7 +84,7 @@ export default function TimeBlockCard({
         ))}
       </div>
 
-      {/* Days of the week */}
+      {/* Days of the week - Selectable chips */}
       <Controller
         name={`blocks.${index}.days`}
         control={control}
@@ -92,14 +92,25 @@ export default function TimeBlockCard({
           const selectedDays = (field.value ?? []) as Day[];
 
           return (
-            <div className="flex flex-wrap gap-x-4 gap-y-2">
+            <div className="flex flex-wrap gap-2">
               {DAYS.map((day) => {
                 const checked = selectedDays.includes(day.value);
 
                 return (
                   <label
                     key={day.value}
-                    className="mr-1 flex cursor-pointer items-center space-x-1"
+                    className={`
+                      flex h-9 min-w-10 w-1/8 items-center justify-center
+                      rounded-md border px-3
+                      cursor-pointer select-none
+                      text-sm font-medium
+                      transition-colors duration-150
+                      ${
+                        checked
+                          ? 'border-whitesmoke/70 bg-whitesmoke/20 text-main'
+                          : 'border-whitesmoke/15 bg-transparent text-whitesmoke/40 hover:border-whitesmoke/40 hover:text-whitesmoke/80'
+                      }
+                    `}
                   >
                     <input
                       type="checkbox"
@@ -113,18 +124,10 @@ export default function TimeBlockCard({
                             : [...selectedDays, day.value],
                         );
                       }}
-                      className="peer size-3.5 cursor-pointer appearance-none border-2 border-whitesmoke/20 bg-black checked:bg-whitesmoke/87"
+                      className="sr-only"
                     />
 
-                    <span
-                      className={`capitalize ${
-                        checked
-                          ? 'text-whitesmoke/87'
-                          : 'text-whitesmoke/30'
-                      }`}
-                    >
-                      {day.label}
-                    </span>
+                    {day.label}
                   </label>
                 );
               })}
@@ -160,7 +163,16 @@ export default function TimeBlockCard({
         type="button"
         onClick={onDelete}
         aria-label="Delete time block"
-        className="absolute right-2 top-2 size-6 rounded-full border-2 border-whitesmoke/37 text-xs hover:cursor-pointer hover:border-error-dark hover:text-error-dark"
+        className="
+          absolute right-2 top-2
+          size-8 rounded-full
+          border-2 border-whitesmoke/37
+          text-xs
+          hover:cursor-pointer
+          hover:border-error-dark
+          hover:text-error-dark
+          transition-colors  hover:bg-error/20 
+        "
       >
         X
       </button>

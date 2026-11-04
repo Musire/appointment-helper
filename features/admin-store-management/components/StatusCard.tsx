@@ -1,6 +1,6 @@
 import { Body } from '@/components/ui';
 import { cn } from '@/lib/utils';
-import { ChevronRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
 type StatusCardProps = {
@@ -10,21 +10,40 @@ type StatusCardProps = {
   value: number;
 };
 
-export default function StatusCard({ 
-    className, 
-    label, 
-    href,
-    value
+export default function StatusCard({
+  className,
+  label,
+  href,
+  value,
 }: StatusCardProps) {
   return (
-    <li className={cn('status-card-base', className)}>
-        <Link href={href} className="centered-col bg-surface-1 normal-space h-28 w-32 p-4 relative group opacity-80 hover:opacity-90 border border-border/50 rounded-md">
-            <Body className="text-3xl justify-self-center self-center text-main">
-                {value}
-            </Body>
-            <Body className="text-else">{label}</Body>
-            <ChevronRight className="absolute right-2 top-1/2 -translate-y-1/2 group-hover:opacity-100 opacity-0 snappy " />
-        </Link>
+    <li className={cn('min-w-0 flex-1', className)}>
+      <Link
+        href={href}
+        className={cn(
+          'group relative flex h-full w-full min-w-0 flex-col',
+          'gap-1 rounded-lg  bg-surface-1 p-3 sm:p-4',
+          'transition-colors duration-200',
+          'hover:bg-surface-2 hover:border-border-strong',
+          'active:scale-[0.98] active:bg-surface-2',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
+        )}
+      >
+        <Body className="text-2xl font-semibold tabular-nums text-main sm:text-3xl">
+          {value}
+        </Body>
+
+        <div className="flex min-w-0 items-center justify-between gap-1">
+          <Body className="min-w-0 truncate text-xs text-else sm:text-sm">
+            {label}
+          </Body>
+
+          <ArrowUpRight
+            aria-hidden="true"
+            className="size-4 shrink-0 text-else transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          />
+        </div>
+      </Link>
     </li>
   );
 }

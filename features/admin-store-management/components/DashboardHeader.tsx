@@ -1,7 +1,6 @@
 import { BodySm, H3 } from "@/components/ui";
 import { StoreStatus } from "@/generated/prisma";
-import { CircleCheck, Pencil, Store } from "lucide-react";
-import Link from "next/link";
+import { CircleCheck, Store } from "lucide-react";
 
 interface StoreInfoType {
     setupIssues: string[];
@@ -31,10 +30,7 @@ export default async function DashboardHeader ({ StoreInfo, storeId } : Props) {
                     <H3 className="text-xl capitalize" >{StoreInfo.name}</H3>
                     <BodySm className="text-else col-start-2">{StoreInfo.address}</BodySm>
                 </span>
-                <Link href={`/stores/${storeId}/edit`} className="rounded-md border-border border centered normal-space hover:bg-surface-2 active:bg-surface-1 ml-auto">
-                    <Pencil size={20} strokeWidth={1} />
-                </Link>
-                <div className="">
+                <div className="ml-auto">
                     <div className={`rounded-full flex items-center space-x-2  normal-space ${colorIndicator}`}>
                         <CircleCheck className="size-5" />
                         <span className=" capitalize text-sm">{StoreInfo.status}</span>
