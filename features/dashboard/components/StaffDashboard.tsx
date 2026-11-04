@@ -4,6 +4,7 @@ import { AppointmentCard } from "@/domains/appointments/components/dashboard";
 import { QrButton } from "@/features/qr-code/components";
 import { StatCard } from "@/features/staff-dashboard-stats/components";
 import Link from "next/link";
+import AccountStatus from "./AccountStatus";
 
 export default async function StaffDashboard () {
   
@@ -12,7 +13,14 @@ export default async function StaffDashboard () {
 
   return (
     <div className=" relative stacked p-6 flex-1 overflow-hidden">
-      <div className="self-end w-32 normal-space h-8 rounded-full bg-surface-1 centered">active</div>
+      <AccountStatus
+        active={false}
+        requirements={[
+          { label: "Complete profile", completed: true },
+          { label: "Upload documents", completed: false },
+          { label: "Store approval", completed: false },
+        ]}
+      />
       <ul className="grid grid-cols-3 h-32 shrink-0 gap-x-4 w-full">
         <StatCard variant='pendiente' value={pending} />
         <StatCard variant='checkin' value={checkedIn} />
