@@ -13,14 +13,17 @@ export default async function StaffDashboard () {
 
   return (
     <div className=" relative stacked p-6 flex-1 overflow-hidden">
-      <AccountStatus
-        active={false}
-        requirements={[
-          { label: "Complete profile", completed: true },
-          { label: "Upload documents", completed: false },
-          { label: "Store approval", completed: false },
-        ]}
-      />
+      <div className="spaced">
+        <QrButton />
+        <AccountStatus
+          active={false}
+          requirements={[
+            { label: "Complete profile", completed: true },
+            { label: "Upload documents", completed: false },
+            { label: "Store approval", completed: false },
+          ]}
+        />
+      </div>
       <ul className="grid grid-cols-3 h-32 shrink-0 gap-x-4 w-full">
         <StatCard variant='pendiente' value={pending} />
         <StatCard variant='checkin' value={checkedIn} />
@@ -29,7 +32,7 @@ export default async function StaffDashboard () {
       <div className="flex-col flex space-y-2 flex-1 overflow-y-hidden p-4">
         <span className="spaced">
           <BodySm className="text-base font-medium">Horario de Hoy</BodySm>
-          <Link href="pool" className="hover:text-main text-sm cursor-pointer text-main/80">Ver Todas</Link>
+          <Link href="/pool" className="hover:text-main text-sm cursor-pointer text-main/80">Ver Todas</Link>
         </span>
         <ul className="flex flex-col flex-1 overflow-y-auto pr-4 scrollbar-adjust">
           {filtered.map(a => {
@@ -40,7 +43,6 @@ export default async function StaffDashboard () {
           )}
         </ul>
       </div>
-      <QrButton />
     </div>
   );
 }

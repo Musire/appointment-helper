@@ -29,7 +29,7 @@ export default function AccountStatus({
 
   if (active) {
     return (
-      <div className="self-end w-32 h-8 centered rounded-full bg-success/20 text-success text-sm font-medium">
+      <div className=" w-32 h-8 centered rounded-full bg-success/20 text-success text-sm font-medium">
         Active
       </div>
     );
@@ -41,15 +41,18 @@ export default function AccountStatus({
         <button
           type="button"
           onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
-          className="group self-end flex h-8 w-32 items-center justify-center  gap-2 rounded-full border border-warning/30 bg-warning/10 text-sm font-medium text-alternate border-alternate bg-alternate/10 transition hover:bg-warning/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warning"
+          onMouseLeave={(e) => {
+            e.currentTarget.blur();
+            setOpen(false);
+          }}
+          className="group cursor-pointer  flex h-8 w-32 items-center justify-center  gap-2 rounded-full border border-warning/30 bg-warning/10 text-sm font-medium text-alternate border-alternate bg-alternate/10 transition hover:bg-warning/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warning"
         >
           Inactive
           <AlertCircle size={14} />
         </button>
       </PopoverTrigger>
-
       <PopoverContent
+        onCloseAutoFocus={(e) => e.preventDefault()}
         align="end"
         side="bottom"
         sideOffset={8}

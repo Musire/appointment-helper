@@ -12,7 +12,7 @@ export const navByRole: Record<Role | string, NavItem[]> = {
     {
       label: 'Perfil',
       icon: 'profile',
-      href: 'profile'
+      href: '/profile'
     }
   ],
   STAFF: [
@@ -39,7 +39,7 @@ export const navByRole: Record<Role | string, NavItem[]> = {
     {
       label: 'Perfil',
       icon: 'profile',
-      href: 'profile'
+      href: '/profile'
     }
   ],
   USER: [
@@ -62,7 +62,7 @@ export const navByRole: Record<Role | string, NavItem[]> = {
       {
         label: 'Perfil',
         icon: 'profile',
-        href: 'profile'
+        href: '/profile'
       }
   ],
   SUPERADMIN: [

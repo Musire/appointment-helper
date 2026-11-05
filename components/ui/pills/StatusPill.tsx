@@ -9,27 +9,27 @@ type VariantObject = {
 const StatusConfig:Record<AppointmentStatus, VariantObject> = {
     pending: {
         label: 'Pending',
-        style: 'bg-surface-1 text-else'
+        style: 'bg-surface-1/50 text-else'
     },
     checkedin: {
         label: 'Checked-In',
-        style: 'bg-blue-950 text-blue-300'
+        style: 'bg-blue-950/50 text-blue-300/75'
     },
     inprogress: {
         label: 'In Progress',
-        style: 'bg-blue-950 text-blue-300'
+        style: 'bg-blue-950/50 text-blue-300/75'
     },
     completed: {
         label: 'Completed',
-        style: 'bg-green-950 text-success'
+        style: 'bg-green-950/50 text-success/75'
     },
     cancelled: {
         label: 'Cancelled',
-        style: 'bg-red-950 text-error'
+        style: 'bg-red-950/50 text-error/75'
     },
     noshow: {
         label: 'No Show',
-        style: 'bg-red-950 text-error'
+        style: 'bg-red-950/50 text-error/75'
     }
 }
 

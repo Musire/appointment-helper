@@ -6,12 +6,12 @@ export default function QrButton () {
     return (
     <Link 
         href="qr" 
-        className="grid place-items-center grid-rows-2 p-4 gap-x-4 grid-cols-[40_1fr_20] surface-1 hover:cursor-pointer hover:bg-surface-2 active:bg-surface-4"
+        className="grid place-items-center grid-rows-2 p-4 gap-x-4 grid-cols-[40_1fr_20]  hover:cursor-pointer hover:bg-surface-2 active:bg-surface-4"
     >
         <ScanQrCode strokeWidth={1} className="row-span-2" size={40} />
         <Body className="place-self-start text-sm font-medium text-main ">Escanee el código QR</Body>
         <BodySm className="place-self-start text-else text-xs col-start-2">
-          Escanee el código QR del cliente para registrarlo
+          Registre a su cliente
         </BodySm>
         <ChevronRight className="row-span-full col-start-3  w-full h-full" />
     </Link>
