@@ -1,4 +1,3 @@
-import { SlidingContainers } from "@/features/staff-dashboard-sliders/components";
 
 export type MockAppointmentCard = {
     id: string;
@@ -6,34 +5,24 @@ export type MockAppointmentCard = {
     value: string;
 }
 
-const cards = [
-    {
-        id: 'appt-001',
-        href: '/appointment',
-        value: ''
-    }
-]
 
-/* we need to mock the barbers, and the stores - then create two routes discovory/barbers discovery/stores */
 
 export default function EnduserDashboard () {
     return (
-        <main className="py-6 stacked flex-1 overflow-x-hidden overflow-y-auto scrollbar-none ">
-            <SlidingContainers 
-                title="Appointments"
-                cards={cards}
-                
-            />
-            <SlidingContainers 
-                title="Barberos" 
-                cards={cards} 
-                seeMoreHref="/discover/barbers"    
-            />
-            <SlidingContainers 
-                title="Tiendas" 
-                cards={cards} 
-                seeMoreHref="/discover/stores"    
-            />
+        <main className="p-6 stacked flex-1 min-h-0 overflow-hidden ">
+            <div className="flex-1 min-h-0 flex flex-col space-y-4 overflow-y-hidden">
+                <h3 className="shrink-0">Upcoming appointments</h3>
+                <div className="  min-h-0 flex flex-col flex-1 gap-y-4 overflow-y-scroll scrollbar-adjust">
+                    <div className="bg-surface-1 w-full h-20 shrink-0"></div>
+                    <div className="bg-surface-1 w-full h-20 shrink-0"></div>
+                    <div className="bg-surface-1 w-full h-20 shrink-0"></div>
+                    <div className="bg-surface-1 w-full h-20 shrink-0"></div>
+                    <div className="bg-surface-1 w-full h-20 shrink-0"></div>
+                    <div className="bg-surface-1 w-full h-20 shrink-0"></div>
+                    <div className="bg-surface-1 w-full h-20 shrink-0"></div>
+                    <div className="bg-surface-1 w-full h-20 shrink-0"></div>
+                </div>
+            </div>
         </main>
     );
 }
