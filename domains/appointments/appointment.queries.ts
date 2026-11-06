@@ -1,8 +1,13 @@
 import { AppointmentStatus } from "@/generated/prisma";
+
 import { AppointmentDetails, AppointmentHistoryItem, AppointmentMetrics, AppointmentWithRelations } from "./appointment.types";
+
 import dayjs, { toAppTime } from "./utils/dayjs";
 
 const weekStart = dayjs().startOf('week').add(1, 'day');
+
+const weekDateOnly = (day: number) =>
+  new Date(`${weekStart.add(day, 'day').format('YYYY-MM-DD')}T00:00:00.000Z`);
 
 const weekDate = (day: number, hour: number, minute = 0) =>
   weekStart.add(day, 'day').hour(hour).minute(minute).second(0).millisecond(0).toDate();
@@ -12,12 +17,13 @@ const statuses: AppointmentStatus[] = ["PENDING", "PENDING", "CANCELLED", "COMPL
 export const AppointmentHistory = {
   "2024-11-15": [
     {
+      date: new Date("2024-11-15T00:00:00.000Z"),
       id: "apt-101",
       storeId: "store-001",
       staffId: "staff-001",
       userId: "user-999",
-      startTime: new Date("2024-11-15T09:00:00Z"),
-      endTime: new Date("2024-11-15T10:00:00Z"),
+      startTime: 540,
+      endTime: 600,
       status: "COMPLETED" as AppointmentStatus,
       createdAt: new Date("2024-11-10T12:00:00Z"),
       client: { id: "user-999", name: "John Doe" },
@@ -36,12 +42,13 @@ export const AppointmentHistory = {
       ],
     },
     ...Array.from({ length: 4 }, (_, i) => ({
+      date: new Date("2024-11-15T00:00:00.000Z"),
       id: `apt-102-${i}`,
       storeId: "store-001",
       staffId: "staff-001",
       userId: `user-${i}`,
-      startTime: new Date(`2024-11-15T${11 + i}:00:00Z`),
-      endTime: new Date(`2024-11-15T${12 + i}:00:00Z`),
+      startTime: (11 + i) * 60,
+      endTime: (12 + i) * 60,
       // Cycles through remaining statuses
       status: statuses[i % statuses.length],
       createdAt: new Date(),
@@ -56,12 +63,13 @@ export const AppointmentHistory = {
     })),
   ],
   "2024-11-14": Array.from({ length: 10 }, (_, i) => ({
+    date: new Date("2024-11-14T00:00:00.000Z"),
     id: `apt-200-${i}`,
     storeId: "store-001",
     staffId: "staff-002",
     userId: `user-b-${i}`,
-    startTime: new Date(`2024-11-14T${9 + i}:00:00Z`),
-    endTime: new Date(`2024-11-14T${10 + i}:00:00Z`),
+    startTime: (9 + i) * 60,
+    endTime: (10 + i) * 60,
     status: statuses[i % statuses.length],
     createdAt: new Date(),
     client: { id: `user-b-${i}`, name: `Customer ${i}` },
@@ -75,12 +83,13 @@ export const AppointmentHistory = {
     ],
   })),
   "2024-11-10": Array.from({ length: 15 }, (_, i) => ({
+    date: new Date("2024-11-10T00:00:00.000Z"),
     id: `apt-300-${i}`,
     storeId: "store-001",
     staffId: "staff-001",
     userId: `user-c-${i}`,
-    startTime: new Date(`2024-11-10T${8 + i}:00:00Z`),
-    endTime: new Date(`2024-11-10T${9 + i}:00:00Z`),
+    startTime: (8 + i) * 60,
+    endTime: (9 + i) * 60,
     status: statuses[i % statuses.length],
     createdAt: new Date(),
     client: { id: `user-c-${i}`, name: `Old Client ${i}` },
@@ -94,12 +103,13 @@ export const AppointmentHistory = {
     ],
   })),
   "2024-10-28": Array.from({ length: 10 }, (_, i) => ({
+    date: new Date("2024-10-28T00:00:00.000Z"),
     id: `apt-400-${i}`,
     storeId: "store-001",
     staffId: "staff-003",
     userId: `user-d-${i}`,
-    startTime: new Date(`2024-10-28T${10 + i}:00:00Z`),
-    endTime: new Date(`2024-10-28T${11 + i}:00:00Z`),
+    startTime: (10 + i) * 60,
+    endTime: (11 + i) * 60,
     status: statuses[i % statuses.length],
     createdAt: new Date(),
     client: { id: `user-d-${i}`, name: `Archive Client ${i}` },
@@ -615,7 +625,6 @@ export function getAppointmentDetails(
 export function filterAppointmentToday(mockData: AppointmentDetails[]) {
   // 1. Convert your "right now" UTC anchor into your app's local timezone
   const todayAnchor = toAppTime(new Date());
-
   // 2. Filter using dayjs.isSame() comparing by 'day'
   return mockData.filter(item => 
     item.scheduledAt && toAppTime(item.scheduledAt).isSame(todayAnchor, "day")
@@ -626,14 +635,11 @@ export function getAppointmentMetrics(appointments: AppointmentDetails[]): Appoi
   return appointments.reduce<AppointmentMetrics>(
     (acc, current) => {
       if (current.status === "pending") acc.pending++;
-      
       // ✨ Combines checkedin + inprogress states into the single checkedIn metric
       if (current.status === "checkedin" || current.status === "inprogress") {
         acc.checkedIn++;
       }
-      
       if (current.status === "completed") acc.completed++;
-      
       return acc;
     },
     { pending: 0, checkedIn: 0, completed: 0 }
@@ -741,18 +747,16 @@ const createdDate = () => dayjs().toDate();
 
 export const mockUpcomingAppointments: AppointmentWithRelations[] = [
   {
+    date: weekDateOnly(0),
     id: 'apt-1',
     storeId: 'store-1',
     staffId: 'staff-1',
     userId: 'user-1',
-
-    startTime: weekDate(0, 9),
-    endTime: weekDate(0, 10),
-
+    startTime: 540,
+    endTime: 600,
     status: AppointmentStatus.PENDING,
     createdAt: createdDate(),
     checkedInAt: null,
-
     client: {
       id: 'user-1',
       authId: 'user-auth-1',
@@ -762,7 +766,6 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       avatarUrl: null,
       createdAt: createdDate(),
     },
-
     items: [
       {
         id: 'item-1',
@@ -790,20 +793,17 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       },
     ],
   },
-
   {
+    date: weekDateOnly(0),
     id: 'apt-2',
     storeId: 'store-1',
     staffId: 'staff-1',
     userId: 'user-2',
-
-    startTime: weekDate(0, 10),
-    endTime: weekDate(0, 11),
-
+    startTime: 600,
+    endTime: 660,
     status: AppointmentStatus.PENDING,
     createdAt: createdDate(),
     checkedInAt: null,
-
     client: {
       id: 'user-2',
       authId: 'user-auth-2',
@@ -813,7 +813,6 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       avatarUrl: null,
       createdAt: createdDate(),
     },
-
     items: [
       {
         id: 'item-3',
@@ -853,20 +852,17 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       },
     ],
   },
-
   {
+    date: weekDateOnly(0),
     id: 'apt-3',
     storeId: 'store-1',
     staffId: 'staff-1',
     userId: 'user-3',
-
-    startTime: weekDate(0, 11),
-    endTime: weekDate(0, 12),
-
+    startTime: 660,
+    endTime: 720,
     status: AppointmentStatus.PENDING,
     createdAt: createdDate(),
     checkedInAt: null,
-
     client: {
       id: 'user-3',
       authId: 'user-auth-3',
@@ -876,7 +872,6 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       avatarUrl: null,
       createdAt: createdDate(),
     },
-
     items: [
       {
         id: 'item-6',
@@ -892,20 +887,17 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       },
     ],
   },
-
   {
+    date: weekDateOnly(0),
     id: 'apt-4',
     storeId: 'store-1',
     staffId: 'staff-1',
     userId: 'user-4',
-
-    startTime: weekDate(0, 12),
-    endTime: weekDate(0, 13),
-
+    startTime: 720,
+    endTime: 780,
     status: AppointmentStatus.PENDING,
     createdAt: createdDate(),
     checkedInAt: null,
-
     client: {
       id: 'user-4',
       authId: 'user-auth-4',
@@ -915,7 +907,6 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       avatarUrl: null,
       createdAt: createdDate(),
     },
-
     items: [
       {
         id: 'item-7',
@@ -931,20 +922,17 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       },
     ],
   },
-
   {
+    date: weekDateOnly(0),
     id: 'apt-5',
     storeId: 'store-1',
     staffId: 'staff-1',
     userId: 'user-5',
-
-    startTime: weekDate(0, 13),
-    endTime: weekDate(0, 14),
-
+    startTime: 780,
+    endTime: 840,
     status: AppointmentStatus.CANCELLED,
     createdAt: createdDate(),
     checkedInAt: null,
-
     client: {
       id: 'user-5',
       authId: 'user-auth-5',
@@ -954,7 +942,6 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       avatarUrl: null,
       createdAt: createdDate(),
     },
-
     items: [
       {
         id: 'item-8',
@@ -970,20 +957,17 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       },
     ],
   },
-
   {
+    date: weekDateOnly(0),
     id: 'apt-6',
     storeId: 'store-1',
     staffId: 'staff-1',
     userId: 'user-6',
-
-    startTime: weekDate(0, 14),
-    endTime: weekDate(0, 15),
-
+    startTime: 840,
+    endTime: 900,
     status: AppointmentStatus.PENDING,
     createdAt: createdDate(),
     checkedInAt: null,
-
     client: {
       id: 'user-6',
       authId: 'user-auth-6',
@@ -993,7 +977,6 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       avatarUrl: null,
       createdAt: createdDate(),
     },
-
     items: [
       {
         id: 'item-9',
@@ -1009,20 +992,17 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       },
     ],
   },
-
   {
+    date: weekDateOnly(0),
     id: 'apt-7',
     storeId: 'store-1',
     staffId: 'staff-1',
     userId: 'user-7',
-
-    startTime: weekDate(0, 15),
-    endTime: weekDate(0, 16),
-
+    startTime: 900,
+    endTime: 960,
     status: AppointmentStatus.PENDING,
     createdAt: createdDate(),
     checkedInAt: null,
-
     client: {
       id: 'user-7',
       authId: 'user-auth-7',
@@ -1032,7 +1012,6 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       avatarUrl: null,
       createdAt: createdDate(),
     },
-
     items: [
       {
         id: 'item-10',
@@ -1048,20 +1027,17 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       },
     ],
   },
-
   {
+    date: weekDateOnly(0),
     id: 'apt-8',
     storeId: 'store-1',
     staffId: 'staff-1',
     userId: 'user-8',
-
-    startTime: weekDate(0, 16),
-    endTime: weekDate(0, 17),
-
+    startTime: 960,
+    endTime: 1020,
     status: AppointmentStatus.PENDING,
     createdAt: createdDate(),
     checkedInAt: null,
-
     client: {
       id: 'user-8',
       authId: 'user-auth-8',
@@ -1071,7 +1047,6 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       avatarUrl: null,
       createdAt: createdDate(),
     },
-
     items: [
       {
         id: 'item-11',
@@ -1087,20 +1062,17 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       },
     ],
   },
-
   {
+    date: weekDateOnly(0),
     id: 'apt-9',
     storeId: 'store-1',
     staffId: 'staff-1',
     userId: 'user-9',
-
-    startTime: weekDate(0, 17),
-    endTime: weekDate(0, 18),
-
+    startTime: 1020,
+    endTime: 1080,
     status: AppointmentStatus.PENDING,
     createdAt: createdDate(),
     checkedInAt: null,
-
     client: {
       id: 'user-9',
       authId: 'user-auth-9',
@@ -1110,7 +1082,6 @@ export const mockUpcomingAppointments: AppointmentWithRelations[] = [
       avatarUrl: null,
       createdAt: createdDate(),
     },
-
     items: [
       {
         id: 'item-12',
