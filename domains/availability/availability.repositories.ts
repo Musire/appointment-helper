@@ -1,4 +1,4 @@
-import { Prisma } from "@/generated/prisma";
+import { DayOfWeek, Prisma } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { StoreStaffType } from "./availability.validations";
 
@@ -8,6 +8,16 @@ export const AvailabilityRepository = {
         const availability = await prisma.staffAvailability.findMany({
             where: { storeStaffId }
         })
+        return availability
+    },
+    async getStaffAvailability (data: {storeStaffId: string, dayOfWeek: DayOfWeek}) {
+        const availability = await prisma.staffAvailability.findFirst({
+            where: { 
+                storeStaffId: data.storeStaffId,
+                dayOfWeek: data.dayOfWeek
+            }
+        })
+
         return availability
     }
 }

@@ -1,101 +1,55 @@
-'use client'
+import { ActionResponse } from "@/domains/auth/auth.types";
+import { useCallback, useRef, useState, useTransition } from "react";
 
-import { useEffect, useState } from 'react';
+export default function useFetch<T, A extends any[] = []>(
+  action: (...args: A) => Promise<ActionResponse<T>>
+) {
+  const [data, setData] = useState<T | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
-export type FetchState<T> =
-  | { status: 'idle'; data: null; error: null }
-  | { status: 'loading'; data: null; error: null }
-  | { status: 'success'; data: T; error: null }
-  | { status: 'error'; data: null; error: string }
+  const requestIdRef = useRef(0);
 
-type FetchOptions = {
-  method?: RequestInit['method']
-  headers?: HeadersInit
-  body?: unknown
-  credentials?: RequestInit['credentials']
-  cache?: RequestInit['cache']
-  mode?: RequestInit['mode']
-}
+  const execute = useCallback(
+    (...args: A) => {
+      const currentRequestId = ++requestIdRef.current;
 
-export default function useFetch<T>(
-  url: string | null,
-  options?: FetchOptions
-): FetchState<T> {
-  const [state, setState] = useState<FetchState<T>>({
-    status: 'idle',
-    data: null,
-    error: null,
-  })
+      startTransition(async () => {
+        try {
+          const res = await action(...args);
 
-  // Extract stable primitive values and stringified keys to prevent infinite loops
-  const method = options?.method
-  const credentials = options?.credentials
-  const cache = options?.cache
-  const mode = options?.mode
-  const headersKey = JSON.stringify(options?.headers ?? null)
-  const bodyKey = JSON.stringify(options?.body ?? null)
+          // Guard against out-of-order race conditions
+          if (currentRequestId !== requestIdRef.current) return;
 
-  // Store options in stable references or variables inside effect
-  const bodyValue = options?.body
-  const headersValue = options?.headers
+          if (res.success) {
+            setData(res.data);
+            setError(null);
+          } else {
+            setData(null);
+            setError(res.error ?? "An unexpected error occurred.");
+          }
+        } catch (err) {
+          if (currentRequestId !== requestIdRef.current) return;
 
-  useEffect(() => {
-    if (!url) return
-
-    const controller = new AbortController()
-    let isMounted = true
-
-    // 🔑 Defer the loading update to prevent synchronous cascading renders during effect execution
-    queueMicrotask(() => {
-      if (isMounted) {
-        setState({ status: 'loading', data: null, error: null })
-      }
-    })
-
-    const isJsonBody =
-      bodyValue !== undefined &&
-      typeof bodyValue === 'object' &&
-      !(bodyValue instanceof FormData)
-
-    fetch(url, {
-      method: method ?? (bodyValue ? 'POST' : 'GET'),
-      body: isJsonBody ? JSON.stringify(bodyValue) : (bodyValue as BodyInit | undefined),
-      headers: {
-        ...(isJsonBody ? { 'Content-Type': 'application/json' } : {}),
-        ...headersValue,
-      },
-      credentials: credentials,
-      cache: cache,
-      mode: mode,
-      signal: controller.signal,
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          const text = await res.text()
-          throw new Error(text || `Request failed: ${res.status}`)
+          setData(null);
+          setError(err instanceof Error ? err.message : "Request failed.");
         }
-        return res.json()
-      })
-      .then((data: T) => {
-        if (isMounted) {
-          setState({ status: 'success', data, error: null })
-        }
-      })
-      .catch((err) => {
-        if (err.name === 'AbortError' || !isMounted) return
+      });
+    },
+    [action]
+  );
 
-        setState({
-          status: 'error',
-          data: null,
-          error: err instanceof Error ? err.message : 'Unknown error',
-        })
-      })
+  const reset = useCallback(() => {
+    requestIdRef.current++; // Invalidate active requests
+    setData(null);
+    setError(null);
+  }, []);
 
-    return () => {
-      isMounted = false
-      controller.abort()
-    }
-  }, [url, bodyKey, headersKey, method, credentials, cache, mode, bodyValue, headersValue])
-
-  return state
+  return {
+    data,
+    error,
+    isPending,
+    execute,
+    reset,
+  };
 }

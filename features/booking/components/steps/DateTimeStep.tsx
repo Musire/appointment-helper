@@ -8,13 +8,9 @@ import { useState, useTransition } from "react";
 import { getDatetime } from "../../../../domains/booking/booking.actions";
 import { ContinueButton } from "../page";
 
-type timeslot = {
-    id: string;
-    time: string;
-}
 
 type Props = {
-  initialSlots: timeslot[];
+  initialSlots: number[];
   storeId: string;
   barberId: string;
 }
@@ -26,10 +22,10 @@ export default function DateTimeStep ({
 }: Props) {
     const router = useRouter()
 
-    const [timeslots, setTimeslots] = useState<timeslot[]>(initialSlots);
+    const [timeslots, setTimeslots] = useState<number[]>(initialSlots);
   
     const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
-    const [time, setTime] = useState<string>(initialSlots[0]?.time ?? '09:00 AM');
+    const [time, setTime] = useState<number>(initialSlots[0] ?? 0);
    
     const [isPending, startTransition] = useTransition();
 
@@ -37,11 +33,20 @@ export default function DateTimeStep ({
         startTransition(async () => {
             setSelectedDate(newDate);
 
-            const res = await getDatetime(storeId, barberId, newDate.toDate());
+            const res = await getDatetime({
+                storeId, 
+                staffId: barberId, 
+                targetDate: newDate.toDate()});
             
             if (res.success && res.data) {
                 setTimeslots(res.data);
             }
+
+            if (!res.success && res.error === "staff member has not set up availability times") {
+                setTimeslots([])
+            }
+
+            console.log(res)
         });
     }
         
@@ -65,11 +70,8 @@ export default function DateTimeStep ({
                 onBack={() => router.back()} 
                 next="review" 
                 selected={(() => {
-                    const datePart = selectedDate.format("YYYY-MM-DD");
-                    const timePart = parseTo24H(time) ;
-                    const combinedZoneTime = dayjs.tz(`${datePart} ${timePart}`)
-                    
-                    return combinedZoneTime.toISOString();
+                    const datePart = selectedDate.toISOString();
+                    return `${datePart} ${time}`
                 })()}
             />
         </div>

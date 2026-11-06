@@ -11,5 +11,12 @@ export const AppointmentRepository = {
       where: { id },
       data: { status, checkedInAt: new Date() },
     });
-  }
+  },
+  async getStaffAppointmentsByDate(data: {staffId: string, date: Date}) {
+    const appointments = await prisma.appointment.findMany({
+      where: data
+    })
+    return appointments
+}
+  
 }

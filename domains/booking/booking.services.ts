@@ -2,8 +2,12 @@ import { prisma } from "@/lib/prisma";
 import { convertUTC } from "@/lib/utils/time";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { StaffDatetimeRepository, StoreServiceRepository } from "./booking.repositories";
+import { AppointmentRepository } from "../appointments/appointment.repositories";
+import { AvailabilityRepository, StoreStaffRepository } from "../availability/availability.repositories";
+import { filterBookedSlots, generateTimeGrid, getDayOfWeek } from "../availability/availability.utils";
+import { StoreServiceRepository } from "./booking.repositories";
 import { inputType, ReviewInput } from "./booking.types";
+import { DateTimeStepType } from "./booking.validations";
 dayjs.extend(utc)
 
 // BOOKING SERVICE FUNCTIONS
@@ -76,16 +80,31 @@ export async function getStoreOfferings (storeId: string) {
 // DATETIME SERVICE FUNCTIONS
 
 
-export async function getDatetimeService (storeId: string, staffId: string, targetDate: Date): Promise<{ id: string; time: string; }[]> { 
-  const availability = await StaffDatetimeRepository.getAvailability(storeId, staffId, targetDate) ?? []; 
-  const blocked = await StaffDatetimeRepository.getBlocked(staffId, targetDate) ?? [];
-  const booked = await StaffDatetimeRepository.getBooked(staffId, targetDate) ?? [];
-  
-  const unavailable = new Set([...blocked, ...booked]);
-  
-  return availability
-    .filter(slot => !unavailable.has(slot))
-    .map(slot => ({ id: crypto.randomUUID(), time: slot })); 
+export async function getDatetimeService (data: DateTimeStepType) {
+    const { storeId, staffId, targetDate } = data
+
+    const dayOfWeek =  getDayOfWeek(targetDate.toISOString())
+    const storeStaff = await StoreStaffRepository.getStoreStaff({ storeId, userId: staffId })
+
+    if (!storeStaff) throw new Error ('staff member not associated with a store')
+
+    const availability = await AvailabilityRepository.getStaffAvailability({
+        storeStaffId: storeStaff.id,
+        dayOfWeek
+    })
+
+    if (!availability) throw new Error ('staff member has not set up availability times')
+
+
+    const booked = await AppointmentRepository.getStaffAppointmentsByDate({
+        staffId,
+        date: targetDate
+    })
+    
+    const slots = generateTimeGrid(availability.startTime, availability.endTime)
+    const free = filterBookedSlots(slots, booked)
+
+    return free
 }
 
 // REVIEW SERVICE FUNCTIONS

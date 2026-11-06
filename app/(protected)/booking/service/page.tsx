@@ -12,7 +12,7 @@ export default async function BookingService ({ searchParams }: SearchParamsType
     if (!data) return <div className="">some error</div>;
 
     return (
-        <div className="flex w-full h-full py-6">
+        <div className="flex flex-1 p-6">
             <ServicesStep services={data} />   
         </div>
     );

@@ -124,18 +124,19 @@ model Appointment {
   storeId     String
   staffId     String
   userId      String
-  startTime   DateTime
-  endTime     DateTime
+  date        DateTime // New field for the appointment date (stored as UTC)
+  startTime   Int // Changed from DateTime to Int (0 - 1440)
+  endTime     Int // Changed from DateTime to Int (0 - 1440)
   status      AppointmentStatus
-  createdAt   DateTime             @default(now())
+  createdAt   DateTime // @default(now()) removed temporarily if migration is handled manually
   checkedInAt DateTime?
   staff       StoreStaff           @relation("StaffAppointments", fields: [staffId], references: [id])
   store       Store                @relation(fields: [storeId], references: [id])
   client      User                 @relation("UserAppointments", fields: [userId], references: [id])
   items       AppointmentService[]
 
-  @@index([storeId, startTime])
-  @@index([staffId, startTime])
+  @@index([storeId, date, startTime]) // Updated index to include the date field
+  @@index([staffId, date, startTime]) // Updated index to include the date field
 }
 
 model AppointmentService {

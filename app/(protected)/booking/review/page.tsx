@@ -12,7 +12,7 @@ export default async function BookingService ({ searchParams }: SearchParamsType
     console.log('data', data)
 
     return (
-        <div className="flex w-full h-full">
+        <div className="flex flex-1 p-6">
             <ReviewStep {...data}/>   
         </div>
     );

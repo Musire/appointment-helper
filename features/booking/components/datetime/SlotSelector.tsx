@@ -1,12 +1,11 @@
 'use client';
 
-type SlotType = {
-    id: string;
-    time: string;
-}
+import { toMeridiem } from "@/lib/utils/timeConversion";
+
+
 
 type SlotProps = {
-    data: SlotType;
+    data: number;
     selected: boolean;
     onSelect: () => void;
 }
@@ -19,7 +18,7 @@ function Slot ({ data, selected, onSelect }: SlotProps) {
 
     return (
         <li onClick={onSelect} className={`ring-2 centered normal-space hover:cursor-pointer ${isSelected}`}>
-            {data.time}
+            {toMeridiem(data*60)}
         </li>
     );
 }
@@ -27,9 +26,9 @@ function Slot ({ data, selected, onSelect }: SlotProps) {
 
 
 type SlotSelectorProps = {
-    slots: SlotType[];
-    selectedTime: string;
-    onSelect: (s: string) => void;
+    slots: number[];
+    selectedTime: number;
+    onSelect: (s: number) => void;
 }
 
 export default function SlotSelector ({ slots, selectedTime, onSelect }: SlotSelectorProps) {
@@ -39,10 +38,10 @@ export default function SlotSelector ({ slots, selectedTime, onSelect }: SlotSel
             <ul className="grid grid-cols-3 place-content-center gap-6">
                 {slots.map(s => (
                     <Slot 
-                        key={s.time} 
+                        key={s} 
                         data={s}
-                        selected={selectedTime === s.time}
-                        onSelect={() => onSelect(s.time)}
+                        selected={selectedTime === s}
+                        onSelect={() => onSelect(s)}
                     />
                 ))}    
             </ul>

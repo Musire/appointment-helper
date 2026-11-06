@@ -13,7 +13,7 @@ export default async function BookingStaff ({ searchParams }: SearchParamsType) 
     if (!data) return <div className="">no staff</div>;
 
     return (
-        <div className="flex w-full h-full">
+        <div className="flex flex-1 p-6">
             <StaffStep staff={data} />   
         </div>
     );

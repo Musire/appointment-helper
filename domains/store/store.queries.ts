@@ -45,9 +45,11 @@ export const getStoreDetails = createSafeAction(
 
 export const getActiveStores = createSafeAction(
   {
-    allowedRoles: ['ADMIN', 'admin']
+    allowedRoles: ['ADMIN', 'admin', 'user', 'USER']
   }, 
-  getActiveStoresService
+  async () => {
+    return getActiveStoresService()
+  }
 )
 
 export const getStaffStores = createSafeAction(
@@ -146,7 +148,7 @@ export async function getStoreStaff(storeId: string) {
 // MISC - FUNCTIONS 
 export const getStoreServices = createSafeAction(
   {
-    allowedRoles: ['USER']
+    allowedRoles: ['USER', 'user']
   },
   getStoreOfferings
 )

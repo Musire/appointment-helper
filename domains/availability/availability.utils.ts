@@ -1,4 +1,4 @@
-import { DayOfWeek, StaffAvailability } from "@/generated/prisma";
+import { Appointment, DayOfWeek, StaffAvailability } from "@/generated/prisma";
 import { Day } from "../offering/offering.types";
 
 export type StaffAvailabilityWithoutId = Omit<StaffAvailability, 'id'>
@@ -99,4 +99,58 @@ export function convertToAvailability(
       };
     })
   );
+}
+
+export function getDayOfWeek(isoString: string): DayOfWeek {
+  const days: DayOfWeek[] = [
+    "SUNDAY",
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY",
+    "SATURDAY"
+  ];
+  
+  const date = new Date(isoString);
+  
+  if (isNaN(date.getTime())) {
+    throw new Error("Invalid ISO date string provided");
+  }
+  
+  // Use UTC to prevent local timezone shifts from changing the day
+  return days[date.getUTCDay()];
+}
+
+export function generateTimeGrid(
+  startMinutes: number,
+  endMinutes: number,
+  intervalMinutes: number = 60
+): number[] {
+  const slots: number[] = [];
+  let currentSlot = startMinutes;
+
+  while (currentSlot + intervalMinutes <= endMinutes) {
+    slots.push(currentSlot);
+    currentSlot += intervalMinutes;
+  }
+
+  return slots;
+}
+
+export function filterBookedSlots(
+  potentialSlots: number[],
+  bookedAppointments: Appointment[],
+  intervalMinutes: number = 60
+): number[] {
+  return potentialSlots.filter(slotStart => {
+    const slotEnd = slotStart + intervalMinutes;
+
+    // Flip down the slot if any booked appointment overlaps it
+    const isBooked = bookedAppointments.some(appointment => {
+      return slotStart < appointment.endTime && slotEnd > appointment.startTime;
+    });
+
+    return !isBooked;
+  });
 }

@@ -1,8 +1,9 @@
 import { formatAppTimeSplit, toAppTime } from "@/domains/appointments/utils/dayjs";
-import { createSafeAction } from "@/domains/auth/util/safeAction";
+import { createSafeAction, validateSchema } from "@/domains/auth/util/safeAction";
 import { prisma } from "@/lib/prisma";
 import { BookingParams } from "@/lib/utils/navigation";
 import { getDatetimeService, getStoreStaffService } from "./booking.services";
+import { DateTimeStepSchema, DateTimeStepType } from "./booking.validations";
 
 export const getStoreStaff = createSafeAction(
     {
@@ -12,8 +13,15 @@ export const getStoreStaff = createSafeAction(
 )
 
 export const getDatetime = createSafeAction(
-    {},
-    getDatetimeService
+    {
+        allowedRoles: ['USER', 'user']
+    },
+    async (input: DateTimeStepType) => {
+        const validated = validateSchema(DateTimeStepSchema, input)
+        const res = getDatetimeService(validated)
+        return res
+    }
+    
 )
 
 export async function getBookingReviewData(data: BookingParams) {
