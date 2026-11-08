@@ -1,4 +1,3 @@
-import { formatAppTimeSplit, toAppTime } from "@/domains/appointments/utils/dayjs";
 import { createSafeAction, validateSchema } from "@/domains/auth/util/safeAction";
 import { prisma } from "@/lib/prisma";
 import { BookingParams } from "@/lib/utils/navigation";
@@ -44,18 +43,13 @@ export async function getBookingReviewData(data: BookingParams) {
     throw new Error("Invalid booking data");
   }
 
-
-  // 1. Convert the incoming UTC ISO string directly to Chihuahua time
-  const zonedTime = toAppTime(dateTime);
-
-  // 2. Extract the beautifully formatted date and time strings
-  const { dateString, timeString } = formatAppTimeSplit(zonedTime);
+  const [dateString, timeString] = dateTime.split(" ")
 
   return {
     store: storeData,
     staff: staffData,
     services: serviceData,
-    date: dateString, 
-    time: timeString  
+    date: dateString , 
+    time: timeString   
   };
 }

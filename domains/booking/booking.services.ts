@@ -93,7 +93,7 @@ export async function getDatetimeService (data: DateTimeStepType) {
         dayOfWeek
     })
 
-    if (!availability) throw new Error ('staff member has not set up availability times')
+    if (!availability) return []
 
 
     const booked = await AppointmentRepository.getStaffAppointmentsByDate({

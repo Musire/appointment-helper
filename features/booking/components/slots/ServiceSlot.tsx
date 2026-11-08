@@ -7,7 +7,7 @@ type ServiceSlotProps = {
 
 export default function ServiceSlot ({ service }: ServiceSlotProps) {
     return (
-        <li className="flex items-center space-x-6 w-72">
+        <li className="flex items-center space-x-6 w-full pb-4">
             <Icon size={30} strokeWidth={1} />
             <span className="">
                 <p className="capitalize">{service.name}</p>

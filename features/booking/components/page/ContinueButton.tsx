@@ -28,7 +28,7 @@ export default function ContinueButton ({ onBack, next, selected }: ContinueButt
     };
 
     return (
-        <span className="flex items-center gap-x-4 mt-auto">
+        <span className="flex items-center gap-x-4 mt-auto w-full">
             <button
                 type="button"
                 disabled={!selected}

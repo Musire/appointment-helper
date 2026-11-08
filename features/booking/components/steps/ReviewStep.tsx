@@ -53,14 +53,14 @@ export default function ReviewStep ({ store, staff, services, date, time }: Revi
         <div className="w-full flex flex-1  flex-col space-y-6 py-6">
             {!success && (
                 <>
-                    <ul className="stacked space-y-2 ">
+                    <ul className="stacked space-y-2 w-full bg-surface-1 divide-y divide-disabled gap-y-4 p-6 rounded-lg">
                         <StoreSlot store={store} />
                         <StaffSlot staff={staff} />
                         <ServiceSlot service={services} />
                         <DatetimeCard datetime={{ date, time }} />
                     </ul>
-                    <span className="spaced pt-6 border-t-2 mt-auto border-disabled">
-                        <p className="text-2xl">Total</p>
+                    <span className="spaced pt-6 border-t mt-auto border-disabled">
+                        <p className="text-xl font-light">Total</p>
                         <p className="text-2xl font-semibold">{formatCurrency(services.price)}</p>
                     </span>
 
