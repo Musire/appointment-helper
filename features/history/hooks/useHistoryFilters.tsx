@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { ExtendedUserAppointment } from "../components/staff/cards/AppointmentCard";
 
 export type OptionType =
   | "all"
@@ -19,21 +20,8 @@ const options: OptionType[] = [
   "completed",
 ];
 
-export type ItemWithFilters = {
-  status: string;
-  user?: {
-    fullName: string;
-  };
-  [key: string]: any;
-};
-
 type Props = {
-  items: {
-    id: string;
-    scheduledAt: Date;
-    clientName: string;
-    status: string;
-  }[];
+  items: ExtendedUserAppointment[];
 };
 
 export type DateRangeValue = {
@@ -112,7 +100,7 @@ export default function useHistoryFilters({ items }: Props) {
       const matchesStatus =
         selected.includes("all") || selected.includes(itemStatus);
 
-      const fullName = item.clientName || "";
+      const fullName = item.client.name || "";
 
       const matchesSearch = fullName
         .toLowerCase()

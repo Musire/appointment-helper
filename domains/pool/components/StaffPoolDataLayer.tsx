@@ -1,8 +1,9 @@
-import { appointmentMocks } from "@/domains/appointments/appointment.queries";
+import { getAppointmentPool } from "@/domains/appointments/appointment.queries";
 import PoolPage from "./PoolPage";
 
 export default function StaffPoolDataLayer () {
-    const appointments = appointmentMocks
+    const { data: appointments } = getAppointmentPool()
+
     return (
         <div className="flex-1 flex p-6  overflow-y-hidden">
             <PoolPage appointments={appointments} />

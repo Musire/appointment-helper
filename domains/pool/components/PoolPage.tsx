@@ -1,13 +1,9 @@
 'use client';
 
-import { DatePickerButton } from "@/components/ui/date-picker";
-import dayjs from "dayjs";
-import { useMemo, useState } from "react";
-import { AppointmentDetails } from "../../appointments/appointment.types";
-import PoolDisplay from "./PoolDisplay";
-import PoolFilter from "./PoolFilter";
+import { ExtendedUserAppointment } from "@/features/history/components/staff/cards/AppointmentCard";
 import usePoolFilters from "../usePoolFilters";
 import FilterComponent from "./FilterComponent";
+import PoolDisplay from "./PoolDisplay";
 
 export type OptionType = 'all' |
     'checkedin' |
@@ -19,7 +15,7 @@ export type OptionType = 'all' |
 
 
 type Props = {
-    appointments: AppointmentDetails[]
+    appointments: ExtendedUserAppointment[]
 }
 
 export default function PoolPage ({ 

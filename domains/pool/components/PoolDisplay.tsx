@@ -1,8 +1,7 @@
-import { AppointmentDetails } from "../../appointments/appointment.types";
-import PoolCard from "./PoolCard";
+import AppointmentCard, { ExtendedUserAppointment } from "@/features/history/components/staff/cards/AppointmentCard";
 
 type Props = {
-    appointments: AppointmentDetails[]
+    appointments: ExtendedUserAppointment[]
 }
 
 export default function PoolDisplay ({
@@ -12,7 +11,7 @@ export default function PoolDisplay ({
         <ul className=" flex flex-col space-y-2 h-full overflow-y-auto scrollbar-adjust pr-4  ">
             {appointments.map(p => {
                 return (
-                    <PoolCard key={p.id} appointment={p} />
+                    <AppointmentCard key={p.id} appointment={p} />
                 )
             })}
         </ul>

@@ -13,13 +13,12 @@ type Props = {
 export default function AppointmentCard ({
     appointment
 }: Props) {
-    const { timeString } = formatAppTimeSplit(dayjs(appointment.scheduledAt))
     const services = getServices(appointment.services)
 
     return (
         <li className="">
             <Link href={`/appointment/${appointment.id}`} className='flex gap-x-4 items-center p-4 opacity-80 hover:opacity-100 hover:cursor-pointer'>
-                <BodySm className="w-16">{timeString}</BodySm>
+                <BodySm className="w-16">{appointment.startTime}</BodySm>
                 <span className="flex flex-col flex-1 ">
                     <BodySm className="text-main">{appointment.client.name}</BodySm>
                     <BodySm className="text-else">{services}</BodySm>

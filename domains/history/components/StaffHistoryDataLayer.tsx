@@ -2,11 +2,11 @@ import { getAppointmentHistory } from "@/domains/appointments/appointment.querie
 import StaffHistory from "./StaffHistory";
 
 export default function StaffHistoryDataLayer () {
-    const AppointmentHistory = getAppointmentHistory()
+    const { data } = getAppointmentHistory()
 
     return (
         <div className="flex flex-1">
-            <StaffHistory appointments={AppointmentHistory} />
+            <StaffHistory appointments={data} />
         </div>
     );
 }

@@ -41,26 +41,26 @@ export default function PaginationDisplay<T>({
         <div className="flex flex-1 flex-col justify-between overflow-y-hidden">
 
             {/* Scrollable grid/list container */}
-            <div className={`flex-1 overflow-y-auto scrollbar-adjust pr-4 ${containerClassName}`}>
+            <div className={`flex-1 overflow-y-auto scrollbar-adjust pr-2 ${containerClassName}`}>
                 {currentItems.map((item, index) => renderItem(item, startIndex + index))}
             </div>
 
             {/* Pagination Controls Footer */}
-            <div className="mt-2 flex shrink-0 items-center justify-between border-t bg-background pb-1 pt-3">
+            <div className="mt-2 flex shrink-0 items-center justify-between border-t border-border bg-background pb-1 pt-3">
 
                 {/* Results Information */}
                 <div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-else">
                         Showing{' '}
-                        <span className="font-medium">
+                        <span className="font-medium text-alternate">
                             {items.length === 0 ? 0 : startIndex + 1}
                         </span>
                         {' '}to{' '}
-                        <span className="font-medium">
+                        <span className="font-medium text-main">
                             {Math.min(endIndex, items.length)}
                         </span>
                         {' '}of{' '}
-                        <span className="font-medium">{items.length}</span>
+                        <span className="font-medium text-main">{items.length}</span>
                         {' '}results
                     </p>
                 </div>
@@ -74,7 +74,7 @@ export default function PaginationDisplay<T>({
                         <button
                             onClick={() => handlePageChange(activePage - 1)}
                             disabled={activePage === 1}
-                            className="relative inline-flex items-center rounded-l-md border bg-background p-2 text-muted-foreground hover:bg-muted disabled:opacity-50"
+                            className="cursor-pointer disabled:cursor-not-allowed relative inline-flex items-center rounded-l-md border border-border bg-background p-2 text-else hover:text-whitesmoke/75 hover:bg-surface-1 disabled:opacity-50"
                         >
                             <span className="sr-only">Previous</span>
                             <ChevronLeft className="h-4 w-4" aria-hidden="true" />
@@ -87,8 +87,8 @@ export default function PaginationDisplay<T>({
                                 aria-current={activePage === page ? 'page' : undefined}
                                 className={`relative inline-flex items-center border px-3 py-1.5 text-sm font-semibold focus:z-20 ${
                                     activePage === page
-                                        ? 'z-10 bg-primary text-primary-foreground focus-visible:outline focus-visible:outline-2'
-                                        : 'bg-background text-muted-foreground hover:bg-muted'
+                                        ? 'z-10 bg-surface-2 cursor-default text-main border-border'
+                                        : 'bg-background  border-border cursor-pointer text-else hover:text-whitesmoke/75 hover:bg-surface-1'
                                 }`}
                             >
                                 {page}
@@ -98,7 +98,7 @@ export default function PaginationDisplay<T>({
                         <button
                             onClick={() => handlePageChange(activePage + 1)}
                             disabled={activePage === totalPages}
-                            className="relative inline-flex items-center rounded-r-md border bg-background p-2 text-muted-foreground hover:bg-muted disabled:opacity-50"
+                            className="cursor-pointer disabled:cursor-not-allowed relative inline-flex items-center rounded-r-md border border-border bg-background p-2 text-else hover:text-whitesmoke/75 hover:bg-surface-1 disabled:opacity-50"
                         >
                             <span className="sr-only">Next</span>
                             <ChevronRight className="h-4 w-4" aria-hidden="true" />

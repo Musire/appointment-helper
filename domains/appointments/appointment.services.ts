@@ -26,3 +26,11 @@ export async function processAppointmentCheckin(appointmentId: string): Promise<
   // 3. Complete mutation if status is valid (e.g., PENDING)
   await AppointmentRepository.updateAppointmentStatus(appointmentId, AppointmentStatus.CHECKIN);
 }
+
+export async function getHistoryService () {
+
+}
+
+export async function getPoolService () {
+  
+}
