@@ -1,4 +1,4 @@
-import { Appointment, AppointmentService, Service, User } from "@/generated/prisma";
+import { Appointment } from "@/generated/prisma";
 
 // This represents a single Service object
 export type ServiceMock = {
@@ -30,8 +30,6 @@ export type AppointmentStatus =
   | 'cancelled' 
   | 'noshow';
 
-// The Final Grouped Shape for your History Page
-export type GroupedAppointments = Record<string, AppointmentWithRelations[]>;
 
 // 1. Defined a new Client structure
 export type ClientDetails = {
@@ -72,9 +70,11 @@ export type AppointmentHistoryItem = {
   status: 'COMPLETED' | 'CANCELLED' | 'NOSHOW'
 }
 
-export type AppointmentWithRelations = Appointment & {
-  client: User;
-  items: (AppointmentService & {
-    service: Service;
-  })[];
+export type ExtendedUserAppointment = Appointment & {
+  client: {
+    fullName: string | null;
+  };
+  items: string[];
 };
+
+

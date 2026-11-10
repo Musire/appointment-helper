@@ -1,6 +1,6 @@
 'use client';
 
-import { ExtendedUserAppointment } from "@/features/history/components/staff/cards/AppointmentCard";
+import { ExtendedUserAppointment } from "@/domains/appointments/appointment.types";
 import usePoolFilters from "../usePoolFilters";
 import FilterComponent from "./FilterComponent";
 import PoolDisplay from "./PoolDisplay";
@@ -29,6 +29,7 @@ export default function PoolPage ({
         handleSelect,
         handleDateSelect,
         filteredAppointments,
+        loading
     } = usePoolFilters({ appointments })
     
 
@@ -42,7 +43,8 @@ export default function PoolPage ({
                 handleDateSelect={handleDateSelect}
             />
             <PoolDisplay 
-                appointments={filteredAppointments} 
+                appointments={filteredAppointments}
+                loading={loading}
             />
         </div>
     );

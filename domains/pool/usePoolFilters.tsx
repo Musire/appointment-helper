@@ -1,8 +1,11 @@
+
 'use client';
 
-import { ExtendedUserAppointment } from '@/features/history/components/staff/cards/AppointmentCard';
 import dayjs from 'dayjs';
-import { useMemo, useState } from 'react';
+import { useState, useTransition } from 'react';
+
+import { getAppointmentPool } from '../appointments/appointment.queries';
+import type { ExtendedUserAppointment } from '../appointments/appointment.types';
 
 export type OptionType =
   | 'all'
@@ -27,57 +30,67 @@ type Props = {
   appointments: ExtendedUserAppointment[];
 };
 
-export default function usePoolFilters({ appointments }: Props) {
-  const [selected, setSelected] = useState<OptionType[]>(['all']);
+export default function usePoolFilters({
+  appointments: initialAppointments,
+}: Props) {
+  const [appointments, setAppointments] =
+    useState<ExtendedUserAppointment[]>(initialAppointments);
 
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format('YYYY-MM-DD')
   );
 
-  const handleSelect = (value: OptionType) => {
-    setSelected((prev) => {
-      if (prev.includes('all')) {
-        if (value === 'all') {
-          return [];
-        }
+  const [selected, setSelected] = useState<OptionType[]>(['all']);
 
-        return [value];
-      }
-
-      if (value === 'all') {
-        return ['all'];
-      }
-
-      if (prev.includes(value)) {
-        return prev.filter((item) => item !== value);
-      }
-
-      return [...prev, value];
-    });
-  };
+  const [pending, startTransition] = useTransition();
 
   const handleDateSelect = (date: string) => {
-    if (!date) return;
+    if (!date || date === selectedDate) return;
 
     setSelectedDate(date);
+
+    startTransition(async () => {
+      const selectedDay = new Date(`${date}T00:00:00`);
+
+      const from = new Date(selectedDay);
+      from.setHours(0, 0, 0, 0);
+
+      const to = new Date(selectedDay);
+      to.setHours(23, 59, 59, 999);
+
+      const payload = {
+        from: from.toISOString(),
+        to: to.toISOString(),
+      };
+
+      const { data: appointments } = await getAppointmentPool(payload);
+
+      setAppointments(appointments ?? []);
+    });
   };
 
-  const filteredAppointments = useMemo(() => {
-    if (!selected.length) {
-      return [];
-    }
+  const handleSelect = (value: OptionType) => {
+    setSelected((prev) => {
+      if (value === 'all') return ['all'];
 
-    return appointments.filter((appointment) => {
-      const matchesStatus =
-        selected.includes('all') ||
-        selected.includes(appointment.status.toLowerCase() as OptionType);
+      const filters = prev.filter((item) => item !== 'all');
 
-      const matchesDate =
-        dayjs(appointment.date).format('YYYY-MM-DD') === selectedDate;
+      if (filters.includes(value)) {
+        return filters.filter((item) => item !== value);
+      }
 
-      return matchesStatus && matchesDate;
+      return [...filters, value];
     });
-  }, [appointments, selected, selectedDate]);
+  };
+
+  const filteredAppointments = appointments.filter((appointment) => {
+    return (
+      selected.includes('all') ||
+      selected.includes(
+        appointment.status.toLowerCase() as OptionType
+      )
+    );
+  });
 
   return {
     options,
@@ -86,5 +99,6 @@ export default function usePoolFilters({ appointments }: Props) {
     handleSelect,
     handleDateSelect,
     filteredAppointments,
+    loading: pending
   };
 }

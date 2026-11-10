@@ -3,6 +3,7 @@ import "dotenv/config";
 
 import {
   AppointmentStatus,
+  Prisma,
   PrismaClient,
 } from "@/generated/prisma";
 
@@ -102,13 +103,41 @@ function randomTime(): number {
 // --------------------------------------------------
 // APPOINTMENT GENERATION
 // --------------------------------------------------
-
 function generateAppointments() {
   const now = new Date();
   const monday = startOfWeek(now);
   const previousMonday = addDays(monday, -7);
 
-  const appointments = [];
+  const appointments: Prisma.AppointmentCreateManyInput[] = [];
+  const appointmentServices: Prisma.AppointmentServiceCreateManyInput[] = [];
+
+  function addAppointment(
+    date: Date,
+    status: AppointmentStatus,
+    createdAt: Date
+  ) {
+    const service = randomItem(services);
+    const appointmentId = randomUUID();
+    const startTime = randomTime();
+
+    appointments.push({
+      id: appointmentId,
+      storeId: STORE_ID,
+      staffId: STAFF_ID,
+      userId: randomItem(users),
+      date: new Date(date),
+      startTime,
+      endTime: startTime + service.duration,
+      status,
+      createdAt,
+      checkedInAt: null,
+    });
+
+    appointmentServices.push({
+      appointmentId,
+      serviceId: service.id,
+    });
+  }
 
   // Previous week + elapsed days of current week.
   const pastEnd = new Date(now);
@@ -119,23 +148,12 @@ function generateAppointments() {
     date < pastEnd;
     date = addDays(date, 1)
   ) {
-    // 5 appointments per day.
     for (let i = 0; i < 5; i++) {
-      const service = randomItem(services);
-      const startTime = randomTime();
-
-      appointments.push({
-        id: randomUUID(),
-        storeId: STORE_ID,
-        staffId: STAFF_ID,
-        userId: randomItem(users),
-        date: new Date(date),
-        startTime,
-        endTime: startTime + service.duration,
-        status: randomItem(appointmentStatuses.past),
-        createdAt: addDays(date, -2),
-        checkedInAt: null,
-      });
+      addAppointment(
+        date,
+        randomItem(appointmentStatuses.past),
+        addDays(date, -2)
+      );
     }
   }
 
@@ -149,25 +167,15 @@ function generateAppointments() {
     date = addDays(date, 1)
   ) {
     for (let i = 0; i < 5; i++) {
-      const service = randomItem(services);
-      const startTime = randomTime();
-
-      appointments.push({
-        id: randomUUID(),
-        storeId: STORE_ID,
-        staffId: STAFF_ID,
-        userId: randomItem(users),
-        date: new Date(date),
-        startTime,
-        endTime: startTime + service.duration,
-        status: randomItem(appointmentStatuses.future),
-        createdAt: new Date(now),
-        checkedInAt: null,
-      });
+      addAppointment(
+        date,
+        randomItem(appointmentStatuses.future),
+        new Date(now)
+      );
     }
   }
 
-  return appointments;
+  return { appointments, appointmentServices };
 }
 
 // --------------------------------------------------
@@ -175,18 +183,39 @@ function generateAppointments() {
 // --------------------------------------------------
 
 async function main() {
-  const appointments = generateAppointments();
+  const { appointments, appointmentServices } = generateAppointments();
 
   console.log(`Generated ${appointments.length} appointments.`);
+  console.log(`Generated ${appointmentServices.length} appointment services.`);
 
   await prisma.$transaction(
     async (tx) => {
-      // Delete all existing appointments.
-      await tx.appointment.deleteMany({});
+      // Delete existing appointment services for this store.
+      await tx.appointmentService.deleteMany({
+        where: {
+          appointment: {
+            is: {
+              storeId: STORE_ID,
+            },
+          },
+        },
+      });
 
-      // Insert all generated appointments in one query.
+      // Delete existing appointments for this store.
+      await tx.appointment.deleteMany({
+        where: {
+          storeId: STORE_ID,
+        },
+      });
+
+      // Insert appointments.
       await tx.appointment.createMany({
         data: appointments,
+      });
+
+      // Insert appointment-service relations.
+      await tx.appointmentService.createMany({
+        data: appointmentServices,
       });
     },
     {
@@ -195,15 +224,26 @@ async function main() {
     }
   );
 
-  console.log("Appointments seeded successfully.");
+  console.log("Appointments and services seeded successfully.");
 
-  const count = await prisma.appointment.count({
+  const appointmentCount = await prisma.appointment.count({
     where: {
       storeId: STORE_ID,
     },
   });
 
-  console.log(`Appointments in database for this store: ${count}`);
+  const serviceCount = await prisma.appointmentService.count({
+    where: {
+      appointment: {
+        is: {
+          storeId: STORE_ID,
+        },
+      },
+    },
+  });
+
+  console.log(`Appointments in database: ${appointmentCount}`);
+  console.log(`Appointment services in database: ${serviceCount}`);
 
   const dbUrl = new URL(process.env.DATABASE_URL!);
 

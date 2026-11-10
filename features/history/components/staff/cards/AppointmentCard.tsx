@@ -1,18 +1,10 @@
 
 import { Body, BodySm } from "@/components/ui";
 import { StatusPill } from "@/components/ui/pills";
-import { Appointment } from "@/generated/prisma";
+import { ExtendedUserAppointment } from "@/domains/appointments/appointment.types";
 import { toMeridiem } from "@/lib/utils/timeConversion";
 import Link from "next/link";
 
-export type ExtendedUserAppointment = Appointment & {
-    client: {
-        name: string;
-    };
-    services: {
-        name: string;
-    }[];
-};
 
 type Props = {
     appointment: ExtendedUserAppointment;
@@ -21,7 +13,7 @@ type Props = {
 export default function AppointmentCard({
     appointment,
 }: Props) {
-    const serviceCount = appointment.services.length;
+    const serviceCount = appointment.items.length
 
     const formattedDate = appointment.date.toLocaleDateString(
         "en-US",
@@ -49,7 +41,7 @@ export default function AppointmentCard({
             >
                 {/* Top left: Client */}
                 <Body className="text-main truncate font-medium tx-lg">
-                    {appointment.client.name}
+                    {appointment.client.fullName}
                 </Body>
 
                 {/* Top right: Status */}

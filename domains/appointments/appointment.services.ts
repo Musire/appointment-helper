@@ -1,6 +1,8 @@
 // src/domain/appointments/services/appointment-service.ts
 import { AppointmentStatus } from "@/generated/prisma";
+import { getCurrentUser } from "../auth/util/session";
 import { AppointmentRepository } from "./appointment.repositories";
+import { HistoryType, PoolType } from "./appointment.validations";
 
 export async function processAppointmentCheckin(appointmentId: string): Promise<void> {
   const appointment = await AppointmentRepository.findAppointmentById(appointmentId);
@@ -27,10 +29,26 @@ export async function processAppointmentCheckin(appointmentId: string): Promise<
   await AppointmentRepository.updateAppointmentStatus(appointmentId, AppointmentStatus.CHECKIN);
 }
 
-export async function getHistoryService () {
-
+export async function getHistoryService (data: HistoryType) {
+  return AppointmentRepository.getHistory(data)
 }
 
-export async function getPoolService () {
-  
+export async function getPoolService (data: PoolType) {
+  const user = await getCurrentUser()
+
+  if (!user) throw new Error('no user found')
+
+  let payload
+
+  if (user.role === "STAFF") {
+    payload = { ...data, staffId: user.id };
+  } else if (user.role === "USER") {
+    payload = { ...data, userId: user.id };
+  } else {
+    throw new Error("Unauthorized role");
+  }
+
+  console.log(data)
+
+  return AppointmentRepository.getPool(payload)
 }
