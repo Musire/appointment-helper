@@ -1,5 +1,6 @@
 import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
 import { AdminDashboard, EnduserDashboard, StaffDashboard } from "@/features/dashboard/components";
+import EndUserDashboardDataLayer from "@/features/dashboard/components/EndUserDashboardDataLayer";
 
 export default async function DashboardPage() {
   return (
@@ -7,7 +8,7 @@ export default async function DashboardPage() {
       roles={{
         ADMIN: <AdminDashboard />,
         STAFF: <StaffDashboard/>,
-        USER: <EnduserDashboard />
+        USER: <EndUserDashboardDataLayer />
       }}>
     </RoleRenderer>
   )

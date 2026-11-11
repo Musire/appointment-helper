@@ -18,4 +18,17 @@ export const DateTimeStepSchema = z.object({
     targetDate: z.date().min(1, 'target date needed')
 })
 
+export const CreateBookingSchema = z.object({
+  storeId: z.uuid('Store ID is required'),
+  staffId: z.uuid('Staff ID is required'),
+  date: z.iso
+    .datetime('Date must be a valid ISO string'),
+  time: z.number('Time is required'),
+  serviceIds: z
+    .array(z.uuid('Invalid service ID'))
+    .min(1, 'At least one service must be selected'),
+});
+
+
 export type DateTimeStepType = z.infer<typeof DateTimeStepSchema>
+export type CreateBookingType = z.input<typeof CreateBookingSchema>

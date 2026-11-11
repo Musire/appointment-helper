@@ -2,7 +2,7 @@
 
 import { SelectableList } from "@/components/ui";
 import { Service } from "@/generated/prisma";
-import { useSelect } from "@/hooks";
+import useSelectable from "@/hooks/useSelect";
 import { useRouter } from "next/navigation";
 import { ServiceCard } from "../cards";
 import { ContinueButton } from "../page";
@@ -12,14 +12,14 @@ type ServiceStepProps = {
 }
 
 export default function ServicesStep ({ services }: ServiceStepProps ) {
-    const { selected, handleSelect } = useSelect()
+    const { selected, handleSelect } = useSelectable<string>([], true)
     const router = useRouter()
 
     return (
         <div className="flex flex-col max-w-full  space-y-6 ">
             <h3 className="text-primary">{`Step ${3} of ${5}`}</h3>
-
-            <SelectableList 
+            <SelectableList
+                multi
                 items={services}
                 getId={item => item.id}
                 selected={selected}

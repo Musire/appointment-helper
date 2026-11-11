@@ -1,6 +1,6 @@
 // src/domain/appointments/services/appointment-service.ts
 import { AppointmentStatus } from "@/generated/prisma";
-import { getCurrentUser } from "../auth/util/session";
+import { getCurrentUser, getPrismaUserId } from "../auth/util/session";
 import { AppointmentRepository } from "./appointment.repositories";
 import { AppointmentDetailType, HistoryType, PoolType } from "./appointment.validations";
 
@@ -55,4 +55,10 @@ export async function getPoolService (data: PoolType) {
 
 export async function getAppointmentService (data: AppointmentDetailType) {
   return AppointmentRepository.getAppointmentDetails(data)
+}
+ 
+export async function getFutureAppointmentService () {
+  const userId = await getPrismaUserId()
+  if (!userId) throw new Error('No user found in prisma')
+  return AppointmentRepository.getFutureUserAppointments(userId)
 }

@@ -4,9 +4,8 @@
 import { Service, Store, User } from "@/generated/prisma";
 import { formatCurrency } from "@/lib/utils/stringMutate";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
-import SuccessDisplay from "../../../../components/ui/forms/SuccessDisplay";
-import { createBookingAction } from "../../../../domains/booking/booking.actions";
+import { useTransition } from "react";
+import { createBooking } from "../../../../domains/booking/booking.actions";
 import { DatetimeCard } from "../cards";
 import { SubmitButton } from "../page";
 import ServiceSlot from "../slots/ServiceSlot";
@@ -14,65 +13,56 @@ import StaffSlot from "../slots/StaffSlot";
 import StoreSlot from "../slots/StoreSlot";
 
 type ReviewData = {
-    store: Store,
-    staff: User,
-    services: Service,
+    store: Store | null,
+    staff: User | null,
+    services: Service[],
     date: string;
-    time: string
+    time: number;
 }
 
-export default function ReviewStep ({ store, staff, services, date, time }: ReviewData) {
+type Props = {
+  data: ReviewData
+}
+
+export default function ReviewStep ({data}: Props) {
+    const { store, staff, services, date, time } = data
     const router = useRouter()
-    const [error, setError] = useState<string | null>(null);
-    const [success, setSuccess] = useState(false);
     const [isPending, startTransition] = useTransition();
 
-    const action = () => {
-        setError(null);
+    if (!store || !staff || !services.length || !date || !time) {
+        return (
+            <div className="">
+                <p className="">review incomplete</p>
+            </div>
+        )
+    }
 
+    const submission = () => {
         startTransition(async () => {
-            const result = await createBookingAction({
+            await createBooking({
                 storeId: store.id,
                 staffId: staff.id,
-                serviceId: services.id,
+                serviceIds: services.map(s => s.id),
+                time: Number(time),
                 date,
-                time,
             });
+        })
 
-            console.log(result)
-
-            if (result.success) {
-            setSuccess(true);
-            } else {
-            setError(result.error ?? "Something went wrong.");
-            }
-        });
-    };
+    }
 
     return (
         <div className="w-full flex flex-1  flex-col space-y-6 py-6">
-            {!success && (
-                <>
-                    <ul className="stacked space-y-2 w-full bg-surface-1 divide-y divide-disabled gap-y-4 p-6 rounded-lg">
-                        <StoreSlot store={store} />
-                        <StaffSlot staff={staff} />
-                        <ServiceSlot service={services} />
-                        <DatetimeCard datetime={{ date, time }} />
-                    </ul>
-                    <span className="spaced pt-6 border-t mt-auto border-disabled">
-                        <p className="text-xl font-light">Total</p>
-                        <p className="text-2xl font-semibold">{formatCurrency(services.price)}</p>
-                    </span>
-
-                    {error && (
-                        <div className="p-4 bg-red-100 text-error-dark rounded">
-                            {error}
-                        </div>
-                    )}
-                    <SubmitButton onBack={() => router.back()} action={action}  />
-                </>
-            )}
-            {success && <SuccessDisplay /> }
+            <ul className="stacked space-y-2 w-full bg-surface-1 divide-y divide-disabled gap-y-4 p-6 rounded-lg">
+                <StoreSlot store={store} />
+                <StaffSlot staff={staff} />
+                <ServiceSlot services={services} />
+                <DatetimeCard datetime={{ date, time }} />
+            </ul>
+            <span className="spaced pt-6 border-t mt-auto border-disabled">
+                <p className="text-xl font-light">Total</p>
+                <p className="text-2xl font-semibold">{formatCurrency(services.reduce((sum, item) => sum + item.price, 0))}</p>
+            </span>
+            <SubmitButton onBack={() => router.back()} action={submission}  />
         </div>
     );
 }

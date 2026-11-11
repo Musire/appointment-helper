@@ -1,8 +1,8 @@
 import { createSafeAction, validateSchema } from "@/domains/auth/util/safeAction";
 import { prisma } from "@/lib/prisma";
 import { BookingParams } from "@/lib/utils/navigation";
-import { getDatetimeService, getStoreStaffService } from "./booking.services";
-import { DateTimeStepSchema, DateTimeStepType } from "./booking.validations";
+import { getDatetimeService, getReviewDataService, getStoreStaffService } from "./booking.services";
+import { CreateBookingSchema, CreateBookingType, DateTimeStepSchema, DateTimeStepType } from "./booking.validations";
 
 export const getStoreStaff = createSafeAction(
     {
@@ -22,6 +22,18 @@ export const getDatetime = createSafeAction(
     }
     
 )
+
+export const getBookingReview = createSafeAction(
+    {
+        allowedRoles: ['user', 'USER']
+    },
+    async (input: CreateBookingType) => {
+        const validated = validateSchema(CreateBookingSchema, input)
+        const res = getReviewDataService(validated)
+        return res
+    }
+)
+
 
 export async function getBookingReviewData(data: BookingParams) {
   const { store, staff, service, dateTime } = data;

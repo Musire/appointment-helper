@@ -1,6 +1,7 @@
 import { DayOfWeek } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { serviceSchemaType } from "../service/validation/service.schema";
+import { CreateBookingType } from "./booking.validations";
 
 
 const getUTCDayName = (date: Date) => {
@@ -93,4 +94,56 @@ export const StoreServiceRepository = {
             },
         });
     },
+}
+
+export const BookingRepository = {
+    async getReviewData (data: CreateBookingType) {
+        const { storeId, staffId, serviceIds, date, time } = data;
+        
+        
+        const [store, staff, services] = await Promise.all([
+            prisma.store.findUnique({
+                where: { id: storeId },
+            }),
+            prisma.user.findUnique({
+                where: { id: staffId },
+            }),
+            prisma.service.findMany({
+                where: {
+                    id: {
+                        in: serviceIds
+                    }
+                }
+            }),
+        ]);
+        
+    
+        return { store, staff, services, date, time };
+    },
+    async createBooking ({data, userId}: {data: CreateBookingType, userId: string}) {
+        const { storeId, staffId, serviceIds, time, date } = data
+        const appointment = await prisma.appointment.create({
+            data: {
+                store: { connect: { id: storeId } },
+                client: { connect: { id: userId } },
+                staff: {
+                    connect: {
+                        storeId_userId: {
+                            storeId: storeId,
+                            userId: staffId,
+                        },
+                    },
+                },
+                date,
+                startTime: time,
+                endTime: time + 60,
+                items: {
+                    create: serviceIds.map((id) => ({
+                        service: { connect: { id } },
+                    })),
+                },
+            },
+        });
+        return appointment.id
+    }
 }

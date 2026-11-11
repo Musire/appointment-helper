@@ -124,11 +124,11 @@ model Appointment {
   storeId     String
   staffId     String
   userId      String
-  date        DateTime             // New field for the appointment date (stored as UTC)
-  startTime   Int                  // Changed from DateTime to Int (0 - 1440)
-  endTime     Int                  // Changed from DateTime to Int (0 - 1440)
-  status      AppointmentStatus
-  createdAt   DateTime             // @default(now()) removed temporarily if migration is handled manually
+  date        DateTime // New field for the appointment date (stored as UTC)
+  startTime   Int // Changed from DateTime to Int (0 - 1440)
+  endTime     Int // Changed from DateTime to Int (0 - 1440)
+  status      AppointmentStatus    @default(PENDING)
+  createdAt   DateTime             @default(now())
   checkedInAt DateTime?
   staff       StoreStaff           @relation("StaffAppointments", fields: [staffId], references: [id])
   store       Store                @relation(fields: [storeId], references: [id])
@@ -138,7 +138,6 @@ model Appointment {
   @@index([storeId, date, startTime]) // Updated index to include the date field
   @@index([staffId, date, startTime]) // Updated index to include the date field
 }
-
 
 model AppointmentService {
   id            String      @id @default(uuid())

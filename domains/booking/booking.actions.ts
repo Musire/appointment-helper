@@ -1,10 +1,12 @@
 "use server";
 
-import { createSafeAction } from "@/domains/auth/util/safeAction";
+import { createSafeAction, validateSchema } from "@/domains/auth/util/safeAction";
 import { convertToUTC } from "@/lib/utils/time";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { getDatetimeService } from "./booking.services";
+import { createBookingService, getDatetimeService } from "./booking.services";
+import { CreateBookingSchema, CreateBookingType } from "./booking.validations";
+import { redirect } from "next/navigation";
 
 dayjs.extend(utc);
 
@@ -15,6 +17,17 @@ type Input = {
   time: string;
   serviceId: string;
 };
+
+export const createBooking = createSafeAction(
+  {
+    allowedRoles: ["USER", 'user']
+  },
+  async (input: CreateBookingType) => {
+    const validated = validateSchema(CreateBookingSchema, input)
+    await createBookingService(validated)
+    redirect('/dashboard')
+  }
+)
 
 export async function createBookingAction({
   storeId,
@@ -36,37 +49,7 @@ export async function createBookingAction({
 
         const appointment = { start: s, end: e, serviceId }
 
-        // const appointment = await prisma.appointment.create({
-        //     data: {
-        //         store: { connect: { id: storeId } },
-        //         staff: { connect: { id: staffId } },
-        //         client: { connect: { id: userId } },
-        //         startTime: start.toDate(),
-        //         endTime: end.toDate(),
-        //         status: "CONFIRMED",
-        //         items: {
-        //             create: services.map((id) => ({
-        //                 service: { connect: { id } }
-        //             }))
-        //         }
-        //     },
-        //     select: {
-        //         id: true,
-        //         startTime: true,
-        //         endTime: true,
-        //         status: true,
-        //         items: {
-        //         select: {
-        //             service: {
-        //             select: {
-        //                 name: true,
-        //                 priceCents: true
-        //             }
-        //             }
-        //         }
-        //         }
-        //     }
-        // })
+        
 
         return  {
           success: true,

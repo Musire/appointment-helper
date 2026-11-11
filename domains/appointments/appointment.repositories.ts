@@ -141,6 +141,46 @@ export const AppointmentRepository = {
     };
 
     return details;
+  },
+  async getFutureUserAppointments(userId: string) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const appointments = await prisma.appointment.findMany({
+      where: {
+        userId,
+        date: {
+          gte: today,
+        },
+      },
+      include: {
+        client: {
+          select: {
+            fullName: true,
+          },
+        },
+        items: {
+          include: {
+            service: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: [
+        { date: "asc" },
+        { startTime: "asc" },
+      ],
+    });
+
+    const futureAppointments = appointments.map((appointment) => ({
+      ...appointment,
+      items: appointment.items.map((item) => item.service.name),
+    }));
+
+    return futureAppointments;
   }
   
 }

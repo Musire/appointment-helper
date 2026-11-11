@@ -5,9 +5,10 @@ import utc from "dayjs/plugin/utc";
 import { AppointmentRepository } from "../appointments/appointment.repositories";
 import { AvailabilityRepository, StoreStaffRepository } from "../availability/availability.repositories";
 import { filterBookedSlots, generateTimeGrid, getDayOfWeek } from "../availability/availability.utils";
-import { StoreServiceRepository } from "./booking.repositories";
+import { BookingRepository, StoreServiceRepository } from "./booking.repositories";
 import { inputType, ReviewInput } from "./booking.types";
-import { DateTimeStepType } from "./booking.validations";
+import { CreateBookingType, DateTimeStepType } from "./booking.validations";
+import { getPrismaUserId } from "../auth/util/session";
 dayjs.extend(utc)
 
 // BOOKING SERVICE FUNCTIONS
@@ -105,6 +106,16 @@ export async function getDatetimeService (data: DateTimeStepType) {
     const free = filterBookedSlots(slots, booked)
 
     return free
+}
+
+export async function getReviewDataService (data: CreateBookingType) {
+   return  BookingRepository.getReviewData(data)
+}
+
+export async function createBookingService (data: CreateBookingType) {
+    const userId = await getPrismaUserId()
+    if (!userId) throw new Error('User not found in prisma')
+    return BookingRepository.createBooking({ data, userId })
 }
 
 // REVIEW SERVICE FUNCTIONS

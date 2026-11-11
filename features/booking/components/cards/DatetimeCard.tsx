@@ -5,7 +5,7 @@ import { Calendar as Icon } from "lucide-react";
 type DatetimeSlotProps = {
     datetime: {
         date: string;
-        time: string;
+        time: number;
     }
 }
 
@@ -16,7 +16,7 @@ export default function DatetimeCard ({ datetime }: DatetimeSlotProps) {
             <Icon size={30} strokeWidth={1} />
             <span className="flex flex-col">
                 <p className="">{date.format('dddd, MMMM D, YYYY')}</p>
-                <p className="">{toMeridiem(Number(datetime.time) * 60)}</p>
+                <p className="">{toMeridiem(datetime.time * 60)}</p>
             </span>
         </li>
     );

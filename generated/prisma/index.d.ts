@@ -21084,8 +21084,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
     staff: StoreStaffCreateNestedOneWithoutAppointmentsInput
     store: StoreCreateNestedOneWithoutAppointmentsInput
@@ -21101,8 +21101,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
     items?: AppointmentServiceUncheckedCreateNestedManyWithoutAppointmentInput
   }
@@ -21143,8 +21143,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
   }
 
@@ -23756,8 +23756,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
     staff: StoreStaffCreateNestedOneWithoutAppointmentsInput
     store: StoreCreateNestedOneWithoutAppointmentsInput
@@ -23771,8 +23771,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
     items?: AppointmentServiceUncheckedCreateNestedManyWithoutAppointmentInput
   }
@@ -24291,8 +24291,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
     staff: StoreStaffCreateNestedOneWithoutAppointmentsInput
     client: UserCreateNestedOneWithoutAppointmentsInput
@@ -24306,8 +24306,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
     items?: AppointmentServiceUncheckedCreateNestedManyWithoutAppointmentInput
   }
@@ -24774,8 +24774,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
     store: StoreCreateNestedOneWithoutAppointmentsInput
     client: UserCreateNestedOneWithoutAppointmentsInput
@@ -24789,8 +24789,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
     items?: AppointmentServiceUncheckedCreateNestedManyWithoutAppointmentInput
   }
@@ -25506,8 +25506,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
     staff: StoreStaffCreateNestedOneWithoutAppointmentsInput
     store: StoreCreateNestedOneWithoutAppointmentsInput
@@ -25522,8 +25522,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
   }
 
@@ -25852,8 +25852,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
   }
 
@@ -26084,8 +26084,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
   }
 
@@ -26264,8 +26264,8 @@ export namespace Prisma {
     date: Date | string
     startTime: number
     endTime: number
-    status: $Enums.AppointmentStatus
-    createdAt: Date | string
+    status?: $Enums.AppointmentStatus
+    createdAt?: Date | string
     checkedInAt?: Date | string | null
   }
 

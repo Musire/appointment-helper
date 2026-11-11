@@ -4,7 +4,7 @@
 import { toAppTime } from "./utils/dayjs";
 
 import { createSafeAction, validateSchema } from "../auth/util/safeAction";
-import { getAppointmentService, getHistoryService, getPoolService } from "./appointment.services";
+import { getAppointmentService, getFutureAppointmentService, getHistoryService, getPoolService } from "./appointment.services";
 import { AppointmentDetails } from "./appointment.types";
 import { AppointmentDetailSchema, AppointmentDetailType, HistorySchema, PoolSchema, PoolType } from "./appointment.validations";
 
@@ -44,7 +44,12 @@ export const getAppointmentDetails = createSafeAction(
   }
 )
 
-
+export const getFutureUserAppointments = createSafeAction(
+  {
+    allowedRoles: ["USER", "user"]
+  },
+  getFutureAppointmentService
+)
 
 
 export async function filterAppointmentToday(mockData: AppointmentDetails[]) {
