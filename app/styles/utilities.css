@@ -184,3 +184,11 @@
     var(--mix-base)
   );
 }
+
+@utility staggerAnimationChildren-* {
+  @apply *:animate-fade-up;
+  & > * {
+    animation-delay: calc((sibling-index() - 1) * --value(integer) * 1ms);
+    animation-delay: calc((sibling-index() - 1) * --value([*]));
+  }
+}
