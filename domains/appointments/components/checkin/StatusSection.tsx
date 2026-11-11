@@ -1,63 +1,55 @@
 import { Body, Caption, H3 } from "@/components/ui";
+import { AppointmentStatus } from "@/generated/prisma";
 import { AlertTriangle, Check, Copy, OctagonAlert, X } from "lucide-react";
 
-export type AppointmentStatus = 
-  | 'pending' 
-  | 'checkedin' 
-  | 'inprogress' 
-  | 'completed' 
-  | 'cancelled' 
-  | 'noshow'
-  | 'offset';
-
 type Props = {
-    status: AppointmentStatus;
+    status: AppointmentStatus | "OFFSET";
 };
 
 const STATUS_CONFIG = {
-    pending: { 
+    PENDING: { 
         Icon: Check, 
         bgClass: "bg-success", 
         textClass: "text-success", 
         state: "Ready", 
         msg: "ready for check-in" 
     },
-    checkedin: { 
+    CHECKIN: { 
         Icon: Copy, 
         bgClass: "bg-purple-600", 
         textClass: "text-purple-400", 
         state: "Duplicate", 
         msg: "already been checked-in" 
     },
-    inprogress: { 
+    INPROGRESS: { 
         Icon: Copy, 
         bgClass: "bg-purple-600", 
         textClass: "text-purple-400", 
         state: "Checked In", 
         msg: "already been checked-in" 
     },
-    completed: { 
+    COMPLETED: { 
         Icon: OctagonAlert , 
         bgClass: "bg-blue-500", 
         textClass: "text-blue-400", 
         state: "Completed", 
         msg: "already been completed" 
     },
-    noshow: { 
+    NOSHOW: { 
         Icon: X, 
         bgClass: "bg-orange-400/60", 
         textClass: "text-orange-400", 
         state: "No Show", 
         msg: "marked as a no-show" 
     },
-    cancelled: { 
+    CANCELLED: { 
         Icon: X, 
         bgClass: "bg-error border", 
         textClass: "text-error", 
         state: "Cancelled", 
         msg: "cancelled" 
     },
-    offset: { 
+    OFFSET: { 
         Icon: AlertTriangle, 
         bgClass: "bg-slate-700", 
         textClass: "text-slate-400", 

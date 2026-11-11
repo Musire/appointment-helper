@@ -2,7 +2,7 @@
 import { AppointmentStatus } from "@/generated/prisma";
 import { getCurrentUser } from "../auth/util/session";
 import { AppointmentRepository } from "./appointment.repositories";
-import { HistoryType, PoolType } from "./appointment.validations";
+import { AppointmentDetailType, HistoryType, PoolType } from "./appointment.validations";
 
 export async function processAppointmentCheckin(appointmentId: string): Promise<void> {
   const appointment = await AppointmentRepository.findAppointmentById(appointmentId);
@@ -51,4 +51,8 @@ export async function getPoolService (data: PoolType) {
   console.log(data)
 
   return AppointmentRepository.getPool(payload)
+}
+
+export async function getAppointmentService (data: AppointmentDetailType) {
+  return AppointmentRepository.getAppointmentDetails(data)
 }

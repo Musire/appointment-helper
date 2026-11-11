@@ -1,6 +1,7 @@
 'use client';
 
-import AppointmentCard, { ExtendedUserAppointment } from "@/features/history/components/staff/cards/AppointmentCard";
+import { ExtendedUserAppointment } from "@/domains/appointments/appointment.types";
+import AppointmentCard from "@/features/history/components/staff/cards/AppointmentCard";
 import HistoryFilters from "@/features/history/components/staff/HistoryFilters";
 import PaginationDisplay from "@/features/history/components/staff/PaginationDisplay";
 import useHistoryFilters from "@/features/history/hooks/useHistoryFilters";

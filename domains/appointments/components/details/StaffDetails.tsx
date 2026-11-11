@@ -10,7 +10,7 @@ export default async function StaffDetails({
 }: Props) {
     // Now params correctly evaluates to Promise<{ appointmentId: string }>
     const { appointmentId } = await params;
-    const appointment = getAppointmentDetails(appointmentId);
+    const { data: appointment } = await getAppointmentDetails({id: appointmentId});
 
     if (!appointment) {
         return (

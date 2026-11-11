@@ -1,52 +1,52 @@
 import { Body, Caption } from "@/components/ui";
 import dayjs from "@/domains/appointments/utils/dayjs";
+import { AppointmentStatus } from "@/generated/prisma";
 import { Dayjs } from "dayjs";
 import { Info } from "lucide-react";
-import { AppointmentStatus } from "./StatusSection";
 
 type Props = {
-    status: AppointmentStatus;
+    status: AppointmentStatus | "OFFSET";
     dateTime?: Dayjs; 
 };
 
 const STATUS_CONFIG = {
-    pending: { 
+    PENDING: { 
         bgClass: "bg-success", 
         textClass: "text-success", 
         state: "Ready", 
         msg: "checked-in" 
     },
-    checkedin: { 
+    CHECKIN: { 
         bgClass: "bg-purple-600", 
         textClass: "text-purple-400", 
         state: "Checked In", 
         msg: "already been checked-in" 
     },
-    inprogress: { 
+    INPROGRESS: { 
         bgClass: "bg-purple-600", 
         textClass: "text-purple-400", 
         state: "Checked In", 
         msg: "already been checked-in" 
     },
-    completed: { 
+    COMPLETED: { 
         bgClass: "bg-blue-500", 
         textClass: "text-blue-400", 
         state: "Completed", 
         msg: "already been completed" 
     },
-    noshow: { 
+    NOSHOW: { 
         bgClass: "bg-orange-800", 
         textClass: "text-orange-700 dark:text-orange-400", 
         state: "No Show", 
         msg: "marked as a no-show" 
     },
-    cancelled: { 
+    CANCELLED: { 
         bgClass: "bg-error", 
         textClass: "text-error", 
         state: "Cancelled", 
         msg: "cancelled" 
     },
-    offset: { 
+    OFFSET: { 
         bgClass: "", 
         textClass: "text-slate-400", 
         state: "Locked", 
@@ -61,7 +61,7 @@ export default function Message({
 }: Props) {
     const config = STATUS_CONFIG[status as keyof typeof STATUS_CONFIG];
 
-    if (!config || status === 'pending') return null; 
+    if (!config || status === 'PENDING') return null; 
 
     const { textClass, msg } = config;
 

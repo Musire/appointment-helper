@@ -1,7 +1,7 @@
 import { getAppointmentDetails } from "@/domains/appointments/appointment.queries";
 import { AppointmentDetails, Controller, Message, StatusSection } from "@/domains/appointments/components/checkin";
-import { AppointmentStatus } from "@/domains/appointments/components/checkin/StatusSection";
 import dayjs from "@/domains/appointments/utils/dayjs";
+import { AppointmentStatus } from "@/generated/prisma";
 import { ParamsType } from "@/lib/types";
 import { checkPendingTimeWindow } from "@/lib/utils/time";
 import { Dayjs } from "dayjs";
@@ -9,21 +9,20 @@ import { Dayjs } from "dayjs";
 export default async function CheckinPage ({ params }: ParamsType<{appointmentId: string}>) {
     const {appointmentId} = await params
 
-    const appointment = getAppointmentDetails(appointmentId)
+    const { data: appointment} = await getAppointmentDetails({id: appointmentId})
     if (!appointment) return null
 
-    const status = appointment.status === 'pending' 
+    const status = appointment.status === 'PENDING' 
         ? checkPendingTimeWindow(appointment.scheduledAt) 
         : appointment.status;
 
     const timestamps: Record<AppointmentStatus, Dayjs | undefined> = {
-        cancelled: dayjs(appointment.updatedAt),
-        noshow: dayjs(appointment.updatedAt),
-        completed: dayjs(appointment.completedAt) ?? undefined,
-        checkedin: dayjs(appointment.checkedAt) ?? undefined,
-        offset: dayjs(appointment.scheduledAt).subtract(30, "minute"),
-        inprogress: undefined,
-        pending: undefined,
+        CHECKIN: dayjs(appointment.checkedAt) ?? undefined,
+        INPROGRESS: undefined,
+        PENDING: undefined,
+        COMPLETED: undefined, 
+        NOSHOW: undefined, 
+        CANCELLED: undefined
     };
 
     const timestamp = timestamps[appointment.status];

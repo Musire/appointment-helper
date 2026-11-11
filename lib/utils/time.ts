@@ -158,7 +158,7 @@ export function formatAppointmentDateTime(date: Date): { dateStr: string; timeSt
   return { dateStr, timeStr };
 }
 
-export type CheckedStatus = 'pending' | 'offset';
+export type CheckedStatus = 'PENDING' | 'OFFSET';
 
 export function checkPendingTimeWindow(scheduledAt: Date): CheckedStatus {
   const now = dayjs('2026-06-12T14:00:00Z');
@@ -167,8 +167,8 @@ export function checkPendingTimeWindow(scheduledAt: Date): CheckedStatus {
   const minutesUntilAppointment = appointmentTime.diff(now, 'minute');
 
   if (minutesUntilAppointment > 30 || minutesUntilAppointment < -10) {
-    return 'offset';
+    return 'OFFSET';
   }
 
-  return 'pending'; 
+  return 'PENDING'; 
 }

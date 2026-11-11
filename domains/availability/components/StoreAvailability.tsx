@@ -72,27 +72,27 @@ type Props = {
 
 export default function StoreAvailability ({ stores, invites }: Props) {
     return (
-        <section className="flex flex-1 p-6 stacked">
-            <div className="stacked space-y-4">
+        <section className="flex flex-1 p-6 stacked overflow-y-hidden">
+            <div className="stacked space-y-4  h-1/2">
                 <p className="w-full spaced">
                     <span className="font-medium">Your stores</span>
                     <span className="text-sm border border-success bg-success/20  text-success min-w-24 centered normal-space rounded-full">
                         {`${stores.length} active`}
                     </span>
                 </p>
-                <div className="">
+                <div className="flex-1 overflow-y-auto scrollbar-adjust pr-2 space-y-4 ">
                     {stores?.map(s => <StoreStaffCard key={s.store.id} storeStaff={s.store} />)}
                 </div>
             </div>
 
-            <div className="stacked space-y-4">
+            <div className="stacked space-y-4  h-1/2">
                 <p className="w-full spaced">
                     <span className="capitalize font-medium">invites</span>
                     <span className="text-sm border border-alternate bg-alternate/20  text-alternate min-w-24 centered normal-space rounded-full">
                         {`${mockInvites.length} pending`
                     }</span>
                 </p>
-                <div className="">
+                <div className="flex-1 overflow-y-auto scrollbar-adjust pr-2 space-y-4">
                     {mockInvites?.map(i=> <StaffInviteCard key={i.id} inviteId={i.id} store={i.store} />)}
                 </div>
             </div>

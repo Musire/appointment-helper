@@ -1,4 +1,4 @@
-import { Appointment } from "@/generated/prisma";
+import { Appointment, AppointmentStatus } from "@/generated/prisma";
 
 // This represents a single Service object
 export type ServiceMock = {
@@ -21,14 +21,6 @@ export type AppointmentMetrics = {
   checkedIn: number;
   completed: number;
 };
-
-export type AppointmentStatus = 
-  | 'pending' 
-  | 'checkedin' 
-  | 'inprogress' 
-  | 'completed' 
-  | 'cancelled' 
-  | 'noshow';
 
 
 // 1. Defined a new Client structure
@@ -54,10 +46,7 @@ export type AppointmentDetails = {
   store: StoreDetails;     
   scheduledAt: Date;       
   createdAt: Date;
-  updatedAt: Date;
   checkedAt: Date | null;   
-  startedAt: Date | null;   
-  completedAt: Date | null; 
   status: AppointmentStatus;
   services: ServiceDetails[];      
   notes?: string;          

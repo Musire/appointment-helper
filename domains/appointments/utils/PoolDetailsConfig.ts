@@ -1,14 +1,8 @@
+import { AppointmentStatus } from "@/generated/prisma";
 import React from "react";
 import { CancelAppointmentButton, CheckinButton, MarkNoshowButton, PendingDetails } from "../components/details";
 import { PendingDetailsProps } from "../components/details/PendingDetails";
 
-export type AppointmentStatus =
-  | "pending"
-  | "checkedin"
-  | "inprogress"
-  | "completed"
-  | "cancelled"
-  | "noshow";
 
 type ActionProps = { 
     appointmentId: string;
@@ -26,7 +20,7 @@ export const APPOINTMENT_STATUS_CONFIG: Record<
     Component: React.ComponentType<PendingDetailsProps>
   }
 > = {
-    pending: {
+    PENDING: {
         actions: [
             { name: 'checkin-button', Component: CheckinButton},
             { name: 'noshow-button', Component: MarkNoshowButton},
@@ -35,27 +29,27 @@ export const APPOINTMENT_STATUS_CONFIG: Record<
         Component: PendingDetails
     },
 
-    checkedin: {
+    CHECKIN: {
         actions: [{ name: 'cancellation-button', Component: CancelAppointmentButton}],
         Component: PendingDetails
     },
 
-    inprogress: {
+    INPROGRESS: {
         actions: [{ name: 'cancellation-button', Component: CancelAppointmentButton}],
         Component: PendingDetails
     },
 
-    completed: {
+    COMPLETED: {
         actions: [],
         Component: PendingDetails
     },
 
-    cancelled: {
+    CANCELLED: {
         actions: [],
         Component: PendingDetails
     },
 
-    noshow: {
+    NOSHOW: {
         actions: [],
         Component: PendingDetails
     },

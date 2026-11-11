@@ -1,8 +1,8 @@
 "use client";
 
+import { ExtendedUserAppointment } from "@/domains/appointments/appointment.types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { ExtendedUserAppointment } from "../components/staff/cards/AppointmentCard";
 
 export type OptionType =
   | "all"
@@ -100,7 +100,7 @@ export default function useHistoryFilters({ items }: Props) {
       const matchesStatus =
         selected.includes("all") || selected.includes(itemStatus);
 
-      const fullName = item.client.name || "";
+      const fullName = item.client.fullName || "";
 
       const matchesSearch = fullName
         .toLowerCase()
