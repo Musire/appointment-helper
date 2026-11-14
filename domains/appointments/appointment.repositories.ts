@@ -1,7 +1,7 @@
 import { AppointmentStatus } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { AppointmentDetails } from "./appointment.types";
-import { AppointmentDetailType, HistoryType, PoolType } from "./appointment.validations";
+import { appointmentCompletionType, AppointmentDetailType, HistoryType, PoolType } from "./appointment.validations";
 
 
 export const AppointmentRepository = {
@@ -109,11 +109,16 @@ export const AppointmentRepository = {
 
     return pool;
   },
-  async getAppointmentDetails ({ id }: AppointmentDetailType) {
+  async getAppointmentDetails({ id }: AppointmentDetailType) {
     const appointment = await prisma.appointment.findUnique({
       where: { id },
       include: {
         client: true,
+        staff: {
+          include: {
+            user: true,
+          },
+        },
         store: true,
         items: {
           include: {
@@ -125,19 +130,26 @@ export const AppointmentRepository = {
 
     if (!appointment) return null;
 
+    const { items, ...appointmentData } = appointment;
+
     const details: AppointmentDetails = {
-      id: appointment.id,
+      ...appointmentData,
+
       client: {
         id: appointment.client.id,
-        name: appointment.client.fullName ?? 'client name'
+        fullName: appointment.client.fullName,
+        email: appointment.client.email,
+        phone: appointment.client.phone,
       },
-      barberId: appointment.staffId,
+
+      staff: {
+        id: appointment.staff.id,
+        fullName: appointment.staff.user.fullName,
+      },
+
       store: appointment.store,
-      scheduledAt: appointment.date,
-      createdAt: appointment.createdAt,
-      checkedAt: appointment.checkedInAt,
-      status: appointment.status,
-      services: appointment.items.map((item) => item.service),
+
+      services: items.map((item) => item.service),
     };
 
     return details;
@@ -181,6 +193,46 @@ export const AppointmentRepository = {
     }));
 
     return futureAppointments;
+  },
+  async checkinAppointment (id: string) {
+    const appointment = await prisma.appointment.update({
+      where: { id },
+      data: {
+        status: 'CHECKIN'
+      }
+    })
+    return appointment
+  },
+  async startService (id: string) {
+    const appointment = await prisma.appointment.update({
+      where: { id },
+      data: {
+        status: 'INPROGRESS'
+      }
+    })
+    return appointment
+  },
+  async completeService(data: appointmentCompletionType) {
+
+    const appointment = await prisma.appointment.update({
+      where: { id: data.appointmentId },
+      data: {
+        status: 'COMPLETED',
+        completedAt: new Date(),
+      },
+    });
+
+    return appointment;
+  },
+  async markNoshow(id: string) {
+    const appointment = await prisma.appointment.update({
+      where: {id},
+      data: {
+        status: "NOSHOW",
+        noshowAt: new Date(),
+      }
+    })
+    return appointment
   }
   
 }

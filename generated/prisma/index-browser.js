@@ -207,7 +207,21 @@ exports.Prisma.AppointmentScalarFieldEnum = {
   endTime: 'endTime',
   status: 'status',
   createdAt: 'createdAt',
-  checkedInAt: 'checkedInAt'
+  checkedInAt: 'checkedInAt',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  cancelledAt: 'cancelledAt',
+  noshowAt: 'noshowAt',
+  duration: 'duration',
+  notes: 'notes',
+  actorId: 'actorId'
+};
+
+exports.Prisma.AppointmentBreakScalarFieldEnum = {
+  id: 'id',
+  appointmentId: 'appointmentId',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt'
 };
 
 exports.Prisma.AppointmentServiceScalarFieldEnum = {
@@ -337,6 +351,7 @@ exports.Prisma.ModelName = {
   StaffAvailability: 'StaffAvailability',
   Service: 'Service',
   Appointment: 'Appointment',
+  AppointmentBreak: 'AppointmentBreak',
   AppointmentService: 'AppointmentService',
   Notification: 'Notification',
   Invite: 'Invite',

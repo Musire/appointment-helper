@@ -2,22 +2,55 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { processAppointmentCheckin } from './appointment.services'
+import { createSafeAction, validateSchema } from '../auth/util/safeAction'
+import { checkinAppointmentService, completeAppointmentService, markNoshowService, startAppointmentService } from './appointment.services'
+import { appointmentCompletionSchema, appointmentCompletionType, appointmentUpdateSchema, appointmentUpdateType } from './appointment.validations'
 
-export async function checkInAppointment(appointmentId: string) {
-  try {
 
-    await processAppointmentCheckin(appointmentId)
-    
-    // 3. Perform framework-specific orchestration
-    revalidatePath('/appointments') 
-    
-    return { success: true }
-  } catch (error) {
-    // Gracefully transform internal domain errors to client-safe messages
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : 'Failed to check in' 
-    }
+export const checkinAppointment = createSafeAction(
+  {
+    allowedRoles: ['STAFF', 'staff']
+  },
+  async (input: appointmentUpdateType) => {
+    const validated = validateSchema(appointmentUpdateSchema, input)
+    const res = checkinAppointmentService(validated)
+    revalidatePath(`/appointment/${validated.appointmentId}`)
+    return res
   }
-}
+)
+
+export const startService = createSafeAction(
+  {
+    allowedRoles: ['STAFF', 'staff']
+  },
+  async (input: appointmentUpdateType) => {
+    const validated = validateSchema(appointmentUpdateSchema, input)
+    const res = startAppointmentService(validated)
+    revalidatePath(`/appointment/${validated.appointmentId}`)
+    return res
+  }
+)
+
+export const completeAppointment = createSafeAction(
+  {
+    allowedRoles: ['STAFF', 'staff']
+  },
+  async (input: appointmentCompletionType) => {
+    const validated = validateSchema(appointmentCompletionSchema, input)
+    const res = completeAppointmentService(validated)
+    revalidatePath(`/appointment/${validated.appointmentId}`)
+    return res
+  }
+)
+
+export const markNoshow = createSafeAction(
+  {
+    allowedRoles: ['STAFF', 'staff']
+  },
+  async (input: appointmentUpdateType) => {
+    const validated = validateSchema(appointmentUpdateSchema, input)
+    const res = markNoshowService(validated)
+    revalidatePath(`/appointment/${validated.appointmentId}`)
+    return res
+  }
+)

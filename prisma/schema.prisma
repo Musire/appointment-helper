@@ -120,23 +120,50 @@ model Service {
 }
 
 model Appointment {
-  id          String               @id @default(uuid())
-  storeId     String
-  staffId     String
-  userId      String
-  date        DateTime // New field for the appointment date (stored as UTC)
-  startTime   Int // Changed from DateTime to Int (0 - 1440)
-  endTime     Int // Changed from DateTime to Int (0 - 1440)
-  status      AppointmentStatus    @default(PENDING)
-  createdAt   DateTime             @default(now())
-  checkedInAt DateTime?
-  staff       StoreStaff           @relation("StaffAppointments", fields: [staffId], references: [id])
-  store       Store                @relation(fields: [storeId], references: [id])
-  client      User                 @relation("UserAppointments", fields: [userId], references: [id])
-  items       AppointmentService[]
+  id        String            @id @default(uuid())
+  storeId   String
+  staffId   String
+  userId    String
+  date      DateTime
+  startTime Int
+  endTime   Int
+  status    AppointmentStatus @default(PENDING)
 
-  @@index([storeId, date, startTime]) // Updated index to include the date field
-  @@index([staffId, date, startTime]) // Updated index to include the date field
+  createdAt DateTime @default(now())
+
+  // Appointment lifecycle timestamps
+  checkedInAt DateTime?
+  startedAt   DateTime?
+  completedAt DateTime?
+  cancelledAt DateTime?
+  noshowAt    DateTime?
+
+  // Service information
+  duration Int?
+  notes    String[] @default([])
+
+  // Who performed the action (e.g. cancellation)
+  actorId String?
+
+  staff  StoreStaff           @relation("StaffAppointments", fields: [staffId], references: [id])
+  store  Store                @relation(fields: [storeId], references: [id])
+  client User                 @relation("UserAppointments", fields: [userId], references: [id])
+  items  AppointmentService[]
+  breaks AppointmentBreak[]
+
+  @@index([storeId, date, startTime])
+  @@index([staffId, date, startTime])
+}
+
+model AppointmentBreak {
+  id            String   @id @default(uuid())
+  appointmentId String
+  startsAt      DateTime
+  endsAt        DateTime
+
+  appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+
+  @@index([appointmentId])
 }
 
 model AppointmentService {

@@ -19,7 +19,7 @@ export default function DetailSection ({
     children 
 }: SectionProps) {
     return (
-        <section className="p-4 bg-surface-1 stacked space-y-2">
+        <section className="p-4 bg-surface-1 rounded-lg stacked space-y-2">
             {title && <H3 className="">{title}</H3>}
             <div className={`stacked space-y-2 ${className}`}>
                 {children}

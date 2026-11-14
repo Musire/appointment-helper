@@ -34,6 +34,49 @@ export function toMeridiem(totalSeconds: number): string {
   return `${paddedHours}:${paddedMinutes} ${meridiem}`;
 }
 
+
+export function formatIsoDate(
+  isoString: string, 
+  locale: string = 'en-US'
+): string {
+  const date = new Date(isoString);
+
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    return 'Invalid Date';
+  }
+
+  return new Intl.DateTimeFormat(locale, {
+    year: 'numeric',
+    month: 'short', // Use 'long' for "November", '2-digit' for "11"
+    day: 'numeric',
+  }).format(date);
+}
+
+export function formatDateTime(
+  date: Date,
+  locale: string = 'en-US'
+): string {
+  // Check if the passed Date object is valid
+  if (!(date instanceof Date) || isNaN(date.getTime())) {
+    return 'Invalid Date';
+  }
+
+  const formattedDate = new Intl.DateTimeFormat(locale, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(date);
+
+  const formattedTime = new Intl.DateTimeFormat(locale, {
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(date);
+
+  return `${formattedDate} · ${formattedTime}`;
+}
+
+
 export function formatToAppTime(startsAt: number, endsAt: number): string {
   const startTime = toMeridiem(startsAt);
   const endTime = toMeridiem(endsAt);

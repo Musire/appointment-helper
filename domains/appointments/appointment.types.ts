@@ -1,4 +1,4 @@
-import { Appointment, AppointmentStatus } from "@/generated/prisma";
+import { Appointment, AppointmentStatus, Service, Store } from "@/generated/prisma";
 
 // This represents a single Service object
 export type ServiceMock = {
@@ -39,7 +39,32 @@ export type ServiceDetails = {
   name: string;
 }
 
-export type AppointmentDetails = {
+
+export type AppointmentDetails = Appointment & {
+  client: {
+    id: string;
+    fullName: string | null;
+    email: string;
+    phone: string | null;
+  };
+
+  store: Store;
+
+  staff: {
+    id: string;
+    fullName: string | null;
+  };
+
+  services: Service[];
+
+  breaks: {
+    id: string;
+    startsAt: Date;
+    endsAt: Date;
+  }[];
+};
+
+export type AppointmentBase = {
   id: string;
   client: ClientDetails;
   barberId: string;        
@@ -51,6 +76,7 @@ export type AppointmentDetails = {
   services: ServiceDetails[];      
   notes?: string;          
 };
+
 
 export type AppointmentHistoryItem = {
   id: string

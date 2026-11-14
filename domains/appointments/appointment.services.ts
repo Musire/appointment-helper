@@ -2,7 +2,7 @@
 import { AppointmentStatus } from "@/generated/prisma";
 import { getCurrentUser, getPrismaUserId } from "../auth/util/session";
 import { AppointmentRepository } from "./appointment.repositories";
-import { AppointmentDetailType, HistoryType, PoolType } from "./appointment.validations";
+import { appointmentCompletionType, AppointmentDetailType, appointmentUpdateType, HistoryType, PoolType } from "./appointment.validations";
 
 export async function processAppointmentCheckin(appointmentId: string): Promise<void> {
   const appointment = await AppointmentRepository.findAppointmentById(appointmentId);
@@ -61,4 +61,22 @@ export async function getFutureAppointmentService () {
   const userId = await getPrismaUserId()
   if (!userId) throw new Error('No user found in prisma')
   return AppointmentRepository.getFutureUserAppointments(userId)
+}
+
+//appointment mutations
+
+export async function checkinAppointmentService(data: appointmentUpdateType) {
+  return AppointmentRepository.checkinAppointment(data.appointmentId)
+}
+
+export async function startAppointmentService(data: appointmentUpdateType) {
+  return AppointmentRepository.startService(data.appointmentId)
+}
+
+export async function completeAppointmentService(data: appointmentCompletionType) {
+  return AppointmentRepository.completeService(data)
+}
+
+export async function markNoshowService (data: appointmentUpdateType) {
+  return AppointmentRepository.markNoshow(data.appointmentId)
 }
