@@ -51,7 +51,7 @@ export default function AppointmentCard({
 
                 {/* Bottom left: Time and date */}
                 <BodySm className="text-else whitespace-nowrap text-xs">
-                    {toMeridiem(appointment.startTime)}
+                    {toMeridiem(appointment.startTime *60)}
                     {" · "}
                     {formattedDate}
                 </BodySm>

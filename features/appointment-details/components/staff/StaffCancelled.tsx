@@ -27,7 +27,7 @@ export default function StaffCancelled ({ appointment }: Props) {
                 <p className="w-full spaced">
                     <span className="text-sm text-else">Cancelled</span>
                     <span className="text-error">
-                        {appointment.noshowAt && formatDateTime(appointment.noshowAt)}</span>
+                        {appointment.cancelledAt && formatDateTime(appointment.cancelledAt)}</span>
                 </p>
             </div>
         </div>

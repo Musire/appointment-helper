@@ -1,6 +1,6 @@
 'use client';
 
-import { markNoshow } from "@/domains/appointments/appointment.actions";
+import { cancelAppointment } from "@/domains/appointments/appointment.actions";
 
 type Props = {
   appointmentId: string
@@ -8,7 +8,7 @@ type Props = {
 
 export default function CancelledButton ({ appointmentId }: Props) {
     const handleClick = (appointmentId: string) => {
-        markNoshow({ appointmentId })
+        cancelAppointment({ appointmentId })
         console.log(appointmentId)
     }
     return (
@@ -17,7 +17,7 @@ export default function CancelledButton ({ appointmentId }: Props) {
             type="button" 
             className="w-full bg-error/20 h-16 border border-error text-error normal-space rounded-lg cursor-pointer"
         >
-            Test No-show
+            Test Cancel
         </button>
     );
 }

@@ -48,7 +48,6 @@ export async function getPoolService (data: PoolType) {
     throw new Error("Unauthorized role");
   }
 
-  console.log(data)
 
   return AppointmentRepository.getPool(payload)
 }
@@ -79,4 +78,8 @@ export async function completeAppointmentService(data: appointmentCompletionType
 
 export async function markNoshowService (data: appointmentUpdateType) {
   return AppointmentRepository.markNoshow(data.appointmentId)
+}
+
+export async function cancelAppointmentService (data: appointmentUpdateType) {
+  return AppointmentRepository.cancelAppointment(data.appointmentId)
 }

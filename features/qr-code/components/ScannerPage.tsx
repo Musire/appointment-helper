@@ -16,30 +16,15 @@ export default function ScannerPage() {
 
     const scannerRef = useRef<any>(null);
     const isProcessingRef = useRef(false);
-    const isMountedRef = useRef(false);
+    const scannerOperationRef = useRef<Promise<void>>(Promise.resolve());
+    const generationRef = useRef(0);
 
     const [error, setError] = useState('');
     const [message, setMessage] = useState(
         'Waiting for appointment QR code...'
     );
 
-    const stopScanner = useCallback(async () => {
-        const scanner = scannerRef.current;
-
-        if (!scanner) return;
-
-        // Clear the ref immediately to prevent duplicate stop calls.
-        scannerRef.current = null;
-
-        try {
-            await scanner.stop();
-        } catch {}
-
-        try {
-            scanner.clear();
-        } catch {}
-    }, []);
-
+    // Validate appointment QR payload.
     const isAppointmentQr = (
         payload: unknown
     ): payload is AppointmentQrPayload => {
@@ -52,110 +37,171 @@ export default function ScannerPage() {
         );
     };
 
+    // Stop and clear scanner sequentially.
+    const stopScanner = useCallback(async () => {
+        const operation = scannerOperationRef.current
+            .catch(() => {})
+            .then(async () => {
+                const scanner = scannerRef.current;
+
+                if (!scanner) return;
+
+                try {
+                    await scanner.stop();
+                } catch (err) {
+                    console.warn('Scanner stop:', err);
+                }
+
+                try {
+                    scanner.clear();
+                } catch (err) {
+                    console.warn('Scanner clear:', err);
+                }
+
+                if (scannerRef.current === scanner) {
+                    scannerRef.current = null;
+                }
+            });
+
+        scannerOperationRef.current = operation;
+
+        await operation;
+    }, []);
+
+    // Handle successfully decoded QR codes.
     const handleScan = useCallback(
         async (decodedText: string) => {
             if (isProcessingRef.current) return;
 
+            let payload: unknown;
+
             try {
-                const payload = JSON.parse(decodedText);
-
-                if (!isAppointmentQr(payload)) return;
-
-                isProcessingRef.current = true;
-
-                setMessage('Valid appointment found. Redirecting...');
-
-                await stopScanner();
-
-                router.push(
-                    `/staff/dashboard/checkin/${payload.appointmentId}`
-                );
+                payload = JSON.parse(decodedText);
             } catch {
-                // Ignore QR codes that are not valid appointment payloads.
+                return;
             }
+
+            if (!isAppointmentQr(payload)) return;
+
+            isProcessingRef.current = true;
+
+            setMessage('Valid appointment found. Redirecting...');
+
+            await stopScanner();
+
+            router.push(
+                `/staff/dashboard/checkin/${payload.appointmentId}`
+            );
         },
         [router, stopScanner]
     );
 
-    const startScanner = useCallback(async () => {
-        if (!isMountedRef.current) return;
+    // Start scanner with lifecycle protection.
+    const startScanner = useCallback(
+        async (generation: number) => {
+            const operation = scannerOperationRef.current
+                .catch(() => {})
+                .then(async () => {
+                    if (generation !== generationRef.current) return;
 
-        try {
-            const { Html5Qrcode } = await import('html5-qrcode');
+                    if (scannerRef.current) return;
 
-            // Component may have unmounted during the import.
-            if (!isMountedRef.current) return;
+                    const { Html5Qrcode } = await import('html5-qrcode');
 
-            const scanner = new Html5Qrcode(elementId);
+                    if (generation !== generationRef.current) return;
 
-            scannerRef.current = scanner;
-            isProcessingRef.current = false;
+                    const scanner = new Html5Qrcode(elementId);
 
-            await scanner.start(
-                {
-                    facingMode: 'environment',
-                },
-                {
-                    fps: 10,
-                    qrbox: {
-                        width: 250,
-                        height: 250,
-                    },
-                },
-                handleScan,
-                () => {
-                    // Ignore scan failures.
-                }
-            );
-        } catch (err) {
-            console.error(err);
+                    scannerRef.current = scanner;
 
-            if (isMountedRef.current) {
+                    try {
+                        await scanner.start(
+                            { facingMode: 'environment' },
+                            {
+                                fps: 10,
+                                qrbox: {
+                                    width: 250,
+                                    height: 250,
+                                },
+                            },
+                            handleScan,
+                            () => {}
+                        );
+                    } catch (err) {
+                        // Release scanner instance if initialization fails.
+                        if (scannerRef.current === scanner) {
+                            try {
+                                scanner.clear();
+                            } catch {}
+
+                            scannerRef.current = null;
+                        }
+
+                        throw err;
+                    }
+                });
+
+            scannerOperationRef.current = operation;
+
+            try {
+                await operation;
+            } catch (err) {
+                if (generation !== generationRef.current) return;
+
+                console.error('Scanner initialization:', err);
+
                 setError('Unable to access camera or start scanner.');
+                
+                await stopScanner();
             }
-        }
-    }, [handleScan]);
+        },
+        [handleScan, stopScanner]
+    );
 
+    // Initialize and clean up scanner.
     useEffect(() => {
-        isMountedRef.current = true;
+        const generation = ++generationRef.current;
+        const currentGeneration = generation;
 
-        const initialize = async () => {
-            // State updates happen asynchronously, outside the effect body.
-            await Promise.resolve();
+        isProcessingRef.current = false;
 
-            if (!isMountedRef.current) return;
-
-            setError('');
-            setMessage('Waiting for appointment QR code...');
-
-            await startScanner();
-        };
-
-        initialize();
+        void startScanner(generation);
 
         return () => {
-            isMountedRef.current = false;
+            // Invalidate pending initialization.
+            if (generationRef.current === currentGeneration) {
+                generationRef.current = currentGeneration + 1;
+            }
+
             void stopScanner();
         };
     }, [startScanner, stopScanner]);
 
+    // Restart scanner manually.
     const handleRestart = async () => {
-        await stopScanner();
+        isProcessingRef.current = false;
 
         setError('');
         setMessage('Waiting for appointment QR code...');
 
-        await startScanner();
+        const generation = ++generationRef.current;
+
+        await stopScanner();
+
+        if (generation !== generationRef.current) return;
+
+        await startScanner(generation);
     };
 
     return (
-        <div className="flex min-h-screen flex-col items-center justify-center bg-black p-4">
+        <div className="flex flex-1 flex-col items-center justify-center bg-background p-6">
             <div className="w-full max-w-md space-y-4">
-                <div className="overflow-hidden rounded-xl border border-zinc-700 bg-zinc-950">
+
+                <div className="overflow-hidden rounded-xl border border-border bg-surface-1">
                     <div
                         id={elementId}
                         className="
-                            min-h-[350px]
+                            min-h-87.5
                             [&_video]:w-full
                             [&_video]:h-full
                             [&_video]:object-cover
@@ -170,17 +216,18 @@ export default function ScannerPage() {
                 </div>
 
                 {error && (
-                    <div className="rounded-lg border border-red-500 bg-red-950 p-4">
-                        <p className="text-red-300">{error}</p>
+                    <div className="rounded-lg border border-error text-error bg-darken-8/error p-4">
+                        <p>{error}</p>
                     </div>
                 )}
 
                 <button
                     onClick={handleRestart}
-                    className="w-full rounded-lg bg-blue-600 py-3 font-medium text-white hover:bg-blue-700"
+                    className="w-full rounded-lg bg-blue-600 normal-space h-16 font-medium text-white cursor-pointer hover:bg-blue-700"
                 >
                     Restart Scanner
                 </button>
+
             </div>
         </div>
     );

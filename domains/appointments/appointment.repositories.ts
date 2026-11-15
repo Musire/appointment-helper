@@ -125,12 +125,13 @@ export const AppointmentRepository = {
             service: true,
           },
         },
+        breaks: true,
       },
     });
 
     if (!appointment) return null;
 
-    const { items, ...appointmentData } = appointment;
+    const { items, breaks, ...appointmentData } = appointment;
 
     const details: AppointmentDetails = {
       ...appointmentData,
@@ -150,6 +151,12 @@ export const AppointmentRepository = {
       store: appointment.store,
 
       services: items.map((item) => item.service),
+
+      breaks: breaks.map((item) => ({
+        id: item.id,
+        startsAt: item.startsAt,
+        endsAt: item.endsAt,
+      })),
     };
 
     return details;
@@ -233,6 +240,16 @@ export const AppointmentRepository = {
       }
     })
     return appointment
-  }
+  },
+  async cancelAppointment(id: string) {
+    const appointment = await prisma.appointment.update({
+      where: {id},
+      data: {
+        status: "CANCELLED",
+        cancelledAt: new Date(),
+      }
+    })
+    return appointment
+  },
   
 }

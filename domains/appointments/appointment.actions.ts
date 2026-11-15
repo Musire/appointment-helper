@@ -3,7 +3,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { createSafeAction, validateSchema } from '../auth/util/safeAction'
-import { checkinAppointmentService, completeAppointmentService, markNoshowService, startAppointmentService } from './appointment.services'
+import { cancelAppointmentService, checkinAppointmentService, completeAppointmentService, markNoshowService, startAppointmentService } from './appointment.services'
 import { appointmentCompletionSchema, appointmentCompletionType, appointmentUpdateSchema, appointmentUpdateType } from './appointment.validations'
 
 
@@ -50,6 +50,18 @@ export const markNoshow = createSafeAction(
   async (input: appointmentUpdateType) => {
     const validated = validateSchema(appointmentUpdateSchema, input)
     const res = markNoshowService(validated)
+    revalidatePath(`/appointment/${validated.appointmentId}`)
+    return res
+  }
+)
+
+export const cancelAppointment = createSafeAction(
+  {
+    allowedRoles: ['STAFF', 'staff']
+  },
+  async (input: appointmentUpdateType) => {
+    const validated = validateSchema(appointmentUpdateSchema, input)
+    const res = cancelAppointmentService(validated)
     revalidatePath(`/appointment/${validated.appointmentId}`)
     return res
   }

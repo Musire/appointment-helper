@@ -6,7 +6,7 @@ export type ServiceBreak = {
   endedAt: string | null;
 };
 
-type ServiceCompletion = {
+export type ServiceCompletion = {
   serviceStartedAt: string;
   completedAt: string;
   durationSeconds: number;
@@ -19,19 +19,9 @@ export function useServiceTimer() {
   const [runningSince, setRunningSince] = useState<string | null>(null);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [breaks, setBreaks] = useState<ServiceBreak[]>([]);
-  const [now, setNow] = useState(Date.now());
+  const [now, setNow] = useState(0);
 
-  // Automatically start the service when the hook mounts.
-  useEffect(() => {
-    const timestamp = new Date().toISOString();
-
-    setServiceStartedAt(timestamp);
-    setRunningSince(timestamp);
-    setIsRunning(true);
-    setNow(Date.now());
-  }, []);
-
-  // Keep timer and active break durations updated.
+  // Keep timer updated.
   useEffect(() => {
     const interval = setInterval(() => {
       setNow(Date.now());
@@ -43,7 +33,7 @@ export function useServiceTimer() {
   // Total active service time.
   const elapsed =
     elapsedSeconds +
-    (isRunning && runningSince
+    (isRunning && runningSince && now
       ? Math.floor(
           (now - new Date(runningSince).getTime()) / 1000
         )
@@ -51,8 +41,22 @@ export function useServiceTimer() {
 
   const isOnBreak = !isRunning && serviceStartedAt !== null;
 
+  // Start service.
+  function startTimer() {
+    if (serviceStartedAt) return;
+
+    const currentTime = Date.now();
+    const timestamp = new Date(currentTime).toISOString();
+
+    setServiceStartedAt(timestamp);
+    setRunningSince(timestamp);
+    setIsRunning(true);
+    setNow(currentTime);
+  }
+
+  // Pause service.
   function pauseTimer() {
-    if (!runningSince) return;
+    if (!runningSince || !isRunning) return;
 
     const currentTime = Date.now();
     const timestamp = new Date(currentTime).toISOString();
@@ -61,10 +65,8 @@ export function useServiceTimer() {
       (currentTime - new Date(runningSince).getTime()) / 1000
     );
 
-    // Preserve accumulated service time.
     setElapsedSeconds((prev) => prev + sessionSeconds);
 
-    // Record a new break.
     setBreaks((prev) => [
       ...prev,
       {
@@ -78,13 +80,13 @@ export function useServiceTimer() {
     setNow(currentTime);
   }
 
+  // Resume service.
   function resumeTimer() {
     if (!serviceStartedAt || isRunning) return;
 
     const currentTime = Date.now();
     const timestamp = new Date(currentTime).toISOString();
 
-    // Close the latest break.
     setBreaks((prev) =>
       prev.map((item, index) =>
         index === prev.length - 1 && item.endedAt === null
@@ -93,13 +95,48 @@ export function useServiceTimer() {
       )
     );
 
-    // Resume without resetting elapsed time.
     setRunningSince(timestamp);
     setIsRunning(true);
     setNow(currentTime);
   }
 
-  
+  // Complete service.
+  function completeTimer(): ServiceCompletion | null {
+    if (!serviceStartedAt) return null;
+
+    const currentTime = Date.now();
+    const timestamp = new Date(currentTime).toISOString();
+
+    let finalElapsed = elapsedSeconds;
+    let finalBreaks = breaks;
+
+    if (isRunning && runningSince) {
+      finalElapsed += Math.floor(
+        (currentTime - new Date(runningSince).getTime()) / 1000
+      );
+    } else if (isOnBreak) {
+      finalBreaks = breaks.map((item, index) =>
+        index === breaks.length - 1 && item.endedAt === null
+          ? { ...item, endedAt: timestamp }
+          : item
+      );
+    }
+
+    const completion: ServiceCompletion = {
+      serviceStartedAt,
+      completedAt: timestamp,
+      durationSeconds: finalElapsed,
+      breaks: finalBreaks,
+    };
+
+    setIsRunning(false);
+    setRunningSince(null);
+    setElapsedSeconds(finalElapsed);
+    setBreaks(finalBreaks);
+    setNow(currentTime);
+
+    return completion;
+  }
 
   return {
     isRunning,
@@ -108,7 +145,9 @@ export function useServiceTimer() {
     elapsed,
     breaks,
     now,
+    startTimer,
     pauseTimer,
     resumeTimer,
+    completeTimer,
   };
 }

@@ -55,7 +55,7 @@ export default function AccountStatus({
         onCloseAutoFocus={(e) => e.preventDefault()}
         align="end"
         side="bottom"
-        sideOffset={8}
+        sideOffset={20}
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
         className="w-72 space-y-4 rounded-xl bg-surface-1 text-main"

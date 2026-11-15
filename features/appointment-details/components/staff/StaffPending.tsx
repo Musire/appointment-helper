@@ -9,6 +9,7 @@ import { EllipsisVertical } from "lucide-react";
 import AppointmentHeader from "../shared/AppointmentHeader";
 import CheckinButton from "../shared/CheckinButton";
 import NoshowButton from "../shared/NoshowButton";
+import CancelledButton from "../shared/CancelledButton";
 
 type Props = {
   appointment: AppointmentDetails
@@ -27,7 +28,7 @@ export default function StaffPending ({ appointment }: Props) {
         },
         {
             name: 'test cancelled',
-            Component: () => null
+            Component: () => <CancelledButton appointmentId={appointment.id} />
         }
     ]
     return (
