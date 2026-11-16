@@ -1,6 +1,6 @@
 'use client';
 
-import { ExtendedUserAppointment } from "@/domains/appointments/appointment.types";
+import { AppointmentDetails } from "@/domains/appointments/appointment.types";
 import usePoolFilters from "../usePoolFilters";
 import FilterComponent from "./FilterComponent";
 import PoolDisplay from "./PoolDisplay";
@@ -15,7 +15,7 @@ export type OptionType = 'all' |
 
 
 type Props = {
-    appointments: ExtendedUserAppointment[]
+    appointments: AppointmentDetails[]
 }
 
 export default function PoolPage ({ 

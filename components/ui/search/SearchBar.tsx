@@ -9,7 +9,7 @@ export type SearchBarProps = {
 
 export default function SearchBar ({ query, setQuery }: SearchBarProps) {
     return (
-        <div className="relative">
+        <div className="relative ">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
 
             <input
@@ -17,7 +17,7 @@ export default function SearchBar ({ query, setQuery }: SearchBarProps) {
                 value={query}
                 onChange={e => setQuery(e.target.value)}
                 placeholder="Search..."
-                className="w-full rounded-md border px-9 py-2 text-sm focus:outline-none focus:ring-2"
+                className="w-full rounded-md border border-border px-9 py-2 text-sm "
             />
 
             {query && (

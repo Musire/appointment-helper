@@ -38,7 +38,7 @@ export default function PaginationDisplay<T>({
     };
 
     return (
-        <div className="flex flex-1 flex-col justify-between overflow-y-hidden">
+        <div className="flex flex-1  flex-col justify-between overflow-y-hidden">
 
             {/* Scrollable grid/list container */}
             <div className={`flex-1 overflow-y-auto scrollbar-adjust pr-2 ${containerClassName}`}>

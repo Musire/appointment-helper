@@ -52,7 +52,6 @@ export type AppointmentDetails = Appointment & {
 
   staff: {
     id: string;
-    fullName: string | null;
   };
 
   services: Service[];

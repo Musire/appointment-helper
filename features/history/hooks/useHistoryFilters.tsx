@@ -1,6 +1,6 @@
 "use client";
 
-import { ExtendedUserAppointment } from "@/domains/appointments/appointment.types";
+import { AppointmentDetails } from "@/domains/appointments/appointment.types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
@@ -21,7 +21,7 @@ const options: OptionType[] = [
 ];
 
 type Props = {
-  items: ExtendedUserAppointment[];
+  items: AppointmentDetails[];
 };
 
 export type DateRangeValue = {

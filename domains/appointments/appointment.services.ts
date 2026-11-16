@@ -30,7 +30,23 @@ export async function processAppointmentCheckin(appointmentId: string): Promise<
 }
 
 export async function getHistoryService (data: HistoryType) {
-  return AppointmentRepository.getHistory(data)
+  const user = await getCurrentUser()
+
+  if (!user) throw new Error('no user found')
+
+  let payload
+
+  if (user.role === "STAFF") {
+    payload = { ...data, staffId: user.id };
+  } else if (user.role === "USER") {
+    payload = { ...data, userId: user.id };
+  } else {
+    throw new Error("Unauthorized role");
+  }
+
+  const res = await AppointmentRepository.getHistory(payload)
+
+  return res
 }
 
 export async function getPoolService (data: PoolType) {

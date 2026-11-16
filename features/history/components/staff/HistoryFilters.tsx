@@ -31,7 +31,7 @@ export default function HistoryFilters ({
     setSearchQuery
 }: Props) {
     return (
-        <div className="flex flex-col space-y-2">
+        <div className="flex flex-col space-y-2 px-1">
             <div className="spaced">
                 <DatePickerButton 
                     selectedDate={selectedDate} 

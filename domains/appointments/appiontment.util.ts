@@ -1,7 +1,7 @@
-import { AppointmentMetrics, ExtendedUserAppointment } from "./appointment.types";
+import { AppointmentDetails, AppointmentMetrics } from "./appointment.types";
 
 
-export function getAppointmentMetrics(appointments: ExtendedUserAppointment[]): AppointmentMetrics {
+export function getAppointmentMetrics(appointments: AppointmentDetails[]): AppointmentMetrics {
   return appointments.reduce<AppointmentMetrics>(
     (acc, current) => {
       if (current.status === "PENDING") acc.pending++;

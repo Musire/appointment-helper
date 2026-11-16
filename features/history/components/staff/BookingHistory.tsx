@@ -1,14 +1,44 @@
-import { ExtendedUserAppointment } from "@/domains/appointments/appointment.types";
+'use client';
+
+import { AppointmentDetails } from "@/domains/appointments/appointment.types";
+import AppointmentCard from "@/features/history/components/staff/cards/AppointmentCard";
+import HistoryFilters from "@/features/history/components/staff/HistoryFilters";
+import PaginationDisplay from "@/features/history/components/staff/PaginationDisplay";
+import useHistoryFilters from "@/features/history/hooks/useHistoryFilters";
 
 type Props = {
-    history: ExtendedUserAppointment[]
-}
+  appointments: AppointmentDetails[];
+};
 
-export default function BookingHistory({ history }: Props) {
+export default function BookingHistory({ appointments }: Props) {
+    const {
+        options,
+        selected,
+        selectedDate,
+        searchQuery,
+        setSearchQuery,
+        handleSelect,
+        handleDateSelect,
+        filteredItems, 
+    } = useHistoryFilters({ items: appointments });
 
     return (
-        <div className=" grid grid-cols-1 md:grid-cols-2 py-4 gap-8 ">
-            <p className="">pending</p>
+        <div className="stacked pt-6 flex flex-1 overflow-hidden ">
+            <HistoryFilters 
+                selectedDate={selectedDate}
+                handleDateSelect={handleDateSelect}
+                options={options}
+                selected={selected}
+                handleSelect={handleSelect}
+                searchQuery={searchQuery} 
+                setSearchQuery={setSearchQuery} 
+            />
+            <PaginationDisplay 
+                items={filteredItems} 
+                renderItem={(appointment: AppointmentDetails) => (
+                    <AppointmentCard key={appointment.id} appointment={appointment} />    
+                )}    
+            />
         </div>
     );
 }

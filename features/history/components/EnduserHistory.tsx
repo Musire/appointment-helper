@@ -6,17 +6,24 @@ export default async function EnduserHistory () {
     const selectedDate = new Date();
 
     const from = new Date(selectedDate);
+    const day = from.getDay();
+    const diff = day === 0 ? -6 : 1 - day;
+
+    from.setDate(from.getDate() + diff);
     from.setHours(0, 0, 0, 0);
 
-    const to = new Date(selectedDate);
-    to.setHours(23, 59, 59, 999);
+    // Monday of the following week
+    const to = new Date(from);
+    to.setDate(to.getDate() + 7);
+    to.setHours(0, 0, 0, 0);
 
     const payload = {
         from: from.toISOString(),
         to: to.toISOString(),
     };
-    const { data: appointments } = await getAppointmentHistory(payload)
+    const { data: appointments, error } = await getAppointmentHistory(payload)
 
+    console.log(error)
     if (!appointments) return (
         <section className="">
             <p className="">not found data</p>
@@ -24,8 +31,8 @@ export default async function EnduserHistory () {
     )
     
     return (
-        <div className="pt-6 w-full ">
-            <BookingHistory history={appointments} />
+        <div className="px-6 w-full flex flex-1 ">
+            <BookingHistory appointments={appointments} />
         </div>
     );
 }

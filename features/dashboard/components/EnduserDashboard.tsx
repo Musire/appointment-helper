@@ -1,14 +1,9 @@
-import { ExtendedUserAppointment } from "@/domains/appointments/appointment.types";
+import { AppointmentDetails } from "@/domains/appointments/appointment.types";
 import AppointmentCard from "@/features/history/components/staff/cards/AppointmentCard";
 
-export type MockAppointmentCard = {
-    id: string;
-    href: string;
-    value: string;
-}
 
 type Props = {
-  appointments: ExtendedUserAppointment[]
+  appointments: AppointmentDetails[]
 }
 
 

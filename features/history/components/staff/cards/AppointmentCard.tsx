@@ -1,19 +1,19 @@
 
 import { Body, BodySm } from "@/components/ui";
 import { StatusPill } from "@/components/ui/pills";
-import { ExtendedUserAppointment } from "@/domains/appointments/appointment.types";
+import { AppointmentDetails } from "@/domains/appointments/appointment.types";
 import { toMeridiem } from "@/lib/utils/timeConversion";
 import Link from "next/link";
 
 
 type Props = {
-    appointment: ExtendedUserAppointment;
+    appointment: AppointmentDetails;
 };
 
 export default function AppointmentCard({
     appointment,
 }: Props) {
-    const serviceCount = appointment.items.length
+    const serviceCount = appointment?.services?.length
 
     const formattedDate = appointment.date.toLocaleDateString(
         "en-US",

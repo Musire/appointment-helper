@@ -1,9 +1,9 @@
-import { ExtendedUserAppointment } from "@/domains/appointments/appointment.types";
+import { AppointmentDetails } from "@/domains/appointments/appointment.types";
 import AppointmentCard from "@/features/history/components/staff/cards/AppointmentCard";
 import { RefreshCw } from "lucide-react";
 
 type Props = {
-    appointments: ExtendedUserAppointment[];
+    appointments: AppointmentDetails[];
     loading: boolean;
 }
 

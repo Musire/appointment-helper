@@ -22,89 +22,102 @@ export const AppointmentRepository = {
   },
   async getHistory({ from, to, userId, staffId }: HistoryType) {
     const appointments = await prisma.appointment.findMany({
-      where: {
-        date: {
-          gte: from,
-          lte: to,
-        },
-        ...(userId && { userId }),
-        ...(staffId && {
-          staff: {
-            userId: staffId,
-          },
-        }),
-        status: {
-          in: ["COMPLETED", "CANCELLED", "NOSHOW"],
-        },
-      },
-      include: {
-        client: {
-          select: {
-            fullName: true,
-          },
-        },
-        items: {
-          include: {
-            service: {
-              select: {
-                name: true,
-              },
+        where: {
+            date: {
+                gte: from,
+                lt: to,
             },
-          },
+            ...(userId && { userId }),
+            ...(staffId && {
+                staff: {
+                    userId: staffId,
+                },
+            }),
+            status: {
+                in: ["COMPLETED", "CANCELLED", "NOSHOW"],
+            },
         },
-      },
-      orderBy: [
-        { date: "asc" },
-        { startTime: "asc" },
-      ],
+        include: {
+            client: {
+                select: {
+                    id: true,
+                    fullName: true,
+                    email: true,
+                    phone: true,
+                },
+            },
+            store: true,
+            staff: {
+                select: {
+                    id: true,
+                },
+            },
+            items: {
+                include: {
+                    service: true,
+                },
+            },
+            breaks: true,
+        },
+        orderBy: [
+            { date: "asc" },
+            { startTime: "asc" },
+        ],
     });
-    const history = appointments.map((appointment) => ({
-      ...appointment,
-      items: appointment.items.map((item) => item.service.name),
+
+    const history = appointments.map(({ items, ...appointment }) => ({
+        ...appointment,
+        services: items.map(item => item.service),
     }));
     return history
   },
   async getPool({ from, to, userId, staffId }: PoolType) {
     const appointments = await prisma.appointment.findMany({
-      where: {
-        date: {
-          gte: from,
-          lte: to,
-        },
-        ...(userId && { userId }),
-        ...(staffId && {
-          staff: {
-            userId: staffId,
-          },
-        }),
-        status: {
-          in: ["PENDING", "CHECKIN", "INPROGRESS"],
-        },
-      },
-      include: {
-        client: {
-          select: {
-            fullName: true,
-          },
-        },
-        items: {
-          include: {
-            service: {
-              select: {
-                name: true,
-              },
+        where: {
+            date: {
+                gte: from,
+                lt: to,
             },
-          },
+            ...(userId && { userId }),
+            ...(staffId && {
+                staff: {
+                    userId: staffId,
+                },
+            }),
+            status: {
+                in: ["PENDING", "INPROGRESS", "CHECKIN"],
+            },
         },
-      },
-      orderBy: [
-        { date: "asc" },
-        { startTime: "asc" },
-      ],
+        include: {
+            client: {
+                select: {
+                    id: true,
+                    fullName: true,
+                    email: true,
+                    phone: true,
+                },
+            },
+            store: true,
+            staff: {
+                select: {
+                    id: true,
+                },
+            },
+            items: {
+                include: {
+                    service: true,
+                },
+            },
+            breaks: true,
+        },
+        orderBy: [
+            { date: "asc" },
+            { startTime: "asc" },
+        ],
     });
     const pool = appointments.map((appointment) => ({
-      ...appointment,
-      items: appointment.items.map((item) => item.service.name),
+        ...appointment,
+        services: appointment.items.map((item) => item.service),
     }));
 
     return pool;
@@ -145,7 +158,6 @@ export const AppointmentRepository = {
 
       staff: {
         id: appointment.staff.id,
-        fullName: appointment.staff.user.fullName,
       },
 
       store: appointment.store,
@@ -166,37 +178,43 @@ export const AppointmentRepository = {
     today.setHours(0, 0, 0, 0);
 
     const appointments = await prisma.appointment.findMany({
-      where: {
-        userId,
-        date: {
-          gte: today,
-        },
-      },
-      include: {
-        client: {
-          select: {
-            fullName: true,
-          },
-        },
-        items: {
-          include: {
-            service: {
-              select: {
-                name: true,
-              },
+        where: {
+            userId,
+            date: {
+                gte: today,
             },
-          },
         },
-      },
-      orderBy: [
-        { date: "asc" },
-        { startTime: "asc" },
-      ],
+        include: {
+            client: {
+                select: {
+                    id: true,
+                    fullName: true,
+                    email: true,
+                    phone: true,
+                },
+            },
+            store: true,
+            staff: {
+                select: {
+                    id: true,
+                },
+            },
+            items: {
+                include: {
+                    service: true,
+                },
+            },
+            breaks: true,
+        },
+        orderBy: [
+            { date: "asc" },
+            { startTime: "asc" },
+        ],
     });
 
-    const futureAppointments = appointments.map((appointment) => ({
-      ...appointment,
-      items: appointment.items.map((item) => item.service.name),
+    const futureAppointments = appointments.map(({ items, ...appointment }) => ({
+        ...appointment,
+        services: items.map((item) => item.service),
     }));
 
     return futureAppointments;

@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { useState, useTransition } from 'react';
 
 import { getAppointmentPool } from '../appointments/appointment.queries';
-import type { ExtendedUserAppointment } from '../appointments/appointment.types';
+import type { AppointmentDetails } from '../appointments/appointment.types';
 
 export type OptionType =
   | 'all'
@@ -27,14 +27,14 @@ const options: OptionType[] = [
 ];
 
 type Props = {
-  appointments: ExtendedUserAppointment[];
+  appointments: AppointmentDetails[];
 };
 
 export default function usePoolFilters({
   appointments: initialAppointments,
 }: Props) {
   const [appointments, setAppointments] =
-    useState<ExtendedUserAppointment[]>(initialAppointments);
+    useState<AppointmentDetails[]>(initialAppointments);
 
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format('YYYY-MM-DD')

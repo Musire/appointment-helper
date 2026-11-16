@@ -1,13 +1,13 @@
 'use client';
 
-import { ExtendedUserAppointment } from "@/domains/appointments/appointment.types";
+import { AppointmentDetails } from "@/domains/appointments/appointment.types";
 import AppointmentCard from "@/features/history/components/staff/cards/AppointmentCard";
 import HistoryFilters from "@/features/history/components/staff/HistoryFilters";
 import PaginationDisplay from "@/features/history/components/staff/PaginationDisplay";
 import useHistoryFilters from "@/features/history/hooks/useHistoryFilters";
 
 type Props = {
-  appointments: ExtendedUserAppointment[];
+  appointments: AppointmentDetails[];
 };
 
 export default function StaffHistory({ appointments }: Props) {
@@ -35,7 +35,7 @@ export default function StaffHistory({ appointments }: Props) {
             />
             <PaginationDisplay 
                 items={filteredItems} 
-                renderItem={(appointment: ExtendedUserAppointment) => (
+                renderItem={(appointment: AppointmentDetails) => (
                     <AppointmentCard key={appointment.id} appointment={appointment} />    
                 )}    
             />

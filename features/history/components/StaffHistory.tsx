@@ -23,7 +23,7 @@ export default async function StaffHistory () {
     )
     return (
         <div className="pt-6 w-full ">
-            <BookingHistory history={appointments} />
+            <BookingHistory appointments={appointments} />
         </div>
     );
 }
