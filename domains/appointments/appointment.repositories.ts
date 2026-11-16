@@ -183,6 +183,9 @@ export const AppointmentRepository = {
             date: {
                 gte: today,
             },
+            status: {
+              in: ['PENDING', 'INPROGRESS', 'CHECKIN']
+            }
         },
         include: {
             client: {

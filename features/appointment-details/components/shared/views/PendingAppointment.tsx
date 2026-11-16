@@ -3,24 +3,19 @@
 import { BottomDrawer, DrawerContent, DrawerTrigger } from "@/components/ui";
 import { AppointmentDetails } from "@/domains/appointments/appointment.types";
 import DetailSection from "@/domains/appointments/components/details/DetailSection";
+import { AppointmentAction } from "@/features/appointment-details/actionConfig";
 import { ServiceSlot, StoreSlot } from "@/features/booking/components";
 import DatetimeSlot from "@/features/booking/components/slots/DatetimeSlot";
 import { EllipsisVertical } from "lucide-react";
-import AppointmentHeader from "../shared/AppointmentHeader";
-import StartServiceButton from "../shared/StartServiceButton";
+import AppointmentHeader from "../AppointmentHeader";
 
 type Props = {
-  appointment: AppointmentDetails
+  appointment: AppointmentDetails;
+  actions?: AppointmentAction[];
 }
 
 
-export default function StaffCheckin ({ appointment }: Props) {
-    const actions = [
-        {
-            name: 'test',
-            Component: () => <StartServiceButton appointmentId={appointment.id} />
-        }
-    ]
+export default function PendingAppointment ({ appointment, actions }: Props) {
     return (
         <div className="flex-1 p-6 stacked">
             <AppointmentHeader status={appointment.status} clientName={appointment.client.fullName} />
@@ -32,12 +27,6 @@ export default function StaffCheckin ({ appointment }: Props) {
                     time={appointment.startTime} 
                 />
             </DetailSection>
-            <div className="bg-surface-1 rounded-lg p-6">
-                <p className="spaced">
-                    <span className="text-else">Checked in at</span>
-                    <span className="">testing</span>
-                </p>
-            </div>
             <BottomDrawer>
                 <DrawerTrigger>
                     <button
@@ -48,10 +37,12 @@ export default function StaffCheckin ({ appointment }: Props) {
                     </button>
                 </DrawerTrigger>
                 <DrawerContent>
-                    {actions?.map(action => {
-                        const {name, Component} = action
-                        return <Component key={`appointment-action-${name}`} />
-                    })}
+                    <ul className="stacked ">
+                        {actions?.map(action => {
+                            const {name, Component} = action
+                            return <Component key={`appointment-action-${name}`} appointmentId={appointment.id} />
+                        })}
+                    </ul>
                 </DrawerContent>
             </BottomDrawer>
         </div>

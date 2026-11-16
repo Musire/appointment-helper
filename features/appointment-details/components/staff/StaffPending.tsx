@@ -7,9 +7,9 @@ import { ServiceSlot, StoreSlot } from "@/features/booking/components";
 import DatetimeSlot from "@/features/booking/components/slots/DatetimeSlot";
 import { EllipsisVertical } from "lucide-react";
 import AppointmentHeader from "../shared/AppointmentHeader";
-import CheckinButton from "../shared/CheckinButton";
-import NoshowButton from "../shared/NoshowButton";
-import CancelledButton from "../shared/CancelledButton";
+import CancelledButton from "../shared/buttons/CancelledButton";
+import CheckinButton from "../shared/buttons/CheckinButton";
+import NoshowButton from "../shared/buttons/NoshowButton";
 
 type Props = {
   appointment: AppointmentDetails
@@ -58,7 +58,6 @@ export default function StaffPending ({ appointment }: Props) {
                             return <Component key={`appointment-action-${name}`} />
                         })}
                     </ul>
-                    
                 </DrawerContent>
             </BottomDrawer>
         </div>

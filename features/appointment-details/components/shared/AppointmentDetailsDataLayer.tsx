@@ -1,11 +1,13 @@
 import { getAppointmentDetails } from "@/domains/appointments/appointment.queries";
-import StaffDetails from "./StaffDetails";
+import { Role } from "../../actionConfig";
+import AppointmentDetailsView from "./AppointmentDetailsView";
 
 type Props = {
   appointmentId: string;
+  role: Role;
 }
 
-export default async function StaffDetailsDataLayer ({ appointmentId }: Props) {
+export default async function AppointmentDetailsDataLayer ({ appointmentId, role }: Props) {
     const { data: appointment } = await getAppointmentDetails({ id: appointmentId})
 
     if (!appointment) {
@@ -18,7 +20,7 @@ export default async function StaffDetailsDataLayer ({ appointmentId }: Props) {
 
     return (
         <div className="flex flex-1">
-            <StaffDetails appointment={appointment} />
+            <AppointmentDetailsView role={role} appointment={appointment} />
         </div>
     );
 }
