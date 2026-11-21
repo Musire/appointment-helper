@@ -13,15 +13,40 @@ export type ServiceCompletion = {
   breaks: ServiceBreak[];
 };
 
-export function useServiceTimer() {
-  const [isRunning, setIsRunning] = useState(false);
-  const [serviceStartedAt, setServiceStartedAt] = useState<string | null>(null);
-  const [runningSince, setRunningSince] = useState<string | null>(null);
+type StartedAt = string | Date | null | undefined;
+
+function normalizeTimestamp(value: StartedAt): string | null {
+  if (!value) return null;
+
+  const date = new Date(value);
+
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
+}
+
+export function useServiceTimer(startedAt: StartedAt) {
+  const initialTimestamp = normalizeTimestamp(startedAt);
+
+  // Pure initial state.
+  const [serviceStartedAt, setServiceStartedAt] =
+    useState<string | null>(initialTimestamp);
+
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+
+  const [isRunning, setIsRunning] = useState(
+    initialTimestamp !== null
+  );
+
+  // A persisted timer starts from its database timestamp.
+  const [runningSince, setRunningSince] = useState<number | null>(
+    initialTimestamp ? new Date(initialTimestamp).getTime() : null
+  );
+
   const [breaks, setBreaks] = useState<ServiceBreak[]>([]);
+
+  // No impure initialization during render.
   const [now, setNow] = useState(0);
 
-  // Keep timer updated.
+  // Clock subscription.
   useEffect(() => {
     const interval = setInterval(() => {
       setNow(Date.now());
@@ -30,47 +55,47 @@ export function useServiceTimer() {
     return () => clearInterval(interval);
   }, []);
 
-  // Total active service time.
+  // Active service duration.
   const elapsed =
     elapsedSeconds +
-    (isRunning && runningSince && now
-      ? Math.floor(
-          (now - new Date(runningSince).getTime()) / 1000
-        )
+    (isRunning && runningSince !== null && now > 0
+      ? Math.max(0, Math.floor((now - runningSince) / 1000))
       : 0);
 
-  const isOnBreak = !isRunning && serviceStartedAt !== null;
+  const isOnBreak = breaks.some(
+    item => item.endedAt === null
+  );
 
-  // Start service.
+  // Start.
   function startTimer() {
     if (serviceStartedAt) return;
 
     const currentTime = Date.now();
-    const timestamp = new Date(currentTime).toISOString();
 
-    setServiceStartedAt(timestamp);
-    setRunningSince(timestamp);
+    setServiceStartedAt(new Date(currentTime).toISOString());
+    setElapsedSeconds(0);
+    setRunningSince(currentTime);
     setIsRunning(true);
     setNow(currentTime);
   }
 
-  // Pause service.
+  // Pause.
   function pauseTimer() {
-    if (!runningSince || !isRunning) return;
+    if (!isRunning || runningSince === null) return;
 
     const currentTime = Date.now();
-    const timestamp = new Date(currentTime).toISOString();
 
-    const sessionSeconds = Math.floor(
-      (currentTime - new Date(runningSince).getTime()) / 1000
+    const sessionSeconds = Math.max(
+      0,
+      Math.floor((currentTime - runningSince) / 1000)
     );
 
-    setElapsedSeconds((prev) => prev + sessionSeconds);
+    setElapsedSeconds(prev => prev + sessionSeconds);
 
-    setBreaks((prev) => [
+    setBreaks(prev => [
       ...prev,
       {
-        startedAt: timestamp,
+        startedAt: new Date(currentTime).toISOString(),
         endedAt: null,
       },
     ]);
@@ -80,47 +105,47 @@ export function useServiceTimer() {
     setNow(currentTime);
   }
 
-  // Resume service.
+  // Resume.
   function resumeTimer() {
     if (!serviceStartedAt || isRunning) return;
 
     const currentTime = Date.now();
     const timestamp = new Date(currentTime).toISOString();
 
-    setBreaks((prev) =>
-      prev.map((item, index) =>
-        index === prev.length - 1 && item.endedAt === null
+    setBreaks(prev =>
+      prev.map(item =>
+        item.endedAt === null
           ? { ...item, endedAt: timestamp }
           : item
       )
     );
 
-    setRunningSince(timestamp);
+    setRunningSince(currentTime);
     setIsRunning(true);
     setNow(currentTime);
   }
 
-  // Complete service.
+  // Complete.
   function completeTimer(): ServiceCompletion | null {
     if (!serviceStartedAt) return null;
 
     const currentTime = Date.now();
     const timestamp = new Date(currentTime).toISOString();
 
-    let finalElapsed = elapsedSeconds;
-    let finalBreaks = breaks;
+    const finalElapsed =
+      elapsedSeconds +
+      (isRunning && runningSince !== null
+        ? Math.max(
+            0,
+            Math.floor((currentTime - runningSince) / 1000)
+          )
+        : 0);
 
-    if (isRunning && runningSince) {
-      finalElapsed += Math.floor(
-        (currentTime - new Date(runningSince).getTime()) / 1000
-      );
-    } else if (isOnBreak) {
-      finalBreaks = breaks.map((item, index) =>
-        index === breaks.length - 1 && item.endedAt === null
-          ? { ...item, endedAt: timestamp }
-          : item
-      );
-    }
+    const finalBreaks = breaks.map(item =>
+      item.endedAt === null
+        ? { ...item, endedAt: timestamp }
+        : item
+    );
 
     const completion: ServiceCompletion = {
       serviceStartedAt,

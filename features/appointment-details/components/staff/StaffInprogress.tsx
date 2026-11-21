@@ -1,15 +1,15 @@
 'use client';
 
-import { startTransition, useTransition } from 'react';
+import { useTransition } from 'react';
 import { useServiceTimer } from '../../useServiceTimer';
 
+import { useToast } from '@/context/ToastContext';
+import { completeAppointment } from '@/domains/appointments/appointment.actions';
+import { AppointmentDetails } from '@/domains/appointments/appointment.types';
 import BreaksList from './inprogress/BreaksList';
 import CompleteServiceButton from './inprogress/CompleteServiceButton';
 import CurrentService from './inprogress/CurrentService';
 import CustomerNotes from './inprogress/CustomerNotes';
-import { completeAppointment } from '@/domains/appointments/appointment.actions';
-import { useToast } from '@/context/ToastContext';
-import { AppointmentDetails } from '@/domains/appointments/appointment.types';
 
 type Props = {
   appointment: AppointmentDetails
@@ -27,7 +27,7 @@ export default function StaffInprogress({ appointment }: Props) {
     now,
     pauseTimer,
     resumeTimer,
-  } = useServiceTimer();
+  } = useServiceTimer(appointment.startedAt);
 
   const handleCompletion = () => {
     startTransition(async() =>{

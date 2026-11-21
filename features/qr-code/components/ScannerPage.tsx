@@ -1,17 +1,14 @@
 
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 type AppointmentQrPayload = {
-    type: 'appointment';
     appointmentId: string;
+    signature: string;
 };
 
 export default function ScannerPage() {
-    const router = useRouter();
-
     const elementId = 'qr-reader';
 
     const scannerRef = useRef<any>(null);
@@ -24,6 +21,11 @@ export default function ScannerPage() {
         'Waiting for appointment QR code...'
     );
 
+    const [scannedText, setScannedText] = useState<string | null>(null);
+
+    const [scannedPayload, setScannedPayload] =
+        useState<AppointmentQrPayload | null>(null);
+
     // Validate appointment QR payload.
     const isAppointmentQr = (
         payload: unknown
@@ -31,9 +33,12 @@ export default function ScannerPage() {
         return (
             typeof payload === 'object' &&
             payload !== null &&
-            (payload as AppointmentQrPayload).type === 'appointment' &&
-            typeof (payload as AppointmentQrPayload).appointmentId === 'string' &&
-            (payload as AppointmentQrPayload).appointmentId.length > 0
+            'appointmentId' in payload &&
+            'signature' in payload &&
+            typeof payload.appointmentId === 'string' &&
+            payload.appointmentId.length > 0 &&
+            typeof payload.signature === 'string' &&
+            /^[a-f0-9]{64}$/i.test(payload.signature)
         );
     };
 
@@ -47,16 +52,14 @@ export default function ScannerPage() {
                 if (!scanner) return;
 
                 try {
-                    await scanner.stop();
-                } catch (err) {
-                    console.warn('Scanner stop:', err);
-                }
+                    if (scanner.isScanning) {
+                        await scanner.stop();
+                    }
+                } catch {}
 
                 try {
                     scanner.clear();
-                } catch (err) {
-                    console.warn('Scanner clear:', err);
-                }
+                } catch {}
 
                 if (scannerRef.current === scanner) {
                     scannerRef.current = null;
@@ -73,27 +76,38 @@ export default function ScannerPage() {
         async (decodedText: string) => {
             if (isProcessingRef.current) return;
 
+            isProcessingRef.current = true;
+
+            setScannedText(decodedText);
+            setScannedPayload(null);
+            setError('');
+
             let payload: unknown;
 
             try {
                 payload = JSON.parse(decodedText);
             } catch {
+                setMessage('QR detected, but content is not valid JSON.');
+
+                // Keep scanner active.
+                isProcessingRef.current = false;
                 return;
             }
 
-            if (!isAppointmentQr(payload)) return;
+            if (!isAppointmentQr(payload)) {
+                setMessage('QR detected, but it is not an appointment QR.');
 
-            isProcessingRef.current = true;
+                // Keep scanner active.
+                isProcessingRef.current = false;
+                return;
+            }
 
-            setMessage('Valid appointment found. Redirecting...');
+            setMessage('Appointment QR scanned successfully!');
+            setScannedPayload(payload);
 
             await stopScanner();
-
-            router.push(
-                `/staff/dashboard/checkin/${payload.appointmentId}`
-            );
         },
-        [router, stopScanner]
+        [stopScanner]
     );
 
     // Start scanner with lifecycle protection.
@@ -119,16 +133,14 @@ export default function ScannerPage() {
                             { facingMode: 'environment' },
                             {
                                 fps: 10,
-                                qrbox: {
-                                    width: 250,
-                                    height: 250,
-                                },
+                                qrbox: undefined,
                             },
-                            handleScan,
+                            (decodedText: string) => {
+                                void handleScan(decodedText);
+                            },
                             () => {}
                         );
                     } catch (err) {
-                        // Release scanner instance if initialization fails.
                         if (scannerRef.current === scanner) {
                             try {
                                 scanner.clear();
@@ -148,10 +160,12 @@ export default function ScannerPage() {
             } catch (err) {
                 if (generation !== generationRef.current) return;
 
-                console.error('Scanner initialization:', err);
+                setError(
+                    err instanceof Error
+                        ? err.message
+                        : 'Unable to access camera or start scanner.'
+                );
 
-                setError('Unable to access camera or start scanner.');
-                
                 await stopScanner();
             }
         },
@@ -168,7 +182,6 @@ export default function ScannerPage() {
         void startScanner(generation);
 
         return () => {
-            // Invalidate pending initialization.
             if (generationRef.current === currentGeneration) {
                 generationRef.current = currentGeneration + 1;
             }
@@ -182,6 +195,8 @@ export default function ScannerPage() {
         isProcessingRef.current = false;
 
         setError('');
+        setScannedText(null);
+        setScannedPayload(null);
         setMessage('Waiting for appointment QR code...');
 
         const generation = ++generationRef.current;
@@ -218,6 +233,30 @@ export default function ScannerPage() {
                 {error && (
                     <div className="rounded-lg border border-error text-error bg-darken-8/error p-4">
                         <p>{error}</p>
+                    </div>
+                )}
+
+                {scannedText !== null && (
+                    <div className="rounded-lg border border-border bg-surface-1 p-4 space-y-3">
+                        <h2 className="font-semibold">
+                            Detected QR Content
+                        </h2>
+
+                        <pre className="overflow-x-auto whitespace-pre-wrap break-all text-sm">
+                            {scannedText}
+                        </pre>
+                    </div>
+                )}
+
+                {scannedPayload && (
+                    <div className="rounded-lg border border-border bg-surface-1 p-4 space-y-3">
+                        <h2 className="font-semibold">
+                            Appointment QR Payload
+                        </h2>
+
+                        <pre className="overflow-x-auto whitespace-pre-wrap break-all text-sm">
+                            {JSON.stringify(scannedPayload, null, 2)}
+                        </pre>
                     </div>
                 )}
 

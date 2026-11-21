@@ -235,7 +235,8 @@ export const AppointmentRepository = {
     const appointment = await prisma.appointment.update({
       where: { id },
       data: {
-        status: 'INPROGRESS'
+        status: 'INPROGRESS',
+        startedAt: new Date()
       }
     })
     return appointment
