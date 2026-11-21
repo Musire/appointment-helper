@@ -49,7 +49,7 @@ export default function AppointmentQr({ appointmentId }: Props) {
   if (!payload) return null;
 
   return (
-    <div>
+    <div className="mx-auto">
       <QRCodeSVG
         value={JSON.stringify(payload)}
         size={400}

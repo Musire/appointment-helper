@@ -7,6 +7,7 @@ import { ServiceSlot, StoreSlot } from "@/features/booking/components";
 import DatetimeSlot from "@/features/booking/components/slots/DatetimeSlot";
 import { EllipsisVertical } from "lucide-react";
 import { AppointmentAction } from "../../actionConfig";
+import AppointmentQr from "@/features/qr-code/components/AppointmentQr";
 
 type Props = {
   appointment: AppointmentDetails;
@@ -17,6 +18,7 @@ type Props = {
 export default function UserPending ({ appointment, actions }: Props) {
     return (
         <div className="flex-1 p-6 stacked">
+            <AppointmentQr appointmentId={appointment.id} />
             <DetailSection className="">
                 <StoreSlot store={appointment.store} />
                 <ServiceSlot services={appointment.services} />

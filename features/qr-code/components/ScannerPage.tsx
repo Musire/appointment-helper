@@ -3,6 +3,9 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { useToast } from '@/context/ToastContext';
+import { scanAndCheckin } from '@/domains/qr/qr.actions';
+
 type AppointmentQrPayload = {
     appointmentId: string;
     signature: string;
@@ -15,6 +18,8 @@ export default function ScannerPage() {
     const isProcessingRef = useRef(false);
     const scannerOperationRef = useRef<Promise<void>>(Promise.resolve());
     const generationRef = useRef(0);
+
+    const { createSuccess } = useToast();
 
     const [error, setError] = useState('');
     const [message, setMessage] = useState(
@@ -89,7 +94,6 @@ export default function ScannerPage() {
             } catch {
                 setMessage('QR detected, but content is not valid JSON.');
 
-                // Keep scanner active.
                 isProcessingRef.current = false;
                 return;
             }
@@ -97,17 +101,47 @@ export default function ScannerPage() {
             if (!isAppointmentQr(payload)) {
                 setMessage('QR detected, but it is not an appointment QR.');
 
-                // Keep scanner active.
                 isProcessingRef.current = false;
                 return;
             }
 
-            setMessage('Appointment QR scanned successfully!');
             setScannedPayload(payload);
+            setMessage('Valid appointment QR. Checking in...');
 
+            // Stop camera before executing server action.
             await stopScanner();
+
+            try {
+                const result = await scanAndCheckin({
+                    appointmentId: payload.appointmentId,
+                    signature: payload.signature,
+                });
+
+                // Handle failed server action.
+                if (!result.success) {
+                    setError(
+                        result.error ?? 'Appointment check-in failed.'
+                    );
+
+                    setMessage('Appointment check-in failed.');
+                    return;
+                }
+
+                // Handle successful check-in.
+                createSuccess('Appointment checked in');
+
+                setMessage('Appointment checked in successfully!');
+            } catch (err) {
+                setError(
+                    err instanceof Error
+                        ? err.message
+                        : 'Unable to check in appointment.'
+                );
+
+                setMessage('Appointment check-in failed.');
+            }
         },
-        [stopScanner]
+        [stopScanner, createSuccess]
     );
 
     // Start scanner with lifecycle protection.
