@@ -5,18 +5,18 @@ import { FormStatusProvider } from "@/context/FormStatusProvider";
 import { ActionResponse } from "@/domains/auth/auth.types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  startTransition,
-  useActionState,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState
+    startTransition,
+    useActionState,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useState
 } from "react";
 import {
-  DefaultValues,
-  FieldValues,
-  FormProvider,
-  useForm
+    DefaultValues,
+    FieldValues,
+    FormProvider,
+    useForm
 } from "react-hook-form";
 import { z } from "zod";
 import StatusButton from "./StatusButton";
@@ -55,6 +55,8 @@ export default function ActionForm<T, S extends z.ZodObject<FieldValues>>({
         defaultValues: initialValues,
         mode: "onBlur"
     });
+
+    const { reset } = form;
 
     const handleFormSubmit = async () => {
         const isValid = await form.trigger();
@@ -98,6 +100,7 @@ export default function ActionForm<T, S extends z.ZodObject<FieldValues>>({
     // Track each action response
     const previousStateRef = useRef(state);
 
+    // Handle successful submission
     useEffect(() => {
         const previousState = previousStateRef.current;
         previousStateRef.current = state;
@@ -107,7 +110,7 @@ export default function ActionForm<T, S extends z.ZodObject<FieldValues>>({
 
         onSuccessRef.current?.();
 
-        form.reset(initialValues);
+        reset(initialValues);
 
         setShowSuccess(true);
 
@@ -117,7 +120,7 @@ export default function ActionForm<T, S extends z.ZodObject<FieldValues>>({
 
         return () => clearTimeout(timeout);
 
-    }, [state, form.reset]);
+    }, [state, reset, initialValues]);
 
     return (
         <FormProvider {...form}>

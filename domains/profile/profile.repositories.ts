@@ -47,7 +47,6 @@ export const ProfileRepository = {
             ),
         };
     },
-
     async getStoreProfileStatus(storeId: string) {
         const [
             store,
@@ -72,8 +71,7 @@ export const ProfileRepository = {
 
             prisma.service.count({
                 where: {
-                    storeId,
-                    isListed: true,
+                    storeId
                 },
             }),
         ]);

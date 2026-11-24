@@ -2,7 +2,7 @@ import { StoreStatus } from "@/generated/prisma"
 import { prisma } from "@/lib/prisma"
 import { unslugify } from "@/lib/utils/stringMutate"
 import { StoreUpdateType } from "@/validation/StoreCreation.schema"
-import { defaultHours, storeHours } from "./store.types"
+import { storeHours } from "./store.types"
 import { StoreCreationType, StoreDetailsType, storeHoursUpdateType } from "./store.validations"
 
 export const  storeRepository = {
@@ -31,8 +31,7 @@ export const  storeRepository = {
                                 createMany: {
                                     data: data.hoursList.map((row) => ({
                                         id: row.id,
-                                        label: row.label,
-                                        isActive: row.isActive,
+                                        day: row.day,
                                         start: row.start,
                                         end: row.end,
                                     })),
@@ -45,8 +44,7 @@ export const  storeRepository = {
                                 createMany: {
                                     data: data.hoursList.map((row) => ({
                                         id: row.id,
-                                        label: row.label,
-                                        isActive: row.isActive,
+                                        day: row.day,
                                         start: row.start,
                                         end: row.end,
                                     })),
@@ -63,8 +61,6 @@ export const  storeRepository = {
                         hours: {
                             select: {
                                 id: true,
-                                label: true,
-                                isActive: true,
                                 start: true,
                                 end: true
                             }
@@ -137,21 +133,12 @@ export const  storeRepository = {
             }
         })
     },
-    async createStore({data, defaultHours, id}: {data: StoreCreationType, defaultHours: defaultHours, id: string}) { 
+    async createStore({data, id}: {data: StoreCreationType, id: string}) { 
         const store = await prisma.store.create({
             data: {
                 name: data.name,
                 address: data.address,
                 createdById: id,
-                config: {
-                    create: {
-                        hours: {
-                            createMany: {
-                                data: defaultHours
-                            }
-                        }
-                    }
-                }
             }
         })
         return store

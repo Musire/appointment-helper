@@ -1,10 +1,9 @@
 import { StoreConfig } from "@/generated/prisma";
 
 export type defaultHours = {
- label: string;
- isActive: boolean;
- start: string;
- end: string;
+ day: string;
+ start: number;
+ end: number;
 }[]
 
 

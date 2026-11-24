@@ -5,7 +5,6 @@ import { unslugify } from "@/lib/utils/stringMutate";
 import { StoreUpdateType } from "@/validation/StoreCreation.schema";
 import { getPrismaUserId } from "../auth/util/session";
 import { storeRepository } from "./store.repositories";
-import { type defaultHours } from "./store.types";
 import { invitableStaffType, saveBusinessHoursType, StoreCreationType, StoreDetailsType, storeHoursUpdateType } from "./store.validations";
 
 
@@ -157,10 +156,10 @@ export async function getDashboardMetrics(storeId: string) {
 // CREATE/UPDATE SERVICE FUNCTIONS
 
 
-export async function createStoreService ({data, defaultHours}: {data: StoreCreationType, defaultHours: defaultHours}) {
+export async function createStoreService (data: StoreCreationType) {
     const id = await getPrismaUserId()
     if (!id) throw new Error('user id not found')
-    return storeRepository.createStore({ data, defaultHours, id })
+    return storeRepository.createStore({ data, id })
 }
 
 export async function updateStoreService (data: StoreUpdateType) {

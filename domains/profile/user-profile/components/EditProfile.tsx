@@ -25,7 +25,7 @@ export default function EditProfile () {
     return (
         <form action={ e => handleSubmit(e)} className="" >
             <FileUploader />
-            <StatusButton state={formState} isPending={isPending} />
+            <StatusButton showSuccess={!!formState.success} state={formState} isPending={isPending} />
             {!formState.success && formState.error && (
                 <p className="">{formState.error}</p>
             )}

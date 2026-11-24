@@ -15,14 +15,7 @@ export const createStore = createSafeAction(
     },
     async (_:any, formData: FormData) => {
         const validated = validateFormData(StoreCreationSchema, formData)
-
-        const defaultHours = [
-            { label: "Lun - Vier", isActive: false, start: "09:00 AM", end: "05:00 PM" },
-            { label: "Sábado", isActive: false, start: "09:00 AM", end: "02:00 PM" },
-            { label: "Domingo", isActive: false, start: "09:00 AM", end: "02:00 PM" }
-        ]
-        
-        const res = await createStoreService({data: validated, defaultHours})
+        const res = await createStoreService(validated)
         revalidatePath('/dashboard')
         return res
     }

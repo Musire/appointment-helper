@@ -25,12 +25,7 @@ export async function createStore (formData: StoreCreationType) {
     }
     const { name, address } = parsed.data
 
-    // 3. Define default store hours data
-    const defaultHours = [
-      { label: "Lun - Vier", isActive: false, start: "09:00 AM", end: "05:00 PM" },
-      { label: "Sábado", isActive: false, start: "09:00 AM", end: "02:00 PM" },
-      { label: "Domingo", isActive: false, start: "09:00 AM", end: "02:00 PM" }
-    ]
+    
 
     // 4. Create Store, Config, and Hours in one nested transaction
     await prisma.store.create({
@@ -38,21 +33,9 @@ export async function createStore (formData: StoreCreationType) {
         name,
         address,
         createdById: user.id,
-        // Nesting the StoreConfig creation
-        config: {
-          create: {
-            // Nesting multiple StoreHour creations inside the Config
-            hours: {
-              createMany: {
-                data: defaultHours
-              }
-            }
-          }
-        }
       }
     })
 
-    // 5. Revalidate cache
     revalidatePath('/dashboard')
   })
 }
