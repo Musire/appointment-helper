@@ -1,13 +1,19 @@
+import { getStoreHours } from "@/domains/store/store.queries";
+import { consolidateToTimeBlocks } from "@/domains/store/store.utilities";
 import AdminHourForm from "./AdminHourForm";
 
 type Props = {
   storeId: string
 }
 
-export default function AdminHourDataLayer ({ storeId }: Props) {
+export default async function AdminHourDataLayer ({ storeId }: Props) {
+
+    const { data: hours } = await getStoreHours({ storeId })
+    const consolidated = hours ? consolidateToTimeBlocks(hours) : []
+
     return (
         <div className="flex flex-1">
-            <AdminHourForm storeId={storeId} />
+            <AdminHourForm initialBlocks={consolidated} storeId={storeId} />
         </div>
     );
 }

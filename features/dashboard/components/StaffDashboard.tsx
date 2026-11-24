@@ -1,54 +1,37 @@
 import { Body, BodySm } from "@/components/ui";
-import { getAppointmentMetrics } from "@/domains/appointments/appiontment.util";
-import { getAppointmentPool } from "@/domains/appointments/appointment.queries";
+import { AppointmentDetails } from "@/domains/appointments/appointment.types";
+import { type AccountStatus as AccountStatusType, type Metrics } from "@/domains/profile/profile.types";
 import AppointmentCard from "@/features/history/components/staff/cards/AppointmentCard";
 import { QrButton } from "@/features/qr-code/components";
 import { StatCard } from "@/features/staff-dashboard-stats/components";
 import Link from "next/link";
 import AccountStatus from "./AccountStatus";
 
-export default async function StaffDashboard () {
+type Props = {
+  metrics: Metrics;
+  appointments: AppointmentDetails[];
+  status: AccountStatusType
+}
 
-  const selectedDate = new Date();
-
-  const from = new Date(selectedDate);
-  from.setHours(0, 0, 0, 0);
-
-  const to = new Date(selectedDate);
-  to.setHours(23, 59, 59, 999);
-
-  const payload = {
-      from: from.toISOString(),
-      to: to.toISOString(),
-  };
-  
-  const { data: appointments } = await getAppointmentPool(payload)
-
-  if (!appointments) return (
-    <section className="">
-      <p className="">not found data</p>
-    </section>
-  )
-
-  const { pending, checkedIn, completed } = getAppointmentMetrics(appointments)
+export default async function StaffDashboard ({ 
+  metrics, 
+  appointments, 
+  status 
+}: Props) {
 
   return (
     <div className=" relative stacked p-6 flex-1 overflow-hidden">
       <div className="spaced">
         <QrButton />
         <AccountStatus
-          active={false}
-          requirements={[
-            { label: "Complete profile", completed: true },
-            { label: "Upload documents", completed: false },
-            { label: "Store approval", completed: false },
-          ]}
+          active={status?.active}
+          requirements={status?.requirements}
         />
       </div>
       <ul className="grid grid-cols-3 h-32 shrink-0 gap-x-4 w-full">
-        <StatCard variant='pendiente' value={pending} />
-        <StatCard variant='checkin' value={checkedIn} />
-        <StatCard variant='finalizado' value={completed} />
+        <StatCard variant='pendiente' value={metrics?.pending} />
+        <StatCard variant='checkin' value={metrics?.checkedIn} />
+        <StatCard variant='finalizado' value={metrics?.completed} />
       </ul>
       <div className="flex-col flex space-y-2 flex-1 overflow-y-hidden p-4">
         <span className="spaced">
@@ -56,10 +39,10 @@ export default async function StaffDashboard () {
           <Link href="/pool" className="hover:text-main text-sm cursor-pointer text-main/80">Ver Todas</Link>
         </span>
         <ul className="flex flex-col flex-1 overflow-y-auto pr-4 scrollbar-adjust">
-          {appointments.map(a => {
+          {appointments?.map(a => {
             return <AppointmentCard key={a.id} appointment={a} />
           })}
-          {!appointments.length && (
+          {!appointments?.length && (
             <Body className="mx-auto my-auto text-else">No hay citas</Body>
           )}
         </ul>

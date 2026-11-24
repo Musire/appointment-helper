@@ -8327,44 +8327,62 @@ export namespace Prisma {
 
   export type AggregateStoreHour = {
     _count: StoreHourCountAggregateOutputType | null
+    _avg: StoreHourAvgAggregateOutputType | null
+    _sum: StoreHourSumAggregateOutputType | null
     _min: StoreHourMinAggregateOutputType | null
     _max: StoreHourMaxAggregateOutputType | null
+  }
+
+  export type StoreHourAvgAggregateOutputType = {
+    start: number | null
+    end: number | null
+  }
+
+  export type StoreHourSumAggregateOutputType = {
+    start: number | null
+    end: number | null
   }
 
   export type StoreHourMinAggregateOutputType = {
     id: string | null
     storeConfigId: string | null
-    label: string | null
-    isActive: boolean | null
-    start: string | null
-    end: string | null
+    day: string | null
+    start: number | null
+    end: number | null
   }
 
   export type StoreHourMaxAggregateOutputType = {
     id: string | null
     storeConfigId: string | null
-    label: string | null
-    isActive: boolean | null
-    start: string | null
-    end: string | null
+    day: string | null
+    start: number | null
+    end: number | null
   }
 
   export type StoreHourCountAggregateOutputType = {
     id: number
     storeConfigId: number
-    label: number
-    isActive: number
+    day: number
     start: number
     end: number
     _all: number
   }
 
 
+  export type StoreHourAvgAggregateInputType = {
+    start?: true
+    end?: true
+  }
+
+  export type StoreHourSumAggregateInputType = {
+    start?: true
+    end?: true
+  }
+
   export type StoreHourMinAggregateInputType = {
     id?: true
     storeConfigId?: true
-    label?: true
-    isActive?: true
+    day?: true
     start?: true
     end?: true
   }
@@ -8372,8 +8390,7 @@ export namespace Prisma {
   export type StoreHourMaxAggregateInputType = {
     id?: true
     storeConfigId?: true
-    label?: true
-    isActive?: true
+    day?: true
     start?: true
     end?: true
   }
@@ -8381,8 +8398,7 @@ export namespace Prisma {
   export type StoreHourCountAggregateInputType = {
     id?: true
     storeConfigId?: true
-    label?: true
-    isActive?: true
+    day?: true
     start?: true
     end?: true
     _all?: true
@@ -8426,6 +8442,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: StoreHourAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: StoreHourSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: StoreHourMinAggregateInputType
@@ -8456,6 +8484,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: StoreHourCountAggregateInputType | true
+    _avg?: StoreHourAvgAggregateInputType
+    _sum?: StoreHourSumAggregateInputType
     _min?: StoreHourMinAggregateInputType
     _max?: StoreHourMaxAggregateInputType
   }
@@ -8463,11 +8493,12 @@ export namespace Prisma {
   export type StoreHourGroupByOutputType = {
     id: string
     storeConfigId: string
-    label: string
-    isActive: boolean
-    start: string
-    end: string
+    day: string
+    start: number
+    end: number
     _count: StoreHourCountAggregateOutputType | null
+    _avg: StoreHourAvgAggregateOutputType | null
+    _sum: StoreHourSumAggregateOutputType | null
     _min: StoreHourMinAggregateOutputType | null
     _max: StoreHourMaxAggregateOutputType | null
   }
@@ -8489,8 +8520,7 @@ export namespace Prisma {
   export type StoreHourSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     storeConfigId?: boolean
-    label?: boolean
-    isActive?: boolean
+    day?: boolean
     start?: boolean
     end?: boolean
     storeConfig?: boolean | StoreConfigDefaultArgs<ExtArgs>
@@ -8499,8 +8529,7 @@ export namespace Prisma {
   export type StoreHourSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     storeConfigId?: boolean
-    label?: boolean
-    isActive?: boolean
+    day?: boolean
     start?: boolean
     end?: boolean
     storeConfig?: boolean | StoreConfigDefaultArgs<ExtArgs>
@@ -8509,8 +8538,7 @@ export namespace Prisma {
   export type StoreHourSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     storeConfigId?: boolean
-    label?: boolean
-    isActive?: boolean
+    day?: boolean
     start?: boolean
     end?: boolean
     storeConfig?: boolean | StoreConfigDefaultArgs<ExtArgs>
@@ -8519,13 +8547,12 @@ export namespace Prisma {
   export type StoreHourSelectScalar = {
     id?: boolean
     storeConfigId?: boolean
-    label?: boolean
-    isActive?: boolean
+    day?: boolean
     start?: boolean
     end?: boolean
   }
 
-  export type StoreHourOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeConfigId" | "label" | "isActive" | "start" | "end", ExtArgs["result"]["storeHour"]>
+  export type StoreHourOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeConfigId" | "day" | "start" | "end", ExtArgs["result"]["storeHour"]>
   export type StoreHourInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     storeConfig?: boolean | StoreConfigDefaultArgs<ExtArgs>
   }
@@ -8544,10 +8571,9 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       storeConfigId: string
-      label: string
-      isActive: boolean
-      start: string
-      end: string
+      day: string
+      start: number
+      end: number
     }, ExtArgs["result"]["storeHour"]>
     composites: {}
   }
@@ -8974,10 +9000,9 @@ export namespace Prisma {
   interface StoreHourFieldRefs {
     readonly id: FieldRef<"StoreHour", 'String'>
     readonly storeConfigId: FieldRef<"StoreHour", 'String'>
-    readonly label: FieldRef<"StoreHour", 'String'>
-    readonly isActive: FieldRef<"StoreHour", 'Boolean'>
-    readonly start: FieldRef<"StoreHour", 'String'>
-    readonly end: FieldRef<"StoreHour", 'String'>
+    readonly day: FieldRef<"StoreHour", 'String'>
+    readonly start: FieldRef<"StoreHour", 'Int'>
+    readonly end: FieldRef<"StoreHour", 'Int'>
   }
     
 
@@ -20481,8 +20506,7 @@ export namespace Prisma {
   export const StoreHourScalarFieldEnum: {
     id: 'id',
     storeConfigId: 'storeConfigId',
-    label: 'label',
-    isActive: 'isActive',
+    day: 'day',
     start: 'start',
     end: 'end'
   };
@@ -20714,9 +20738,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
+   * Reference to a field of type 'Int'
    */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -20749,16 +20780,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'Boolean'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -21155,18 +21179,16 @@ export namespace Prisma {
     NOT?: StoreHourWhereInput | StoreHourWhereInput[]
     id?: StringFilter<"StoreHour"> | string
     storeConfigId?: StringFilter<"StoreHour"> | string
-    label?: StringFilter<"StoreHour"> | string
-    isActive?: BoolFilter<"StoreHour"> | boolean
-    start?: StringFilter<"StoreHour"> | string
-    end?: StringFilter<"StoreHour"> | string
+    day?: StringFilter<"StoreHour"> | string
+    start?: IntFilter<"StoreHour"> | number
+    end?: IntFilter<"StoreHour"> | number
     storeConfig?: XOR<StoreConfigScalarRelationFilter, StoreConfigWhereInput>
   }
 
   export type StoreHourOrderByWithRelationInput = {
     id?: SortOrder
     storeConfigId?: SortOrder
-    label?: SortOrder
-    isActive?: SortOrder
+    day?: SortOrder
     start?: SortOrder
     end?: SortOrder
     storeConfig?: StoreConfigOrderByWithRelationInput
@@ -21174,27 +21196,28 @@ export namespace Prisma {
 
   export type StoreHourWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    storeConfigId_day?: StoreHourStoreConfigIdDayCompoundUniqueInput
     AND?: StoreHourWhereInput | StoreHourWhereInput[]
     OR?: StoreHourWhereInput[]
     NOT?: StoreHourWhereInput | StoreHourWhereInput[]
     storeConfigId?: StringFilter<"StoreHour"> | string
-    label?: StringFilter<"StoreHour"> | string
-    isActive?: BoolFilter<"StoreHour"> | boolean
-    start?: StringFilter<"StoreHour"> | string
-    end?: StringFilter<"StoreHour"> | string
+    day?: StringFilter<"StoreHour"> | string
+    start?: IntFilter<"StoreHour"> | number
+    end?: IntFilter<"StoreHour"> | number
     storeConfig?: XOR<StoreConfigScalarRelationFilter, StoreConfigWhereInput>
-  }, "id">
+  }, "id" | "storeConfigId_day">
 
   export type StoreHourOrderByWithAggregationInput = {
     id?: SortOrder
     storeConfigId?: SortOrder
-    label?: SortOrder
-    isActive?: SortOrder
+    day?: SortOrder
     start?: SortOrder
     end?: SortOrder
     _count?: StoreHourCountOrderByAggregateInput
+    _avg?: StoreHourAvgOrderByAggregateInput
     _max?: StoreHourMaxOrderByAggregateInput
     _min?: StoreHourMinOrderByAggregateInput
+    _sum?: StoreHourSumOrderByAggregateInput
   }
 
   export type StoreHourScalarWhereWithAggregatesInput = {
@@ -21203,10 +21226,9 @@ export namespace Prisma {
     NOT?: StoreHourScalarWhereWithAggregatesInput | StoreHourScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"StoreHour"> | string
     storeConfigId?: StringWithAggregatesFilter<"StoreHour"> | string
-    label?: StringWithAggregatesFilter<"StoreHour"> | string
-    isActive?: BoolWithAggregatesFilter<"StoreHour"> | boolean
-    start?: StringWithAggregatesFilter<"StoreHour"> | string
-    end?: StringWithAggregatesFilter<"StoreHour"> | string
+    day?: StringWithAggregatesFilter<"StoreHour"> | string
+    start?: IntWithAggregatesFilter<"StoreHour"> | number
+    end?: IntWithAggregatesFilter<"StoreHour"> | number
   }
 
   export type StoreStaffWhereInput = {
@@ -22169,64 +22191,57 @@ export namespace Prisma {
 
   export type StoreHourCreateInput = {
     id?: string
-    label: string
-    isActive: boolean
-    start: string
-    end: string
+    day: string
+    start: number
+    end: number
     storeConfig: StoreConfigCreateNestedOneWithoutHoursInput
   }
 
   export type StoreHourUncheckedCreateInput = {
     id?: string
     storeConfigId: string
-    label: string
-    isActive: boolean
-    start: string
-    end: string
+    day: string
+    start: number
+    end: number
   }
 
   export type StoreHourUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    label?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    start?: StringFieldUpdateOperationsInput | string
-    end?: StringFieldUpdateOperationsInput | string
+    day?: StringFieldUpdateOperationsInput | string
+    start?: IntFieldUpdateOperationsInput | number
+    end?: IntFieldUpdateOperationsInput | number
     storeConfig?: StoreConfigUpdateOneRequiredWithoutHoursNestedInput
   }
 
   export type StoreHourUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     storeConfigId?: StringFieldUpdateOperationsInput | string
-    label?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    start?: StringFieldUpdateOperationsInput | string
-    end?: StringFieldUpdateOperationsInput | string
+    day?: StringFieldUpdateOperationsInput | string
+    start?: IntFieldUpdateOperationsInput | number
+    end?: IntFieldUpdateOperationsInput | number
   }
 
   export type StoreHourCreateManyInput = {
     id?: string
     storeConfigId: string
-    label: string
-    isActive: boolean
-    start: string
-    end: string
+    day: string
+    start: number
+    end: number
   }
 
   export type StoreHourUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    label?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    start?: StringFieldUpdateOperationsInput | string
-    end?: StringFieldUpdateOperationsInput | string
+    day?: StringFieldUpdateOperationsInput | string
+    start?: IntFieldUpdateOperationsInput | number
+    end?: IntFieldUpdateOperationsInput | number
   }
 
   export type StoreHourUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     storeConfigId?: StringFieldUpdateOperationsInput | string
-    label?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    start?: StringFieldUpdateOperationsInput | string
-    end?: StringFieldUpdateOperationsInput | string
+    day?: StringFieldUpdateOperationsInput | string
+    start?: IntFieldUpdateOperationsInput | number
+    end?: IntFieldUpdateOperationsInput | number
   }
 
   export type StoreStaffCreateInput = {
@@ -23257,9 +23272,15 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type StoreConfigScalarRelationFilter = {
@@ -23267,11 +23288,20 @@ export namespace Prisma {
     isNot?: StoreConfigWhereInput
   }
 
+  export type StoreHourStoreConfigIdDayCompoundUniqueInput = {
+    storeConfigId: string
+    day: string
+  }
+
   export type StoreHourCountOrderByAggregateInput = {
     id?: SortOrder
     storeConfigId?: SortOrder
-    label?: SortOrder
-    isActive?: SortOrder
+    day?: SortOrder
+    start?: SortOrder
+    end?: SortOrder
+  }
+
+  export type StoreHourAvgOrderByAggregateInput = {
     start?: SortOrder
     end?: SortOrder
   }
@@ -23279,8 +23309,7 @@ export namespace Prisma {
   export type StoreHourMaxOrderByAggregateInput = {
     id?: SortOrder
     storeConfigId?: SortOrder
-    label?: SortOrder
-    isActive?: SortOrder
+    day?: SortOrder
     start?: SortOrder
     end?: SortOrder
   }
@@ -23288,18 +23317,30 @@ export namespace Prisma {
   export type StoreHourMinOrderByAggregateInput = {
     id?: SortOrder
     storeConfigId?: SortOrder
-    label?: SortOrder
-    isActive?: SortOrder
+    day?: SortOrder
     start?: SortOrder
     end?: SortOrder
   }
 
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+  export type StoreHourSumOrderByAggregateInput = {
+    start?: SortOrder
+    end?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumStoreRoleFilter<$PrismaModel = never> = {
@@ -23375,6 +23416,11 @@ export namespace Prisma {
     _max?: NestedEnumStaffStatusFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type StaffProfileCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -23396,15 +23442,12 @@ export namespace Prisma {
     active?: SortOrder
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumDayOfWeekFilter<$PrismaModel = never> = {
@@ -23451,22 +23494,6 @@ export namespace Prisma {
   export type StaffAvailabilitySumOrderByAggregateInput = {
     startTime?: SortOrder
     endTime?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumDayOfWeekWithAggregatesFilter<$PrismaModel = never> = {
@@ -24557,8 +24584,12 @@ export namespace Prisma {
     connect?: StoreConfigWhereUniqueInput
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type StoreConfigUpdateOneRequiredWithoutHoursNestedInput = {
@@ -24695,6 +24726,10 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type UserUpdateOneRequiredWithoutStaffNestedInput = {
     create?: XOR<UserCreateWithoutStaffInput, UserUncheckedCreateWithoutStaffInput>
     connectOrCreate?: UserCreateOrConnectWithoutStaffInput
@@ -24707,14 +24742,6 @@ export namespace Prisma {
     create?: XOR<StoreStaffCreateWithoutAvailabilityInput, StoreStaffUncheckedCreateWithoutAvailabilityInput>
     connectOrCreate?: StoreStaffCreateOrConnectWithoutAvailabilityInput
     connect?: StoreStaffWhereUniqueInput
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type EnumDayOfWeekFieldUpdateOperationsInput = {
@@ -25196,17 +25223,31 @@ export namespace Prisma {
     _max?: NestedEnumStoreStatusFilter<$PrismaModel>
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedEnumStoreRoleFilter<$PrismaModel = never> = {
@@ -25243,38 +25284,24 @@ export namespace Prisma {
     _max?: NestedEnumStaffStatusFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedEnumDayOfWeekFilter<$PrismaModel = never> = {
     equals?: $Enums.DayOfWeek | EnumDayOfWeekFieldRefInput<$PrismaModel>
     in?: $Enums.DayOfWeek[] | ListEnumDayOfWeekFieldRefInput<$PrismaModel>
     notIn?: $Enums.DayOfWeek[] | ListEnumDayOfWeekFieldRefInput<$PrismaModel>
     not?: NestedEnumDayOfWeekFilter<$PrismaModel> | $Enums.DayOfWeek
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedEnumDayOfWeekWithAggregatesFilter<$PrismaModel = never> = {
@@ -26337,18 +26364,16 @@ export namespace Prisma {
 
   export type StoreHourCreateWithoutStoreConfigInput = {
     id?: string
-    label: string
-    isActive: boolean
-    start: string
-    end: string
+    day: string
+    start: number
+    end: number
   }
 
   export type StoreHourUncheckedCreateWithoutStoreConfigInput = {
     id?: string
-    label: string
-    isActive: boolean
-    start: string
-    end: string
+    day: string
+    start: number
+    end: number
   }
 
   export type StoreHourCreateOrConnectWithoutStoreConfigInput = {
@@ -26420,10 +26445,9 @@ export namespace Prisma {
     NOT?: StoreHourScalarWhereInput | StoreHourScalarWhereInput[]
     id?: StringFilter<"StoreHour"> | string
     storeConfigId?: StringFilter<"StoreHour"> | string
-    label?: StringFilter<"StoreHour"> | string
-    isActive?: BoolFilter<"StoreHour"> | boolean
-    start?: StringFilter<"StoreHour"> | string
-    end?: StringFilter<"StoreHour"> | string
+    day?: StringFilter<"StoreHour"> | string
+    start?: IntFilter<"StoreHour"> | number
+    end?: IntFilter<"StoreHour"> | number
   }
 
   export type StoreConfigCreateWithoutHoursInput = {
@@ -28184,34 +28208,30 @@ export namespace Prisma {
 
   export type StoreHourCreateManyStoreConfigInput = {
     id?: string
-    label: string
-    isActive: boolean
-    start: string
-    end: string
+    day: string
+    start: number
+    end: number
   }
 
   export type StoreHourUpdateWithoutStoreConfigInput = {
     id?: StringFieldUpdateOperationsInput | string
-    label?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    start?: StringFieldUpdateOperationsInput | string
-    end?: StringFieldUpdateOperationsInput | string
+    day?: StringFieldUpdateOperationsInput | string
+    start?: IntFieldUpdateOperationsInput | number
+    end?: IntFieldUpdateOperationsInput | number
   }
 
   export type StoreHourUncheckedUpdateWithoutStoreConfigInput = {
     id?: StringFieldUpdateOperationsInput | string
-    label?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    start?: StringFieldUpdateOperationsInput | string
-    end?: StringFieldUpdateOperationsInput | string
+    day?: StringFieldUpdateOperationsInput | string
+    start?: IntFieldUpdateOperationsInput | number
+    end?: IntFieldUpdateOperationsInput | number
   }
 
   export type StoreHourUncheckedUpdateManyWithoutStoreConfigInput = {
     id?: StringFieldUpdateOperationsInput | string
-    label?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    start?: StringFieldUpdateOperationsInput | string
-    end?: StringFieldUpdateOperationsInput | string
+    day?: StringFieldUpdateOperationsInput | string
+    start?: IntFieldUpdateOperationsInput | number
+    end?: IntFieldUpdateOperationsInput | number
   }
 
   export type AppointmentCreateManyStaffInput = {

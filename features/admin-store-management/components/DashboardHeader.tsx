@@ -1,25 +1,16 @@
 import { BodySm, H3 } from "@/components/ui";
-import { StoreStatus } from "@/generated/prisma";
-import { CircleCheck, Store } from "lucide-react";
+import { type AccountStatus as AccountStatusType, storeInfo } from "@/domains/profile/profile.types";
+import AccountStatus from "@/features/dashboard/components/AccountStatus";
+import { Store } from "lucide-react";
 
-interface StoreInfoType {
-    setupIssues: string[];
-    name: string;
-    address: string | null;
-    status: StoreStatus
-} 
 
 type Props = {
-  StoreInfo: StoreInfoType;
-  storeId: string
+  storeInfo: storeInfo;
+  accountStatus: AccountStatusType;
 }
 
-export default async function DashboardHeader ({ StoreInfo, storeId } : Props) {
+export default async function DashboardHeader ({ storeInfo, accountStatus } : Props) {
     
-    const colorIndicator = StoreInfo.status === 'ACTIVE' 
-        ? 'bg-success/10 text-success'
-        : 'bg-error/20 text-error'
-
     return (
         <div className="stacked relative ">
             <div className="flex items-center space-x-6">
@@ -27,14 +18,14 @@ export default async function DashboardHeader ({ StoreInfo, storeId } : Props) {
                     <Store className="shrink-0" strokeWidth={1} />
                 </span>
                 <span className="">
-                    <H3 className="text-xl capitalize" >{StoreInfo.name}</H3>
-                    <BodySm className="text-else col-start-2">{StoreInfo.address}</BodySm>
+                    <H3 className="text-xl capitalize" >{storeInfo.name}</H3>
+                    <BodySm className="text-else col-start-2">{storeInfo.address}</BodySm>
                 </span>
                 <div className="ml-auto">
-                    <div className={`rounded-full flex items-center space-x-2  normal-space ${colorIndicator}`}>
-                        <CircleCheck className="size-5" />
-                        <span className=" capitalize text-sm">{StoreInfo.status}</span>
-                    </div>
+                    <AccountStatus 
+                        active={accountStatus.active}
+                        requirements={accountStatus.requirements}
+                    />
                 </div>
             </div>
             

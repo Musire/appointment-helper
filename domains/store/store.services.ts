@@ -6,28 +6,15 @@ import { StoreUpdateType } from "@/validation/StoreCreation.schema";
 import { getPrismaUserId } from "../auth/util/session";
 import { storeRepository } from "./store.repositories";
 import { type defaultHours } from "./store.types";
-import { toStoreHours } from "./store.utilities";
 import { invitableStaffType, saveBusinessHoursType, StoreCreationType, StoreDetailsType, storeHoursUpdateType } from "./store.validations";
 
 
 // GET SERVICE FUNCTIONS
 
-export async function getStoreHoursService (storeId: string) {
-    const hours = await storeRepository.getStoreHours(storeId);
+export async function getStoreHoursService (data: {storeId: string}) {
+    const hours = await storeRepository.getStoreHours(data.storeId);
 
-    // 2. Define UI row order rules
-    const orderMap: Record<string, number> = {
-        'lun - vier': 1,
-        'sabado': 2,
-        'domingo': 3
-    };
-
-    // 3. Transform and return sorted data
-    return [...hours].sort((a, b) => {
-        const weightA = orderMap[a.label] ?? 99;
-        const weightB = orderMap[b.label] ?? 99;
-        return weightA - weightB;
-    });
+    return hours
 }
 
 export async function getStoresService () {
@@ -43,10 +30,28 @@ export async function getActiveStoresService () {
 }
 
 
-export async function saveBusinessHoursService (data: saveBusinessHoursType) {
-    const hours = toStoreHours(data.blocks)
-    
-    storeRepository.saveBusinessHours(data)
+export async function saveBusinessHoursService(data: saveBusinessHoursType) {
+    const { storeId, blocks } = data;
+
+    const storeConfig = await storeRepository.findStoreConfig(storeId);
+
+    if (!storeConfig) {
+        throw new Error("Store configuration not found.");
+    }
+
+    const hours = blocks.flatMap(block =>
+        block.days.map(day => ({
+            storeConfigId: storeConfig.id,
+            day,
+            start: block.start,
+            end: block.end,
+        }))
+    );
+
+    return storeRepository.saveBusinessHours({
+        storeConfigId: storeConfig.id,
+        hours
+    });
 }
 
 
@@ -73,46 +78,68 @@ export async function updateStoreHoursService (data : storeHoursUpdateType) {
     return storeRepository.updateStoreHours(data)
 }
 
-
 export async function syncStoreStatus(storeId: string) {
-    // Phase 1 Guard: Fetch the store first to check existence and base status
     const store = await storeRepository.findStoreWithStatus(storeId);
+
     if (!store) {
         throw new Error("Store profile not found.");
     }
 
-    const setupIssues: string[] = [];
+    type Requirement = {
+        label: string;
+        completed: boolean;
+    };
 
-    // Early Return Guard: If suspended, skip metric calculations entirely
+    const requirements: Requirement[] = [];
+
+    // Suspended guard
     if (store.status === StoreStatus.SUSPENDED) {
-        setupIssues.push("This storefront is currently suspended");
-        return { ...store, setupIssues };
+        return {
+            id: store.id,
+            name: store.name,
+            address: store.address,
+            active: false,
+            requirements: [
+                {
+                    label: "Store is not suspended",
+                    completed: false,
+                },
+            ],
+        };
     }
 
-    // Phase 2: Store is valid and not suspended, now pull metrics safely in parallel
     const [servicesCount, activeHoursCount] = await Promise.all([
         storeRepository.countServices(storeId),
-        storeRepository.countStoreDays(storeId)
+        storeRepository.countStoreDays(storeId),
     ]);
 
-    // Derive logic metrics
-    const hasServices = servicesCount > 0;
-    const hasActiveDay = activeHoursCount > 0;
+    requirements.push(
+        {
+            label: "Services setup",
+            completed: servicesCount > 0,
+        },
+        {
+            label: "Hours of operation setup",
+            completed: activeHoursCount > 0,
+        }
+    );
 
-    if (!hasServices) setupIssues.push("No services created yet");
-    if (!hasActiveDay) setupIssues.push("No operational hours set active");
+    const active = requirements.every(item => item.completed);
 
-    // Evaluate state machine transitions
-    const finalStatus = (hasServices && hasActiveDay) 
-        ? StoreStatus.ACTIVE 
-        : StoreStatus.DRAFT;
+    if (store.status !== (active ? StoreStatus.ACTIVE : StoreStatus.DRAFT)) {
+        await storeRepository.updateStoreStatus(
+            storeId,
+            active ? StoreStatus.ACTIVE : StoreStatus.DRAFT
+        );
+    }
 
-    // Persist status update only if a real state change happens
-    const displayStore = store.status !== finalStatus
-        ? await storeRepository.updateStoreStatus(storeId, finalStatus)
-        : store;
-
-    return { ...displayStore, setupIssues };
+    return {
+        id: store.id,
+        name: store.name,
+        address: store.address,
+        active,
+        requirements,
+    };
 }
 
 export async function getDashboardMetrics(storeId: string) {

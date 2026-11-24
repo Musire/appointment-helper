@@ -1,101 +1,148 @@
+
 'use client';
 
 import { FormStatusProvider } from "@/context/FormStatusProvider";
 import { ActionResponse } from "@/domains/auth/auth.types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { startTransition, useActionState, useEffect, useLayoutEffect, useRef } from "react";
-import { DefaultValues, FieldValues, FormProvider, useForm } from "react-hook-form";
+import {
+  startTransition,
+  useActionState,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react";
+import {
+  DefaultValues,
+  FieldValues,
+  FormProvider,
+  useForm
+} from "react-hook-form";
 import { z } from "zod";
 import StatusButton from "./StatusButton";
 
-
 interface FormProps<T, S extends z.ZodObject<FieldValues>> {
     schema: S;
-    initialValues: DefaultValues<z.infer<S>>; 
+    initialValues: DefaultValues<z.infer<S>>;
     isMulti?: boolean;
     children?: React.ReactNode;
-    actionFn: (_:any, formData: FormData) => ActionResponse<T> | Promise<ActionResponse<T>>;
+    actionFn: (
+        _: any,
+        formData: FormData
+    ) => ActionResponse<T> | Promise<ActionResponse<T>>;
     onSuccess?: () => void;
 }
 
-export default function ActionForm<T, S extends z.ZodObject<FieldValues>>({ 
+export default function ActionForm<T, S extends z.ZodObject<FieldValues>>({
     schema,
     initialValues,
-    isMulti, 
+    isMulti,
     actionFn,
     onSuccess,
-    children 
+    children
 }: FormProps<T, S>) {
-    
-    const [state, formAction, pending] = useActionState(actionFn, { 
-        success: false, 
+
+    const [state, formAction, pending] = useActionState(actionFn, {
+        success: false,
         error: undefined,
         data: null
     });
 
+    const [showSuccess, setShowSuccess] = useState(false);
+
     const form = useForm<z.infer<S>>({
-      resolver: zodResolver(schema) as any, 
-      defaultValues: initialValues,
-      mode: "onBlur"
+        resolver: zodResolver(schema) as any,
+        defaultValues: initialValues,
+        mode: "onBlur"
     });
 
     const handleFormSubmit = async () => {
-      console.log('trigger front end')
-      const isValid = await form.trigger();
-      if (!isValid) {
-        console.log('Validation errors:', form.formState.errors);
-        return;
-      }
+        const isValid = await form.trigger();
 
-      const formValues = form.getValues();
+        if (!isValid) {
+            console.log('Validation errors:', form.formState.errors);
+            return;
+        }
 
-      // 1. Explicitly build the FormData instance from RHF values
-      const formData = new FormData();
+        const formValues = form.getValues();
 
-      Object.entries(formValues).forEach(([key, value]) => {
-        if (value === undefined || value === null) return;
+        // Explicitly build FormData from RHF values
+        const formData = new FormData();
 
-        formData.append(
-          key,
-          typeof value === "object"
-            ? JSON.stringify(value)
-            : String(value)
-        );
-      });
+        Object.entries(formValues).forEach(([key, value]) => {
+            if (value === undefined || value === null) return;
 
-      startTransition(async () => {
-        formAction(formData); 
-      });
+            formData.append(
+                key,
+                typeof value === "object"
+                    ? JSON.stringify(value)
+                    : String(value)
+            );
+        });
+
+        // Clear previous success feedback on new submission
+        setShowSuccess(false);
+
+        startTransition(() => {
+            formAction(formData);
+        });
     };
 
     const onSuccessRef = useRef(onSuccess);
 
-    // Keep the ref continuously updated safely inside an effect
+    // Keep callback ref updated
     useLayoutEffect(() => {
-      onSuccessRef.current = onSuccess;
+        onSuccessRef.current = onSuccess;
     }, [onSuccess]);
 
+    // Track each action response
+    const previousStateRef = useRef(state);
+
     useEffect(() => {
-      // Check if the submission was successful
-      if (state.success) {
+        const previousState = previousStateRef.current;
+        previousStateRef.current = state;
+
+        // Only handle a new successful response
+        if (!state.success || state === previousState) return;
+
         onSuccessRef.current?.();
-        form.reset(); 
-      }
-    // ONLY depend on state.success and the stable reset function
-    }, [state.success, form]); 
+
+        form.reset(initialValues);
+
+        setShowSuccess(true);
+
+        const timeout = setTimeout(() => {
+            setShowSuccess(false);
+        }, 1000);
+
+        return () => clearTimeout(timeout);
+
+    }, [state, form.reset]);
 
     return (
-      <FormProvider {...form}>
-        <FormStatusProvider state={state} pending={pending} >
-        <form
-          className="flex flex-col rounded-xl max-w-lg w-full p-6 stacked space-y-2"
-          action={handleFormSubmit}
-          >
-          {children}
-          {state.error && <p className="text-error text-sm">{state.error}</p>}
-          {!isMulti && <StatusButton isPending={pending} state={state} />}
-        </form>
-          </FormStatusProvider>
-      </FormProvider>
+        <FormProvider {...form}>
+            <FormStatusProvider state={state} pending={pending}>
+                <form
+                    className="flex flex-col rounded-xl max-w-lg w-full p-6 stacked space-y-2"
+                    action={handleFormSubmit}
+                >
+                    {children}
+
+                    {state.error && (
+                        <p className="text-error text-sm">
+                            {state.error}
+                        </p>
+                    )}
+
+                    {!isMulti && (
+                        <StatusButton
+                            isPending={pending}
+                            state={state}
+                            showSuccess={showSuccess}
+                        />
+                    )}
+                </form>
+            </FormStatusProvider>
+        </FormProvider>
     );
 }

@@ -1,21 +1,11 @@
 import { z } from "zod";
-export const MAX_SECONDS_24HRS = 86400
-
-export const daySchema = z.enum([
-  'sun',
-  'mon',
-  'tue',
-  'wed',
-  'thu',
-  'fri',
-  'sat',
-]);
+export const MINS_24HRS = 1440
 
 export const timeBlockSchema = z.object({
   id: z.string(),
-  start: z.number().int().min(1).max(MAX_SECONDS_24HRS),
-  end: z.number().int().min(1).max(MAX_SECONDS_24HRS),
-  days: z.array(daySchema),
+  start: z.number().int().min(1).max(MINS_24HRS),
+  end: z.number().int().min(1).max(MINS_24HRS),
+  days: z.array(z.string()),
 });
 
 export const saveBusinessHoursSchema = z.object({

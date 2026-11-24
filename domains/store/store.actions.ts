@@ -5,7 +5,6 @@ import { createSafeAction, safeAction, validateFormData, validateSchema } from "
 import { prisma } from "@/lib/prisma";
 import { StoreUpdateSchema } from "@/validation/StoreCreation.schema";
 import { revalidatePath } from "next/cache";
-import { saveStoreAvailabilityService } from "../availability/availability.services";
 import { createStoreService, saveBusinessHoursService, updateStoreHoursService, updateStoreService } from "./store.services";
 import { saveBusinessHoursSchema, StoreConfigEditType, StoreCreationSchema, storeHoursUpdateSchema, storeHoursUpdateType } from "./store.validations";
 
@@ -97,7 +96,9 @@ export const saveBusinessHours = createSafeAction(
 
     const validated = validateSchema(saveBusinessHoursSchema, payload)
 
-    return saveBusinessHoursService(validated);
+    const res = await saveBusinessHoursService(validated);
+    revalidatePath(`/stores/${formData.get('storeId')}/hours`)
+    return res
   }
 );
 

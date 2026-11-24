@@ -1,3 +1,5 @@
+import { storeHours } from '@/domains/store/store.types';
+import { toMeridiem } from '@/lib/utils/timeConversion';
 import { Clock } from 'lucide-react';
 
 export type DaySchedule = {
@@ -7,13 +9,13 @@ export type DaySchedule = {
 };
 
 type StoreHoursSummaryProps = {
-  schedule: DaySchedule[];
+  storeHours: storeHours[];
 };
 
 export function StoreHoursSummary({
-  schedule,
+  storeHours,
 }: StoreHoursSummaryProps) {
-  const openDays = schedule.filter(
+  const openDays = storeHours.filter(
     ({ start, end }) => start !== null && end !== null
   ).length;
 
@@ -42,7 +44,7 @@ export function StoreHoursSummary({
       </header>
 
       <dl className="divide-y divide-border">
-        {schedule.map(({ day, start, end }) => {
+        {storeHours.map(({ day, start, end }) => {
           const isOpen = start !== null && end !== null;
 
           return (
@@ -50,7 +52,7 @@ export function StoreHoursSummary({
               key={day}
               className="flex items-center justify-between gap-4 py-3"
             >
-              <dt className="text-sm font-medium ">
+              <dt className="text-xs font-medium ">
                 {day}
               </dt>
 
@@ -63,7 +65,7 @@ export function StoreHoursSummary({
                   }
                 >
                   {isOpen
-                    ? `${start} – ${end}`
+                    ? `${toMeridiem(Number(start) * 60)} – ${toMeridiem(Number(end) * 60)}`
                     : 'Closed'}
                 </span>
 

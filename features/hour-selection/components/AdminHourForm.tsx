@@ -4,9 +4,9 @@ import { ActionForm } from '@/components/ui';
 import { v4 as uuid } from 'uuid';
 
 import { BusinessHoursFields } from '@/components/ui/forms/inputs/BusinessHoursFields';
-import { SaveStoreAvailabilitySchema } from '@/domains/availability/availability.validations';
 import { TimeBlock } from '@/domains/offering/offering.types';
 import { saveBusinessHours } from '@/domains/store/store.actions';
+import { saveBusinessHoursSchema } from '@/domains/store/store.validations';
 
 type Props = {
   storeId: string;
@@ -31,13 +31,15 @@ export default function AdminHourForm({
       : [DEFAULT_BLOCK()],
   };
 
+
   const onSuccess = () => {
     console.log('Business hours saved successfully');
   };
 
+
   return (
     <ActionForm
-      schema={SaveStoreAvailabilitySchema}
+      schema={saveBusinessHoursSchema}
       initialValues={initialValues}
       actionFn={saveBusinessHours}
       onSuccess={onSuccess}

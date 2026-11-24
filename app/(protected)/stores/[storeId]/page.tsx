@@ -1,5 +1,5 @@
 import { RoleRenderer } from "@/components/ui/auth/RoleRenderer";
-import { AdminStoreDetails } from "@/features/admin-store-management/components";
+import StoreDetailsDataLayer from "@/features/admin-store-management/components/StoreDetailsDataLayer";
 import { ParamsType } from "@/lib/types";
 
 type Props = ParamsType<{storeId: string}>
@@ -10,7 +10,7 @@ export default async function StoreDetailsPage ({ params }: Props) {
     return (
         <RoleRenderer
             roles={{
-                'ADMIN': <AdminStoreDetails storeId={storeId} />
+                'ADMIN': <StoreDetailsDataLayer storeId={storeId} />
             }}
         />
     );

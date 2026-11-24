@@ -67,11 +67,12 @@ model StoreConfig {
 model StoreHour {
   id            String      @id @default(uuid())
   storeConfigId String
-  label         String
-  isActive      Boolean
-  start         String
-  end           String
+  day           String
+  start         Int
+  end           Int
   storeConfig   StoreConfig @relation(fields: [storeConfigId], references: [id], onDelete: Cascade)
+
+  @@unique([storeConfigId, day])
 }
 
 model StoreStaff {

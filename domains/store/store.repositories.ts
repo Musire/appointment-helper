@@ -2,8 +2,8 @@ import { StoreStatus } from "@/generated/prisma"
 import { prisma } from "@/lib/prisma"
 import { unslugify } from "@/lib/utils/stringMutate"
 import { StoreUpdateType } from "@/validation/StoreCreation.schema"
-import { defaultHours } from "./store.types"
-import { saveBusinessHoursType, StoreCreationType, StoreDetailsType, storeHoursUpdateType } from "./store.validations"
+import { defaultHours, storeHours } from "./store.types"
+import { StoreCreationType, StoreDetailsType, storeHoursUpdateType } from "./store.validations"
 
 export const  storeRepository = {
     async findStoresByUserId() {
@@ -83,8 +83,8 @@ export const  storeRepository = {
                 hours: {
                     select: {
                         id: true,
-                        label: true,
-                        isActive: true,
+                        storeConfigId: true,
+                        day: true,
                         start: true,
                         end: true
                     }
@@ -103,7 +103,6 @@ export const  storeRepository = {
     async countStoreDays(storeId: string): Promise<number> {
         return prisma.storeHour.count({
             where: {
-                isActive: true,
                 storeConfig: {
                     store: {
                         id: storeId
@@ -115,7 +114,7 @@ export const  storeRepository = {
     async findStoreWithStatus(storeId: string) {
         return prisma.store.findUnique({
             where: { id: storeId },
-            select: { name: true, address: true, status: true }
+            select: { id: true, name: true, address: true, status: true }
         });
     },
     async countStaff(storeId: string) {
@@ -178,8 +177,31 @@ export const  storeRepository = {
         })
         return store
     },
-    async saveBusinessHours (data: saveBusinessHoursType) {
+    async findStoreConfig (storeId: string) {
+        const storeConfig = await prisma.storeConfig.findUnique({
+            where: {
+                storeId,
+            },
+            select: {
+                id: true,
+            },
+        });
 
+        return storeConfig
+    },
+    async saveBusinessHours(data: { storeConfigId: string, hours: storeHours[]}) {
+        
+        return prisma.$transaction([
+            prisma.storeHour.deleteMany({
+                where: {
+                    storeConfigId: data.storeConfigId,
+                },
+            }),
+
+            prisma.storeHour.createMany({
+                data: data.hours,
+            }),
+        ]);
     },
     async getInvitableStaff (storeId: string) {
         const staff = await prisma.user.findMany({

@@ -11,7 +11,7 @@ import { invitableStaffSchema, invitableStaffType, StoreDetailsSchema, StoreDeta
 
 export const getStoreHours = createSafeAction(
     {
-        allowedRoles: ['admin']
+        allowedRoles: ['admin', 'ADMIN']
     },
     getStoreHoursService
 )
@@ -19,7 +19,7 @@ export const getStoreHours = createSafeAction(
 
 export const getStoreStatus = createSafeAction(
     {
-        allowedRoles: ['admin']
+        allowedRoles: ['admin', 'ADMIN']
     },
     async(storeId: string) => {
         const [storeInfo, metrics] = await Promise.all([

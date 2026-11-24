@@ -6,34 +6,24 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Requirement } from "@/domains/profile/profile.types";
 import { AlertCircle, CheckCircle2, Circle } from "lucide-react";
 import { useState } from "react";
 
 type Props = {
   active: boolean;
-  requirements?: {
-    label: string;
-    completed: boolean;
-  }[];
+  requirements: Requirement[];
 };
 
 export default function AccountStatus({
   active,
-  requirements = [
-    { label: "Complete your profile", completed: true },
-    { label: "Submit required documents", completed: false },
-    { label: "Wait for store approval", completed: false },
-  ],
+  requirements,
 }: Props) {
   const [open, setOpen] = useState(false);
-
-  if (active) {
-    return (
-      <div className=" w-32 h-8 centered rounded-full bg-success/20 text-success text-sm font-medium">
-        Active
-      </div>
-    );
-  }
+  const status = active ? "Active" : "Inactive"
+  const colorStyle = active 
+    ? "text-success border-success bg-success/20 hover:bg-success/30" 
+    : " text-alternate border-alternate bg-alternate/10 border-warning/30 bg-warning/10 hover:bg-warning/20 focus-visible:ring-warning"
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -45,9 +35,14 @@ export default function AccountStatus({
             e.currentTarget.blur();
             setOpen(false);
           }}
-          className="group cursor-pointer  flex h-8 w-32 items-center justify-center  gap-2 rounded-full border border-warning/30 bg-warning/10 text-sm font-medium text-alternate border-alternate bg-alternate/10 transition hover:bg-warning/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warning"
+          className={`
+            h-8 w-32 centered gap-2 group cursor-pointer rounded-full 
+            border text-sm font-medium transition
+            focus-visible:outline-none focus-visible:ring-2
+            ${colorStyle}
+          `}
         >
-          Inactive
+          {status}
           <AlertCircle size={14} />
         </button>
       </PopoverTrigger>
@@ -58,14 +53,14 @@ export default function AccountStatus({
         sideOffset={20}
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
-        className="w-72 space-y-4 rounded-xl bg-surface-1 text-main"
+        className="w-72 space-y-3 rounded-xl bg-surface-1 text-main"
       >
         <div className="flex items-center gap-2">
-          <AlertCircle className="size-5 text-alternate" />
-          <h3 className="font-semibold">Account inactive</h3>
+          {!active && <AlertCircle className="size-5 text-alternate" />}
+          <h3 className="font-semibold">Account Requirements</h3>
         </div>
 
-        <p className="text-sm text-muted-foreground">
+        <p className="text-xs text-else">
           Complete the following requirements to activate your account.
         </p>
 

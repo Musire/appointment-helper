@@ -160,8 +160,7 @@ exports.Prisma.StoreConfigScalarFieldEnum = {
 exports.Prisma.StoreHourScalarFieldEnum = {
   id: 'id',
   storeConfigId: 'storeConfigId',
-  label: 'label',
-  isActive: 'isActive',
+  day: 'day',
   start: 'start',
   end: 'end'
 };

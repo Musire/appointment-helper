@@ -1,4 +1,5 @@
 import { Consolidated, Day, TimeBlock } from '../offering/offering.types';
+import { storeHours } from './store.types';
 
 export function consolidate(blocks: TimeBlock[]): Consolidated {
   const result: Consolidated = {
@@ -93,4 +94,27 @@ export function toStoreHours(blocks: TimeBlock[]) {
     start: minutesToTime(block.start),
     end: minutesToTime(block.end),
   }));
+}
+
+
+export function consolidateToTimeBlocks(rows: storeHours[]): TimeBlock[] {
+  const grouped = new Map<string, TimeBlock>();
+
+  for (const row of rows) {
+    const key = `${row.start}-${row.end}`;
+    const existing = grouped.get(key);
+
+    if (existing) {
+      existing.days.push(row.day as Day);
+    } else {
+      grouped.set(key, {
+        id: row?.id ?? '', // Reuses the first row's ID (or use crypto.randomUUID())
+        start: row.start,
+        end: row.end,
+        days: [row.day as Day],
+      });
+    }
+  }
+
+  return Array.from(grouped.values());
 }

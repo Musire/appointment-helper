@@ -22,12 +22,14 @@ export type Action =
   | { type: "update_end"; id: string; value: number }
   | { type: "toggle_closed"; id: string };
 
+
+
 export interface storeHours {
-    id: string;
-    label: string;
-    start: string;
-    end:string;
-    isActive: boolean
+    id?: string;
+    storeConfigId: string;
+    day: string;
+    start: number;
+    end: number;
 }
 
 export type StoreConfigResult =
